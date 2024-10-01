@@ -1,4 +1,4 @@
-name: CI and CD
+name: CD
 
 on:
   push:
@@ -57,6 +57,6 @@ jobs:
 
       - name: Deploy to Vercel
         run: |
-          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm --force
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes --force
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
