@@ -46,12 +46,13 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-nextjs-app:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/my-nextjs-app:${{ github.sha }}
 
       - name: Run container and test
         run: |
-          docker run -d -p 3000:3000 --name test-container ${{ secrets.DOCKERHUB_USERNAME }}/my-nextjs-app:${{ github.sha }}
+          docker run -d -p 3000:3000 --name test-container ${{ secrets.DOCKER_USERNAME }}/my-nextjs-app:${{ github.sha }}
           sleep 10
           curl http://localhost:3000 || exit 1
           docker stop test-container
