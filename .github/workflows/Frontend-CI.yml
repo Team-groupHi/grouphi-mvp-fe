@@ -34,11 +34,9 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/my-nextjs-app:${{ github.sha }}
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/my-nextjs-app:${{ github.sha }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/my-nextjs-app:${{ github.sha }}
 
       - name: Run container and test
         run: |
