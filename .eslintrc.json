@@ -7,14 +7,20 @@
     "createDefaultProgram": true
   },
   "extends": [
+    "prettier",
     "next/core-web-vitals",
     "next/typescript",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }]
-  }
+  },
+  "prettier/prettier": [
+    "error",
+    {
+      "singleQuote": true
+    }
+  ]
 }
