@@ -22,7 +22,7 @@ jobs:
         with:
           source-directory: 'output'
           destination-github-username: joyswim
-          destination-repository-name: groupHi-FE
+          destination-repository-name: grouphi-mvp-fe
           user-email: ${{ secrets.VERCEL_EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
