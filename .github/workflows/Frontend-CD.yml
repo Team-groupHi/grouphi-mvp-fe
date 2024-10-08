@@ -73,5 +73,5 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           echo "Deploying the application to personal repository..."
-          DEPLOY_URL=$(vercel deploy --prod --token $VERCEL_TOKEN --scope joyswim --yes)
+          DEPLOY_URL=$(vercel deploy --prod --token $VERCEL_TOKEN --yes)
           echo "Deployed at: $DEPLOY_URL"
