@@ -75,5 +75,5 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
           echo "Deploying the application to personal repository..."
-          DEPLOY_URL=$(vercel deploy --prod --token $VERCEL_TOKEN $VERCEL_PROJECT_ID --yes)
+          DEPLOY_URL=$(vercel deploy --prod --token $VERCEL_TOKEN --yes)
           echo "Deployed at: $DEPLOY_URL"
