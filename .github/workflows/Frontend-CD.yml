@@ -71,9 +71,7 @@ jobs:
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
           echo "Deploying the application to personal repository..."
-          DEPLOY_URL=$(vercel deploy --prod --token $VERCEL_TOKEN --yes)
+          DEPLOY_URL=$(vercel deploy --prod --token VERCEL_TOKEN --scope=groupHi --yes)
           echo "Deployed at: $DEPLOY_URL"
