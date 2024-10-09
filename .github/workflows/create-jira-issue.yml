@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Login
-        uses: atlassian/gajira-login@v3
+        uses: atlassian/gajira-login@v4
         env:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
@@ -33,7 +33,7 @@ jobs:
           echo '${{ steps.issue-parser.outputs.jsonString }}'
 
       - name: Convert markdown to Jira Syntax
-        uses: peter-evans/jira2md@v1
+        uses: peter-evans/jira2md@v2
         id: md2jira
         with:
           input-text: |
@@ -45,7 +45,7 @@ jobs:
 
       - name: Create Issue
         id: create
-        uses: atlassian/gajira-create@v3
+        uses: atlassian/gajira-create@v4
         with:
           project: GRPHI
           issuetype: Task
