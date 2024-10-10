@@ -34,7 +34,7 @@ jobs:
           destination-github-username: joyswim
           destination-repository-name: grouphi-mvp-fe
           user-email: ${{ secrets.EMAIL }}
-          commit-message: ${{ env.commit_messsage }}
+          commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
 
       - name: Pushes to dev deploy repository
