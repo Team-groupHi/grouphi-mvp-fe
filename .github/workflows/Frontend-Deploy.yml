@@ -2,7 +2,8 @@ name: Push To Deploy Repo
 
 on:
   push:
-    branches: [main, dev]
+    branches:
+      - main
 
 jobs:
   build:
