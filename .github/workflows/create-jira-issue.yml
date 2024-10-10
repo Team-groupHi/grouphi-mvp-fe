@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Login
-        uses: atlassian/gajira-login@v4
+        uses: atlassian/gajira-login@v3
         env:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
@@ -45,7 +45,7 @@ jobs:
 
       - name: Create Issue
         id: create
-        uses: atlassian/gajira-create@v4
+        uses: atlassian/gajira-create@v3
         with:
           project: GRPHI
           issuetype: Task
