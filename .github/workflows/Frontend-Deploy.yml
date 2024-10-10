@@ -2,20 +2,44 @@ name: Push To Deploy Repo
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     container: pandoc/latex
+
     steps:
-      - uses: actions/checkout@v2
+      # 부모 레포지토리에서만 실행되도록 설정
+      - name: Check repository
+        if: github.repository == 'Team-groupHi/grouphi-mvp-fe'
+        uses: actions/checkout@v4
+
       - name: Install mustache (to update the date)
+        if: github.repository == 'Team-groupHi/grouphi-mvp-fe'
         run: apk add ruby && gem install mustache
+
       - name: creates output
+        if: github.repository == 'Team-groupHi/grouphi-mvp-fe'
         run: sh ./build.sh
-      - name: Pushes to another repository
-        id: push_directory
+
+      - name: Pushes to main deploy repository
+        if: github.ref == 'refs/heads/main' && github.repository == 'Team-groupHi/grouphi-mvp-fe'
+        id: push_main_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'output'
+          destination-github-username: joyswim
+          destination-repository-name: grouphi-mvp-fe
+          user-email: ${{ secrets.EMAIL }}
+          commit-message: ${{ env.commit_messsage }}
+          target-branch: main
+
+      - name: Pushes to dev deploy repository
+        if: github.ref == 'refs/heads/dev' && github.repository == 'Team-groupHi/grouphi-mvp-fe'
+        id: push_dev_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
@@ -25,6 +49,8 @@ jobs:
           destination-repository-name: grouphi-mvp-fe
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
-          target-branch: main
+          target-branch: dev
+
       - name: Test get variable exported by push-to-another-repository
+        if: github.repository == 'Team-groupHi/grouphi-mvp-fe'
         run: echo $DESTINATION_CLONED_DIRECTORY
