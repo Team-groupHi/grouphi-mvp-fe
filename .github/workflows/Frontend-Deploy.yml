@@ -2,7 +2,8 @@ name: Push To Deploy Repo
 
 on:
   push:
-    branches: [main, dev]
+    branches:
+      - main
 
 jobs:
   build:
@@ -36,20 +37,6 @@ jobs:
           user-email: ${{ secrets.EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
-
-      - name: Pushes to dev deploy repository
-        if: github.ref == 'refs/heads/dev' && github.repository == 'Team-groupHi/grouphi-mvp-fe'
-        id: push_dev_directory
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: 'output'
-          destination-github-username: joyswim
-          destination-repository-name: grouphi-mvp-fe
-          user-email: ${{ secrets.EMAIL }}
-          commit-message: ${{ github.event.commits[0].message }}
-          target-branch: dev
 
       - name: Test get variable exported by push-to-another-repository
         if: github.repository == 'Team-groupHi/grouphi-mvp-fe'

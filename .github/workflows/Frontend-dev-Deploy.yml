@@ -3,30 +3,41 @@ name: Push To Dev Repo
 on:
   push:
     branches:
-      - dev # dev 브랜치에 푸시될 때 트리거
+      - dev
 
 jobs:
-  sync-dev:
+  build:
     runs-on: ubuntu-latest
+    container: pandoc/latex
 
     steps:
-    - name: Checkout original repository
-      uses: actions/checkout@v4
-      with:
-        ref: dev
+      # 부모 레포지토리에서만 실행되도록 설정
+      - name: Check repository
+        if: github.repository == 'Team-groupHi/grouphi-mvp-fe'
+        uses: actions/checkout@v4
 
-    - name: Configure Git
-      run: |
-        git config --global user.name "SoJuSo"
-        git config --global user.email "asdfg7123@gmail.com"
+      - name: Install mustache (to update the date)
+        if: github.repository == 'Team-groupHi/grouphi-mvp-fe'
+        run: apk add ruby && gem install mustache
 
-    - name: Add forked repository as remote
-      run: |
-        git remote add fork https://github.com/SoJuSo/grouphi-mvp-fe.git
-        git fetch fork dev
+      - name: creates output
+        if: github.repository == 'Team-groupHi/grouphi-mvp-fe'
+        run: sh ./build.sh
 
-    - name: Push changes to forked dev branch
-      run: |
-        git push fork dev
-      env:
-        GITHUB_TOKEN: ${{ secrets.DEV_ACCESS_TOKEN }}
+      - name: Pushes to dev deploy repository
+        if: github.ref == 'refs/heads/dev' && github.repository == 'Team-groupHi/grouphi-mvp-fe'
+        id: push_dev_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.DEV_ACCESS_TOKEN }}
+        with:
+          source-directory: 'output'
+          destination-github-username: SoJuSo
+          destination-repository-name: grouphi-mvp-fe
+          user-email: 'asdfg7123@gmail.com'
+          commit-message: ${{ github.event.commits[0].message }}
+          target-branch: dev
+
+      - name: Test get variable exported by push-to-another-repository
+        if: github.repository == 'Team-groupHi/grouphi-mvp-fe'
+        run: echo $DESTINATION_CLONED_DIRECTORY
