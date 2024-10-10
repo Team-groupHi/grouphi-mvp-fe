@@ -25,10 +25,9 @@ jobs:
           git remote add fork https://github.com/SoJuSo/grouphi-mvp-fe.git
           git fetch fork dev
 
-      - name: Pull latest changes from forked dev branch
-        run: git pull fork dev --rebase
-
-      - name: Push changes to forked dev branch
-        run: git push fork dev
+      - name: Force reset forked dev branch to upstream dev
+        run: |
+          git reset --hard fork/dev
+          git push --force fork dev
         env:
           GITHUB_TOKEN: ${{ secrets.DEV_ACCESS_TOKEN }}
