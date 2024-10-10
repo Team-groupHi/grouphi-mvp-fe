@@ -27,7 +27,7 @@ jobs:
       - name: Pushes to dev deploy repository
         if: github.ref == 'refs/heads/dev' && github.repository == 'Team-groupHi/grouphi-mvp-fe'
         id: push_dev_directory
-        uses: cpina/github-action-push-to-another-repository@v2
+        uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.DEV_ACCESS_TOKEN }}
         with:
