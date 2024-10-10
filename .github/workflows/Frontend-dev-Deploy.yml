@@ -10,23 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout original repository
-      uses: actions/checkout@v4
-      with:
-        ref: dev
+      - name: Checkout original repository
+        uses: actions/checkout@v4
+        with:
+          ref: dev
 
-    - name: Configure Git
-      run: |
-        git config --global user.name "SoJuSo"
-        git config --global user.email "asdfg7123@gmail.com"
+      - name: Configure Git
+        run: |
+          git config --global user.name "SoJuSo"
+          git config --global user.email "asdfg7123@gmail.com"
 
-    - name: Add forked repository as remote
-      run: |
-        git remote add fork https://github.com/SoJuSo/grouphi-mvp-fe.git
-        git fetch fork dev
+      - name: Add forked repository as remote
+        run: |
+          git remote add fork https://github.com/SoJuSo/grouphi-mvp-fe.git
+          git fetch fork dev
 
-    - name: Push changes to forked dev branch
-      run: |
-        git push fork dev
-      env:
-        GITHUB_TOKEN: ${{ secrets.DEV_ACCESS_TOKEN }}
+      - name: Pull latest changes from forked dev branch
+        run: git pull fork dev --rebase
+
+      - name: Push changes to forked dev branch
+        run: git push fork dev
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEV_ACCESS_TOKEN }}
