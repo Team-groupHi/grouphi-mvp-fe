@@ -7,43 +7,42 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    colors: {
-      primary: {
-        light: '#93EFDE',
-        DEFAULT: '#32E4D0',
-        dark: '#00CDB6',
-        container: '#000000',
-      },
-      secondary: {
-        light: '#E6A3FF',
-        DEFAULT: '#CB78EA',
-        dark: '#B355D5',
-        container: '#000000',
-      },
-      tertiary: {
-        DEFAULT: '#FFF0B6',
-        container: '#000000',
-      },
-      error: {
-        DEFAULT: '#E83A34',
-        container: '#000000',
-      },
-      text: {
-        DEFAULT: '#F0F0F0',
-        dark: '#B3B3B3',
-      },
-      gray: {
-        100: '#F2F2F7',
-        200: '#E5E5EA',
-        300: '#C7C7CC',
-        500: '#AEAEB2',
-        700: '#808080',
-        900: '#404040',
-      },
-      black: '#000000',
-      white: '#ffffff',
-    },
     extend: {
+      colors: {
+        primary: {
+          light: '#A4FFEE',
+          DEFAULT: '#32E4D0',
+          dark: '#00CDB6',
+          container: '#352777',
+        },
+        secondary: {
+          light: '#E6A3FF',
+          DEFAULT: '#CB78EA',
+          dark: '#B355D5',
+          container: '#8BF4E1',
+        },
+        yellow: {
+          light: '#FFF9E0',
+          DEFAULT: '#FFF0B6',
+          dark: '#F9E07D',
+          container: '#352777',
+        },
+        error: {
+          DEFAULT: '#E83A34',
+        },
+        text: {
+          DEFAULT: '#F0F0F0',
+          gray: '#A0A0A0',
+        },
+        gray: {
+          100: '#F2F2F7',
+          200: '#E5E5EA',
+          300: '#C7C7CC',
+          500: '#AEAEB2',
+          700: '#808080',
+          900: '#404040',
+        },
+      },
       backgroundImage: {
         'gradient-purple':
           'linear-gradient(#350D6D 0%, #352778 20%, #5D4DA6 85%)',
@@ -72,6 +71,9 @@ const config: Config = {
         xl: '18.75rem', // 300px
         '2xl': '31.25rem', // 500px
         '3xl': '62.5rem', // 1000px
+        'icon-sm': '1rem',
+        'icon-md': '1.5rem',
+        'icon-lg': '2.25rem',
       },
       height: {
         sm: '2rem',
@@ -101,10 +103,11 @@ const config: Config = {
         heavy: '0 4px 4px rgba(0, 0, 0, 0.25)',
       },
       zIndex: {
-        60: '60',
-        70: '70',
-        80: '80',
-        100: '100',
+        10: '10',
+        20: '20',
+        30: '30',
+        40: '40',
+        50: '50',
       },
     },
   },
