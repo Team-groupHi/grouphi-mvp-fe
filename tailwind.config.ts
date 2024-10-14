@@ -93,7 +93,7 @@ const config: Config = {
         '2xl': '4rem',
       },
       borderRadius: {
-        DEFAULT: 'ㅅ8px',
+        DEFAULT: '8px',
         sm: '8px',
         md: '12px',
         lg: '16px',
