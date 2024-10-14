@@ -60,7 +60,7 @@ const config: Config = {
       },
       fontSize: {
         sm: '0.875rem',
-        base: '1rem',
+        DEFAULT: '1rem',
         lg: '1.25rem',
         xl: '1.5rem',
       },
@@ -93,7 +93,7 @@ const config: Config = {
         '2xl': '4rem',
       },
       borderRadius: {
-        DEFAULT: '8px',
+        DEFAULT: 'ㅅ8px',
         sm: '8px',
         md: '12px',
         lg: '16px',
