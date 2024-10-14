@@ -56,7 +56,7 @@ const config: Config = {
         '2xl': '1440px',
       },
       fontFamily: {
-        sansSerif: ['Pretendard', 'Noto Sans CJK KR', 'Roboto', 'sans-serif'],
+        sans: ['Pretendard', 'Noto Sans CJK KR', 'Roboto', 'sans-serif'],
       },
       fontSize: {
         sm: '0.675rem',
@@ -104,7 +104,9 @@ const config: Config = {
         light: '0 4px 4px rgba(0, 0, 0, 0.10)',
       },
       opacity: {
+        low: '.25',
         DEFAULT: '.5',
+        high: '.75',
       },
       zIndex: {
         DEFAULT: '0',
