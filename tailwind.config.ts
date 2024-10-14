@@ -93,16 +93,21 @@ const config: Config = {
         '2xl': '4rem',
       },
       borderRadius: {
+        DEFAULT: '8px',
         sm: '8px',
         md: '16px',
         lg: '24px',
         xl: '32px',
       },
       boxShadow: {
+        DEFAULT: '0 4px 4px rgba(0, 0, 0, 0.25)',
         light: '0 4px 4px rgba(0, 0, 0, 0.10)',
-        heavy: '0 4px 4px rgba(0, 0, 0, 0.25)',
+      },
+      opacity: {
+        DEFAULT: '.5',
       },
       zIndex: {
+        DEFAULT: '0',
         10: '10',
         20: '20',
         30: '30',
