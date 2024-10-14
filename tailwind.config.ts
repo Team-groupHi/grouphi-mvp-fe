@@ -63,7 +63,7 @@ const config: Config = {
         sm: '0.675rem',
         base: '1rem',
         lg: '1.5rem',
-        xl: '2.25rem',
+        xl: '2rem',
       },
       fontWeight: {
         light: '300',
@@ -71,12 +71,23 @@ const config: Config = {
         medium: '500',
         bold: '700',
       },
+      width: {
+        sm: '3.75rem', // 60px
+        md: '6.25rem', // 100px
+        lg: '12.5rem', // 200px
+        xl: '18.75rem', // 300px
+        '2xl': '31.25rem', // 500px
+        '3xl': '62.5rem', // 1000px
+      },
       height: {
         sm: '2rem',
         md: '3rem',
         lg: '3.75rem', // 60px
-        xl: '6.25rem', // 100px
+        xl: '6.25rem', // 200px
         '2xl': '15.625rem', // 250px
+        'icon-sm': '1rem',
+        'icon-md': '1.5rem',
+        'icon-lg': '2.25rem',
       },
       spacing: {
         sm: '0.5rem',
