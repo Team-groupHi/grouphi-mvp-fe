@@ -65,12 +65,6 @@ const config: Config = {
         lg: '1.5rem',
         xl: '2rem',
       },
-      fontWeight: {
-        light: '300',
-        normal: '400',
-        medium: '500',
-        bold: '700',
-      },
       width: {
         sm: '3.75rem', // 60px
         md: '6.25rem', // 100px
