@@ -59,10 +59,10 @@ const config: Config = {
         sans: ['Pretendard', 'Noto Sans CJK KR', 'Roboto', 'sans-serif'],
       },
       fontSize: {
-        sm: '0.675rem',
+        sm: '0.875rem',
         base: '1rem',
-        lg: '1.5rem',
-        xl: '2rem',
+        lg: '1.25rem',
+        xl: '1.5rem',
       },
       width: {
         sm: '3.75rem', // 60px
@@ -95,9 +95,9 @@ const config: Config = {
       borderRadius: {
         DEFAULT: '8px',
         sm: '8px',
-        md: '16px',
-        lg: '24px',
-        xl: '32px',
+        md: '12px',
+        lg: '16px',
+        xl: '24px',
       },
       boxShadow: {
         DEFAULT: '0 4px 4px rgba(0, 0, 0, 0.25)',
