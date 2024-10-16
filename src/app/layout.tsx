@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID
   return (
-    <html lang="en">
+    <html lang="ko">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
