@@ -1,6 +1,8 @@
 interface gameCardProps {
   title: string
   description?: string
+  width?: string | number
+  height?: string | number
   flexBasis?: string | number
   maxWidth?: string
 }
@@ -8,13 +10,14 @@ interface gameCardProps {
 const GameListCard = ({
   title,
   description,
-  flexBasis = '1/3',
-  maxWidth = 'xs',
+  width = '20rem',
+  height = '12rem',
   ...props
 }: gameCardProps) => {
   return (
     <article
-      className={`basis-${flexBasis} max-w-${maxWidth} p-md bg-primary-container p-sm shadow rounded-md`}
+      style={{ width, height }}
+      className={`p-md bg-primary-container p-sm shadow rounded-md`}
       {...props}
     >
       <p className="text font-medium">{title}</p>
