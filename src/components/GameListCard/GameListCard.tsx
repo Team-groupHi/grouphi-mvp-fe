@@ -3,8 +3,6 @@ interface gameCardProps {
   description?: string
   width?: string | number
   height?: string | number
-  flexBasis?: string | number
-  maxWidth?: string
 }
 
 const GameListCard = ({
@@ -17,11 +15,19 @@ const GameListCard = ({
   return (
     <article
       style={{ width, height }}
-      className={`p-md bg-primary-container p-sm shadow rounded-md`}
+      className={`p-md bg-primary-container shadow rounded-md`}
       {...props}
     >
-      <p className="text font-medium">{title}</p>
-      {description && <p className="text-sm text-gray pt-2">{description}</p>}
+      <section className="relative z-10">
+        <p className="text font-medium truncate">{title}</p>
+        {description && (
+          <p
+            className={`text-sm text-gray pt-2 overflow-hiddden text-ellipsis line-clamp-2 break-all`}
+          >
+            {description}
+          </p>
+        )}
+      </section>
     </article>
   )
 }
