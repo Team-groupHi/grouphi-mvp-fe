@@ -22,7 +22,7 @@ const GameListCard = ({ title, description, src, ...props }: gameCardProps) => {
         />
       )}
       <section
-        className={`relative place-content-center margin-auto h-full p-lg bg-black bg-opacity rounded-md z-10`}
+        className={`relative place-content-center margin-auto h-full p-lg bg-black bg-opacity rounded-md z-10 hover:bg-opacity-high hover:cursor-pointer`}
       >
         <p className="text font-medium truncate">{title}</p>
         {description && (
