@@ -1,24 +1,29 @@
+import Image from 'next/image'
+
 interface gameCardProps {
   title: string
   description?: string
-  width?: string | number
-  height?: string | number
+  src?: string
 }
 
-const GameListCard = ({
-  title,
-  description,
-  width = '20rem',
-  height = '12rem',
-  ...props
-}: gameCardProps) => {
+const GameListCard = ({ title, description, src, ...props }: gameCardProps) => {
   return (
     <article
-      style={{ width, height }}
-      className={`p-md bg-primary-container shadow rounded-md`}
+      className={`basis-1/3 max-w-80 min-w-60 relative bg-primary-container shadow rounded-md overflow-hidden`}
       {...props}
     >
-      <section className="relative z-10">
+      {src && (
+        <Image
+          src={src}
+          alt={title}
+          layout="fill"
+          objectFit="cover"
+          className="absolute"
+        />
+      )}
+      <section
+        className={`relative place-content-center margin-auto h-full p-lg bg-black bg-opacity rounded-md z-10`}
+      >
         <p className="text font-medium truncate">{title}</p>
         {description && (
           <p
