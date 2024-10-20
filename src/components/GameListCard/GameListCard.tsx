@@ -1,15 +1,24 @@
+'use client'
 import Image from 'next/image'
 
 interface gameCardProps {
   title: string
   description?: string
   src?: string
+  onClick?: () => void
 }
 
-const GameListCard = ({ title, description, src, ...props }: gameCardProps) => {
+const GameListCard = ({
+  title,
+  description,
+  src,
+  onClick,
+  ...props
+}: gameCardProps) => {
   return (
     <article
       className={`basis-1/3 max-w-80 min-w-60 relative bg-primary-container shadow rounded-md overflow-hidden`}
+      onClick={onClick}
       {...props}
     >
       {src && (
