@@ -26,7 +26,7 @@ const GameListCard = ({
           src={src}
           alt={title}
           layout="fill"
-          objectFit="cover"
+          style={{ objectFit: 'cover' }}
           className="absolute"
         />
       )}
@@ -36,7 +36,7 @@ const GameListCard = ({
         <p className="text font-medium truncate">{title}</p>
         {description && (
           <p
-            className={`text-sm text-gray pt-2 overflow-hiddden text-ellipsis line-clamp-2 break-all`}
+            className={`text-sm text-gray pt-2 overflow-hidden text-ellipsis line-clamp-2 break-all`}
           >
             {description}
           </p>
