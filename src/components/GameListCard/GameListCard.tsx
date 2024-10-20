@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 
-interface gameCardProps {
+interface gameListCardProps {
   title: string
   description?: string
   src?: string
@@ -14,7 +14,7 @@ const GameListCard = ({
   src,
   onClick,
   ...props
-}: gameCardProps) => {
+}: gameListCardProps) => {
   return (
     <article
       className={`basis-1/3 max-w-80 min-w-60 relative bg-primary-container shadow rounded-md overflow-hidden`}
