@@ -31,7 +31,7 @@ const GameListCard = ({
         />
       )}
       <section
-        className={`relative place-content-center margin-auto h-full p-lg bg-gradient-to-b from-transparent to-black/65 to-50% rounded-md z-10 hover:bg-black/30 hover:cursor-pointer`}
+        className={`relative place-content-center margin-auto h-full p-lg bg-gradient-transparent-black rounded-md z-10 hover:bg-black/30 hover:cursor-pointer`}
       >
         <p className="text font-medium truncate">{title}</p>
         {description && (
