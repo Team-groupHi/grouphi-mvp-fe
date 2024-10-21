@@ -2,6 +2,7 @@
 
 interface ButtonProps {
   variant?: 'solid' | 'secondary' | 'outline' | 'warn' | 'ghost'
+  size?: 'sm' | 'md' | 'lg' | 'xl'
   isDisabled?: boolean
   border?: string
   children: string
@@ -10,6 +11,7 @@ interface ButtonProps {
 
 const Button = ({
   variant = 'solid',
+  size = 'md',
   isDisabled,
   border,
   children,
@@ -25,13 +27,20 @@ const Button = ({
     ghost: 'text hover:bg-black/10',
   }
   const disabledClass = isDisabled
-    ? 'grayscale cursor-not-allowed'
+    ? 'grayscale cursor-default'
     : 'hover:bg-opacity-85'
   const borderClass = border ? border : 'rounded-full'
+  const sizeClass = {
+    sm: 'px-md py-xs text-sm',
+    md: 'px-lg py-sm text-md',
+    lg: 'px-xl py-sm text-lg',
+    xl: 'px-2xl py-sm text-xl',
+  }
 
   return (
     <button
-      className={`px-lg py-sm ${borderClass} ${variantsClass[variant]} ${disabledClass}`}
+      className={`${sizeClass[size]} ${variantsClass[variant]} ${borderClass} ${disabledClass}`}
+      disabled={isDisabled}
       onClick={onClick}
       {...props}
     >
