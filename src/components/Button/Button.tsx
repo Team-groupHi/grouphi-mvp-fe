@@ -1,10 +1,12 @@
 'use client'
+import React from 'react'
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'solid' | 'secondary' | 'outline' | 'warn' | 'ghost'
   size?: 'sm' | 'md' | 'lg' | 'xl'
+  shape?: 'square' | 'full'
+  weight?: 'light' | 'normal' | 'bold'
   isDisabled?: boolean
-  border?: string
   children: string
   onClick: () => void
 }
@@ -12,8 +14,9 @@ interface ButtonProps {
 const Button = ({
   variant = 'solid',
   size = 'md',
+  shape = 'full',
+  weight = 'normal',
   isDisabled,
-  border,
   children,
   onClick,
   ...props
@@ -24,22 +27,30 @@ const Button = ({
     secondary: 'bg-primary-light text-dark',
     outline: 'border border-gray text hover:bg-black/10',
     warn: 'bg-error text',
-    ghost: 'text hover:bg-black/10 text-dark',
+    ghost: 'text hover:bg-black/10',
   }
   const disabledClass = isDisabled
     ? 'grayscale cursor-default text-gray-700'
     : 'hover:bg-opacity-85'
-  const borderClass = border ? border : 'rounded-full'
+  const borderClass = {
+    square: 'rounded-md',
+    full: 'rounded-full',
+  }
   const sizeClass = {
     sm: 'px-md py-xs text-sm',
     md: 'px-lg py-sm text-md',
     lg: 'px-xl py-sm text-lg',
     xl: 'px-2xl py-sm text-xl',
   }
+  const weightClass: { [key: string]: string } = {
+    light: 'font-light',
+    normal: 'font-normal',
+    bold: 'font-bold',
+  }
 
   return (
     <button
-      className={`${sizeClass[size]} ${variantsClass[variant]} ${borderClass} ${disabledClass}`}
+      className={`${sizeClass[size]} ${variantsClass[variant]} ${borderClass[shape]} ${disabledClass} ${weightClass[weight]}`}
       disabled={isDisabled}
       onClick={onClick}
       {...props}
