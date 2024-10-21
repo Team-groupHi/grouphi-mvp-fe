@@ -30,11 +30,8 @@ const config: Config = {
         error: {
           DEFAULT: '#E83A34',
         },
-        text: {
-          DEFAULT: '#F0F0F0',
-          gray: '#A0A0A0',
-        },
         gray: {
+          DEFAULT: '#A0A0A0',
           100: '#F2F2F7',
           200: '#E5E5EA',
           300: '#C7C7CC',
@@ -43,10 +40,17 @@ const config: Config = {
           900: '#404040',
         },
       },
+      textColor: {
+        DEFAULT: '#F0F0F0',
+        gray: '#A0A0A0',
+        black: '#303030',
+      },
       backgroundImage: {
         'gradient-purple':
           'linear-gradient(#350D6D 0%, #352778 20%, #5D4DA6 85%)',
         'gradient-primary': 'linear-gradient(120deg, #32E4D0 0%, #CB78EA 80%)',
+        'gradient-transparent-black':
+          'linear-gradient(to bottom, transparent, #00000090 40%)',
       },
       screens: {
         sm: '640px',
