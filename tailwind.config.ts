@@ -28,20 +28,22 @@ const config: Config = {
           container: '#352777',
         },
         error: {
-          DEFAULT: '#E83A34',
-        },
-        text: {
-          DEFAULT: '#F0F0F0',
-          gray: '#A0A0A0',
+          DEFAULT: '#DB4D48',
         },
         gray: {
+          DEFAULT: '#A0A0A0',
           100: '#F2F2F7',
           200: '#E5E5EA',
           300: '#C7C7CC',
           500: '#AEAEB2',
-          700: '#808080',
+          700: '#707070',
           900: '#404040',
         },
+      },
+      textColor: {
+        DEFAULT: '#F0F0F0',
+        light: '#F0F0F0',
+        dark: '#303030',
       },
       backgroundImage: {
         'gradient-purple':
@@ -86,6 +88,7 @@ const config: Config = {
         'icon-lg': '2.25rem',
       },
       spacing: {
+        xs: '0.4rem',
         sm: '0.5rem',
         md: '1rem',
         lg: '1.5rem',
