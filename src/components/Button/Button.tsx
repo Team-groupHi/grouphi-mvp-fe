@@ -1,8 +1,7 @@
 'use client'
 import React from 'react'
-
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'solid' | 'secondary' | 'outline' | 'warn' | 'ghost'
+  variant?: 'solid' | 'secondary' | 'outline' | 'warn' | 'ghost' | 'link'
   size?: 'sm' | 'md' | 'lg' | 'xl'
   shape?: 'square' | 'full'
   weight?: 'light' | 'normal' | 'bold'
@@ -28,6 +27,7 @@ const Button = ({
     outline: 'border border-gray text hover:bg-black/10',
     warn: 'bg-error text',
     ghost: 'text hover:bg-black/10',
+    link: 'text hover:bg-black/10 underline underline-offset-4',
   }
   const disabledClass = isDisabled
     ? 'grayscale cursor-default text-gray-700'
