@@ -25,7 +25,7 @@ const GameListCard = ({
         <Image
           src={src}
           alt={title}
-          layout="fill"
+          fill
           style={{ objectFit: 'cover' }}
           className="absolute"
         />
