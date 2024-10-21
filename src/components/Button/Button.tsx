@@ -3,6 +3,7 @@
 interface ButtonProps {
   variant?: 'solid' | 'secondary' | 'outline' | 'warn' | 'ghost'
   isDisabled?: boolean
+  border?: string
   children: string
   onClick: () => void
 }
@@ -10,6 +11,7 @@ interface ButtonProps {
 const Button = ({
   variant = 'solid',
   isDisabled,
+  border,
   children,
   onClick,
   ...props
@@ -18,17 +20,18 @@ const Button = ({
   const variantsClass = {
     solid: 'bg-primary',
     secondary: 'bg-primary-light',
-    outline: 'border border-gray text',
+    outline: 'border border-gray text hover:bg-black/10',
     warn: 'bg-error text',
     ghost: 'text hover:bg-black/10',
   }
   const disabledClass = isDisabled
     ? 'grayscale cursor-not-allowed'
-    : 'hover:opacity-85'
+    : 'hover:bg-opacity-85'
+  const borderClass = border ? border : 'rounded-full'
 
   return (
     <button
-      className={`px-lg py-sm rounded-full ${variantsClass[variant]} ${disabledClass}`}
+      className={`px-lg py-sm ${borderClass} ${variantsClass[variant]} ${disabledClass}`}
       onClick={onClick}
       {...props}
     >
