@@ -9,6 +9,7 @@ interface ButtonProps {
 
 const Button = ({
   variant = 'solid',
+  isDisabled,
   children,
   onClick,
   ...props
@@ -21,10 +22,13 @@ const Button = ({
     warn: 'bg-error text',
     ghost: 'text hover:bg-black/10',
   }
+  const disabledClass = isDisabled
+    ? 'grayscale cursor-not-allowed'
+    : 'hover:opacity-85'
 
   return (
     <button
-      className={`px-lg py-sm rounded-full ${variantsClass[variant]}`}
+      className={`px-lg py-sm rounded-full ${variantsClass[variant]} ${disabledClass}`}
       onClick={onClick}
       {...props}
     >
