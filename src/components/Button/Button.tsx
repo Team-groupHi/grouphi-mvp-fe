@@ -20,14 +20,14 @@ const Button = ({
 }: ButtonProps) => {
   const upperCaseText = children.toUpperCase()
   const variantsClass = {
-    solid: 'bg-primary',
-    secondary: 'bg-primary-light',
+    solid: 'bg-primary text-dark',
+    secondary: 'bg-primary-light text-dark',
     outline: 'border border-gray text hover:bg-black/10',
     warn: 'bg-error text',
-    ghost: 'text hover:bg-black/10',
+    ghost: 'text hover:bg-black/10 text-dark',
   }
   const disabledClass = isDisabled
-    ? 'grayscale cursor-default'
+    ? 'grayscale cursor-default text-gray-700'
     : 'hover:bg-opacity-85'
   const borderClass = border ? border : 'rounded-full'
   const sizeClass = {
