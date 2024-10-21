@@ -4,18 +4,27 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'solid' | 'secondary' | 'outline' | 'warn' | 'ghost' | 'link'
   size?: 'sm' | 'md' | 'lg' | 'xl'
   shape?: 'square' | 'full'
-  weight?: 'light' | 'normal' | 'bold'
+  fontWeight?: 'light' | 'normal' | 'bold'
   isDisabled?: boolean
   children: string
   onClick: () => void
 }
 
+/**
+ * @param [onClick] - [필수] 버튼의 이벤트 핸들러입니다.
+ * @param [variant='solid'] - 버튼의 스타일을 결정합니다.
+ * @param [size='md'] - 버튼의 사이즈입니다. sm ~ xl값을 가집니다.
+ * @param [shape='full'] - 버튼의 형태입니다. 사각형은 'square'를 지정해주세요.
+ * @param [fontWeight='normal'] - 버튼의 fontWeight입니다.
+ * @param [isDisabled=false] - 버튼의 비활성화 여부입니다.
+ * @returns
+ */
 const Button = ({
   variant = 'solid',
   size = 'md',
   shape = 'full',
-  weight = 'normal',
-  isDisabled,
+  fontWeight = 'normal',
+  isDisabled = false,
   children,
   onClick,
   ...props
@@ -42,7 +51,7 @@ const Button = ({
     lg: 'px-xl py-sm text-lg',
     xl: 'px-2xl py-sm text-xl',
   }
-  const weightClass: { [key: string]: string } = {
+  const fontWeightClass: { [key: string]: string } = {
     light: 'font-light',
     normal: 'font-normal',
     bold: 'font-bold',
@@ -50,7 +59,7 @@ const Button = ({
 
   return (
     <button
-      className={`${variantsClass[variant]} ${sizeClass[size]} ${shapeClass[shape]} ${weightClass[weight]} ${disabledClass}`}
+      className={`${variantsClass[variant]} ${sizeClass[size]} ${shapeClass[shape]} ${fontWeightClass[fontWeight]} ${disabledClass}`}
       disabled={isDisabled}
       onClick={onClick}
       {...props}
