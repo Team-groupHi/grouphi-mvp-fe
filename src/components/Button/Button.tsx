@@ -1,72 +1,86 @@
-'use client'
-import React from 'react'
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'solid' | 'secondary' | 'outline' | 'warn' | 'ghost' | 'link'
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  shape?: 'square' | 'full'
-  fontWeight?: 'light' | 'normal' | 'bold'
+import * as React from 'react'
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { cn } from '@/lib/utils'
+
+const buttonVariants = cva(
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300',
+  {
+    variants: {
+      variant: {
+        default:
+          'bg-primary text-dark hover:bg-primary/90 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90',
+        secondary:
+          'bg-zinc-200 text-zinc-900 hover:bg-zinc-200/80 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800/80',
+        outline:
+          'bg-primary-container text border border-zinc-200 hover:bg-zinc-900/40 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50',
+        destructive:
+          'bg-red-500 text-zinc-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-zinc-50 dark:hover:bg-red-900/90',
+        ghost:
+          'text hover:bg-zinc-900/40 dark:hover:bg-zinc-800 dark:hover:text-zinc-50',
+        link: 'text underline-offset-4 hover:underline dark:text-zinc-50',
+      },
+      size: {
+        default: 'h-10 px-4 py-2',
+        sm: 'h-9 px-3 py-2',
+        md: 'h-10 px-4 py-2',
+        lg: 'h-11 px-8 py-2 text-md',
+        xl: 'h-12 px-10 py-2 text-lg',
+        icon: 'h-10 w-10',
+      },
+      shape: {
+        round: 'rounded-full',
+        square: 'rounded-md',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+    },
+  }
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
   isDisabled?: boolean
-  children: string
-  onClick: () => void
+  shape?: 'round' | 'square'
 }
 
 /**
- * @param [onClick] - [필수] 버튼의 이벤트 핸들러입니다.
- * @param [variant='solid'] - 버튼의 스타일을 결정합니다.
+ * @param [variant] - 버튼의 스타일을 결정합니다.
  * @param [size='md'] - 버튼의 사이즈입니다. sm ~ xl값을 가집니다.
- * @param [shape='full'] - 버튼의 형태입니다. 사각형은 'square'를 지정해주세요.
- * @param [fontWeight='normal'] - 버튼의 fontWeight입니다.
+ * @param [shape='round'] - 버튼의 형태입니다. 사각형은 'square'를 지정해주세요.
+ * @param [className] - TailwindCSS 커스텀 속성을 전달합니다.
  * @param [isDisabled=false] - 버튼의 비활성화 여부입니다.
- * @returns
+ * @param [asChild=false] - Link 컴포넌트를 중첩시킬 수 있습니다.
  */
-const Button = ({
-  variant = 'solid',
-  size = 'md',
-  shape = 'full',
-  fontWeight = 'normal',
-  isDisabled = false,
-  children,
-  onClick,
-  ...props
-}: ButtonProps) => {
-  const upperCaseText = children.toUpperCase()
-  const variantsClass = {
-    solid: 'bg-primary text-dark',
-    secondary: 'bg-primary-light text-dark',
-    outline: 'border border-gray text hover:bg-black/10',
-    warn: 'bg-error text',
-    ghost: 'text hover:bg-black/10',
-    link: 'text hover:bg-black/10 underline underline-offset-4',
-  }
-  const disabledClass = isDisabled
-    ? 'grayscale cursor-default text-gray-700'
-    : 'hover:bg-opacity-85'
-  const shapeClass = {
-    square: 'rounded-md',
-    full: 'rounded-full',
-  }
-  const sizeClass = {
-    sm: 'px-md py-xs text-sm',
-    md: 'px-lg py-sm text-md',
-    lg: 'px-xl py-sm text-lg',
-    xl: 'px-2xl py-sm text-xl',
-  }
-  const fontWeightClass: { [key: string]: string } = {
-    light: 'font-light',
-    normal: 'font-normal',
-    bold: 'font-bold',
-  }
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      variant,
+      size = 'md',
+      shape = 'round',
+      className,
+      isDisabled = false,
+      asChild = false,
+      ...props
+    },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : 'button'
 
-  return (
-    <button
-      className={`${variantsClass[variant]} ${sizeClass[size]} ${shapeClass[shape]} ${fontWeightClass[fontWeight]} ${disabledClass}`}
-      disabled={isDisabled}
-      onClick={onClick}
-      {...props}
-    >
-      {upperCaseText}
-    </button>
-  )
-}
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className, shape }))}
+        ref={ref}
+        disabled={isDisabled}
+        {...props}
+      />
+    )
+  }
+)
+Button.displayName = 'Button'
 
-export default Button
+export { Button, buttonVariants }
