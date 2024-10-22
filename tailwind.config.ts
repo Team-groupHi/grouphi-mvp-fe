@@ -1,6 +1,8 @@
 import type { Config } from 'tailwindcss'
+import animate from 'tailwindcss-animate'
 
 const config: Config = {
+  darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -61,8 +63,9 @@ const config: Config = {
         sans: ['Pretendard', 'Noto Sans CJK KR', 'Roboto', 'sans-serif'],
       },
       fontSize: {
-        sm: '0.875rem',
         DEFAULT: '1rem',
+        sm: '0.875rem',
+        md: '1rem',
         lg: '1.25rem',
         xl: '1.5rem',
       },
@@ -96,11 +99,12 @@ const config: Config = {
         '2xl': '4rem',
       },
       borderRadius: {
-        DEFAULT: '8px',
-        sm: '8px',
-        md: '12px',
-        lg: '16px',
-        xl: '24px',
+        DEFAULT: '0.5rem',
+        sm: '0.375rem',
+        md: '0.5rem',
+        lg: '0.625rem',
+        xl: '0.75rem',
+        '2xl': '1rem',
       },
       boxShadow: {
         DEFAULT: '0 4px 4px rgba(0, 0, 0, 0.25)',
@@ -112,7 +116,7 @@ const config: Config = {
         high: '.75',
       },
       zIndex: {
-        DEFAULT: '0',
+        DEFAULT: '10',
         10: '10',
         20: '20',
         30: '30',
@@ -121,6 +125,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [animate],
 }
 export default config
