@@ -34,11 +34,7 @@ describe('Button', () => {
     render(<Button className="text-secondary">Button</Button>)
     expect(screen.getByText('Button')).toHaveClass('text-secondary')
   })
-  test('테스트7 isDisabled를 전달하면 disabled 처리된다.', () => {
-    render(<Button isDisabled>Button</Button>)
-    expect(screen.getByText('Button')).toBeDisabled()
-  })
-  test('테스트8 asChild를 전달하면 button 대신 children이 렌더링된다.', () => {
+  test('테스트7 asChild를 전달하면 button 대신 children이 렌더링된다.', () => {
     render(
       <Button asChild>
         <Link href="/login">Login</Link>
@@ -47,14 +43,14 @@ describe('Button', () => {
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
     expect(screen.getByText('Login')).toBeInTheDocument()
   })
-  test('테스트9 hover하면 배경이 어두워진다.', () => {
+  test('테스트8 hover하면 배경이 어두워진다.', () => {
     render(<Button>Button</Button>)
     const button = screen.getByText('Button')
     fireEvent.mouseOver(button)
 
     expect(button).toHaveClass('hover:bg-primary/90')
   })
-  test('테스트10 클릭하면 함수 호출이 동작한다.', () => {
+  test('테스트9 클릭하면 함수 호출이 동작한다.', () => {
     const onClickMock = vi.fn(() => alert('clicked!'))
     render(<Button onClick={onClickMock}>Button</Button>)
 

@@ -44,7 +44,6 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
-  isDisabled?: boolean
   shape?: 'round' | 'square'
 }
 
@@ -53,7 +52,6 @@ export interface ButtonProps
  * @param [size='md'] - 버튼의 사이즈입니다. sm ~ xl값을 가집니다.
  * @param [shape='round'] - 버튼의 형태입니다. 사각형은 'square'를 지정해주세요.
  * @param [className] - TailwindCSS 커스텀 속성을 전달합니다.
- * @param [isDisabled=false] - 버튼의 비활성화 여부입니다.
  * @param [asChild=false] - Link 컴포넌트를 중첩시킬 수 있습니다.
  */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -63,7 +61,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size = 'md',
       shape = 'round',
       className,
-      isDisabled = false,
       asChild = false,
       ...props
     },
@@ -75,7 +72,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         className={cn(buttonVariants({ variant, size, className, shape }))}
         ref={ref}
-        disabled={isDisabled}
         {...props}
       />
     )
