@@ -49,7 +49,7 @@ describe('Button', () => {
     expect(button).toHaveClass('hover:bg-primary/90')
   })
   test('테스트8 클릭하면 함수 호출이 동작한다.', () => {
-    const onClickMock = vi.fn(() => alert('clicked!'))
+    const onClickMock = vi.fn()
 
     render(<Button onClick={onClickMock}>Button</Button>)
 
