@@ -1,7 +1,7 @@
 import React from 'react' // React 임포트 추가
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
-import BalanceGameQuestionCard from './balanceGameQuestionCard'
+import BalanceGameQuestionCard from './BalanceGameQuestionCard'
 
 describe('BalanceGameQuestionCard', () => {
   it('고양이를 인자로 받아서 텍스트가 있는지 검증', () => {
