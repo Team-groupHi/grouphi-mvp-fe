@@ -1,5 +1,5 @@
-import type { Config } from 'tailwindcss'
-import animate from 'tailwindcss-animate'
+import type { Config } from 'tailwindcss';
+import animate from 'tailwindcss-animate';
 
 const config: Config = {
   darkMode: ['class'],
@@ -12,9 +12,18 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          light: '#A4FFEE',
-          DEFAULT: '#32E4D0',
-          dark: '#00CDB6',
+          default: '#32e4d0',
+          '50': '#f2fcfc',
+          '100': '#e8fcfb',
+          '200': '#c8f7f4',
+          '300': '#a9f5ee',
+          '400': '#6aebde',
+          '500': '#32e4d0',
+          '600': '#29ccb1',
+          '700': '#1bab89',
+          '800': '#128764',
+          '900': '#0a6644',
+          '950': '#044227',
           container: '#352777',
         },
         secondary: {
@@ -126,5 +135,5 @@ const config: Config = {
     },
   },
   plugins: [animate],
-}
-export default config
+};
+export default config;
