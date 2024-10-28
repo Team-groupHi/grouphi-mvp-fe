@@ -1,6 +1,8 @@
 import type { Config } from 'tailwindcss';
+import animate from 'tailwindcss-animate';
 
 const config: Config = {
+  darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -10,9 +12,18 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          light: '#A4FFEE',
-          DEFAULT: '#32E4D0',
-          dark: '#00CDB6',
+          default: '#32e4d0',
+          '50': '#f2fcfc',
+          '100': '#e8fcfb',
+          '200': '#c8f7f4',
+          '300': '#a9f5ee',
+          '400': '#6aebde',
+          '500': '#32e4d0',
+          '600': '#29ccb1',
+          '700': '#1bab89',
+          '800': '#128764',
+          '900': '#0a6644',
+          '950': '#044227',
           container: '#352777',
         },
         secondary: {
@@ -28,20 +39,22 @@ const config: Config = {
           container: '#352777',
         },
         error: {
-          DEFAULT: '#E83A34',
-        },
-        text: {
-          DEFAULT: '#F0F0F0',
-          gray: '#A0A0A0',
+          DEFAULT: '#DB4D48',
         },
         gray: {
+          DEFAULT: '#A0A0A0',
           100: '#F2F2F7',
           200: '#E5E5EA',
           300: '#C7C7CC',
           500: '#AEAEB2',
-          700: '#808080',
+          700: '#707070',
           900: '#404040',
         },
+      },
+      textColor: {
+        DEFAULT: '#F0F0F0',
+        light: '#F0F0F0',
+        dark: '#303030',
       },
       backgroundImage: {
         'gradient-purple':
@@ -59,8 +72,9 @@ const config: Config = {
         sans: ['Pretendard', 'Noto Sans CJK KR', 'Roboto', 'sans-serif'],
       },
       fontSize: {
-        sm: '0.875rem',
         DEFAULT: '1rem',
+        sm: '0.875rem',
+        md: '1rem',
         lg: '1.25rem',
         xl: '1.5rem',
       },
@@ -86,6 +100,7 @@ const config: Config = {
         'icon-lg': '2.25rem',
       },
       spacing: {
+        xs: '0.4rem',
         sm: '0.5rem',
         md: '1rem',
         lg: '1.5rem',
@@ -93,11 +108,12 @@ const config: Config = {
         '2xl': '4rem',
       },
       borderRadius: {
-        DEFAULT: '8px',
-        sm: '8px',
-        md: '12px',
-        lg: '16px',
-        xl: '24px',
+        DEFAULT: '0.5rem',
+        sm: '0.375rem',
+        md: '0.5rem',
+        lg: '0.625rem',
+        xl: '0.75rem',
+        '2xl': '1rem',
       },
       boxShadow: {
         DEFAULT: '0 4px 4px rgba(0, 0, 0, 0.25)',
@@ -109,7 +125,7 @@ const config: Config = {
         high: '.75',
       },
       zIndex: {
-        DEFAULT: '0',
+        DEFAULT: '10',
         10: '10',
         20: '20',
         30: '30',
@@ -118,6 +134,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [animate],
 };
 export default config;
