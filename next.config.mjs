@@ -1,6 +1,6 @@
-import { withSentryConfig } from '@sentry/nextjs'
+import { withSentryConfig } from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {};
 
 export default withSentryConfig(nextConfig, {
   // For all available options, see:
@@ -40,4 +40,4 @@ export default withSentryConfig(nextConfig, {
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
-})
+});
