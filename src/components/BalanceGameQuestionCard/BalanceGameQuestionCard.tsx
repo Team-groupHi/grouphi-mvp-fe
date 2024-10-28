@@ -1,7 +1,7 @@
 interface BalanceGameQuestionCardProps {
-  label: string
-  selectedAnimal: string | null
-  onSelect: () => void
+  label: string;
+  selectedAnimal: string | null;
+  onSelect: () => void;
 }
 
 const BalanceGameQuestionCard = ({
@@ -10,7 +10,7 @@ const BalanceGameQuestionCard = ({
   onSelect,
   ...props
 }: BalanceGameQuestionCardProps) => {
-  const isSelected = selectedAnimal === label
+  const isSelected = selectedAnimal === label;
 
   return (
     <section
@@ -24,7 +24,7 @@ const BalanceGameQuestionCard = ({
     >
       <span className="text-white font-bold text-lg">{label}</span>
     </section>
-  )
-}
+  );
+};
 
-export default BalanceGameQuestionCard
+export default BalanceGameQuestionCard;

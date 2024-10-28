@@ -1,1 +1,1 @@
-export { default } from './BalanceGameQuestionCard'
+export { default } from './BalanceGameQuestionCard';
