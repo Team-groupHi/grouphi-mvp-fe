@@ -105,7 +105,7 @@ const config: Config = {
         '2xl': '1440px',
       },
       fontFamily: {
-        sans: ['Pretendard', 'Noto Sans CJK KR', 'Roboto', 'sans-serif'],
+        sans: ['var(--font-pretendard)', 'var(--font-noto-sans)', 'sans-serif'],
       },
       fontSize: {
         DEFAULT: '1rem',
