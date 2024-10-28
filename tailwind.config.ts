@@ -1,6 +1,7 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -35,12 +36,12 @@ const config: Config = {
           gray: '#A0A0A0',
         },
         gray: {
-          100: '#F2F2F7',
-          200: '#E5E5EA',
-          300: '#C7C7CC',
-          500: '#AEAEB2',
-          700: '#808080',
-          900: '#404040',
+          '100': '#F2F2F7',
+          '200': '#E5E5EA',
+          '300': '#C7C7CC',
+          '500': '#AEAEB2',
+          '700': '#808080',
+          '900': '#404040',
         },
       },
       backgroundImage: {
@@ -65,12 +66,12 @@ const config: Config = {
         xl: '1.5rem',
       },
       width: {
-        sm: '3.75rem', // 60px
-        md: '6.25rem', // 100px
-        lg: '12.5rem', // 200px
-        xl: '18.75rem', // 300px
-        '2xl': '31.25rem', // 500px
-        '3xl': '62.5rem', // 1000px
+        sm: '3.75rem',
+        md: '6.25rem',
+        lg: '12.5rem',
+        xl: '18.75rem',
+        '2xl': '31.25rem',
+        '3xl': '62.5rem',
         'icon-sm': '1rem',
         'icon-md': '1.5rem',
         'icon-lg': '2.25rem',
@@ -78,9 +79,9 @@ const config: Config = {
       height: {
         sm: '2rem',
         md: '3rem',
-        lg: '3.75rem', // 60px
-        xl: '6.25rem', // 200px
-        '2xl': '15.625rem', // 250px
+        lg: '3.75rem',
+        xl: '6.25rem',
+        '2xl': '15.625rem',
         'icon-sm': '1rem',
         'icon-md': '1.5rem',
         'icon-lg': '2.25rem',
@@ -94,9 +95,9 @@ const config: Config = {
       },
       borderRadius: {
         DEFAULT: '8px',
-        sm: '8px',
-        md: '12px',
-        lg: '16px',
+        sm: 'calc(var(--radius) - 4px)',
+        md: 'calc(var(--radius) - 2px)',
+        lg: 'var(--radius)',
         xl: '24px',
       },
       boxShadow: {
@@ -109,15 +110,15 @@ const config: Config = {
         high: '.75',
       },
       zIndex: {
+        '10': '10',
+        '20': '20',
+        '30': '30',
+        '40': '40',
+        '50': '50',
         DEFAULT: '0',
-        10: '10',
-        20: '20',
-        30: '30',
-        40: '40',
-        50: '50',
       },
     },
   },
   plugins: [],
-}
-export default config
+};
+export default config;
