@@ -1,1 +1,1 @@
-export { default as GameListCard } from './GameListCard'
+export { default as GameListCard } from './GameListCard';

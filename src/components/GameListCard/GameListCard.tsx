@@ -1,11 +1,11 @@
-'use client'
-import Image from 'next/image'
+'use client';
+import Image from 'next/image';
 
 interface gameListCardProps {
-  title: string
-  description?: string
-  src?: string
-  onClick?: () => void
+  title: string;
+  description?: string;
+  src?: string;
+  onClick?: () => void;
 }
 
 const GameListCard = ({
@@ -43,7 +43,7 @@ const GameListCard = ({
         )}
       </section>
     </article>
-  )
-}
+  );
+};
 
-export default GameListCard
+export default GameListCard;
