@@ -60,6 +60,8 @@ const config: Config = {
         'gradient-purple':
           'linear-gradient(#350D6D 0%, #352778 20%, #5D4DA6 85%)',
         'gradient-primary': 'linear-gradient(120deg, #32E4D0 0%, #CB78EA 80%)',
+        'gradient-transparent-black':
+          'linear-gradient(to bottom, transparent, #00000090 40%)',
       },
       screens: {
         sm: '640px',
