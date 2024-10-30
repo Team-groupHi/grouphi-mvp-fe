@@ -15,8 +15,10 @@
     "prettier"
   ],
   "rules": {
+    "prettier/prettier": "error",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }],
-    "prettier/prettier": "error"
+    "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }]
   }
 }
