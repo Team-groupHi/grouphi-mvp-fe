@@ -4,7 +4,7 @@ import { describe, it, expect, vi } from 'vitest';
 import Input from './Input';
 
 describe('Input Component', () => {
-  it('changes value when typed into', () => {
+  it('1) 타이핑 가능하다.', () => {
     render(<Input placeholder="Type here" />);
 
     const inputElement = screen.getByPlaceholderText('Type here');
@@ -13,7 +13,7 @@ describe('Input Component', () => {
     expect(inputElement).toHaveValue('Hello World');
   });
 
-  it('renders with correct placeholder', () => {
+  it('2) placeholder 설정이 가능하다.', () => {
     render(<Input placeholder="Enter text" />);
 
     const inputElement = screen.getByPlaceholderText('Enter text');
@@ -21,21 +21,21 @@ describe('Input Component', () => {
     expect(inputElement).toHaveClass('rounded-md');
   });
 
-  it('accepts custom className', () => {
+  it('3) 커스텀 class name 부여가 가능하다.', () => {
     render(<Input className="custom-class" />);
 
     const inputElement = screen.getByRole('textbox');
     expect(inputElement).toHaveClass('custom-class');
   });
 
-  it('renders as disabled when disabled prop is true', () => {
+  it('4) disabled를 부여하면 보이지 않는다.', () => {
     render(<Input disabled />);
 
     const inputElement = screen.getByRole('textbox');
     expect(inputElement).toBeDisabled();
   });
 
-  it('handles focus and blur events', () => {
+  it('5) focus, blur 이벤트가 잘 동작한다.', () => {
     const handleFocus = vi.fn();
     const handleBlur = vi.fn();
 
@@ -57,7 +57,7 @@ describe('Input Component', () => {
     expect(handleBlur).toHaveBeenCalledTimes(1);
   });
 
-  it('forwards ref correctly', () => {
+  it('6) forwards ref가 잘 동작한다.', () => {
     const ref = React.createRef<HTMLInputElement>();
     render(<Input ref={ref} />);
 
@@ -65,7 +65,7 @@ describe('Input Component', () => {
     expect(ref.current).toBe(inputElement);
   });
 
-  it('applies additional props correctly', () => {
+  it('7) password 같은 다른 타입으로 지정할 수 있다.', () => {
     render(
       <Input
         type="password"
