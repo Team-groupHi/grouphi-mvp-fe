@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React from 'react';
 
@@ -6,20 +7,24 @@ interface gameListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   description?: string;
   src?: string;
-  onClick?: () => void;
+  className?: string;
 }
 
 const GameListCard = ({
   title,
   description,
   src,
-  onClick,
+  className,
   ...props
 }: gameListCardProps) => {
+  const containerClassName =
+    'basis-1/3 max-w-80 min-w-60 relative bg-primary-container shadow rounded-md overflow-hidden';
   return (
     <article
-      className={`basis-1/3 max-w-80 min-w-60 relative bg-primary-container shadow rounded-md overflow-hidden`}
-      onClick={onClick}
+      data-testid="gamelistcard-container"
+      className={
+        className ? cn(containerClassName, className) : containerClassName
+      }
       {...props}
     >
       {src && (
