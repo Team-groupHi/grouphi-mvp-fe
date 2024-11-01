@@ -1,7 +1,8 @@
 'use client';
 import Image from 'next/image';
+import React from 'react';
 
-interface gameListCardProps {
+interface gameListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   description?: string;
   src?: string;
@@ -30,18 +31,7 @@ const GameListCard = ({
           className="absolute"
         />
       )}
-      <section
-        className={`relative place-content-center margin-auto h-full p-lg bg-gradient-transparent-black rounded-md z-10 hover:bg-black/30 hover:cursor-pointer`}
-      >
-        <p className="text font-medium truncate">{title}</p>
-        {description && (
-          <p
-            className={`text-sm text-gray pt-2 overflow-hidden text-ellipsis line-clamp-2 break-all`}
-          >
-            {description}
-          </p>
-        )}
-      </section>
+      <section>{description && <p>{description}</p>}</section>
     </article>
   );
 };
