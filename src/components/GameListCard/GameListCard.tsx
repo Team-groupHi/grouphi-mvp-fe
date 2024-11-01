@@ -31,7 +31,18 @@ const GameListCard = ({
           className="absolute"
         />
       )}
-      <section>{description && <p>{description}</p>}</section>
+      <section
+        className={`relative place-content-center margin-auto h-full p-600 bg-gradient-transparent-black rounded-md z-10 hover:bg-black/30 hover:cursor-pointer`}
+      >
+        <p className="text font-semibold truncate">{title}</p>
+        {description && (
+          <p
+            className={`font-light text-sm text-gray-300 pt-2 overflow-hidden text-ellipsis line-clamp-2 break-all`}
+          >
+            {description}
+          </p>
+        )}
+      </section>
     </article>
   );
 };
