@@ -12,7 +12,7 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          default: '#32e4d0',
+          DEFAULT: '#32e4d0',
           '50': '#f2fcfc',
           '100': '#e8fcfb',
           '200': '#c8f7f4',
@@ -24,31 +24,66 @@ const config: Config = {
           '800': '#128764',
           '900': '#0a6644',
           '950': '#044227',
-          container: '#352777',
+          container: '#352778',
         },
         secondary: {
-          light: '#E6A3FF',
-          DEFAULT: '#CB78EA',
-          dark: '#B355D5',
-          container: '#8BF4E1',
+          DEFAULT: '#cb78ea',
+          '50': '#fefaff',
+          '100': '#fbf0fc',
+          '200': '#f5dcfa',
+          '300': '#eec6f7',
+          '400': '#dd9ef0',
+          '500': '#cb78ea',
+          '600': '#b161d4',
+          '700': '#8a43b0',
+          '800': '#642b8c',
+          '900': '#431869',
+          '950': '#260a45',
+          container: '#a9f5ee',
         },
-        yellow: {
-          light: '#FFF9E0',
-          DEFAULT: '#FFF0B6',
-          dark: '#F9E07D',
-          container: '#352777',
+        tertiary: {
+          DEFAULT: '#fff0b6',
+          '50': '#fffffc',
+          '100': '#fffef7',
+          '200': '#fffded',
+          '300': '#fffbe0',
+          '400': '#fff7cc',
+          '500': '#fff0b6',
+          '600': '#e6d293',
+          '700': '#bfa465',
+          '800': '#997942',
+          '900': '#735225',
+          '950': '#4a2e10',
+          container: '#352778',
         },
-        error: {
-          DEFAULT: '#DB4D48',
+        warning: {
+          DEFAULT: '#ef4444',
+          '50': '#fffaf5',
+          '100': '#fcf3eb',
+          '200': '#fce0cf',
+          '300': '#fac7b1',
+          '400': '#f58d7a',
+          '500': '#ef4444',
+          '600': '#d93636',
+          '700': '#b32525',
+          '800': '#8f1818',
+          '900': '#6b0e0e',
+          '950': '#450606',
+          container: '#fffaf5',
         },
-        gray: {
-          DEFAULT: '#A0A0A0',
-          100: '#F2F2F7',
-          200: '#E5E5EA',
-          300: '#C7C7CC',
-          500: '#AEAEB2',
-          700: '#707070',
-          900: '#404040',
+        container: {
+          DEFAULT: '#352778',
+          '50': '#f4f0f7',
+          '100': '#ebe1f2',
+          '200': '#cab8de',
+          '300': '#aa93c9',
+          '400': '#6b54a1',
+          '500': '#352778',
+          '600': '#2c1f6b',
+          '700': '#201559',
+          '800': '#150e47',
+          '900': '#0d0736',
+          '950': '#060324',
         },
       },
       textColor: {
@@ -57,9 +92,10 @@ const config: Config = {
         dark: '#303030',
       },
       backgroundImage: {
-        'gradient-purple':
-          'linear-gradient(#350D6D 0%, #352778 20%, #5D4DA6 85%)',
+        'gradient-purple': 'linear-gradient(#352778 10%, #5D4DA6 50%)',
         'gradient-primary': 'linear-gradient(120deg, #32E4D0 0%, #CB78EA 80%)',
+        'gradient-transparent-black':
+          'linear-gradient(to bottom, transparent 5%, #00000090 60%)',
       },
       screens: {
         sm: '640px',
@@ -69,7 +105,7 @@ const config: Config = {
         '2xl': '1440px',
       },
       fontFamily: {
-        sans: ['Pretendard', 'Noto Sans CJK KR', 'Roboto', 'sans-serif'],
+        sans: ['var(--font-pretendard)', 'var(--font-noto-sans)', 'sans-serif'],
       },
       fontSize: {
         DEFAULT: '1rem',
@@ -100,12 +136,18 @@ const config: Config = {
         'icon-lg': '2.25rem',
       },
       spacing: {
-        xs: '0.4rem',
-        sm: '0.5rem',
-        md: '1rem',
-        lg: '1.5rem',
-        xl: '2rem',
-        '2xl': '4rem',
+        '50': '0.125rem',
+        '100': '0.25rem',
+        '200': '0.375rem', // xs
+        '300': '0.5rem', // s
+        '400': '0.75rem',
+        '500': '1rem', // md
+        '600': '1.5rem', // lg
+        '700': '2rem', // xl
+        '800': '3rem',
+        '900': '4rem', // 2xl
+        '950': '6rem',
+        '1000': '10rem',
       },
       borderRadius: {
         DEFAULT: '0.5rem',
@@ -115,25 +157,25 @@ const config: Config = {
         xl: '0.75rem',
         '2xl': '1rem',
       },
+      borderWidth: {
+        DEFAULT: '1px',
+        1: '1px',
+      },
       boxShadow: {
         DEFAULT: '0 4px 4px rgba(0, 0, 0, 0.25)',
         light: '0 4px 4px rgba(0, 0, 0, 0.10)',
       },
       opacity: {
-        low: '.25',
         DEFAULT: '.5',
+        min: '.1',
+        low: '.25',
+        mid: '.5',
         high: '.75',
-      },
-      zIndex: {
-        DEFAULT: '10',
-        10: '10',
-        20: '20',
-        30: '30',
-        40: '40',
-        50: '50',
+        max: '.9',
       },
     },
   },
   plugins: [animate],
 };
+
 export default config;
