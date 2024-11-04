@@ -64,7 +64,9 @@ const PieChart = ({
   const combinedOptions: ChartOptions<'doughnut'> = {
     responsive: true,
     layout: {
-      padding: 10,
+      padding: {
+        bottom: 10,
+      },
     },
     plugins: {
       legend: {
@@ -81,7 +83,7 @@ const PieChart = ({
 
   if (data.length === 0) {
     return (
-      <section className="w-96 flex justify-center items-center rounded bg-black/50">
+      <section className="min-w-96 flex justify-center items-center rounded bg-black/50">
         데이터가 없습니다
       </section>
     );
