@@ -79,12 +79,21 @@ const PieChart = ({
     ...options,
   };
 
+  if (data.length === 0) {
+    return (
+      <section className="w-96 flex justify-center items-center rounded bg-black/50">
+        데이터가 없습니다
+      </section>
+    );
+  }
+
   return (
     <section
       className={combinedClassName}
       {...props}
     >
       <Doughnut
+        data-testid="pie-chart"
         data={combinedData}
         options={combinedOptions}
       />
