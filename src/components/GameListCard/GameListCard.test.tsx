@@ -36,7 +36,19 @@ describe('GameListCard', () => {
     const image = screen.getByAltText('game');
     expect(image).toHaveAttribute('alt', 'game');
   });
-  test('3) 클릭 이벤트가 잘 호출된다.', () => {
+  test('3) className를 전달하면 잘 렌더링된다.', () => {
+    render(
+      <GameListCard
+        title="game"
+        description="game's description"
+        className="text-red-500"
+      />
+    );
+
+    const article = screen.getByTestId('gamelistcard-container');
+    expect(article).toHaveClass('text-red-500');
+  });
+  test('4) 클릭 이벤트가 잘 호출된다.', () => {
     const onClickMock = vi.fn();
 
     render(
