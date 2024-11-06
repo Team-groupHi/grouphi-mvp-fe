@@ -1008,6 +1008,7 @@
   integrity sha512-FUCf5XMfmW4dtYl69pdS4DbxKy8nj4M7SafBgPllysxmdachynNflAdp/gCsnYWNDnge6tI9onzMp5ARYc1KNw==
   dependencies:
     "@radix-ui/react-compose-refs" "1.1.0"
+>>>>>>>>> Temporary merge branch 2
 
 "@rollup/plugin-commonjs@26.0.1":
   version "26.0.1"
