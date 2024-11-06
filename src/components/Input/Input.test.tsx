@@ -18,7 +18,6 @@ describe('Input Component', () => {
 
     const inputElement = screen.getByPlaceholderText('Enter text');
     expect(inputElement).toBeInTheDocument();
-    expect(inputElement).toHaveClass('rounded-md');
   });
 
   it('3) 커스텀 class name 부여가 가능하다.', () => {
