@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import Label from './Label'; // Label 컴포넌트의 경로를 맞춰주세요
+import Label from './Label';
 
 describe('Label Component', () => {
   it('1) font-size는 sm, font-weight는 medium의 텍스트가 잘 출력된다.', () => {
