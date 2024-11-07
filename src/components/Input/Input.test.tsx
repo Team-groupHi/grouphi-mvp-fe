@@ -34,7 +34,7 @@ describe('Input Component', () => {
     const inputElement = screen.getByRole('textbox');
     expect(inputElement).toBeDisabled();
   });
-  
+
   it('5) focus, blur 이벤트가 잘 동작한다.', () => {
     const handleFocus = vi.fn();
     const handleBlur = vi.fn();
@@ -64,7 +64,7 @@ describe('Input Component', () => {
     const inputElement = screen.getByRole('textbox');
     expect(ref.current).toBe(inputElement);
   });
-  
+
   it('7) password 같은 다른 타입으로 지정할 수 있다.', () => {
     render(
       <Input
