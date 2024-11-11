@@ -7,9 +7,9 @@ interface FinalResultChartProps {
 
 const FinalResultChart = ({ data }: FinalResultChartProps) => {
   return (
-    <section className="bg-container-600 flex flex-col justify-center items-center rounded-lg gap-8 p-4">
+    <section className="bg-container-600 h-4/6 flex flex-col justify-center items-center rounded-lg gap-8 p-4">
       <h1 className="text-xl font-semibold">최종 결과</h1>
-      <section className="w-full gap-3 flex flex-col justify-center items-center">
+      <section className="w-full h-3/5 overflow-y-auto gap-3 flex flex-col items-center">
         {data.map((result, index) => (
           <Bar
             key={index}
