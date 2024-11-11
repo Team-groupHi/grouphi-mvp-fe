@@ -1,22 +1,18 @@
-import Bar from './Bar';
+import Bar, { BarProps } from './Bar';
 
-const FinalResultChart = () => {
+interface FinalResultChartProps {
+  data: BarProps[];
+}
+
+const FinalResultChart = ({ data }: FinalResultChartProps) => {
   return (
-    <div className="bg-container-600">
-      <Bar
-        candidate1="강아지"
-        votes1={2}
-        candidate2="고양이"
-        votes2={7}
-        nonParticipants={1}
-      ></Bar>
-      <Bar
-        candidate1="강하띠"
-        votes1={4}
-        candidate2="코앵이"
-        votes2={6}
-        nonParticipants={0}
-      ></Bar>
+    <div className="bg-container-600 flex flex-col gap-3">
+      {data.map((result, index) => (
+        <Bar
+          key={index}
+          {...result}
+        ></Bar>
+      ))}
     </div>
   );
 };

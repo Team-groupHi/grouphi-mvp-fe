@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from '@/components/Tooltip';
 
-interface BarProps {
+export interface BarProps {
   candidate1: string;
   votes1: number;
   candidate2: string;
