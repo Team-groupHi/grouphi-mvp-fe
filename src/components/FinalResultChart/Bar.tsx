@@ -10,21 +10,13 @@ export interface BarProps {
   votes1: number;
   candidate2: string;
   votes2: number;
-  nonParticipants: number;
 }
 
-const Bar = ({
-  votes1,
-  candidate1,
-  votes2,
-  candidate2,
-  nonParticipants,
-}: BarProps) => {
+const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
   const totalVotes = votes1 + votes2;
 
   const percentageCandidate1 = (votes1 / totalVotes) * 100;
   const percentageCandidate2 = (votes2 / totalVotes) * 100;
-  const percentageNonParticipants = (nonParticipants / totalVotes) * 100;
 
   return (
     <div className="w-full flex items-center justify-center gap-6">
@@ -41,20 +33,6 @@ const Bar = ({
             </TooltipTrigger>
             <TooltipContent>
               <p>{percentageCandidate1.toFixed(1)}%</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger
-              className="bg-tertiary flex items-center justify-center" // 미참여자 색상 변경
-              style={{ width: `${percentageNonParticipants}%` }}
-            >
-              <span className="font-bold bg-clip-text text-transparent bg-gradient-purple text-center w-full">{`${nonParticipants}`}</span>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{percentageNonParticipants.toFixed(1)}%</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
