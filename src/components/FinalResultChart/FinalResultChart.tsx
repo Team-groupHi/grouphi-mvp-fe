@@ -8,13 +8,20 @@ import {
 interface FinalResultChartProps {
   votes1: number;
   votes2: number;
+  nonParticipants: number;
 }
 
-const FinalResultChart = ({ votes1, votes2 }: FinalResultChartProps) => {
+const FinalResultChart = ({
+  votes1,
+  votes2,
+  nonParticipants,
+}: FinalResultChartProps) => {
   const totalVotes = votes1 + votes2;
 
   const percentageCandidate1 = (votes1 / totalVotes) * 100;
   const percentageCandidate2 = (votes2 / totalVotes) * 100;
+  const percentageNonParticipants = (nonParticipants / totalVotes) * 100;
+
   return (
     <div className="w-full max-w-xs mx-auto">
       <div className="flex h-8">
@@ -31,6 +38,21 @@ const FinalResultChart = ({ votes1, votes2 }: FinalResultChartProps) => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger
+              className="bg-tertiary flex items-center justify-center" // 미참여자 색상 변경
+              style={{ width: `${percentageNonParticipants}%` }}
+            >
+              <span className="font-bold bg-clip-text text-transparent bg-gradient-purple text-center w-full">{`${nonParticipants}`}</span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{percentageNonParticipants.toFixed(1)}%</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger
