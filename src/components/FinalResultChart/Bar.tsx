@@ -26,7 +26,7 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger
-              className="bg-primary rounded-l-full flex items-center justify-center"
+              className={`bg-primary ${votes2 === 0 && 'rounded-r-full'} rounded-l-full flex items-center justify-center`}
               style={{ width: `${percentageCandidate1}%` }}
             >
               <span className="font-bold bg-clip-text text-transparent bg-gradient-purple text-center w-full">{`${votes1}`}</span>
