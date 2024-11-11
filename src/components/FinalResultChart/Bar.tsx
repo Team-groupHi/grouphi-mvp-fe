@@ -20,7 +20,7 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
 
   return (
     <div className="w-full flex items-center justify-center gap-6">
-      <span>{candidate1}</span>
+      <span className="min-w-[20%] text-right">{candidate1}</span>
 
       <div className="flex h-8 min-w-[50%]">
         <TooltipProvider>
@@ -40,7 +40,7 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger
-              className="bg-secondary rounded-r-full flex items-center justify-center"
+              className={`bg-secondary ${votes1 === 0 && 'rounded-l-full'} rounded-r-full flex items-center justify-center`}
               style={{ width: `${percentageCandidate2}%` }}
             >
               <span className="font-bold bg-clip-text text-transparent bg-gradient-purple text-center w-full">{`${votes2}`}</span>
@@ -52,7 +52,7 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
         </TooltipProvider>
       </div>
 
-      <span>{candidate2}</span>
+      <span className="min-w-[20%]">{candidate2}</span>
     </div>
   );
 };
