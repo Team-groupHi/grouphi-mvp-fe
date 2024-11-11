@@ -1,29 +1,54 @@
-import Input from '@/components/Input';
+'use client';
 
-const Chatting = () => {
+import Input from '@/components/Input';
+import Item from './Item';
+import React, { useRef, useState } from 'react';
+
+interface Message {
+  name: string;
+  message: string;
+}
+
+interface ChattingProps {
+  messages: Message[];
+  myName: string;
+}
+
+const Chatting = ({ messages, myName }: ChattingProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [isComposing, setIsComposing] = useState(false);
+
+  const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (inputRef.current && !isComposing) {
+        console.log('Submitted:', inputRef.current.value);
+        inputRef.current.value = '';
+      }
+    }
+  };
+
   return (
-    <section className="">
-      <section className="bg-container-600 rounded-t-lg h-full">
-        <div className="rounded-t-lg bg-container-600 p-3">
-          한나: 채팅어쩌공
-          채팅어쩌공채팅어쩌공채팅어쩌공채팅어쩌공채팅어쩌공쩌공채팅어쩌공채팅어쩌공채팅어쩌공채팅어쩌공
-        </div>
-        <div className="bg-[rgb(50,228,208,0.2)] p-3">시스템 알림!</div>
-        <div className="rounded-t-lg bg-container-600 p-3">
-          한나: 채팅어쩌공
-          채팅어쩌공채팅어쩌공채팅어쩌공채팅어쩌공채팅어쩌공쩌공채팅어쩌공채팅어쩌공채팅어쩌공채팅어쩌공
-        </div>
-        <div className="bg-[rgb(255,255,255,0.1)] p-3 text-primary-400">
-          개울가의 나뭇잎: 나야나~
-        </div>
-        <div className="bg-container-600 p-3 text-primary-400">
-          개울가의 나뭇잎: 나야나~
-        </div>
+    <section className="h-4/5">
+      <section className="bg-container-600 rounded-t-lg h-4/5 overflow-auto">
+        {messages.map((item, index) => (
+          <Item
+            key={index}
+            {...item}
+            index={index}
+            isSelf={myName === item.name}
+            isSystem={item.name === 'system'}
+          ></Item>
+        ))}
       </section>
       <section className="bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-zinc-400">
         <Input
+          ref={inputRef}
           className="bg-container-700 border-transparent"
           placeholder="엔터 키를 눌러 채팅 전송"
+          onKeyDown={handleSubmit}
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={() => setIsComposing(false)}
         ></Input>
       </section>
     </section>
