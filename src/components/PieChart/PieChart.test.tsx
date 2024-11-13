@@ -70,4 +70,16 @@ describe('PieChart 컴포넌트', () => {
     fireEvent.click(chart);
     expect(onClickMock).toBeCalledTimes(1);
   });
+
+  test('4) 데이터가 없으면 "데이터가 없습니다" 메세지를 렌더링한다.', () => {
+    render(
+      <PieChart
+        labels={[]}
+        data={[]}
+      />
+    );
+
+    const text = screen.getByText('데이터가 없습니다');
+    expect(text).toBeInTheDocument();
+  });
 });
