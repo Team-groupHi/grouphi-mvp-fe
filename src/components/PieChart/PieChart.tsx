@@ -2,32 +2,16 @@
 import React, { HTMLAttributes } from 'react';
 import {
   Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
   ArcElement,
-  Title,
   Tooltip,
   Legend,
-  Filler,
   ChartData,
   ChartOptions,
 } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { cn } from '@/lib/utils';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface PieChartProps extends HTMLAttributes<HTMLDivElement> {
   labels: string[];
