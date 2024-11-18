@@ -2,7 +2,8 @@
 import { Navigation, Button } from '@/components';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/Carousel';
 import { GameListCard } from '@/components/GameListCard';
-import { usePathname, useRouter } from 'next/navigation';
+import useModalStore from '@/store/useModalStore';
+import { usePathname } from 'next/navigation';
 
 const DUMMY_DATA = [
   {
@@ -17,13 +18,14 @@ const DUMMY_DATA = [
 
 export default function Home() {
   const currentPath = usePathname();
-  const router = useRouter();
+
+  const { openModal } = useModalStore();
 
   const DUMMY_GAMES = [
     {
       title: '밸런스 게임',
       description: '두 가지 선택지 중에 고르는 게임입니다.',
-      onClick: () => router.push('/balance-game/1'),
+      onClick: () => openModal('CreateBalanceGameModal'),
     },
   ];
 
