@@ -2,7 +2,7 @@
 import { Navigation, Button } from '@/components';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/Carousel';
 import { GameListCard } from '@/components/GameListCard';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const DUMMY_DATA = [
   {
@@ -14,15 +14,18 @@ const DUMMY_DATA = [
     href: '/about',
   },
 ];
-const DUMMY_GAMES = [
-  {
-    title: '밸런스 게임',
-    description: '두 가지 선택지 중에 고르는 게임입니다.',
-  },
-];
 
 export default function Home() {
   const currentPath = usePathname();
+  const router = useRouter();
+
+  const DUMMY_GAMES = [
+    {
+      title: '밸런스 게임',
+      description: '두 가지 선택지 중에 고르는 게임입니다.',
+      onClick: () => router.push('/balance-game/1'),
+    },
+  ];
 
   return (
     <main className="flex flex-col h-screen p-800">
@@ -48,7 +51,7 @@ export default function Home() {
         className="flex flex-col grow items-center"
       >
         <span className="text-lg pt-1000">Game List</span>
-        <span className="text-lg pb-200">▽</span>
+        <span className="text-md pb-200">▽</span>
         <section className="flex gap-200">
           <Carousel className="w-full max-w-xl">
             <CarouselContent>
