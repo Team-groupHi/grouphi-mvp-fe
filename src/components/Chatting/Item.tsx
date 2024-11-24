@@ -2,30 +2,23 @@ interface ItemProps {
   name: string;
   message: string;
   index: number;
-  isSystem?: boolean;
-  isSelf: boolean;
+  type: 'system' | 'me' | 'others';
 }
 
-const Item = ({
-  name,
-  message,
-  index,
-  isSystem = false,
-  isSelf,
-}: ItemProps) => {
+const Item = ({ name, message, index, type }: ItemProps) => {
   return (
     <div
       className={`${index === 0 ? 'rounded-t-lg' : ''} p-3 
         ${
-          isSystem
+          type == 'system'
             ? 'bg-primary/20'
             : index % 2 === 0
               ? 'bg-container-600'
               : 'bg-white/10'
         } 
-        ${isSelf || isSystem ? 'text-primary-400' : ''}`}
+        ${type !== 'others' ? 'text-primary-400' : ''}`}
     >
-      {isSystem ? (
+      {type == 'system' ? (
         <span className="font-semibold">{message}</span>
       ) : (
         <div>

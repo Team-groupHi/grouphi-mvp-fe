@@ -36,8 +36,13 @@ const Chatting = ({ messages, myName }: ChattingProps) => {
             key={index}
             {...item}
             index={index}
-            isSelf={myName === item.name}
-            isSystem={item.name === 'system'}
+            type={
+              item.name === 'system'
+                ? 'system'
+                : item.name === myName
+                  ? 'me'
+                  : 'others'
+            }
           ></Item>
         ))}
       </section>
