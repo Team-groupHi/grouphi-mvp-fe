@@ -18,10 +18,10 @@ const Item = ({
       className={`${index === 0 ? 'rounded-t-lg' : ''} p-3 
         ${
           isSystem
-            ? 'bg-[rgb(50,228,208,0.2)]'
+            ? 'bg-primary/20'
             : index % 2 === 0
               ? 'bg-container-600'
-              : 'bg-[rgb(255,255,255,0.1)]'
+              : 'bg-white/10'
         } 
         ${isSelf || isSystem ? 'text-primary-400' : ''}`}
     >
