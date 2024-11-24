@@ -41,7 +41,7 @@ const Chatting = ({ messages, myName }: ChattingProps) => {
           ></Item>
         ))}
       </section>
-      <section className="bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-zinc-400">
+      <section className="bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
         <Input
           ref={inputRef}
           className="bg-container-700 border-transparent"
