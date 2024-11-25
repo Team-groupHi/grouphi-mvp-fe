@@ -74,3 +74,9 @@ export const USER_DUMMY = [
     isReady: false,
   },
 ];
+
+export const GAME_INFO = {
+  title: '밸런스 게임',
+  description: '밸런스 게임입니다.',
+  src: '/assets/dice.jpg',
+};
