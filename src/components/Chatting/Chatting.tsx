@@ -29,8 +29,8 @@ const Chatting = ({ messages, myName }: ChattingProps) => {
   };
 
   return (
-    <section className="h-4/5">
-      <section className="bg-container-600 rounded-t-lg h-4/5 overflow-auto">
+    <section className="h-full">
+      <section className="h-[calc(100%-64px)] bg-container-600 rounded-t-lg overflow-auto">
         {messages.map((item, index) => (
           <Item
             key={index}
@@ -46,7 +46,7 @@ const Chatting = ({ messages, myName }: ChattingProps) => {
           ></Item>
         ))}
       </section>
-      <section className="bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
+      <section className="h-16 bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
         <Input
           ref={inputRef}
           className="bg-container-700 border-transparent"
