@@ -1,6 +1,8 @@
 import Chatting from '@/components/Chatting';
-import { CHAT_DUMMY, MY_NAME, USER_DUMMY } from './DUMMY';
+import { CHAT_DUMMY, MY_NAME, USER_DUMMY, GAME_INFO } from './DUMMY';
 import UserInfoCard from '@/components/UserInfoCard';
+import { GameListCard } from '@/components/GameListCard';
+import { Button } from '@/components/Button';
 
 const WaitingRoom = () => {
   return (
@@ -14,8 +16,18 @@ const WaitingRoom = () => {
         ))}
       </section>
 
-      <section className="h-4/5 min-w-96 w-full max-w-[900px] bg-container/50 rounded-lg">
-        s2
+      <section className="h-4/5 min-w-96 w-full max-w-[900px] flex flex-col justify-center items-center bg-container/50 rounded-lg gap-7">
+        <span className="font-semibold">잠시 후 게임이 시작됩니다.</span>
+        <GameListCard
+          {...GAME_INFO}
+          className="h-16"
+        ></GameListCard>
+        <Button
+          className="text-base font-semibold"
+          size="xl"
+        >
+          {`게임시작 (${USER_DUMMY.filter(({ isReady }) => isReady).length}/${USER_DUMMY.length})`}
+        </Button>
       </section>
 
       <section className="h-4/5 w-96 min-w-52">
