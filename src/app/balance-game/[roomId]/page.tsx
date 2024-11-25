@@ -3,11 +3,20 @@ import { CHAT_DUMMY, MY_NAME, USER_DUMMY, GAME_INFO } from './DUMMY';
 import UserInfoCard from '@/components/UserInfoCard';
 import { GameListCard } from '@/components/GameListCard';
 import { Button } from '@/components/Button';
+import { Link } from 'lucide-react';
 
 const WaitingRoom = () => {
   return (
     <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
-      <section className="flex flex-col gap-3 h-4/5 max-w-[250px]">
+      <section className="flex flex-col gap-3 h-4/5 max-w-[250px] relative">
+        <Button
+          className="absolute -top-12 right-0"
+          size={'sm'}
+          variant={'ghost'}
+        >
+          <Link />
+          초대 링크 복사
+        </Button>
         {USER_DUMMY.map((data, index) => (
           <UserInfoCard
             key={index}
