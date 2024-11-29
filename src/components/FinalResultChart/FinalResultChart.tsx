@@ -1,6 +1,6 @@
 import { Button } from '@/components/Button';
 import Bar, { BarProps } from './Bar';
-
+import { Download } from 'lucide-react';
 interface FinalResultChartProps {
   data: BarProps[];
 }
@@ -18,10 +18,10 @@ const FinalResultChart = ({ data }: FinalResultChartProps) => {
         ))}
       </section>
       <Button
-        shape="square"
-        size={'xl'}
         className="font-semibold"
+        variant={'secondary'}
       >
+        <Download />
         결과 공유하기
       </Button>
     </section>
