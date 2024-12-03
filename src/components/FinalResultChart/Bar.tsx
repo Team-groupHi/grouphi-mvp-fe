@@ -24,13 +24,13 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
       <span className="min-w-[20%] text-right">{candidate1}</span>
 
       {totalVotes === 0 ? (
-        <div className="min-w-[50%] p-1 bg-container-100 rounded-full flex items-center justify-center">
-          <span className="font-bold bg-clip-text text-transparent bg-gradient-purple text-center w-full">
+        <div className="min-w-[50%] h-5 bg-container-100 rounded-full flex items-center justify-center">
+          <span className="font-bold text-sm bg-clip-text text-transparent bg-gradient-purple text-center w-full">
             0
           </span>
         </div>
       ) : (
-        <div className="flex h-8 min-w-[50%]">
+        <div className="flex h-8 min-w-[50%] h-5">
           <BarItem
             className={`bg-primary ${votes2 === 0 && 'rounded-r-full'}`}
             isLeft={true}
@@ -70,7 +70,7 @@ const BarItem = ({ className, isLeft, percentage, votes }: BarItemProps) => (
         )}
         style={{ width: `${percentage}%` }}
       >
-        <span className="font-bold bg-clip-text text-transparent bg-gradient-purple text-center w-full">
+        <span className="font-bold text-sm bg-clip-text text-transparent bg-gradient-purple text-center w-full">
           {votes}
         </span>
       </TooltipTrigger>
