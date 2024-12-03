@@ -6,11 +6,11 @@ import {
 } from '@/components/Tooltip';
 import clsx from 'clsx';
 
-interface BarItemProps {
-  className: string;
-  isLeft: boolean;
-  percentage: number;
-  votes: number;
+export interface BarProps {
+  candidate1: string;
+  votes1: number;
+  candidate2: string;
+  votes2: number;
 }
 
 const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
@@ -52,6 +52,13 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
   );
 };
 
+interface BarItemProps {
+  className: string;
+  isLeft: boolean;
+  percentage: number;
+  votes: number;
+}
+
 const BarItem = ({ className, isLeft, percentage, votes }: BarItemProps) => (
   <TooltipProvider>
     <Tooltip>
@@ -73,12 +80,5 @@ const BarItem = ({ className, isLeft, percentage, votes }: BarItemProps) => (
     </Tooltip>
   </TooltipProvider>
 );
-
-export interface BarProps {
-  candidate1: string;
-  votes1: number;
-  candidate2: string;
-  votes2: number;
-}
 
 export default Bar;
