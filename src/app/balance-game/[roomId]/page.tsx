@@ -13,9 +13,9 @@ const WaitingRoom = () => {
     <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
       <section className="flex flex-col gap-3 h-4/5 max-w-[250px] relative">
         <Button
-          className="absolute -top-12 right-0"
+          className="absolute -top-12 left-0"
           size={'sm'}
-          variant={'ghost'}
+          variant={'secondary'}
         >
           <Link />
           초대 링크 복사
