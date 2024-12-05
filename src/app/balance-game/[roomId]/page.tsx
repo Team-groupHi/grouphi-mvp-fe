@@ -3,9 +3,12 @@ import { CHAT_DUMMY, MY_NAME, USER_DUMMY, GAME_INFO } from './DUMMY';
 import UserInfoCard from '@/components/UserInfoCard';
 import { GameListCard } from '@/components/GameListCard';
 import { Button } from '@/components/Button';
-import { Link } from 'lucide-react';
+import { Loader, Link, CheckCheck } from 'lucide-react';
 
 const WaitingRoom = () => {
+  const readyCount = USER_DUMMY.filter(({ isReady }) => isReady).length;
+  const isAllReady = readyCount === USER_DUMMY.length;
+
   return (
     <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
       <section className="flex flex-col gap-3 h-4/5 max-w-[250px] relative">
@@ -34,8 +37,10 @@ const WaitingRoom = () => {
         <Button
           className="text-base font-semibold"
           size="xl"
+          variant={isAllReady ? 'default' : 'waiting'}
         >
-          {`게임시작 (${USER_DUMMY.filter(({ isReady }) => isReady).length}/${USER_DUMMY.length})`}
+          {isAllReady ? <CheckCheck /> : <Loader />}
+          {`${isAllReady ? '게임 시작' : '준비 대기'} (${readyCount}/${USER_DUMMY.length})`}
         </Button>
       </section>
 
