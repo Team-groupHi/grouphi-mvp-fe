@@ -28,7 +28,7 @@ const WaitingRoom = () => {
         ))}
       </section>
 
-      <section className="h-4/5 min-w-96 w-full max-w-[900px] flex flex-col justify-center items-center bg-container/50 rounded-lg gap-7">
+      <section className="h-4/5 min-w-[600px] w-full flex flex-col justify-center items-center bg-container/50 rounded-lg gap-7">
         <span className="font-semibold">잠시 후 게임이 시작됩니다.</span>
         <GameListCard
           {...GAME_INFO}
@@ -44,7 +44,7 @@ const WaitingRoom = () => {
         </Button>
       </section>
 
-      <section className="h-4/5 w-96 min-w-52">
+      <section className="h-4/5 w-[250px] min-w-[250px]">
         <Chatting
           myName={MY_NAME}
           messages={CHAT_DUMMY}
