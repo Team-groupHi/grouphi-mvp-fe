@@ -1,78 +1,28 @@
 'use client';
-import { Navigation, Button } from '@/components';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/Carousel';
-import { GameListCard } from '@/components/GameListCard';
-import useModalStore from '@/store/useModalStore';
-import { usePathname } from 'next/navigation';
-
-const DUMMY_DATA = [
-  {
-    title: 'HOME',
-    href: '/',
-  },
-  {
-    title: 'ABOUT US',
-    href: '/about',
-  },
-];
+import { getGames } from '@/services/games';
+import { HomeClient } from '@/components';
+import { useEffect, useState } from 'react';
+import { GamesResponse } from '@/types/api';
 
 export default function Home() {
-  const currentPath = usePathname();
+  // const games = await getGames();
 
-  const { openModal } = useModalStore();
+  const [games, setGames] = useState<GamesResponse[]>([]);
 
-  const DUMMY_GAMES = [
-    {
-      title: '밸런스 게임',
-      description: '두 가지 선택지 중에 고르는 게임입니다.',
-      onClick: () => openModal('CreateBalanceGameModal'),
-    },
-  ];
+  const loadGames = async () => {
+    try {
+      const data = await getGames();
+      if (data) {
+        setGames(data);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
-  return (
-    <main className="flex flex-col h-screen p-800">
-      <section
-        id="navigation"
-        className="flex justify-between pb-300"
-      >
-        <Button
-          variant="link"
-          onClick={() => alert('grouphi!')}
-        >
-          Logo
-        </Button>
-        <section className="flex">
-          <Navigation
-            items={DUMMY_DATA}
-            disabled={currentPath}
-          />
-        </section>
-      </section>
-      <section
-        id="gamelist"
-        className="flex flex-col grow items-center"
-      >
-        <span className="text-lg pt-1000">Game List</span>
-        <span className="text-md pb-200">▽</span>
-        <section className="flex gap-200">
-          <Carousel className="w-full max-w-xl">
-            <CarouselContent>
-              {DUMMY_GAMES.map((game, index) => (
-                <CarouselItem
-                  key={index}
-                  className="grid gap-500"
-                >
-                  <GameListCard
-                    key={index}
-                    className="w-80"
-                    {...game}
-                  />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </section>
-      </section>
-    </main>
-  );
+  useEffect(() => {
+    loadGames();
+  }, []);
+
+  return <HomeClient games={games ?? []} />;
 }
