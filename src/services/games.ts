@@ -8,8 +8,8 @@ import { GamesResponse } from '@/types/api';
  */
 export const getGames = async () => {
   try {
-    const res = await axiosInstance.get<GamesResponse>(DOMAIN.GAMES);
-    return res.data;
+    const response = await axiosInstance.get<GamesResponse[]>(DOMAIN.GAMES);
+    return response.data;
   } catch (error) {
     axiosErrorHandler(error);
   }
