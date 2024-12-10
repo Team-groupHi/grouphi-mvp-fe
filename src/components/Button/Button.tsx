@@ -4,21 +4,18 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        default:
-          'bg-primary text-dark hover:bg-primary/90 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90',
-        secondary:
-          'bg-zinc-200 text-zinc-900 hover:bg-zinc-200/80 dark:bg-zinc-800 dark:text-zinc-50 dark:hover:bg-zinc-800/80',
+        default: 'bg-primary text-dark hover:bg-primary/90',
+        secondary: 'bg-zinc-200 text-zinc-900 hover:bg-zinc-200/80',
+        waiting: 'bg-container-600 text hover:bg-container-700',
         outline:
-          'bg-primary-container text border border-zinc-200 hover:bg-zinc-900/40 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:bg-zinc-800 dark:hover:text-zinc-50',
-        destructive:
-          'bg-red-500 text-zinc-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-zinc-50 dark:hover:bg-red-900/90',
-        ghost:
-          'text hover:bg-zinc-900/40 dark:hover:bg-zinc-800 dark:hover:text-zinc-50',
-        link: 'text underline-offset-4 hover:underline dark:text-zinc-50',
+          'bg-primary-container text border border-zinc-200 hover:bg-zinc-900/40',
+        destructive: 'bg-red-500 text-zinc-50 hover:bg-red-500/90',
+        ghost: 'text hover:bg-zinc-900/40',
+        link: 'text underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-10 px-4 py-2',
