@@ -31,14 +31,6 @@ const HomeClient = ({ games }: HomeClientProps) => {
   const currentPath = usePathname();
   const { openModal } = useModalStore();
 
-  // const DUMMY_GAMES = [
-  //   {
-  //     title: '밸런스 게임',
-  //     description: '두 가지 선택지 중에 고르는 게임입니다.',
-  //     onClick: () => openModal('CreateBalanceGameModal'),
-  //   },
-  // ];
-
   return (
     <main className="flex flex-col h-screen p-800">
       <section
@@ -69,15 +61,16 @@ const HomeClient = ({ games }: HomeClientProps) => {
                     className="grid gap-500"
                   >
                     <GameListCard
-                      key={index}
+                      key={game.id}
+                      id={game.id}
                       className="w-80"
                       title={game.nameKr}
                       description={game.descriptionKr}
+                      src={game.thumbnailUrl}
                       onClick={() => {
                         const modalName = game.nameEn.replaceAll(' ', '');
                         return openModal(`Create${modalName}Modal`);
                       }}
-                      {...game}
                     />
                   </CarouselItem>
                 ))}
