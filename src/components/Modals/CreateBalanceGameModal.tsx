@@ -1,35 +1,65 @@
 'use client';
-import { Button } from '@/components/Button';
-import { Input, Label } from '@/components';
-import { ModalShell } from '@/components/Modals';
+import Link from 'next/link';
+import { Button, Input, Label, ModalShell } from '@/components';
 
-const CreateBalanceGameModal = ({ closeModal }: { closeModal: () => void }) => (
-  <ModalShell closeModal={closeModal}>
-    <section className="flex flex-col gap-700">
-      <section>
-        <h2 className="text-lg font-bold">방 생성하기</h2>
+interface BalanceGameModalProps {
+  closeModal: () => void;
+}
+
+const CreateBalanceGameModal = ({ closeModal }: BalanceGameModalProps) => {
+  const handleCreateGame = () => {
+    // todo: 유효성검사
+    console.log('Create Game!');
+    // todo: 방생성 API
+    closeModal();
+  };
+
+  return (
+    <ModalShell closeModal={closeModal}>
+      <section className="flex flex-col px-300 py-600 gap-700">
+        <section>
+          <span className="font-bold">방 생성하기</span>
+        </section>
+        <section className="flex gap-500 items-center text-end">
+          <Label
+            className="w-24"
+            htmlFor="question-count"
+          >
+            질문의 개수
+          </Label>
+          <Input
+            id="question-count"
+            className="bg-white text-dark"
+            type="number"
+            placeholder="범위는 10-20 이내로 작성해주세요"
+            min="10"
+            max="20"
+            defaultValue={20}
+          />
+        </section>
+        <section className="flex gap-300 self-end">
+          <Button
+            asChild={true}
+            onClick={handleCreateGame}
+          >
+            <Link
+              href={{
+                pathname: `/balance-game/1`,
+              }}
+            >
+              생성하기
+            </Link>
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={closeModal}
+          >
+            닫기
+          </Button>
+        </section>
       </section>
-      <section>
-        <Label htmlFor="questions">질문의 개수</Label>
-        <Input
-          id="questions"
-          type="number"
-          placeholder="범위는 10-20 이내로 작성해주세요"
-          className="bg-gray-50 text-dark"
-        />
-      </section>
-      <section className="flex gap-300 self-end">
-        <Button onClick={() => alert('방 생성 API 연결!')}>생성하기</Button>
-        <Button
-          variant="ghost"
-          className="bg-black/15 hover:bg-black/30"
-          onClick={closeModal}
-        >
-          닫기
-        </Button>
-      </section>
-    </section>
-  </ModalShell>
-);
+    </ModalShell>
+  );
+};
 
 export default CreateBalanceGameModal;
