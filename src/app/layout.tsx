@@ -3,6 +3,7 @@ import React from 'react';
 import Script from 'next/script';
 import './globals.css';
 import { pretendard, notoSans } from './fonts/fonts';
+import { Toaster } from '@/components';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -47,6 +48,7 @@ export default function RootLayout({
           </>
         )}
         {children}
+        <Toaster />
       </body>
     </html>
   );

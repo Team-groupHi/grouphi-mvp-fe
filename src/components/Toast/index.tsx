@@ -1,7 +1,5 @@
-export { Button, buttonVariants } from './Button';
 export {
   Toast,
-  Toaster,
   type ToastProps,
   type ToastActionElement,
   ToastProvider,
@@ -11,3 +9,4 @@ export {
   ToastClose,
   ToastAction,
 } from './Toast';
+export { default as Toaster } from './Toaster';
