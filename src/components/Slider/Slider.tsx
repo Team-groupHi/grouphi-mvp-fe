@@ -10,6 +10,7 @@ const Slider = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
 >(({ className, ...props }, ref) => (
   <SliderPrimitive.Root
+    data-testid="slider"
     ref={ref}
     className={cn(
       'relative flex w-full touch-none select-none items-center',
