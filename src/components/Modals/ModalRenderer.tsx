@@ -7,17 +7,29 @@ interface ModalProps {
   closeModal: () => void;
 }
 
-const Renderer = 'ModalRenderer';
 const Temploading = () => (
   <div className="absolute bottom-0 left-0">Loading...</div>
 );
 
+const ErrorModal = ({ closeModal }: ModalProps) => (
+  <div className="absolute bottom-0 left-0 bg-red-500 text-white p-4">
+    잘못된 모달입니다. <button onClick={closeModal}>닫기</button>
+  </div>
+);
+
 const loadModal = (modalType: string) => {
-  if (modalType === Renderer) return null;
-  return dynamic<ModalProps>(() => import(`@/components/Modals/${modalType}`), {
-    loading: () => <Temploading />,
-    ssr: false,
-  });
+  // 상수화, 문서화 시켜서 자동으로 관리하는 프로세스 필요
+  return dynamic<ModalProps>(
+    () =>
+      import(`@/components/ModalList/${modalType}`).catch(() => {
+        console.error(`모달 파일을 불러오는 중 에러 발생: ${modalType}`);
+        return () => ErrorModal;
+      }),
+    {
+      loading: () => <Temploading />,
+      ssr: false,
+    }
+  );
 };
 
 const ModalRenderer = () => {
