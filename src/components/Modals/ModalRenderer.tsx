@@ -5,6 +5,7 @@ import useModalStore from '@/store/useModalStore';
 
 interface ModalProps {
   closeModal: () => void;
+  optionPropsNumber?: number;
 }
 
 const Temploading = () => (
@@ -33,14 +34,21 @@ const loadModal = (modalType: string) => {
 };
 
 const ModalRenderer = () => {
-  const { isOpen, activeModal, closeModal } = useModalStore();
+  const { isOpen, activeModal, optionPropsNumber, closeModal } =
+    useModalStore();
 
   if (!activeModal) return null;
   const DynamicModal = loadModal(activeModal);
 
+  console.log(optionPropsNumber);
   return (
     <Suspense fallback={<Temploading />}>
-      {isOpen && DynamicModal && <DynamicModal closeModal={closeModal} />}
+      {isOpen && DynamicModal && (
+        <DynamicModal
+          closeModal={closeModal}
+          optionPropsNumber={optionPropsNumber}
+        />
+      )}
     </Suspense>
   );
 };

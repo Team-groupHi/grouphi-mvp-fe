@@ -1,3 +1,4 @@
+// useModalStore.ts
 import { create } from 'zustand';
 
 type ModalType = string | null;
@@ -5,15 +6,19 @@ type ModalType = string | null;
 interface ModalStore {
   isOpen: boolean;
   activeModal: ModalType;
-  openModal: (modalType: ModalType) => void;
+  optionPropsNumber?: number;
+  openModal: (modalType: ModalType, optionalNumber?: number) => void;
   closeModal: () => void;
 }
 
 const useModalStore = create<ModalStore>((set) => ({
   isOpen: false,
   activeModal: null,
-  openModal: (modalType) => set({ activeModal: modalType, isOpen: true }),
-  closeModal: () => set({ activeModal: null, isOpen: false }),
+  optionPropsNumber: undefined,
+  openModal: (modalType: ModalType, optionPropsNumber?: number) =>
+    set({ activeModal: modalType, optionPropsNumber, isOpen: true }),
+  closeModal: () =>
+    set({ activeModal: null, optionPropsNumber: undefined, isOpen: false }),
 }));
 
 export default useModalStore;
