@@ -4,14 +4,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { Slider } from '@/components';
 
 describe('Slider 컴포넌트', () => {
-  // beforeAll(() => {
-  //   global.ResizeObserver = class ResizeObserver {
-  //     observe() {}
-  //     unobserve() {}
-  //     disconnect() {}
-  //   };
-  // });
-
   test('1) 기본 슬라이더를 렌더링한다', () => {
     global.ResizeObserver = class ResizeObserver {
       observe() {}
