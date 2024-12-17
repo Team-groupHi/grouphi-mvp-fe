@@ -28,7 +28,7 @@ const WaitingRoom = () => {
         ))}
       </section>
 
-      <section className="h-4/5 min-w-[45rem] max-w-[60rem] w-full flex flex-col justify-center items-center bg-container/50 rounded-lg gap-7">
+      <section className="h-4/5 min-w-[45rem] max-w-[70rem] w-full flex flex-col justify-center items-center bg-container/50 rounded-lg gap-7">
         <span className="font-semibold">잠시 후 게임이 시작됩니다.</span>
         <GameListCard
           {...GAME_INFO}
