@@ -11,7 +11,7 @@ const WaitingRoom = () => {
 
   return (
     <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
-      <section className="flex flex-col gap-3 h-4/5 max-w-[250px] relative">
+      <section className="flex flex-col gap-3 h-4/5 min-w-[15rem] max-w-[20rem] relative">
         <Button
           className="absolute -top-12 left-0"
           size={'sm'}
@@ -28,7 +28,7 @@ const WaitingRoom = () => {
         ))}
       </section>
 
-      <section className="h-4/5 min-w-[600px] w-full flex flex-col justify-center items-center bg-container/50 rounded-lg gap-7">
+      <section className="h-4/5 min-w-[45rem] max-w-[60rem] w-full flex flex-col justify-center items-center bg-container/50 rounded-lg gap-7">
         <span className="font-semibold">잠시 후 게임이 시작됩니다.</span>
         <GameListCard
           {...GAME_INFO}
@@ -44,7 +44,7 @@ const WaitingRoom = () => {
         </Button>
       </section>
 
-      <section className="h-4/5 w-[250px] min-w-[250px]">
+      <section className="h-4/5 min-w-[15rem] max-w-[20rem]">
         <Chatting
           myName={MY_NAME}
           messages={CHAT_DUMMY}

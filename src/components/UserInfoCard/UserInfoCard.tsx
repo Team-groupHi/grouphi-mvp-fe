@@ -10,14 +10,13 @@ interface UserInfoCardProps {
 const UserInfoCard = ({ name, isReady }: UserInfoCardProps) => {
   return (
     <section
-      className={`${isReady ? 'bg-primary/50' : 'bg-container'} w-[250px] h-[65px] flex rounded-lg`}
+      className={`${isReady ? 'bg-primary/50' : 'bg-container'} w-full h-[4rem] flex rounded-lg`}
     >
-      <figure className="rounded-l-lg overflow-hidden">
+      <figure className="rounded-l-lg overflow-hidden w-[4rem] relative">
         <Image
           src={example}
           alt="profile"
-          width={65}
-          height={65}
+          fill={true}
         ></Image>
       </figure>
       <div className="px-5 flex items-center font-bold">
