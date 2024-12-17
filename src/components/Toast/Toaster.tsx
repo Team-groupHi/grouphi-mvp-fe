@@ -12,13 +12,22 @@ import {
 
 export default function Toaster() {
   const { toasts } = useToast();
+  const DURATION_TIMEOUT = 5000;
 
   return (
     <ToastProvider>
-      {toasts.map(function ({ id, title, description, action, ...props }) {
+      {toasts.map(function ({
+        id,
+        title,
+        description,
+        action,
+        duration,
+        ...props
+      }) {
         return (
           <Toast
             key={id}
+            duration={duration ?? DURATION_TIMEOUT}
             {...props}
           >
             <div className="grid gap-1">
