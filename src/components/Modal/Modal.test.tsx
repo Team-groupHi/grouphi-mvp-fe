@@ -12,10 +12,19 @@ import ModalShell from './ModalShell';
 
 vi.mock('@/components/Modals/ModalTest', () => ({
   __esModule: true,
-  default: ({ closeModal }: { closeModal: () => void }) => (
+  default: ({
+    closeModal,
+    optionPropsNumber,
+  }: {
+    closeModal: () => void;
+    optionPropsNumber?: number;
+  }) => (
     <ModalShell closeModal={closeModal}>
       <h2 className="text-xl font-bold">모달 테스트</h2>
       <p className="mt-4">모달 테스트의 내용입니다.</p>
+      {optionPropsNumber !== undefined && (
+        <p className="mt-2 text-gray-600">선택된 숫자: {optionPropsNumber}</p>
+      )}
       <button
         onClick={closeModal}
         className="mt-6 px-4 py-2 bg-secondary text-white rounded hover:bg-secondary-600"
@@ -32,7 +41,11 @@ describe('모달 동작 테스트', () => {
   });
 
   afterEach(() => {
-    useModalStore.setState({ activeModal: null, isOpen: false });
+    useModalStore.setState({
+      activeModal: null,
+      isOpen: false,
+      optionPropsNumber: undefined,
+    });
     document.body.style.overflow = 'auto';
   });
 
@@ -47,7 +60,7 @@ describe('모달 동작 테스트', () => {
       render(<ModalRenderer />);
     });
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText('모달 테스트')).toBeInTheDocument();
       expect(document.body.style.overflow).toBe('hidden');
     });
@@ -64,9 +77,25 @@ describe('모달 동작 테스트', () => {
       render(<ModalRenderer />);
     });
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText('모달 테스트의 내용입니다.')).toBeInTheDocument();
       expect(document.body.style.overflow).toBe('hidden');
+    });
+  });
+
+  it('1-3) 모달에 전달된 숫자가 올바르게 표시되는지 확인한다.', async () => {
+    const { openModal } = useModalStore.getState();
+
+    act(() => {
+      openModal('ModalTest', 42);
+    });
+
+    act(() => {
+      render(<ModalRenderer />);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('선택된 숫자: 42')).toBeInTheDocument();
     });
   });
 
@@ -85,13 +114,13 @@ describe('모달 동작 테스트', () => {
       fireEvent.click(screen.getByText('닫기'));
     });
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.queryByText('모달 테스트')).not.toBeInTheDocument();
       expect(document.body.style.overflow).toBe('auto');
     });
   });
 
-  it('3) 모달을 열고 모달의 dimmer 기능이 정상 동작하는 지 확인한다.', async () => {
+  it('3) 모달을 열고 모달의 dimmer 기능이 정상 동작하는지 확인한다.', async () => {
     const { openModal } = useModalStore.getState();
     act(() => {
       openModal('ModalTest');
@@ -103,7 +132,7 @@ describe('모달 동작 테스트', () => {
       fireEvent.mouseDown(screen.getByRole('dialog'));
     });
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.queryByText('모달 테스트')).not.toBeInTheDocument();
       expect(document.body.style.overflow).toBe('auto');
     });
@@ -121,7 +150,7 @@ describe('모달 동작 테스트', () => {
       fireEvent.mouseDown(screen.getByText('모달 테스트'));
     });
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText('모달 테스트')).toBeInTheDocument();
       expect(document.body.style.overflow).toBe('hidden');
     });
