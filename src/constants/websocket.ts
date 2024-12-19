@@ -35,4 +35,5 @@ export const SOCKET = {
     BG_NEXT: 'BG_NEXT',
     BG_END: 'BG_END',
   },
+  SYSTEM: 'system',
 };

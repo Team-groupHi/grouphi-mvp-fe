@@ -55,6 +55,10 @@ export function useWebSocket() {
   };
 
   const disconnect = () => {
+    sendMessage({
+      destination: `${SOCKET.ENDPOINT.ROOM.EXIT}`,
+    });
+
     client.current?.deactivate();
     console.log('[WebSocket] Disconnected');
   };
@@ -71,6 +75,7 @@ export function useWebSocket() {
   };
 
   const receiveMessage = (message: string) => {
+    console.log(`[WebSocket] 2-1. receiveMessage`, message);
     const { type, sender, content } = JSON.parse(message);
 
     switch (type) {
@@ -78,6 +83,12 @@ export function useWebSocket() {
         addChatMessage({
           sender,
           content,
+        });
+        break;
+      case SOCKET.TYPE.ENTER:
+        addChatMessage({
+          sender: SOCKET.SYSTEM,
+          content: `${sender}님이 입장했어요.`,
         });
         break;
       default:
