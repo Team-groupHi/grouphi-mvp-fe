@@ -1,5 +1,6 @@
 'use client';
 import { SOCKET } from '@/constants/websocket';
+import { ChatMessage } from '@/types';
 import * as StompJS from '@stomp/stompjs';
 import { useRef, useState } from 'react';
 
@@ -7,6 +8,7 @@ export function useWebSocket() {
   const BASE_WEBSOCKET_URL = process.env.NEXT_PUBLIC_BASE_WEBSOCKET_URL;
   const client = useRef<StompJS.Client>();
   const [, setSubscription] = useState<StompJS.StompSubscription>();
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const connect = (roomId: string) => {
     client.current = new StompJS.Client({
@@ -30,20 +32,22 @@ export function useWebSocket() {
       const subscribeId = client.current?.subscribe(
         `${SOCKET.ENDPOINT.SUBSCRIBE}${SOCKET.ENDPOINT.ROOM.ROOMS}/${roomId}`,
         (message) => {
-          console.log('[WebSocket] 2. Subscribe');
-          console.log('[WebSocket] 2-1. Reveived Message: ', message.body);
+          console.log(
+            '[WebSocket] 2. Subscribe - Receive Message',
+            message.body
+          );
+          receiveMessage(message.body);
         }
       );
 
       setSubscription(subscribeId);
 
-      // 메세지 발행
       sendMessage({
         destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
-        body: JSON.stringify({
+        body: {
           roomId,
           name: 'TEST',
-        }),
+        },
       });
     };
 
@@ -56,13 +60,34 @@ export function useWebSocket() {
   };
 
   const sendMessage = (params: StompJS.IPublishParams) => {
-    const { destination } = params;
+    const { destination, body } = params;
+    const text = JSON.stringify(body);
 
     client.current?.publish({
       ...params,
       destination: `${SOCKET.ENDPOINT.PUBLICATION}${destination}`,
+      body: text,
     });
   };
 
-  return { connect, disconnect };
+  const receiveMessage = (message: string) => {
+    const { type, sender, content } = JSON.parse(message);
+
+    switch (type) {
+      case SOCKET.TYPE.CHAT:
+        addChatMessage({
+          sender,
+          content,
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const addChatMessage = (newMessage: ChatMessage) => {
+    setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
+  return { chatMessages, connect, disconnect, sendMessage };
 }
