@@ -16,6 +16,7 @@ interface ChattingProps {
 
 const Chatting = ({ messages, myName }: ChattingProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isComposing, setIsComposing] = useState(false);
 
   const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -24,6 +25,7 @@ const Chatting = ({ messages, myName }: ChattingProps) => {
       if (inputRef.current && !isComposing) {
         console.log('Submitted:', inputRef.current.value);
         inputRef.current.value = '';
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
       }
     }
   };
@@ -45,6 +47,7 @@ const Chatting = ({ messages, myName }: ChattingProps) => {
             }
           ></Item>
         ))}
+        <div ref={messagesEndRef}></div>
       </section>
       <section className="bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
         <Input
