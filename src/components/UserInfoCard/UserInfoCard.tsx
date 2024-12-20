@@ -13,7 +13,7 @@ const UserInfoCard = ({ name, isReady, fileName }: UserInfoCardProps) => {
     >
       <figure className="rounded-l-lg overflow-hidden w-[4rem] relative bg-white">
         <Image
-          src={`/images/characters/${fileName}.png`}
+          src={`/images/characters/${fileName}.webp`}
           alt="profile"
           fill={true}
         ></Image>
