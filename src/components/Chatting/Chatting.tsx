@@ -17,12 +17,11 @@ interface ChattingProps {
 const Chatting = ({ messages, myName }: ChattingProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [isComposing, setIsComposing] = useState(false);
 
   const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (inputRef.current && !isComposing) {
+      if (inputRef.current && !e.nativeEvent.isComposing) {
         //@TODO: 추후에 소켓 통신으로 로직 변경
         console.log('Submitted:', inputRef.current.value);
         inputRef.current.value = '';
@@ -61,8 +60,6 @@ const Chatting = ({ messages, myName }: ChattingProps) => {
           className="bg-container-700 border-transparent"
           placeholder="엔터 키를 눌러 채팅 전송"
           onKeyDown={handleSubmit}
-          onCompositionStart={() => setIsComposing(true)}
-          onCompositionEnd={() => setIsComposing(false)}
         />
       </section>
     </section>
