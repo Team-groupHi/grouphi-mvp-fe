@@ -4,7 +4,7 @@ import ModalShell from '../Modal/ModalShell';
 
 interface Modal1Props {
   closeModal: () => void;
-  optionPropsNumber?: number;
+  optionPropsNumber?: number | string;
 }
 
 const Modal1 = ({ closeModal, optionPropsNumber }: Modal1Props) => (
