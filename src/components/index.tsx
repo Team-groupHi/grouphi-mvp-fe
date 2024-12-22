@@ -6,6 +6,7 @@ export {
   CarouselPrevious,
   CarouselNext,
 } from './Carousel';
+export { Slider } from './Slider';
 export { GameListCard } from './GameListCard';
 export { Navigation } from './Navigation';
 export { HomeClient } from './HomeClient';
