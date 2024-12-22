@@ -1,5 +1,6 @@
 'use client';
-import { Button, Input, Label, ModalShell } from '@/components';
+import { useState } from 'react';
+import { Button, Label, ModalShell, Slider } from '@/components';
 import { createRoom } from '@/services/rooms';
 import { PATH } from '@/constants/router';
 import { useMutation } from '@tanstack/react-query';
@@ -14,12 +15,21 @@ const CreateBalanceGameModal = ({
   closeModal,
   optionPropsNumber,
 }: BalanceGameModalProps) => {
+  const QUESTIONS_COUNT = {
+    MIN: 10,
+    MAX: 20,
+    STEP: 2,
+  };
+
+  const [questionCount, setQuestionCount] = useState([QUESTIONS_COUNT.MIN]);
   const router = useRouter();
 
   const createRoomMutation = useMutation({
     mutationFn: () => createRoom(optionPropsNumber),
     onSuccess: (data) => {
-      router.push(`${PATH.BALANCE_GAME}/${data}`);
+      router.push(
+        `${PATH.BALANCE_GAME}/${data}?question-count=${questionCount}`
+      );
     },
   });
 
@@ -41,15 +51,15 @@ const CreateBalanceGameModal = ({
           >
             질문의 개수
           </Label>
-          <Input
-            id="question-count"
-            className="bg-white text-dark"
-            type="number"
-            placeholder="범위는 10-20 이내로 작성해주세요"
-            min="10"
-            max="20"
-            defaultValue={20}
+          <Slider
+            name="question-count"
+            value={questionCount}
+            onValueChange={setQuestionCount}
+            min={QUESTIONS_COUNT.MIN}
+            max={QUESTIONS_COUNT.MAX}
+            step={QUESTIONS_COUNT.STEP}
           />
+          <span className="w-4 text-subtitle">{questionCount}</span>
         </section>
         <section className="flex gap-300 self-end">
           <Button onClick={handleCreateGame}>생성하기</Button>
