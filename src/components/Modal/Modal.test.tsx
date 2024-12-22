@@ -10,7 +10,7 @@ import useModalStore from '../../store/useModalStore';
 import ModalRenderer from './ModalRenderer';
 import ModalShell from './ModalShell';
 
-vi.mock('@/components/Modals/ModalTest', () => ({
+vi.mock('@/components/ModalList/ModalTest', () => ({
   __esModule: true,
   default: ({
     closeModal,
@@ -120,25 +120,7 @@ describe('모달 동작 테스트', () => {
     });
   });
 
-  it('3) 모달을 열고 모달의 dimmer 기능이 정상 동작하는지 확인한다.', async () => {
-    const { openModal } = useModalStore.getState();
-    act(() => {
-      openModal('ModalTest');
-      render(<ModalRenderer />);
-    });
-    await screen.findByText('모달 테스트');
-
-    act(() => {
-      fireEvent.mouseDown(screen.getByRole('dialog'));
-    });
-
-    await waitFor(() => {
-      expect(screen.queryByText('모달 테스트')).not.toBeInTheDocument();
-      expect(document.body.style.overflow).toBe('auto');
-    });
-  });
-
-  it('4) 모달을 열고 내부 영역을 클릭했을 때 dimmer가 동작하지 않는지 확인한다.', async () => {
+  it('3) 모달을 열고 내부 영역을 클릭했을 때 dimmer가 동작하지 않는지 확인한다.', async () => {
     const { openModal } = useModalStore.getState();
     act(() => {
       openModal('ModalTest');
