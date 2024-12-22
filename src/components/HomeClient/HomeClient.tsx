@@ -11,15 +11,16 @@ import {
   GameListCard,
 } from '@/components';
 import { GamesResponse } from '@/types/api';
+import { PATH } from '@/constants/router';
 
 const DUMMY_DATA = [
   {
     title: 'HOME',
-    href: '/',
+    href: PATH.HOME,
   },
   {
     title: 'ABOUT US',
-    href: '/about',
+    href: PATH.ABOUT,
   },
 ];
 
@@ -69,7 +70,7 @@ const HomeClient = ({ games }: HomeClientProps) => {
                       src={game.thumbnailUrl}
                       onClick={() => {
                         const modalName = game.nameEn.replaceAll(' ', '');
-                        return openModal(`Create${modalName}Modal`);
+                        return openModal(`Create${modalName}Modal`, game.id);
                       }}
                     />
                   </CarouselItem>
