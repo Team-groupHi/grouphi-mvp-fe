@@ -4,6 +4,7 @@ import Script from 'next/script';
 import './globals.css';
 import { pretendard, notoSans } from './fonts/fonts';
 import { ModalRenderer } from '@/components/Modal';
+import Providers from '@/utils/providers';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -47,8 +48,10 @@ export default function RootLayout({
             </Script>
           </>
         )}
-        {children}
-        <ModalRenderer />
+        <Providers>
+          {children}
+          <ModalRenderer />
+        </Providers>
       </body>
     </html>
   );
