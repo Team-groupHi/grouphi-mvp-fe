@@ -109,6 +109,25 @@ const config: Config = {
       },
       fontSize: {
         DEFAULT: '1rem',
+        h1: [
+          '2.5rem',
+          {
+            lineHeight: '3rem',
+            fontWeight: '800',
+            letterSpacing: '-0.03rem',
+          },
+        ],
+        h2: ['2.25rem', { lineHeight: '2.75rem', fontWeight: '700' }],
+        h3: ['1.75rem', { lineHeight: '2.25rem', fontWeight: '700' }],
+        h4: ['1.5rem', { lineHeight: '2rem', fontWeight: '600' }],
+        h5: ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600' }],
+        title1: ['1.125rem', { lineHeight: '1.75rem', fontWeight: '600' }],
+        title2: ['1rem', { lineHeight: '1.5rem', fontWeight: '600' }],
+        title3: ['0.875rem', { lineHeight: '1.25rem', fontWeight: '600' }],
+        body1: ['1rem', { lineHeight: '1.375rem', fontWeight: '400' }],
+        body2: ['0.875rem', { lineHeight: '1.125rem', fontWeight: '400' }],
+        body3: ['0.75rem', { lineHeight: '1rem', fontWeight: '400' }],
+        subtitle: ['0.875rem', { lineHeight: '1.125rem', fontWeight: '400' }],
         sm: '0.875rem',
         md: '1rem',
         lg: '1.25rem',
@@ -136,17 +155,17 @@ const config: Config = {
         'icon-lg': '2.25rem',
       },
       spacing: {
-        '50': '0.125rem',
-        '100': '0.25rem',
-        '200': '0.375rem', // xs
-        '300': '0.5rem', // s
-        '400': '0.75rem',
-        '500': '1rem', // md
-        '600': '1.5rem', // lg
-        '700': '2rem', // xl
-        '800': '3rem',
-        '900': '4rem', // 2xl
-        '950': '6rem',
+        '50': '0.125rem', // 2px
+        '100': '0.25rem', // 4px
+        '200': '0.375rem', // 6px
+        '300': '0.5rem', // 8px
+        '400': '0.75rem', // 12px
+        '500': '1rem', // 16px
+        '600': '1.5rem', // 24px
+        '700': '2rem', // 32px
+        '800': '3rem', // 48px
+        '900': '4rem', // 64px
+        '950': '6rem', // 96px
         '1000': '10rem',
       },
       borderRadius: {
