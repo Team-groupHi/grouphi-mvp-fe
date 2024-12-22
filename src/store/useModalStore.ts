@@ -6,7 +6,7 @@ type ModalType = string | null;
 interface ModalStore {
   isOpen: boolean;
   activeModal: ModalType;
-  optionPropsNumber?: number;
+  optionPropsNumber?: number | string;
   openModal: (modalType: ModalType, optionalNumber?: number) => void;
   closeModal: () => void;
 }
