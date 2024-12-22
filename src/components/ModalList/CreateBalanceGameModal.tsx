@@ -1,17 +1,31 @@
 'use client';
-import Link from 'next/link';
 import { Button, Input, Label, ModalShell } from '@/components';
+import { createRoom } from '@/services/rooms';
+import { PATH } from '@/constants/router';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 interface BalanceGameModalProps {
   closeModal: () => void;
+  optionPropsNumber: number | string;
 }
 
-const CreateBalanceGameModal = ({ closeModal }: BalanceGameModalProps) => {
+const CreateBalanceGameModal = ({
+  closeModal,
+  optionPropsNumber,
+}: BalanceGameModalProps) => {
+  const router = useRouter();
+
+  const createRoomMutation = useMutation({
+    mutationFn: () => createRoom(optionPropsNumber),
+    onSuccess: (data) => {
+      router.push(`${PATH.BALANCE_GAME}/${data}`);
+    },
+  });
+
   const handleCreateGame = () => {
-    // todo: 유효성검사
-    console.log('Create Game!');
-    // todo: 방생성 API
     closeModal();
+    createRoomMutation.mutate();
   };
 
   return (
@@ -38,18 +52,7 @@ const CreateBalanceGameModal = ({ closeModal }: BalanceGameModalProps) => {
           />
         </section>
         <section className="flex gap-300 self-end">
-          <Button
-            asChild={true}
-            onClick={handleCreateGame}
-          >
-            <Link
-              href={{
-                pathname: `/balance-game/1`,
-              }}
-            >
-              생성하기
-            </Link>
-          </Button>
+          <Button onClick={handleCreateGame}>생성하기</Button>
           <Button
             variant="secondary"
             onClick={closeModal}
