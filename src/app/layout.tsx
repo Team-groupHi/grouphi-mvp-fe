@@ -3,7 +3,7 @@ import React from 'react';
 import Script from 'next/script';
 import './globals.css';
 import { pretendard, notoSans } from './fonts/fonts';
-import { ModalRenderer } from '@/components/Modals';
+import { ModalRenderer } from '@/components/Modal';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
