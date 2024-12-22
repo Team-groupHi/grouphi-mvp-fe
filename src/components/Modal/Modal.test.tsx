@@ -17,7 +17,7 @@ vi.mock('@/components/ModalList/ModalTest', () => ({
     optionPropsNumber,
   }: {
     closeModal: () => void;
-    optionPropsNumber?: number;
+    optionPropsNumber?: number | string;
   }) => (
     <ModalShell closeModal={closeModal}>
       <h2 className="text-xl font-bold">모달 테스트</h2>

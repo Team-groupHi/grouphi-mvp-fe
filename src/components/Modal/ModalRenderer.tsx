@@ -5,7 +5,7 @@ import useModalStore from '@/store/useModalStore';
 
 interface ModalProps {
   closeModal: () => void;
-  optionPropsNumber?: number;
+  optionPropsNumber?: number | string;
 }
 
 const Temploading = () => (
