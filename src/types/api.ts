@@ -4,5 +4,5 @@ export interface GamesResponse {
   nameEn: 'string';
   descriptionKr: 'string';
   descriptionEn: 'string';
-  thumbnailUrl: 'string';
+  thumbnailUrl: 'string' | null;
 }
