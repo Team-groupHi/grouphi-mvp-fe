@@ -3,11 +3,14 @@ import { CHAT_DUMMY, MY_NAME, USER_DUMMY, GAME_INFO } from './DUMMY';
 import UserInfoCard from '@/components/UserInfoCard';
 import { GameListCard } from '@/components/GameListCard';
 import { Button } from '@/components/Button';
-import { Loader, Link, CheckCheck } from 'lucide-react';
+import { Loader, Link, CheckCheck, MousePointer2 } from 'lucide-react';
 
 const WaitingRoom = () => {
+  // @TODO: 더미데이터를 활용한 로직이므로 추후에 소켓 연동 후 변경 필요
   const readyCount = USER_DUMMY.filter(({ isReady }) => isReady).length;
   const isAllReady = readyCount === USER_DUMMY.length;
+  const isRoomManager = false;
+  const isReady = false;
 
   return (
     <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
@@ -37,10 +40,42 @@ const WaitingRoom = () => {
         <Button
           className="text-base font-semibold"
           size="xl"
-          variant={isAllReady ? 'default' : 'waiting'}
+          variant={
+            isRoomManager
+              ? isAllReady
+                ? 'default'
+                : 'waiting'
+              : isReady
+                ? 'waiting'
+                : 'default'
+          }
         >
-          {isAllReady ? <CheckCheck /> : <Loader />}
-          {`${isAllReady ? '게임 시작' : '준비 대기'} (${readyCount}/${USER_DUMMY.length})`}
+          {isRoomManager && isAllReady && (
+            <div className="flex items-center justify-center gap-2">
+              <CheckCheck />{' '}
+              <span>
+                게임 시작({readyCount}/{USER_DUMMY.length})
+              </span>{' '}
+            </div>
+          )}
+          {isRoomManager && !isAllReady && (
+            <div className="flex items-center justify-center gap-2">
+              <Loader />{' '}
+              <span>
+                준비 대기({readyCount}/{USER_DUMMY.length})
+              </span>{' '}
+            </div>
+          )}
+          {!isRoomManager && isReady && (
+            <div className="flex items-center justify-center gap-2">
+              <CheckCheck /> <span>준비 완료</span>
+            </div>
+          )}
+          {!isRoomManager && !isReady && (
+            <div className="flex items-center justify-center gap-2">
+              <MousePointer2 /> <span>준비 하기</span>
+            </div>
+          )}
         </Button>
       </section>
 
