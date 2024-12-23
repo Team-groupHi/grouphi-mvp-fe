@@ -44,34 +44,42 @@ export const USER_DUMMY = [
   {
     name: '개울가의 나뭇잎',
     isReady: false,
+    fileName: 'blue',
   },
   {
     name: '한나',
     isReady: false,
+    fileName: 'green',
   },
   {
     name: '긴거긴거긴거긴거',
     isReady: false,
+    fileName: 'mint',
   },
   {
     name: '나도 나뭇잎',
     isReady: true,
+    fileName: 'orange',
   },
   {
     name: '나무',
     isReady: false,
+    fileName: 'pink',
   },
   {
     name: '열매',
     isReady: true,
+    fileName: 'purple',
   },
   {
     name: '잎사귀',
     isReady: true,
+    fileName: 'red',
   },
   {
     name: '뿌리',
     isReady: false,
+    fileName: 'yellow',
   },
 ];
 
