@@ -19,22 +19,29 @@ const Timer = ({ startTime, endTime }: TimerProps) => {
 
   const updateTimer = () => {
     const curTime = Date.now();
-    const curTimeLeft = endTime - curTime;
 
-    setTimeLeft((prevTime) => {
-      if (prevTime <= 0) {
+    setTimeLeft(() => {
+      if (curTime >= endTime) {
         cancelAnimationFrame(rafId);
         return 0;
       }
-      return curTimeLeft;
+      return endTime - curTime;
     });
 
     rafId = requestAnimationFrame(updateTimer);
   };
 
   useEffect(() => {
-    rafId = requestAnimationFrame(updateTimer);
-    return () => cancelAnimationFrame(rafId);
+    const curTime = Date.now();
+    // 시작 시간이 아직 아니라면 타이머를 대기시킨다.
+    if (curTime < startTime) {
+      const delay = startTime - curTime;
+      const timerId = setTimeout(() => {
+        requestAnimationFrame(updateTimer);
+        setTimeLeft(endTime - Date.now());
+      }, delay);
+      return () => clearTimeout(timerId);
+    }
   }, []);
 
   return (
@@ -42,7 +49,7 @@ const Timer = ({ startTime, endTime }: TimerProps) => {
       <AlarmClock />
       <span className="w-6 text-center">{second}</span>
 
-      <div className="relative w-full bg-white/20 rounded h-4">
+      <div className="w-full bg-white/20 rounded h-4">
         <div
           className="bg-primary h-full rounded"
           style={{ width: `${percentage}%` }}
