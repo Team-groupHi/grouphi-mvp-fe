@@ -9,6 +9,8 @@ import {
   CarouselItem,
   GameListCard,
   Logo,
+  CarouselPrevious,
+  CarouselNext,
 } from '@/components';
 import { GamesResponse } from '@/types/api';
 import { PATH } from '@/constants/router';
@@ -32,6 +34,9 @@ const HomeClient = ({ games }: HomeClientProps) => {
   const currentPath = usePathname();
   const { openModal } = useModalStore();
 
+  const MAX_CAROUSEL_ITEMS = 6;
+  const isMultiplePages = games.length > MAX_CAROUSEL_ITEMS;
+
   return (
     <main className="flex flex-col h-screen p-800">
       <section
@@ -54,7 +59,12 @@ const HomeClient = ({ games }: HomeClientProps) => {
           <span className="text-lg pt-1000">Game List</span>
           <span className="text-md pb-200">▽</span>
           <section className="flex gap-200">
-            <Carousel className="w-full max-w-xl">
+            <Carousel
+              className="w-full max-w-xl"
+              opts={{
+                active: isMultiplePages ? true : false,
+              }}
+            >
               <CarouselContent>
                 {games.map((game, index) => (
                   <CarouselItem
@@ -76,6 +86,12 @@ const HomeClient = ({ games }: HomeClientProps) => {
                   </CarouselItem>
                 ))}
               </CarouselContent>
+              {isMultiplePages && (
+                <>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </>
+              )}
             </Carousel>
           </section>
         </section>
