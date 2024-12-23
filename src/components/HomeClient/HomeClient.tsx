@@ -1,37 +1,22 @@
 'use client';
 import React from 'react';
 import useModalStore from '@/store/useModalStore';
-import { usePathname } from 'next/navigation';
 import {
-  Navigation,
   Carousel,
   CarouselContent,
   CarouselItem,
   GameListCard,
-  Logo,
   CarouselPrevious,
   CarouselNext,
+  MainHeader,
 } from '@/components';
 import { GamesResponse } from '@/types/api';
-import { PATH } from '@/constants/router';
-
-const DUMMY_DATA = [
-  {
-    title: 'HOME',
-    href: PATH.HOME,
-  },
-  {
-    title: 'ABOUT US',
-    href: PATH.ABOUT,
-  },
-];
 
 interface HomeClientProps {
   games: GamesResponse[];
 }
 
 const HomeClient = ({ games }: HomeClientProps) => {
-  const currentPath = usePathname();
   const { openModal } = useModalStore();
 
   const MAX_CAROUSEL_ITEMS = 6;
@@ -39,18 +24,7 @@ const HomeClient = ({ games }: HomeClientProps) => {
 
   return (
     <main className="flex flex-col h-screen p-800">
-      <section
-        id="navigation"
-        className="flex justify-between pb-300"
-      >
-        <Logo />
-        <section className="flex">
-          <Navigation
-            items={DUMMY_DATA}
-            disabled={currentPath}
-          />
-        </section>
-      </section>
+      <MainHeader />
       {games.length > 0 ? (
         <section
           id="gamelist"
