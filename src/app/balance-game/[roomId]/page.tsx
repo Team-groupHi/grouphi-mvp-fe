@@ -7,9 +7,12 @@ import { Loader, Link, CheckCheck, MousePointer2 } from 'lucide-react';
 
 const WaitingRoom = () => {
   // @TODO: 더미데이터를 활용한 로직이므로 추후에 소켓 연동 후 변경 필요
-  const readyCount = USER_DUMMY.filter(({ isReady }) => isReady).length;
+  const readyCount = USER_DUMMY.reduce(
+    (count, { isReady }) => count + (isReady ? 1 : 0),
+    0
+  );
   const isAllReady = readyCount === USER_DUMMY.length;
-  const isRoomManager = false;
+  const isRoomManager = true;
   const isReady = false;
 
   return (
