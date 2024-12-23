@@ -1,9 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 
-const Logo = () => {
+const Logo = ({ ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   return (
-    <section className="logo flex gap-300">
+    <section
+      className="logo flex gap-300 cursor-pointer"
+      {...props}
+    >
       <div className="relative w-10">
         <Image
           src="/images/logos/grouphi_logo_origin.png"
