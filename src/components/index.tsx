@@ -12,4 +12,5 @@ export { Navigation } from './Navigation';
 export { HomeClient } from './HomeClient';
 export { default as Label } from './Label';
 export { default as Input } from './Input';
+export { default as Logo } from './Logo';
 export { ModalRenderer, ModalShell } from './Modal';

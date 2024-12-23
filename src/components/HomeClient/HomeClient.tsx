@@ -1,14 +1,14 @@
 'use client';
+import React from 'react';
 import useModalStore from '@/store/useModalStore';
 import { usePathname } from 'next/navigation';
-import React from 'react';
 import {
-  Button,
   Navigation,
   Carousel,
   CarouselContent,
   CarouselItem,
   GameListCard,
+  Logo,
 } from '@/components';
 import { GamesResponse } from '@/types/api';
 import { PATH } from '@/constants/router';
@@ -38,7 +38,7 @@ const HomeClient = ({ games }: HomeClientProps) => {
         id="navigation"
         className="flex justify-between pb-300"
       >
-        <Button variant="link">Logo</Button>
+        <Logo />
         <section className="flex">
           <Navigation
             items={DUMMY_DATA}
