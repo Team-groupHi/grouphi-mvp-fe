@@ -37,10 +37,12 @@ const Timer = ({ startTime, endTime }: TimerProps) => {
     if (curTime < startTime) {
       const delay = startTime - curTime;
       const timerId = setTimeout(() => {
-        requestAnimationFrame(updateTimer);
+        rafId = requestAnimationFrame(updateTimer);
         setTimeLeft(endTime - Date.now());
       }, delay);
       return () => clearTimeout(timerId);
+    } else {
+      rafId = requestAnimationFrame(updateTimer);
     }
   }, []);
 
