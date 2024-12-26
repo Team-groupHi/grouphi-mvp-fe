@@ -59,11 +59,13 @@ export function useWebSocket() {
       destination: `${SOCKET.ENDPOINT.ROOM.EXIT}`,
     });
 
-    client.current?.deactivate();
     console.log('[WebSocket] Disconnected');
+    client.current?.deactivate();
   };
 
-  const sendMessage = (params: StompJS.IPublishParams) => {
+  const sendMessage = <T>(
+    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
+  ) => {
     const { destination, body } = params;
     const text = JSON.stringify(body);
 
@@ -89,6 +91,12 @@ export function useWebSocket() {
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 입장했어요.`,
+        });
+        break;
+      case SOCKET.TYPE.EXIT:
+        addChatMessage({
+          sender: SOCKET.SYSTEM,
+          content: `${sender}님이 퇴장했어요.`,
         });
         break;
       default:
