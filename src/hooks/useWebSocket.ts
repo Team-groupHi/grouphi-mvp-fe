@@ -6,8 +6,8 @@ import { useRef, useState } from 'react';
 
 export function useWebSocket() {
   const BASE_WEBSOCKET_URL = process.env.NEXT_PUBLIC_BASE_WEBSOCKET_URL;
-  const client = useRef<StompJS.Client>();
-  const [, setSubscription] = useState<StompJS.StompSubscription>();
+  const client = useRef<StompJS.Client | null>(null);
+  const [, setSubscription] = useState<StompJS.StompSubscription | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const connect = (roomId: string) => {
@@ -40,27 +40,34 @@ export function useWebSocket() {
         }
       );
 
-      setSubscription(subscribeId);
+      if (subscribeId) {
+        setSubscription(subscribeId);
 
-      sendMessage({
-        destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
-        body: {
-          roomId,
-          name: 'TEST',
-        },
-      });
+        sendMessage({
+          destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
+          body: {
+            roomId,
+            name: 'TEST',
+          },
+        });
+      }
     };
 
     client.current.activate();
   };
 
   const disconnect = () => {
+    if (!client.current) return;
     sendMessage({
       destination: `${SOCKET.ENDPOINT.ROOM.EXIT}`,
     });
 
+    setSubscription(null);
+    setChatMessages([]);
+
+    client.current.deactivate();
+    client.current = null;
     console.log('[WebSocket] Disconnected');
-    client.current?.deactivate();
   };
 
   const sendMessage = <T>(
