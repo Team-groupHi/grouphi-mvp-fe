@@ -12,7 +12,7 @@ import {
 
 export default function Toaster() {
   const { toasts } = useToast();
-  const DURATION_TIMEOUT = 5000;
+  const DURATION_TIMEOUT = 3000;
 
   return (
     <ToastProvider>
