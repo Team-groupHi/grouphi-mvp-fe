@@ -43,7 +43,17 @@ describe('Toast 컴포넌트', () => {
     expect(toast).toBeInTheDocument();
   });
 
-  test('2) variant="success"를 전달하면 success Toast를 렌더링한다', () => {
+  test('2-1) variant="default"를 전달하면 default Toast를 렌더링한다', () => {
+    render(<TestToast variant="default" />);
+
+    const button = screen.getByText('Show Toast');
+    fireEvent.click(button);
+
+    const toast = screen.getAllByTestId('toast')[1];
+    expect(toast).toHaveClass('default');
+  });
+
+  test('2-2) variant="success"를 전달하면 success Toast를 렌더링한다', () => {
     render(<TestToast variant="success" />);
 
     const button = screen.getByText('Show Toast');
@@ -51,6 +61,16 @@ describe('Toast 컴포넌트', () => {
 
     const toast = screen.getAllByTestId('toast')[1];
     expect(toast).toHaveClass('success');
+  });
+
+  test('2-3) variant="destructive"를 전달하면 destructive Toast를 렌더링한다', () => {
+    render(<TestToast variant="destructive" />);
+
+    const button = screen.getByText('Show Toast');
+    fireEvent.click(button);
+
+    const toast = screen.getAllByTestId('toast')[1];
+    expect(toast).toHaveClass('destructive');
   });
 
   const TEST_TIMEOUT = TOAST_TIMEOUT + 200;
