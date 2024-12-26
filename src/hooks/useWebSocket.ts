@@ -13,10 +13,10 @@ export function useWebSocket() {
   const connect = (roomId: string) => {
     client.current = new StompJS.Client({
       brokerURL: BASE_WEBSOCKET_URL,
-      // debug: (message) => {
-      //   console.error('[WebSocket Debug]: ', message);
-      // },
-      reconnectDelay: 0, // todo: 테스트 후 자동재연결 시간 삭제
+      debug: (message) => {
+        console.error('[WebSocket Debug]: ', message);
+      },
+      reconnectDelay: 5000,
       onWebSocketError: (error) => {
         console.log('[WebSocket] Network Error', error);
       },
