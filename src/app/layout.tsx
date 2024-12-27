@@ -4,6 +4,7 @@ import Script from 'next/script';
 import './globals.css';
 import { pretendard, notoSans } from './fonts/fonts';
 import { Toaster } from '@/components';
+import { ModalRenderer } from '@/components/Modal';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -49,6 +50,7 @@ export default function RootLayout({
         )}
         {children}
         <Toaster />
+        <ModalRenderer />
       </body>
     </html>
   );

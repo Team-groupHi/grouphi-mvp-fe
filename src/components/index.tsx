@@ -11,3 +11,5 @@ export {
   ToastClose,
   ToastAction,
 } from './Toast';
+export { Slider } from './Slider';
+export { GameListCard } from './GameListCard';
