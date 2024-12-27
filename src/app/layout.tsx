@@ -3,6 +3,7 @@ import React from 'react';
 import Script from 'next/script';
 import './globals.css';
 import { pretendard, notoSans } from './fonts/fonts';
+import { Toaster } from '@/components';
 import { ModalRenderer } from '@/components/Modal';
 
 export const metadata: Metadata = {
@@ -48,6 +49,7 @@ export default function RootLayout({
           </>
         )}
         {children}
+        <Toaster />
         <ModalRenderer />
       </body>
     </html>
