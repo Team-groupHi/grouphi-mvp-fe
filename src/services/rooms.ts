@@ -12,3 +12,14 @@ export const createRoom = async (gameId: number | string) => {
     axiosErrorHandler(error);
   }
 };
+
+export const getRoomDetail = async (roomId: string) => {
+  try {
+    const response = await axiosInstance.get<string>(
+      DOMAIN.GET_ROOM_DETAIL(roomId)
+    );
+    return response.data;
+  } catch (error) {
+    axiosErrorHandler(error);
+  }
+};

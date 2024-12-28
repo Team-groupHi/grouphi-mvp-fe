@@ -5,4 +5,5 @@ export const NETWORK = {
 export const DOMAIN = {
   CREATE_ROOMS: '/rooms',
   GAMES: '/games',
+  GET_ROOM_DETAIL: (roomId: string) => `/rooms/${roomId}`,
 };
