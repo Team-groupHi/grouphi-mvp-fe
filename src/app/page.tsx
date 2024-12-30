@@ -1,8 +1,14 @@
 import { getGames } from '@/services/games';
-import { HomeClient } from '@/components';
+import { HomeClient, ShootingStars, StarsBackground } from '@/components';
 
 export default async function Home() {
   const games = await getGames();
 
-  return <HomeClient games={games ?? []} />;
+  return (
+    <>
+      <StarsBackground />
+      <ShootingStars />
+      <HomeClient games={games ?? []} />
+    </>
+  );
 }
