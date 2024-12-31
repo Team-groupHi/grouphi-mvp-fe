@@ -25,6 +25,7 @@ const CreateBalanceGameModal = ({
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [count, setCount] = useState([QUESTIONS_COUNT.MIN]);
+  const [error, setError] = useState(false);
 
   const router = useRouter();
   const { setRoomId, setHostName, setQuestionCount } = useRoomStore();
@@ -47,13 +48,15 @@ const CreateBalanceGameModal = ({
 
   const handleCreateGame = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // todo: 유효성 검사
     if (count[0] > 0 && inputRef.current?.value) {
       setQuestionCount(count[0]);
       setHostName(inputRef.current?.value);
 
+      setError(false);
       closeModal();
       createRoomMutation.mutate();
+    } else {
+      setError(true);
     }
   };
 
@@ -92,11 +95,18 @@ const CreateBalanceGameModal = ({
             >
               닉네임
             </Label>
-            <Input
-              name="nickname-input"
-              onKeyDown={handleInputEnter}
-              ref={inputRef}
-            />
+            <section className="flex flex-col gap-200 w-full">
+              <Input
+                name="nickname-input"
+                onKeyDown={handleInputEnter}
+                ref={inputRef}
+              />
+              {error && (
+                <section className="text-warning-500 text-subtitle">
+                  닉네임을 작성해주세요
+                </section>
+              )}
+            </section>
           </section>
         </section>
         <section className="flex gap-300 self-end">
