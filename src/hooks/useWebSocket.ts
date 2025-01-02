@@ -4,13 +4,18 @@ import { ChatMessage } from '@/types';
 import * as StompJS from '@stomp/stompjs';
 import { useRef, useState } from 'react';
 
+interface EnterRoomProps {
+  roomId: string;
+  name: string;
+}
+
 export function useWebSocket() {
   const BASE_WEBSOCKET_URL = process.env.NEXT_PUBLIC_BASE_WEBSOCKET_URL;
   const client = useRef<StompJS.Client | null>(null);
   const [, setSubscription] = useState<StompJS.StompSubscription | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
-  const connect = (roomId: string) => {
+  const connect = ({ roomId, name }: EnterRoomProps) => {
     client.current = new StompJS.Client({
       brokerURL: BASE_WEBSOCKET_URL,
       reconnectDelay: 5000,
@@ -44,10 +49,14 @@ export function useWebSocket() {
           destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
           body: {
             roomId,
-            name: 'TEST',
+            name,
           },
         });
       }
+    };
+
+    client.current.onWebSocketClose = (e: CloseEvent) => {
+      console.log(e);
     };
 
     client.current.activate();
@@ -73,6 +82,7 @@ export function useWebSocket() {
     const { destination, body } = params;
     const text = JSON.stringify(body);
 
+    console.log(params);
     client.current?.publish({
       ...params,
       destination: `${SOCKET.ENDPOINT.PUBLICATION}${destination}`,

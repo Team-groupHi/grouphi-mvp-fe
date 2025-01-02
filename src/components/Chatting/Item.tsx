@@ -1,11 +1,11 @@
 interface ItemProps {
-  name: string;
-  message: string;
+  sender: string;
+  content: string;
   index: number;
   type: 'system' | 'me' | 'others';
 }
 
-const Item = ({ name, message, index, type }: ItemProps) => {
+const Item = ({ sender, content, index, type }: ItemProps) => {
   return (
     <div
       className={`${index === 0 ? 'rounded-t-lg' : ''} p-3 
@@ -19,12 +19,12 @@ const Item = ({ name, message, index, type }: ItemProps) => {
         ${type !== 'others' ? 'text-primary-400' : ''}`}
     >
       {type == 'system' ? (
-        <span className="font-semibold">{message}</span>
+        <span className="font-semibold">{content}</span>
       ) : (
         <div>
-          <span className="font-semibold">{name}</span>
+          <span className="font-semibold">{sender}</span>
           {`: `}
-          <span>{message}</span>
+          <span>{content}</span>
         </div>
       )}
     </div>

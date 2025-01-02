@@ -83,10 +83,7 @@ const WaitingRoom = () => {
       </section>
 
       <section className="h-4/5 min-w-[15rem] max-w-[20rem]">
-        <Chatting
-          myName={MY_NAME}
-          messages={CHAT_DUMMY}
-        ></Chatting>
+        <Chatting myName={MY_NAME}></Chatting>
       </section>
     </section>
   );
