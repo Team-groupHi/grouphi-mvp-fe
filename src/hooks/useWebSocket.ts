@@ -123,6 +123,16 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
+      case SOCKET.TYPE.READY:
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
+      case SOCKET.TYPE.UNREADY:
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
       default:
         break;
     }
