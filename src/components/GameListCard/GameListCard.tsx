@@ -8,7 +8,7 @@ import { Plus } from 'lucide-react';
 interface gameListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   description?: string;
-  src?: string;
+  src?: string | null;
   className?: string;
 }
 
