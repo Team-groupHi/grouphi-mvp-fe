@@ -1,7 +1,9 @@
 'use client';
+import { QUERYKEY } from '@/constants/querykey';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
 import * as StompJS from '@stomp/stompjs';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 
 interface EnterRoomProps {
@@ -14,6 +16,8 @@ export function useWebSocket() {
   const client = useRef<StompJS.Client | null>(null);
   const [, setSubscription] = useState<StompJS.StompSubscription | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+
+  const queryClient = useQueryClient();
 
   const connect = ({ roomId, name }: EnterRoomProps) => {
     client.current = new StompJS.Client({
@@ -106,11 +110,17 @@ export function useWebSocket() {
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 입장했어요.`,
         });
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
         break;
       case SOCKET.TYPE.EXIT:
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 퇴장했어요.`,
+        });
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
       default:
