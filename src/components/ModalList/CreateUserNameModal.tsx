@@ -39,8 +39,6 @@ const CreateUserNameModal = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    //console.log(values);
-    //닉네임 저장해야함 . . .
     setMyName(values.username);
     closeModal();
   };
