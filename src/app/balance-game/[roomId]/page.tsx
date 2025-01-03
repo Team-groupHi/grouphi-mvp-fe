@@ -1,19 +1,92 @@
-import Chatting from '@/components/Chatting';
-import { CHAT_DUMMY, MY_NAME, USER_DUMMY, GAME_INFO } from './DUMMY';
-import UserInfoCard from '@/components/UserInfoCard';
-import { GameListCard } from '@/components/GameListCard';
-import { Button } from '@/components/Button';
+'use client';
+
+import {
+  GameListCard,
+  ToastAction,
+  UserInfoCard,
+  Chatting,
+  Button,
+} from '@/components';
 import { Loader, Link, CheckCheck, MousePointer2 } from 'lucide-react';
+import { redirect, usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import useModalStore from '@/store/useModalStore';
+import { useWebSocket } from '@/hooks/useWebSocket';
+import useRoomStore from '@/store/useRoomStore';
+import { Player } from '@/types/api';
+import { useQueryClient } from '@tanstack/react-query';
+import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
+import { QUERYKEY } from '@/constants/querykey';
+import { useToast } from '@/hooks/useToast';
+import { PATH } from '@/constants/router';
+import { SOCKET } from '@/constants/websocket';
 
 const WaitingRoom = () => {
-  // @TODO: 더미데이터를 활용한 로직이므로 추후에 소켓 연동 후 변경 필요
-  const readyCount = USER_DUMMY.reduce(
+  const path = usePathname();
+  const roomId = path.split('/')[2];
+
+  const { openModal, closeModal } = useModalStore();
+  const { myName } = useRoomStore();
+  const { connect, sendMessage } = useWebSocket();
+  const { toast } = useToast();
+
+  const { data: roomDetail, isError, error } = useFetchRoomDetail(roomId);
+  const queryClient = useQueryClient();
+  const players: Player[] = roomDetail?.players || [];
+
+  if (isError) {
+    console.log(error);
+    //@TODO: 리다이렉트 되느라 토스트 메세지가 보이지 않는 문제 해결방법 찾기
+    setTimeout(() => {
+      toast({
+        title: '방이 폭파되었습니다!',
+        description:
+          '방장이 존재하지 않아 방이 폭파되었습니다. 새로운 방을 만들어 입장해주세요.',
+        variant: 'destructive',
+        action: <ToastAction altText="close">닫기</ToastAction>,
+      });
+    }, 5000);
+
+    closeModal();
+    redirect(PATH.HOME);
+  }
+
+  useEffect(() => {
+    if (!myName) {
+      openModal(`CreateUserNameModal`);
+    } else {
+      connect({ roomId, name: myName });
+      queryClient.invalidateQueries({
+        queryKey: [QUERYKEY.ROOM_DETAIL],
+      });
+    }
+  }, [myName]);
+
+  const isRoomManager = roomDetail?.hostName === myName;
+  const isReady = players.find((player) => player.name === myName)?.isReady;
+
+  const readyCount = players.reduce(
     (count, { isReady }) => count + (isReady ? 1 : 0),
     0
   );
-  const isAllReady = readyCount === USER_DUMMY.length;
-  const isRoomManager = true;
-  const isReady = false;
+  const isAllReady = readyCount === players.length;
+
+  const handleUnready = () => {
+    sendMessage({
+      destination: `${SOCKET.ENDPOINT.ROOM.UNREADY}`,
+    });
+  };
+
+  const handleReady = () => {
+    sendMessage({
+      destination: `${SOCKET.ENDPOINT.ROOM.READY}`,
+    });
+  };
+
+  //@TODO: roomDetail이 없는 경우에는 스피너 컴포넌트 적용
+  if (!myName || !roomDetail) {
+    return;
+  }
 
   return (
     <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
@@ -26,10 +99,11 @@ const WaitingRoom = () => {
           <Link />
           초대 링크 복사
         </Button>
-        {USER_DUMMY.map((data, index) => (
+        {players.map((data, index) => (
           <UserInfoCard
             key={index}
             {...data}
+            fileName="blue"
           ></UserInfoCard>
         ))}
       </section>
@@ -37,53 +111,66 @@ const WaitingRoom = () => {
       <section className="h-4/5 min-w-[45rem] max-w-[70rem] w-full flex flex-col justify-center items-center bg-container/50 rounded-lg gap-7">
         <span className="font-semibold">잠시 후 게임이 시작됩니다.</span>
         <GameListCard
-          {...GAME_INFO}
+          title={roomDetail.game.nameKr}
+          description={roomDetail.game.descriptionKr}
+          src={roomDetail.game.thumbnailUrl}
           className="h-16"
         ></GameListCard>
-        <Button
-          className="text-base font-semibold"
-          size="xl"
-          variant={
-            isRoomManager
-              ? isAllReady
-                ? 'default'
-                : 'waiting'
-              : isReady
-                ? 'waiting'
-                : 'default'
-          }
-        >
-          {isRoomManager && isAllReady && (
+
+        {isRoomManager && isAllReady && (
+          <Button
+            className="text-base font-semibold"
+            size="xl"
+          >
             <div className="flex items-center justify-center gap-2">
               <CheckCheck />{' '}
               <span>
-                게임 시작({readyCount}/{USER_DUMMY.length})
+                게임 시작({readyCount}/{players.length})
               </span>{' '}
             </div>
-          )}
-          {isRoomManager && !isAllReady && (
+          </Button>
+        )}
+        {isRoomManager && !isAllReady && (
+          <Button
+            className="text-base font-semibold"
+            size="xl"
+            variant={'waiting'}
+          >
             <div className="flex items-center justify-center gap-2">
               <Loader />{' '}
               <span>
-                준비 대기({readyCount}/{USER_DUMMY.length})
+                준비 대기({readyCount}/{players.length})
               </span>{' '}
             </div>
-          )}
-          {!isRoomManager && isReady && (
+          </Button>
+        )}
+        {!isRoomManager && isReady && (
+          <Button
+            className="text-base font-semibold"
+            size="xl"
+            variant={'waiting'}
+            onClick={handleUnready}
+          >
             <div className="flex items-center justify-center gap-2">
               <CheckCheck /> <span>준비 완료</span>
             </div>
-          )}
-          {!isRoomManager && !isReady && (
+          </Button>
+        )}
+        {!isRoomManager && !isReady && (
+          <Button
+            className="text-base font-semibold"
+            size="xl"
+            onClick={handleReady}
+          >
             <div className="flex items-center justify-center gap-2">
               <MousePointer2 /> <span>준비 하기</span>
             </div>
-          )}
-        </Button>
+          </Button>
+        )}
       </section>
 
       <section className="h-4/5 min-w-[15rem] max-w-[20rem]">
-        <Chatting myName={MY_NAME}></Chatting>
+        <Chatting myName={myName}></Chatting>
       </section>
     </section>
   );
