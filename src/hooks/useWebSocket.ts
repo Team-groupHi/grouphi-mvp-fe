@@ -86,7 +86,6 @@ export function useWebSocket() {
     const { destination, body } = params;
     const text = JSON.stringify(body);
 
-    console.log(params);
     client.current?.publish({
       ...params,
       destination: `${SOCKET.ENDPOINT.PUBLICATION}${destination}`,
@@ -124,11 +123,19 @@ export function useWebSocket() {
         });
         break;
       case SOCKET.TYPE.READY:
+        addChatMessage({
+          sender: SOCKET.SYSTEM,
+          content: `${sender}님이 준비를 완료했어요.`,
+        });
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
       case SOCKET.TYPE.UNREADY:
+        addChatMessage({
+          sender: SOCKET.SYSTEM,
+          content: `${sender}님이 준비를 취소했어요.`,
+        });
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
@@ -140,6 +147,7 @@ export function useWebSocket() {
 
   const addChatMessage = (newMessage: ChatMessage) => {
     setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+    console.log(chatMessages);
   };
 
   return { chatMessages, connect, disconnect, sendMessage };
