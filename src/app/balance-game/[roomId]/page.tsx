@@ -41,7 +41,7 @@ const WaitingRoom = () => {
       toast({
         title: '방이 폭파되었습니다!',
         description:
-          '방장이 존재하지 않아 방이 폭파되었습니다. 새로운 방을 만들어 입장해주세요.',
+          '방장이 존재하지 않아 방이 폭파되었어요! 새로운 방을 만들어 입장해주세요.',
         variant: 'destructive',
         action: <ToastAction altText="close">닫기</ToastAction>,
       });
