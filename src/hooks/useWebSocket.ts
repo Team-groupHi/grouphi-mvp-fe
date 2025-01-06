@@ -122,20 +122,13 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
+      //@TODO: players 데이터 내부 store로 관리하도록 변경하면서 refetch 로직 제거하기
       case SOCKET.TYPE.READY:
-        addChatMessage({
-          sender: SOCKET.SYSTEM,
-          content: `${sender}님이 준비를 완료했어요.`,
-        });
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
       case SOCKET.TYPE.UNREADY:
-        addChatMessage({
-          sender: SOCKET.SYSTEM,
-          content: `${sender}님이 준비를 취소했어요.`,
-        });
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
