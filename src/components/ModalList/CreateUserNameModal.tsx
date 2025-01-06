@@ -23,11 +23,11 @@ const CreateUserNameModal = () => {
   const formSchema = z.object({
     username: z
       .string()
-      .min(1, {
-        message: '닉네임은 최소 1글자 이상이어야 합니다.',
+      .min(2, {
+        message: '닉네임은 최소 2글자 이상이어야 해요.',
       })
-      .max(10, {
-        message: '닉네임은 최대 10글자 이하여야 합니다.',
+      .max(15, {
+        message: '닉네임은 최대 15글자 이하여야 해요.',
       }),
   });
 
@@ -62,12 +62,12 @@ const CreateUserNameModal = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormDescription>1~10 글자 내로 입력해주세요.</FormDescription>
+                <FormDescription>2~15 글자 내로 입력해주세요.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">완료</Button>
+          <Button type="submit">입장하기</Button>
         </form>
       </Form>
     </ModalShell>
