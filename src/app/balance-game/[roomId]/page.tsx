@@ -13,6 +13,7 @@ import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
 import { QUERYKEY } from '@/constants/querykey';
 import { PATH } from '@/constants/router';
 import PrevGame from './PrevGame';
+import { useToast } from '@/hooks/useToast';
 
 const WaitingRoom = () => {
   const path = usePathname();
@@ -21,16 +22,11 @@ const WaitingRoom = () => {
   const { openModal, closeModal } = useModalStore();
   const { myName } = useRoomStore();
   const { connect, sendMessage, chatMessages } = useWebSocket();
+  const { toast } = useToast();
 
   const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
   const queryClient = useQueryClient();
   const players: Player[] = roomDetail?.players || [];
-
-  if (isError) {
-    //@TODO: 추후에 에러 시 홈으로 유도해주는 페이지 개발 후 해당 주소로 리다이렉트
-    closeModal();
-    redirect(PATH.HOME);
-  }
 
   useEffect(() => {
     if (!myName) {
@@ -42,6 +38,21 @@ const WaitingRoom = () => {
       });
     }
   }, [myName]);
+
+  if (isError) {
+    //@TODO: 추후에 에러 시 홈으로 유도해주는 페이지 개발 후 해당 주소로 리다이렉트
+    closeModal();
+    redirect(PATH.HOME);
+  }
+
+  const handleLinkCopy = () => {
+    const currentUrl = window.document.location.href;
+    navigator.clipboard.writeText(currentUrl);
+    toast({
+      title: '클립보드에 복사되었어요!',
+      duration: 1500,
+    });
+  };
 
   //@TODO: roomDetail이 없는 경우에는 스피너 컴포넌트 적용
   if (!myName || !roomDetail) {
@@ -55,6 +66,7 @@ const WaitingRoom = () => {
           className="absolute -top-12 left-0"
           size={'sm'}
           variant={'secondary'}
+          onClick={handleLinkCopy}
         >
           <Link />
           초대 링크 복사

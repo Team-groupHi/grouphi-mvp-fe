@@ -51,6 +51,7 @@ export default function RootLayout({
         )}
         <Providers>
           {children}
+          <Toaster />
           <ModalRenderer />
         </Providers>
       </body>
