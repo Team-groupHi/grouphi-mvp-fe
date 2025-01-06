@@ -19,7 +19,7 @@
       ]
     },
     {
-      "source": "/groupHi_Spinner.json",
+      "source": "/loading/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
