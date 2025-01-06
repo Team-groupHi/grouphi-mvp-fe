@@ -81,6 +81,10 @@ const WaitingRoom = () => {
     //@TODO: 중앙 컴포넌트 게임 화면으로 바꿔주기
   };
 
+  const handleGameChange = () => {
+    //@TODO: 게임 변경 모달 띄워주기
+  };
+
   //@TODO: roomDetail이 없는 경우에는 스피너 컴포넌트 적용
   if (!myName || !roomDetail) {
     return;
@@ -149,7 +153,7 @@ const WaitingRoom = () => {
             <Button
               className="text-base font-semibold w-[12rem]"
               size="xl"
-              onClick={handleGameStart}
+              onClick={handleGameChange}
             >
               <div className="flex items-center justify-center gap-2">
                 <SlidersHorizontal /> <span>게임 변경</span>
