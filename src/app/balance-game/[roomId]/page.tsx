@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  GameListCard,
-  ToastAction,
-  UserInfoCard,
-  Chatting,
-  Button,
-} from '@/components';
+import { GameListCard, UserInfoCard, Chatting, Button } from '@/components';
 import { Loader, Link, CheckCheck, MousePointer2 } from 'lucide-react';
 import { redirect, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
@@ -17,7 +11,6 @@ import { Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
 import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
 import { QUERYKEY } from '@/constants/querykey';
-import { useToast } from '@/hooks/useToast';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 
@@ -27,33 +20,21 @@ const WaitingRoom = () => {
 
   const { openModal, closeModal } = useModalStore();
   const { myName } = useRoomStore();
-  const { connect, sendMessage } = useWebSocket();
-  const { toast } = useToast();
+  const { connect, sendMessage, chatMessages } = useWebSocket();
 
-  const { data: roomDetail, isError, error } = useFetchRoomDetail(roomId);
+  const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
   const queryClient = useQueryClient();
   const players: Player[] = roomDetail?.players || [];
 
   if (isError) {
-    console.log(error);
-    //@TODO: 리다이렉트 되느라 토스트 메세지가 보이지 않는 문제 해결방법 찾기
-    setTimeout(() => {
-      toast({
-        title: '방이 폭파되었습니다!',
-        description:
-          '방장이 존재하지 않아 방이 폭파되었어요! 새로운 방을 만들어 입장해주세요.',
-        variant: 'destructive',
-        action: <ToastAction altText="close">닫기</ToastAction>,
-      });
-    }, 5000);
-
+    //@TODO: 추후에 에러 시 홈으로 유도해주는 페이지 개발 후 해당 주소로 리다이렉트
     closeModal();
     redirect(PATH.HOME);
   }
 
   useEffect(() => {
     if (!myName) {
-      openModal(`CreateUserNameModal`);
+      openModal('CreateUserNameModal');
     } else {
       connect({ roomId, name: myName });
       queryClient.invalidateQueries({
@@ -83,6 +64,17 @@ const WaitingRoom = () => {
     });
   };
 
+  const handleGameStart = () => {
+    sendMessage({
+      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
+      body: {
+        theme: 'GENERAL',
+        totalRounds: 10,
+      },
+    });
+    //@TODO: 중앙 컴포넌트 게임 화면으로 바꿔주기
+  };
+
   //@TODO: roomDetail이 없는 경우에는 스피너 컴포넌트 적용
   if (!myName || !roomDetail) {
     return;
@@ -103,6 +95,7 @@ const WaitingRoom = () => {
           <UserInfoCard
             key={index}
             {...data}
+            //@TODO: players에 프로필 사진 정보 오도록 변경되면 여기도 수정하기
             fileName="blue"
           ></UserInfoCard>
         ))}
@@ -114,13 +107,14 @@ const WaitingRoom = () => {
           title={roomDetail.game.nameKr}
           description={roomDetail.game.descriptionKr}
           src={roomDetail.game.thumbnailUrl}
-          className="h-16"
+          className="h-16 pointer-events-none"
         ></GameListCard>
 
         {isRoomManager && isAllReady && (
           <Button
             className="text-base font-semibold"
             size="xl"
+            onClick={handleGameStart}
           >
             <div className="flex items-center justify-center gap-2">
               <CheckCheck />{' '}
@@ -170,7 +164,11 @@ const WaitingRoom = () => {
       </section>
 
       <section className="h-4/5 min-w-[15rem] max-w-[20rem]">
-        <Chatting myName={myName}></Chatting>
+        <Chatting
+          myName={myName}
+          chatMessages={chatMessages}
+          sendMessage={sendMessage}
+        ></Chatting>
       </section>
     </section>
   );
