@@ -1,10 +1,11 @@
-import type { Metadata } from 'next';
-import React from 'react';
-import Script from 'next/script';
-import './globals.css';
-import { pretendard, notoSans } from './fonts/fonts';
+import { Toaster } from '@/components';
 import { ModalRenderer } from '@/components/Modal';
 import Providers from '@/utils/providers';
+import type { Metadata } from 'next';
+import Script from 'next/script';
+import React from 'react';
+import { notoSans, pretendard } from './fonts/fonts';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -50,6 +51,7 @@ export default function RootLayout({
         )}
         <Providers>
           {children}
+          <Toaster />
           <ModalRenderer />
         </Providers>
       </body>
