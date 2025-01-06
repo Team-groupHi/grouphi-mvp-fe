@@ -37,9 +37,7 @@ const CreateBalanceGameModal = ({
   };
 
   const formSchema = z.object({
-    questionCount: z.array(
-      z.number().min(QUESTIONS_COUNT.MIN).max(QUESTIONS_COUNT.MAX)
-    ),
+    questionCount: z.number().min(QUESTIONS_COUNT.MIN).max(QUESTIONS_COUNT.MAX),
     hostName: z
       .string()
       .trim()
@@ -68,13 +66,13 @@ const CreateBalanceGameModal = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       hostName: '',
-      questionCount: [QUESTIONS_COUNT.MIN],
+      questionCount: QUESTIONS_COUNT.MIN,
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log('form values : ', values);
-    setQuestionCount(values.questionCount[0]);
+    setQuestionCount(values.questionCount);
     setHostName(values.hostName);
 
     createRoomMutation.mutate();
@@ -106,8 +104,8 @@ const CreateBalanceGameModal = ({
                       질문의 개수
                     </Label>
                     <Slider
-                      defaultValue={value}
-                      onValueChange={onChange}
+                      defaultValue={[value]}
+                      onValueChange={(v) => onChange(v[0])}
                       min={QUESTIONS_COUNT.MIN}
                       max={QUESTIONS_COUNT.MAX}
                       step={QUESTIONS_COUNT.STEP}
