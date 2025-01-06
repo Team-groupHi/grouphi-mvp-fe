@@ -1,6 +1,8 @@
 'use client';
+import Link from 'next/link';
 import Lottie from 'react-lottie-player';
 import groupHi_Spinner from '../../public/groupHi_404.json';
+import { Button } from '@/components';
 
 export default function NotFound() {
   return (
@@ -12,13 +14,20 @@ export default function NotFound() {
           play
         />
       </div>
-      <p className="text-lg mt-8 mb-6">존재하지 않는 페이지에요.</p>
-      <a
+      <h4 className="text-lg mt-8 mb-6">존재하지 않는 페이지에요.</h4>
+      {/* <a
         href="/"
         className="text-primary underline hover:text-primary-600 transition-colors"
       >
         홈으로 돌아가기
-      </a>
+      </a> */}
+      <Button
+        asChild
+        variant="link"
+        className="text-primary underline hover:text-primary-600 transition-colors"
+      >
+        <Link href="/">홈으로 돌아가기</Link>
+      </Button>
     </div>
   );
 }
