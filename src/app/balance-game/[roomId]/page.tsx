@@ -1,7 +1,13 @@
 'use client';
 
 import { GameListCard, UserInfoCard, Chatting, Button } from '@/components';
-import { Loader, Link, CheckCheck, MousePointer2 } from 'lucide-react';
+import {
+  Loader,
+  Link,
+  CheckCheck,
+  MousePointer2,
+  SlidersHorizontal,
+} from 'lucide-react';
 import { redirect, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import useModalStore from '@/store/useModalStore';
@@ -110,37 +116,51 @@ const WaitingRoom = () => {
           className="h-16 pointer-events-none"
         ></GameListCard>
 
-        {isRoomManager && isAllReady && (
-          <Button
-            className="text-base font-semibold"
-            size="xl"
-            onClick={handleGameStart}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <CheckCheck />{' '}
-              <span>
-                게임 시작({readyCount}/{players.length})
-              </span>{' '}
-            </div>
-          </Button>
-        )}
-        {isRoomManager && !isAllReady && (
-          <Button
-            className="text-base font-semibold"
-            size="xl"
-            variant={'waiting'}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <Loader />{' '}
-              <span>
-                준비 대기({readyCount}/{players.length})
-              </span>{' '}
-            </div>
-          </Button>
-        )}
+        <section className="flex flex-col gap-2">
+          {isRoomManager && isAllReady && (
+            <Button
+              className="text-base font-semibold w-[12rem]"
+              size="xl"
+              onClick={handleGameStart}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <CheckCheck />{' '}
+                <span>
+                  게임 시작({readyCount}/{players.length})
+                </span>{' '}
+              </div>
+            </Button>
+          )}
+          {isRoomManager && !isAllReady && (
+            <Button
+              className="text-base font-semibold w-[12rem]"
+              size="xl"
+              variant={'waiting'}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <Loader />{' '}
+                <span>
+                  준비 대기({readyCount}/{players.length})
+                </span>{' '}
+              </div>
+            </Button>
+          )}
+          {isRoomManager && (
+            <Button
+              className="text-base font-semibold w-[12rem]"
+              size="xl"
+              onClick={handleGameStart}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <SlidersHorizontal /> <span>게임 변경</span>
+              </div>
+            </Button>
+          )}
+        </section>
+
         {!isRoomManager && isReady && (
           <Button
-            className="text-base font-semibold"
+            className="text-base font-semibold w-[12rem]"
             size="xl"
             variant={'waiting'}
             onClick={handleUnready}
@@ -152,7 +172,7 @@ const WaitingRoom = () => {
         )}
         {!isRoomManager && !isReady && (
           <Button
-            className="text-base font-semibold"
+            className="text-base font-semibold w-[12rem]"
             size="xl"
             onClick={handleReady}
           >
