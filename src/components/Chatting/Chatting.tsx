@@ -21,7 +21,11 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
 
   const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    if (inputRef.current && !e.nativeEvent.isComposing) {
+    if (
+      inputRef.current &&
+      !e.nativeEvent.isComposing &&
+      inputRef.current.value.trim().length !== 0
+    ) {
       sendMessage({
         destination: `${SOCKET.ENDPOINT.ROOM.CHAT}`,
         body: {
