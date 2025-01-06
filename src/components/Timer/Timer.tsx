@@ -51,9 +51,9 @@ const Timer = ({ startTime, endTime }: TimerProps) => {
       <AlarmClock />
       <span className="w-6 text-center">{second}</span>
 
-      <div className="w-full bg-white/20 rounded h-4">
+      <div className="w-full bg-[#5D5293] rounded h-4 overflow-hidden">
         <div
-          className="bg-primary h-full rounded"
+          className="bg-primary h-full rounded "
           style={{ width: `${percentage}%` }}
         />
       </div>
