@@ -4,7 +4,7 @@ import { ReactNode, useEffect, MouseEvent } from 'react';
 
 interface ModalShellProps {
   children: ReactNode;
-  closeModal?: () => void;
+  closeModal: () => void;
 }
 
 const ModalShell = ({ children, closeModal }: ModalShellProps) => {
@@ -17,7 +17,7 @@ const ModalShell = ({ children, closeModal }: ModalShellProps) => {
 
   const handleBackgroundClick = (e: MouseEvent) => {
     if (e.target === e.currentTarget) {
-      if (closeModal) closeModal();
+      closeModal();
     }
   };
 

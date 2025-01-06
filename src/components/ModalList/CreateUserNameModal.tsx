@@ -44,7 +44,7 @@ const CreateUserNameModal = () => {
   };
 
   return (
-    <ModalShell>
+    <ModalShell closeModal={closeModal}>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
