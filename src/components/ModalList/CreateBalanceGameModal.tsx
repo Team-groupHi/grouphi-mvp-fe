@@ -1,12 +1,11 @@
 'use client';
-import React from 'react';
-import { useRef, useState } from 'react';
 import { Button, Input, Label, ModalShell, Slider } from '@/components';
-import { createRoom } from '@/services/rooms';
 import { PATH } from '@/constants/router';
+import { createRoom } from '@/services/rooms';
+import useRoomStore from '@/store/useRoomStore';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import useRoomStore from '@/store/useRoomStore';
+import React, { useRef, useState } from 'react';
 
 interface BalanceGameModalProps {
   closeModal: () => void;
@@ -31,7 +30,7 @@ const CreateBalanceGameModal = ({
   const { setRoomId, setHostName, setQuestionCount } = useRoomStore();
 
   const createRoomMutation = useMutation({
-    mutationFn: () => createRoom(optionPropsNumber),
+    mutationFn: () => createRoom(optionPropsNumber.toString()),
     onSuccess: (roomId) => {
       if (roomId) {
         setRoomId(roomId);
