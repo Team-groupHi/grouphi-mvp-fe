@@ -143,7 +143,6 @@ export function useWebSocket() {
 
   const addChatMessage = (newMessage: ChatMessage) => {
     setChatMessages((prevMessages) => [...prevMessages, newMessage]);
-    console.log(chatMessages);
   };
 
   return { chatMessages, connect, disconnect, sendMessage };
