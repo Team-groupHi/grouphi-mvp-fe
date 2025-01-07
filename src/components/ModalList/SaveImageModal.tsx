@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/Button';
 import ModalShell from '../Modal/ModalShell';
-import { saveAs } from 'file-saver'; // file-saver를 임포트
+import { saveAs } from 'file-saver';
 import { useToast } from '@/hooks/useToast';
 
 interface SaveImageModalProps {
