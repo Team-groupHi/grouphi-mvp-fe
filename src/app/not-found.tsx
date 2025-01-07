@@ -21,11 +21,7 @@ export default function NotFound() {
       >
         홈으로 돌아가기
       </a> */}
-      <Button
-        asChild
-        variant="link"
-        className="text-primary underline hover:text-primary-600 transition-colors"
-      >
+      <Button asChild={true}>
         <Link href="/">홈으로 돌아가기</Link>
       </Button>
     </div>
