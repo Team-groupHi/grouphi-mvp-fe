@@ -13,3 +13,4 @@ export {
 } from './Toast';
 export { Slider } from './Slider';
 export { GameListCard } from './GameListCard';
+export { Spinner } from './Spinner';
