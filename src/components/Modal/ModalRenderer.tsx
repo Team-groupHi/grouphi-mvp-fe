@@ -40,7 +40,6 @@ const ModalRenderer = () => {
   if (!activeModal) return null;
   const DynamicModal = loadModal(activeModal);
 
-  console.log(optionPropsNumber);
   return (
     <Suspense fallback={<Temploading />}>
       {isOpen && DynamicModal && (
