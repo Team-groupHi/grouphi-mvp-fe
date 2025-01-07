@@ -32,14 +32,14 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
       ) : (
         <div className="flex h-8 min-w-[50%] h-5">
           <BarItem
-            className={`bg-primary ${votes2 === 0 && 'rounded-r-full'}`}
+            className={clsx('bg-primary', votes2 === 0 && 'rounded-r-full')}
             isLeft={true}
             percentage={percentageCandidate1}
             votes={votes1}
           />
 
           <BarItem
-            className={`bg-secondary ${votes1 === 0 && 'rounded-l-full'} `}
+            className={clsx('bg-secondary', votes1 === 0 && 'rounded-l-full')}
             isLeft={false}
             percentage={percentageCandidate2}
             votes={votes2}
@@ -70,7 +70,7 @@ const BarItem = ({ className, isLeft, percentage, votes }: BarItemProps) => (
         )}
         style={{ width: `${percentage}%` }}
       >
-        <span className="font-bold text-sm bg-clip-text text-transparent bg-gradient-purple text-center w-full">
+        <span className="font-bold text-sm text-purple text-center w-full">
           {votes}
         </span>
       </TooltipTrigger>
