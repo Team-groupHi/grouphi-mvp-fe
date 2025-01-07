@@ -18,6 +18,7 @@ export interface RoomGetResponse {
 export interface Player {
   name: string;
   isReady: boolean;
+  avatar: string;
 }
 
 export interface BalanceGameResultGetResponse {
