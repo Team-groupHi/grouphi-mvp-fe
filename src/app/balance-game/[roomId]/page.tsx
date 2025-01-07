@@ -1,19 +1,19 @@
 'use client';
 
-import { UserInfoCard, Chatting, Button } from '@/components';
-import { Link } from 'lucide-react';
-import { redirect, usePathname } from 'next/navigation';
-import { useEffect } from 'react';
-import useModalStore from '@/store/useModalStore';
+import { Button, Chatting, Spinner, UserInfoCard } from '@/components';
+import { QUERYKEY } from '@/constants/querykey';
+import { PATH } from '@/constants/router';
+import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
+import { useToast } from '@/hooks/useToast';
 import { useWebSocket } from '@/hooks/useWebSocket';
+import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
-import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
-import { QUERYKEY } from '@/constants/querykey';
-import { PATH } from '@/constants/router';
+import { Link } from 'lucide-react';
+import { redirect, usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 import PrevGame from './PrevGame';
-import { useToast } from '@/hooks/useToast';
 
 const WaitingRoom = () => {
   const path = usePathname();
@@ -54,9 +54,8 @@ const WaitingRoom = () => {
     });
   };
 
-  //@TODO: roomDetail이 없는 경우에는 스피너 컴포넌트 적용
   if (!myName || !roomDetail) {
-    return;
+    return <Spinner />;
   }
 
   return (
