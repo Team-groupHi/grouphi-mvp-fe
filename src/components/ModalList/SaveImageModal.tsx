@@ -3,6 +3,8 @@ import { Button } from '@/components/Button';
 import ModalShell from '../Modal/ModalShell';
 import { saveAs } from 'file-saver';
 import { useToast } from '@/hooks/useToast';
+import Label from '../Label';
+import { Save } from 'lucide-react';
 
 interface SaveImageModalProps {
   closeModal: () => void;
@@ -34,7 +36,9 @@ const SaveImageModal = ({
 
   return (
     <ModalShell closeModal={closeModal}>
-      <section className="flex flex-col">
+      <section className="flex flex-col justify-center items-center gap-4">
+        <Label>캡쳐 완료 ✅</Label>
+        <Label>사진을 저장해 게임 결과를 공유해보세요!</Label>
         <Image
           src={imageUrl}
           alt="resultImage"
@@ -43,7 +47,10 @@ const SaveImageModal = ({
           sizes="100vw"
           style={{ width: '100%', height: 'auto' }} // optional
         />
-        <Button onClick={handleSaveImage}>저장하기</Button>
+        <Button onClick={handleSaveImage}>
+          <Save />
+          사진 다운로드
+        </Button>
       </section>
     </ModalShell>
   );
