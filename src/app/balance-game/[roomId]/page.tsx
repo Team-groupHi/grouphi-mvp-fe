@@ -74,8 +74,7 @@ const WaitingRoom = () => {
           <UserInfoCard
             key={index}
             {...data}
-            //@TODO: players에 프로필 사진 정보 오도록 변경되면 여기도 수정하기
-            fileName="blue"
+            fileName={data.avatar}
           />
         ))}
       </section>
