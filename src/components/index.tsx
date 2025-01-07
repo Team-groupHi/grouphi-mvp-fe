@@ -26,6 +26,7 @@ export { ModalRenderer, ModalShell } from './Modal';
 export { Navigation } from './Navigation';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';
+export { Spinner } from './Spinner';
 export {
   Toast,
   ToastAction,

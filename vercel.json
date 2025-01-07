@@ -17,6 +17,15 @@
           "value": "max-age=0, s-maxage=86400"
         }
       ]
+    },
+    {
+      "source": "/loading/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=604800, immutable"
+        }
+      ]
     }
   ]
 }
