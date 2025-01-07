@@ -31,6 +31,7 @@ export { PieChart } from './PieChart';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';
 export { Spinner } from './Spinner';
+export { default as Timer } from './Timer';
 export {
   Toast,
   ToastAction,
@@ -43,3 +44,4 @@ export {
   type ToastActionElement,
   type ToastProps,
 } from './Toast';
+export { default as UserInfoCard } from './UserInfoCard';
