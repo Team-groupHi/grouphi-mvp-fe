@@ -30,22 +30,16 @@ export { Navigation } from './Navigation';
 export { PieChart } from './PieChart';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';
+export { Spinner } from './Spinner';
 export {
   Toast,
-  Toaster,
-  type ToastProps,
-  type ToastActionElement,
-  ToastProvider,
-  ToastViewport,
-  ToastTitle,
-  ToastDescription,
-  ToastClose,
   ToastAction,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+  Toaster,
+  type ToastActionElement,
+  type ToastProps,
 } from './Toast';
-export {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-  TooltipProvider,
-} from './Tooltip';
-export { default as UserInfoCard } from './UserInfoCard';

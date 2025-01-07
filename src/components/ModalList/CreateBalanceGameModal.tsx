@@ -1,12 +1,25 @@
 'use client';
-import React from 'react';
-import { useRef, useState } from 'react';
-import { Button, Input, Label, ModalShell, Slider } from '@/components';
-import { createRoom } from '@/services/rooms';
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+  Input,
+  Label,
+  ModalShell,
+  Slider,
+} from '@/components';
+import { FORM } from '@/constants/form';
 import { PATH } from '@/constants/router';
+import { createRoom } from '@/services/rooms';
+import useRoomStore from '@/store/useRoomStore';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import useRoomStore from '@/store/useRoomStore';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 interface BalanceGameModalProps {
   closeModal: () => void;
@@ -23,15 +36,24 @@ const CreateBalanceGameModal = ({
     STEP: 2,
   };
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [count, setCount] = useState([QUESTIONS_COUNT.MIN]);
-  const [error, setError] = useState(false);
+  const formSchema = z.object({
+    questionCount: z.number().min(QUESTIONS_COUNT.MIN).max(QUESTIONS_COUNT.MAX),
+    hostName: z
+      .string()
+      .trim()
+      .min(FORM.NAME.MIN, {
+        message: '닉네임은 2-15글자 이내 작성해주세요.(공백 제외)',
+      })
+      .max(FORM.NAME.MAX, {
+        message: '닉네임은 2-15글자 이내 작성해주세요.(공백 제외)',
+      }),
+  });
 
   const router = useRouter();
   const { setRoomId, setHostName, setQuestionCount } = useRoomStore();
 
   const createRoomMutation = useMutation({
-    mutationFn: () => createRoom(optionPropsNumber),
+    mutationFn: () => createRoom(optionPropsNumber.toString()),
     onSuccess: (roomId) => {
       if (roomId) {
         setRoomId(roomId);
@@ -40,85 +62,97 @@ const CreateBalanceGameModal = ({
     },
   });
 
-  const handleInputEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
-  };
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      hostName: '',
+      questionCount: QUESTIONS_COUNT.MIN,
+    },
+  });
 
-  const handleCreateGame = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (count[0] > 0 && inputRef.current?.value) {
-      setQuestionCount(count[0]);
-      setHostName(inputRef.current?.value);
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log('form values : ', values);
+    setQuestionCount(values.questionCount);
+    setHostName(values.hostName);
 
-      setError(false);
-      closeModal();
-      createRoomMutation.mutate();
-    } else {
-      setError(true);
-    }
+    createRoomMutation.mutate();
+    closeModal();
   };
 
   return (
     <ModalShell closeModal={closeModal}>
-      <form
-        id="create-room-form"
-        className="flex flex-col px-300 py-600 gap-700"
-        onSubmit={handleCreateGame}
-      >
-        <section>
-          <span className="font-bold">방 생성하기</span>
-        </section>
-        <section className="flex flex-col gap-600">
-          <section className="flex gap-500 items-center">
-            <Label
-              className="w-24"
-              htmlFor="question-count"
+      <section>
+        <span className="font-bold">방 생성하기</span>
+      </section>
+      <Form {...form}>
+        <form
+          id="create-room-form"
+          className="flex flex-col px-300 py-600 gap-600"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormField
+            control={form.control}
+            name="questionCount"
+            render={({ field: { value, onChange } }) => (
+              <FormItem>
+                <FormControl>
+                  <section className="flex gap-500 items-center min-h-9">
+                    <Label
+                      className="w-24"
+                      htmlFor="question-count"
+                    >
+                      질문의 개수
+                    </Label>
+                    <Slider
+                      defaultValue={[value]}
+                      onValueChange={(v) => onChange(v[0])}
+                      min={QUESTIONS_COUNT.MIN}
+                      max={QUESTIONS_COUNT.MAX}
+                      step={QUESTIONS_COUNT.STEP}
+                    />
+                    <span className="w-4 text-subtitle">{value}</span>
+                  </section>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="hostName"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <section className="flex gap-500 items-center">
+                    <Label
+                      className="w-24"
+                      htmlFor="nickname-input"
+                    >
+                      닉네임
+                    </Label>
+                    <section className="flex flex-col gap-200 w-full">
+                      <Input
+                        placeholder="2-15자 이내로 작성해주세요"
+                        {...field}
+                      />
+                    </section>
+                  </section>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <section className="flex gap-300 self-end">
+            <Button type="submit">생성하기</Button>
+            <Button
+              variant="secondary"
+              onClick={closeModal}
             >
-              질문의 개수
-            </Label>
-            <Slider
-              name="question-count"
-              value={count}
-              onValueChange={setCount}
-              min={QUESTIONS_COUNT.MIN}
-              max={QUESTIONS_COUNT.MAX}
-              step={QUESTIONS_COUNT.STEP}
-            />
-            <span className="w-4 text-subtitle">{count}</span>
+              닫기
+            </Button>
           </section>
-          <section className="flex gap-500 items-center">
-            <Label
-              className="w-24"
-              htmlFor="nickname-input"
-            >
-              닉네임
-            </Label>
-            <section className="flex flex-col gap-200 w-full">
-              <Input
-                name="nickname-input"
-                onKeyDown={handleInputEnter}
-                ref={inputRef}
-              />
-              {error && (
-                <section className="text-warning-500 text-subtitle">
-                  닉네임을 작성해주세요
-                </section>
-              )}
-            </section>
-          </section>
-        </section>
-        <section className="flex gap-300 self-end">
-          <Button type="submit">생성하기</Button>
-          <Button
-            variant="secondary"
-            onClick={closeModal}
-          >
-            닫기
-          </Button>
-        </section>
-      </form>
+        </form>
+      </Form>
     </ModalShell>
   );
 };
