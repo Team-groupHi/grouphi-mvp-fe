@@ -44,10 +44,10 @@ const FinalResultChart = ({ data }: FinalResultChartProps) => {
   };
 
   return (
-    <section className="bg-container-600 h-full w-full flex flex-col justify-center items-center rounded-lg gap-8 p-8">
+    <section className="bg-container-600 h-full w-full flex flex-col items-center rounded-lg gap-8 p-8 overflow-y-auto">
       <h1 className="text-lg font-semibold">최종 결과</h1>
       <section
-        className="w-full overflow-y-auto gap-2 flex flex-col items-center bg-container-600 p-3"
+        className="w-full gap-2 flex flex-col items-center bg-container-600 p-3"
         ref={chartRef}
       >
         {data.map((result, index) => (
