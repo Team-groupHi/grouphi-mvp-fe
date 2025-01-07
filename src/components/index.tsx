@@ -44,4 +44,10 @@ export {
   type ToastActionElement,
   type ToastProps,
 } from './Toast';
+export {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from './Tooltip';
 export { default as UserInfoCard } from './UserInfoCard';
