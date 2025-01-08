@@ -15,12 +15,6 @@ export default function NotFound() {
         />
       </div>
       <h4 className="text-lg mt-8 mb-6">존재하지 않는 페이지에요.</h4>
-      {/* <a
-        href="/"
-        className="text-primary underline hover:text-primary-600 transition-colors"
-      >
-        홈으로 돌아가기
-      </a> */}
       <Button asChild={true}>
         <Link href="/">홈으로 돌아가기</Link>
       </Button>
