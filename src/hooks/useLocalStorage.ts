@@ -2,7 +2,7 @@
 
 interface LocalStorageReturnProps {
   setItem: (key: string, value: string) => void;
-  getItem: (key: string) => string;
+  getItem: (key: string) => string | null;
   removeItem: (key: string) => void;
   clearStorage: () => void;
 }
@@ -11,17 +11,20 @@ export const useLocalStorage = (): LocalStorageReturnProps => {
   const localStorage = window.localStorage;
 
   const setItem = (key: string, value: string) => {
-    localStorage.setItem(key, JSON.stringify(value));
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      console.error('[LocalStorage Error] ', e);
+    }
   };
 
-  const getItem = (key: string): string => {
-    const value = localStorage.getItem(key);
-
-    if (value) {
-      return JSON.parse(value);
-    } else {
-      console.error("[LocalStorage Error] There isn't accessible key.");
-      return '';
+  const getItem = (key: string) => {
+    try {
+      const value = localStorage.getItem(key);
+      return value && JSON.parse(value);
+    } catch (e) {
+      console.error('[LocalStorage Error] ', e);
+      return null;
     }
   };
 
