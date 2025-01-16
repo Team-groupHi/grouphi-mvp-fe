@@ -18,12 +18,14 @@ export {
 } from './Form';
 export { GameListCard } from './GameListCard';
 export { HomeClient } from './HomeClient';
+export { InitialNickname } from './InitialNickname';
 export { default as Input } from './Input';
 export { default as Label } from './Label';
 export { default as Logo } from './Logo';
 export { MainHeader } from './MainHeader';
 export { ModalRenderer, ModalShell } from './Modal';
 export { Navigation } from './Navigation';
+export { PieChart } from './PieChart';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';
 export { Spinner } from './Spinner';
