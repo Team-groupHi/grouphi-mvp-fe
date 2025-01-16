@@ -170,10 +170,10 @@ const config: Config = {
       },
       borderRadius: {
         DEFAULT: '0.5rem',
-        sm: '0.375rem',
-        md: '0.5rem',
-        lg: '0.625rem',
-        xl: '0.75rem',
+        sm: '0.375rem', // 6px
+        md: '0.5rem', // 8px
+        lg: '0.625rem', // 10px
+        xl: '0.75rem', // 12px
         '2xl': '1rem',
       },
       borderWidth: {
