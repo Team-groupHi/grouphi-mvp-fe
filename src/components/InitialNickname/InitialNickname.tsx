@@ -15,7 +15,7 @@ const InitialNickname = ({ children }: InitialNicknameProps) => {
   const initialNickname = () => {
     const nickname = getItem(STORAGE_KEY.NICKNAME);
 
-    if (!nickname) {
+    if (nickname === '') {
       const newNickname = generateRandomNickname();
       setItem(STORAGE_KEY.NICKNAME, newNickname);
     }
