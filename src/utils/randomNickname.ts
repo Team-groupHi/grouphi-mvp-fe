@@ -1,9 +1,9 @@
-import { NICKNAME } from '@/constants/name';
+import nickname from '../../public/data/nickname.json';
 
 export const generateRandomNickname = () => {
   const starName =
-    NICKNAME.STARS[Math.floor(Math.random() * NICKNAME.STARS.length)];
-  const job = NICKNAME.JOBS[Math.floor(Math.random() * NICKNAME.JOBS.length)];
+    nickname.stars[Math.floor(Math.random() * nickname.stars.length)];
+  const job = nickname.jobs[Math.floor(Math.random() * nickname.jobs.length)];
 
   return `${starName}별 ${job}`;
 };
