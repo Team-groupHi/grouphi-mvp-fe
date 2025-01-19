@@ -18,7 +18,7 @@ const UserInfoCard = ({ name, isReady, fileName }: UserInfoCardProps) => {
           fill={true}
         ></Image>
       </figure>
-      <div className="px-5 flex items-center font-bold">
+      <div className="w-3/4 px-5 flex items-center font-bold">
         <span>{name}</span>
       </div>
     </section>
