@@ -97,6 +97,7 @@ const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
         )}
         {isRoomManager && (
           <Button
+            variant={'secondary'}
             className="text-base font-semibold w-[12rem]"
             size="xl"
             onClick={handleGameChange}
