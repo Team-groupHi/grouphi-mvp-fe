@@ -1,7 +1,7 @@
 'use client';
 
 import { AlarmClock } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface TimerProps {
   startTime: number;
@@ -15,21 +15,21 @@ const Timer = ({ startTime, endTime }: TimerProps) => {
   const percentage = (timeLeft / totalTime) * 100;
   const second = Math.ceil(timeLeft / 1000);
 
-  let rafId: number;
+  const rafId = useRef(0);
 
-  const updateTimer = () => {
+  const updateTimer = useCallback(() => {
     const curTime = Date.now();
 
     setTimeLeft(() => {
       if (curTime >= endTime) {
-        cancelAnimationFrame(rafId);
+        cancelAnimationFrame(rafId.current);
         return 0;
       }
       return endTime - curTime;
     });
 
-    rafId = requestAnimationFrame(updateTimer);
-  };
+    rafId.current = requestAnimationFrame(updateTimer);
+  }, [endTime]);
 
   useEffect(() => {
     const curTime = Date.now();
@@ -37,14 +37,14 @@ const Timer = ({ startTime, endTime }: TimerProps) => {
     if (curTime < startTime) {
       const delay = startTime - curTime;
       const timerId = setTimeout(() => {
-        rafId = requestAnimationFrame(updateTimer);
+        rafId.current = requestAnimationFrame(updateTimer);
         setTimeLeft(endTime - Date.now());
       }, delay);
       return () => clearTimeout(timerId);
     } else {
-      rafId = requestAnimationFrame(updateTimer);
+      rafId.current = requestAnimationFrame(updateTimer);
     }
-  }, []);
+  }, [endTime, startTime, updateTimer]);
 
   return (
     <section className="flex items-center justify-center gap-2 w-full text-title1 font-semibold">
