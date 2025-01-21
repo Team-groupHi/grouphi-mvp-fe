@@ -193,6 +193,15 @@ const config: Config = {
         high: '.75',
         max: '.9',
       },
+      keyframes: {
+        spinSlow: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(-360deg)' },
+        },
+      },
+      animation: {
+        'spin-slow': 'spinSlow 5s linear infinite',
+      },
     },
   },
   plugins: [animate],

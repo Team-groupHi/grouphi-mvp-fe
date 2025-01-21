@@ -1,9 +1,9 @@
-import Chatting from '@/components/Chatting';
-import { CHAT_DUMMY, MY_NAME, USER_DUMMY, GAME_INFO } from './DUMMY';
-import UserInfoCard from '@/components/UserInfoCard';
-import { GameListCard } from '@/components/GameListCard';
 import { Button } from '@/components/Button';
-import { Loader, Link, CheckCheck, MousePointer2 } from 'lucide-react';
+import Chatting from '@/components/Chatting';
+import { GameListCard } from '@/components/GameListCard';
+import UserInfoCard from '@/components/UserInfoCard';
+import { CheckCheck, Link, Loader, MousePointer2 } from 'lucide-react';
+import { CHAT_DUMMY, GAME_INFO, MY_NAME, USER_DUMMY } from './DUMMY';
 
 const WaitingRoom = () => {
   // @TODO: 더미데이터를 활용한 로직이므로 추후에 소켓 연동 후 변경 필요
