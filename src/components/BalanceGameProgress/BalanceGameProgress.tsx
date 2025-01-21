@@ -68,7 +68,7 @@ const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
       </section>
 
       <section className="mt-6 text-sm text-light font-semibold">
-        {round.currentRound}/{totalRounds}
+        {round.currentRound}/{round.totalRounds}
       </section>
     </main>
   );
