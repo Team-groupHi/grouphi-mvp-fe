@@ -47,6 +47,7 @@ const CreateUserNameModal = () => {
     <ModalShell closeModal={closeModal}>
       <Form {...form}>
         <form
+          noValidate
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8"
         >
@@ -58,7 +59,7 @@ const CreateUserNameModal = () => {
                 <FormLabel>닉네임</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="username"
+                    placeholder="닉네임"
                     {...field}
                   />
                 </FormControl>
