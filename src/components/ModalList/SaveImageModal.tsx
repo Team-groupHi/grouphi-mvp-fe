@@ -19,19 +19,18 @@ const SaveImageModal = ({
 
   const { toast } = useToast();
 
-  const handleSaveImage = () => {
-    fetch(imageUrl)
-      .then((response) => response.blob())
-      .then((blob) => {
-        saveAs(blob, 'resultImage.png');
-      })
-      .catch(() => {
-        toast({
-          title: '사진 저장에 실패했어요! 다시 시도해주세요.',
-          duration: 2000,
-          variant: 'destructive',
-        });
+  const handleSaveImage = async () => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      saveAs(blob, 'resultImage.png');
+    } catch {
+      toast({
+        title: '사진 저장에 실패했어요! 다시 시도해주세요.',
+        duration: 2000,
+        variant: 'destructive',
       });
+    }
   };
 
   return (

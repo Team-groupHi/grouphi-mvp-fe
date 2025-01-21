@@ -18,7 +18,7 @@ const FinalResultChart = ({ data }: FinalResultChartProps) => {
   const { openModal } = useModalStore();
   const { toast } = useToast();
 
-  const handleShareClick = () => {
+  const handleShareClick = async () => {
     if (chartRef.current) {
       const style = document.createElement('style');
       document.head.appendChild(style);
@@ -26,20 +26,19 @@ const FinalResultChart = ({ data }: FinalResultChartProps) => {
         'body > div:last-child img { display: inline-block; }'
       );
 
-      html2canvas(chartRef.current, { scale: 2 })
-        .then((canvas) => {
-          style.remove();
-          const dataUrl = canvas.toDataURL('image/png');
+      try {
+        const canvas = await html2canvas(chartRef.current, { scale: 2 });
+        style.remove();
 
-          openModal('SaveImageModal', dataUrl);
-        })
-        .catch(() => {
-          toast({
-            title: '결과 사진 캡처에 실패했어요! 다시 시도해주세요.',
-            duration: 2000,
-            variant: 'destructive',
-          });
+        const dataUrl = canvas.toDataURL('image/png');
+        openModal('SaveImageModal', dataUrl);
+      } catch {
+        toast({
+          title: '결과 사진 캡처에 실패했어요! 다시 시도해주세요.',
+          duration: 2000,
+          variant: 'destructive',
         });
+      }
     }
   };
 
