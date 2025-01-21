@@ -138,6 +138,10 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
+      case SOCKET.TYPE.BG_SELECT:
+        //@Todo
+        // 전원 다 선택을 했을 경우 바로 중간 결과로 가는 로직 필요
+        break;
       case SOCKET.TYPE.BG_START:
         setRoomStatus('progress');
         setRound(content);
