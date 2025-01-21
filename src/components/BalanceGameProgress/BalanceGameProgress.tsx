@@ -1,12 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Timer from '@/components/Timer';
 import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import * as StompJS from '@stomp/stompjs';
+import { SOCKET } from '@/constants/websocket';
 
-const BalanceGameProgress = () => {
-  const { totalRounds, round } = useBalanceGameStore();
+interface BalanceGameProgressProps {
+  sendMessage: <T>(
+    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
+  ) => void;
+}
+
+const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
+  const { totalRounds, round, setRoomStatus } = useBalanceGameStore();
   const startTime = new Date(
     new Date(round.startTime).getTime() + 9 * 60 * 60 * 1000
   ).getTime();
@@ -14,17 +22,28 @@ const BalanceGameProgress = () => {
     new Date(round.endTime).getTime() + 9 * 60 * 60 * 1000
   ).getTime();
 
+  const [isTimeout, setIsTimeout] = useState(false);
+
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isTimeout) {
+      setRoomStatus('result');
+    }
+  }, [isTimeout, setRoomStatus]);
 
   const handleSelect = (option: string) => {
     setSelectedOption(option);
 
-    //@Todo
-    // 타이머 끝났을 때 선택된 선택지 전송 a, b, 미선택
-    // 타이머 정보(끝났다는 상태)를 이 컴포넌트에서 판단해야 함.
-
-    //@Todo
-    // 전원 다 선택을 했을 경우 바로 중간 결과로 가는 로직 필요
+    sendMessage({
+      destination:
+        option === round.a
+          ? SOCKET.ENDPOINT.BALANCE_GAME.SELECT_A
+          : SOCKET.ENDPOINT.BALANCE_GAME.SELECT_B,
+      body: {
+        currentRound: round.currentRound,
+      },
+    });
   };
 
   return (
@@ -33,6 +52,7 @@ const BalanceGameProgress = () => {
         <Timer
           startTime={startTime}
           endTime={endTime}
+          setIsTimeout={setIsTimeout}
         />
       </div>
 

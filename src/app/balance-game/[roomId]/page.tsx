@@ -93,7 +93,9 @@ const WaitingRoom = () => {
             sendMessage={sendMessage}
           />
         )}
-        {roomStatus === 'progress' && <BalanceGameProgress />}
+        {roomStatus === 'progress' && (
+          <BalanceGameProgress sendMessage={sendMessage} />
+        )}
         {roomStatus === 'result' && <div>result</div>}
         {roomStatus === 'finalResult' && <div>finalResult</div>}
       </section>

@@ -6,9 +6,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 interface TimerProps {
   startTime: number;
   endTime: number;
+  setIsTimeout?: (props: boolean) => void;
 }
 
-const Timer = ({ startTime, endTime }: TimerProps) => {
+const Timer = ({ startTime, endTime, setIsTimeout }: TimerProps) => {
   const totalTime = endTime - startTime;
   const [timeLeft, setTimeLeft] = useState(totalTime);
 
@@ -23,6 +24,9 @@ const Timer = ({ startTime, endTime }: TimerProps) => {
     setTimeLeft(() => {
       if (curTime >= endTime) {
         cancelAnimationFrame(rafId.current);
+        if (setIsTimeout) {
+          setIsTimeout(true);
+        }
         return 0;
       }
       return endTime - curTime;
