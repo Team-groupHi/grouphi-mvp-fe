@@ -1,6 +1,7 @@
 import { describe, test, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { GameListCard } from './';
+import Image from 'next/image';
 
 describe('GameListCard', () => {
   test('1) title, description이 잘 렌더링된다.', () => {
@@ -18,7 +19,7 @@ describe('GameListCard', () => {
     vi.mock('next/image', () => ({
       __esModule: true,
       default: ({ src, alt }: { src: string; alt: string }) => (
-        <img
+        <Image
           src={src}
           alt={alt}
         />
