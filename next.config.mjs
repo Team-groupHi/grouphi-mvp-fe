@@ -1,8 +1,6 @@
 import { withSentryConfig } from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: false, // todo: 웹소켓 테스트 후 삭제
-};
+const nextConfig = {};
 
 export default withSentryConfig(nextConfig, {
   // For all available options, see:
