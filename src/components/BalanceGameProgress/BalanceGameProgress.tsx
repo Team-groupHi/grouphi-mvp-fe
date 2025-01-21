@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Timer from '@/components/Timer';
 import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
@@ -21,7 +21,7 @@ const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
 
   useEffect(() => {
     if (isTimeout === true) {
-      //setRoomStatus('result');
+      setRoomStatus('result');
     }
   }, [isTimeout, setRoomStatus]);
 
@@ -40,34 +40,36 @@ const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md mb-4">
+    <main className="flex flex-col items-center justify-center p-8 h-full">
+      <section className="w-full mb-4 flex flex-col items-center gap-4">
         <Timer
           startTime={round.startTime}
           endTime={round.endTime}
           setIsTimeout={setIsTimeout}
         />
-      </div>
+      </section>
 
-      <h2 className="text-xl text-light font-bold mb-6">{round.q}</h2>
+      <section className="h-full flex flex-col items-center justify-center">
+        <h2 className="text-xl text-light font-bold mb-6">{round.q}</h2>
 
-      <div className="flex items-center justify-center gap-6">
-        <BalanceGameQuestionCard
-          label={round.a}
-          selectedAnimal={selectedOption}
-          onSelect={() => handleSelect(round.a)}
-        />
-        <span className="text-title1 font-bold text-light">VS</span>
-        <BalanceGameQuestionCard
-          label={round.b}
-          selectedAnimal={selectedOption}
-          onSelect={() => handleSelect(round.b)}
-        />
-      </div>
+        <section className="flex items-center justify-center gap-6">
+          <BalanceGameQuestionCard
+            label={round.a}
+            selectedAnimal={selectedOption}
+            onSelect={() => handleSelect(round.a)}
+          />
+          <span className="text-title1 font-bold text-light">VS</span>
+          <BalanceGameQuestionCard
+            label={round.b}
+            selectedAnimal={selectedOption}
+            onSelect={() => handleSelect(round.b)}
+          />
+        </section>
+      </section>
 
-      <div className="mt-6 text-sm text-light font-semibold">
+      <section className="mt-6 text-sm text-light font-semibold">
         {round.currentRound}/{totalRounds}
-      </div>
+      </section>
     </main>
   );
 };
