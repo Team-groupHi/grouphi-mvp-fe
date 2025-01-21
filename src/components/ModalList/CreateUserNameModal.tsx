@@ -58,7 +58,7 @@ const CreateUserNameModal = () => {
                 <FormLabel>닉네임</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="username"
+                    placeholder="닉네임"
                     {...field}
                   />
                 </FormControl>
