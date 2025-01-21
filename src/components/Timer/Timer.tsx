@@ -2,15 +2,21 @@
 
 import { AlarmClock } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
+dayjs.extend(utc);
 interface TimerProps {
-  startTime: number;
-  endTime: number;
+  startTime: string;
+  endTime: string;
   setIsTimeout?: (props: boolean) => void;
 }
 
 const Timer = ({ startTime, endTime, setIsTimeout }: TimerProps) => {
-  const totalTime = endTime - startTime;
+  const localStartTime = dayjs.utc(startTime).local().valueOf();
+  const localEndTime = dayjs.utc(endTime).local().valueOf();
+
+  const totalTime = localEndTime - localStartTime;
   const [timeLeft, setTimeLeft] = useState(totalTime);
 
   const percentage = (timeLeft / totalTime) * 100;
@@ -22,27 +28,27 @@ const Timer = ({ startTime, endTime, setIsTimeout }: TimerProps) => {
     const curTime = Date.now();
 
     setTimeLeft(() => {
-      if (curTime >= endTime) {
+      if (curTime >= localEndTime) {
         cancelAnimationFrame(rafId.current);
         if (setIsTimeout) {
           setIsTimeout(true);
         }
         return 0;
       }
-      return endTime - curTime;
+      return localEndTime - curTime;
     });
 
     rafId.current = requestAnimationFrame(updateTimer);
-  }, [endTime]);
+  }, [localEndTime]);
 
   useEffect(() => {
     const curTime = Date.now();
     // 시작 시간이 아직 아니라면 타이머를 대기시킨다.
-    if (curTime < startTime) {
-      const delay = startTime - curTime;
+    if (curTime < localStartTime) {
+      const delay = localStartTime - curTime;
       const timerId = setTimeout(() => {
         rafId.current = requestAnimationFrame(updateTimer);
-        setTimeLeft(endTime - Date.now());
+        setTimeLeft(localEndTime - Date.now());
       }, delay);
       return () => clearTimeout(timerId);
     } else {

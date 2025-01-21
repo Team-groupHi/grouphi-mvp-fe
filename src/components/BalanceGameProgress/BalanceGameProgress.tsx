@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Timer from '@/components/Timer';
 import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
@@ -15,20 +15,13 @@ interface BalanceGameProgressProps {
 
 const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
   const { totalRounds, round, setRoomStatus } = useBalanceGameStore();
-  const startTime = new Date(
-    new Date(round.startTime).getTime() + 9 * 60 * 60 * 1000
-  ).getTime();
-  const endTime = new Date(
-    new Date(round.endTime).getTime() + 9 * 60 * 60 * 1000
-  ).getTime();
-
-  const [isTimeout, setIsTimeout] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [isTimeout, setIsTimeout] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isTimeout) {
-      setRoomStatus('result');
+    if (isTimeout === true) {
+      //setRoomStatus('result');
     }
   }, [isTimeout, setRoomStatus]);
 
@@ -50,8 +43,8 @@ const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
     <main className="flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md mb-4">
         <Timer
-          startTime={startTime}
-          endTime={endTime}
+          startTime={round.startTime}
+          endTime={round.endTime}
           setIsTimeout={setIsTimeout}
         />
       </div>
