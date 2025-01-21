@@ -2,13 +2,16 @@
 
 import { AlarmClock } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
+
+type Time = string | number | Date | Dayjs;
+
 interface TimerProps {
-  startTime: string;
-  endTime: string;
+  startTime: Time;
+  endTime: Time;
   setIsTimeout?: (props: boolean) => void;
 }
 
