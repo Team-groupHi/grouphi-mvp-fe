@@ -1,8 +1,15 @@
 'use client';
+import { QUERYKEY } from '@/constants/querykey';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
 import * as StompJS from '@stomp/stompjs';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
+
+interface EnterRoomProps {
+  roomId: string;
+  name: string;
+}
 
 export function useWebSocket() {
   const BASE_WEBSOCKET_URL = process.env.NEXT_PUBLIC_BASE_WEBSOCKET_URL;
@@ -10,7 +17,9 @@ export function useWebSocket() {
   const [, setSubscription] = useState<StompJS.StompSubscription | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
-  const connect = (roomId: string) => {
+  const queryClient = useQueryClient();
+
+  const connect = ({ roomId, name }: EnterRoomProps) => {
     if (!BASE_WEBSOCKET_URL) {
       throw new Error('NEXT_PUBLIC_BASE_WEBSOCKET_URL is not defined.');
     }
@@ -47,10 +56,14 @@ export function useWebSocket() {
           destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
           body: {
             roomId,
-            name: 'TEST',
+            name,
           },
         });
       }
+    };
+
+    client.current.onWebSocketClose = (e: CloseEvent) => {
+      console.log(e);
     };
 
     client.current.activate();
@@ -99,11 +112,28 @@ export function useWebSocket() {
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 입장했어요.`,
         });
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
         break;
       case SOCKET.TYPE.EXIT:
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 퇴장했어요.`,
+        });
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
+      //@TODO: players 데이터 내부 store로 관리하도록 변경하면서 refetch 로직 제거하기
+      case SOCKET.TYPE.READY:
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
+      case SOCKET.TYPE.UNREADY:
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
       default:
