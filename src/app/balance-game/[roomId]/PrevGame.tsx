@@ -74,10 +74,10 @@ const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
             onClick={handleGameStart}
           >
             <div className="flex items-center justify-center gap-2">
-              <CheckCheck />{' '}
+              <CheckCheck />
               <span>
                 게임 시작({readyCount}/{players.length})
-              </span>{' '}
+              </span>
             </div>
           </Button>
         )}
@@ -88,10 +88,10 @@ const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
             variant={'waiting'}
           >
             <div className="flex items-center justify-center gap-2">
-              <Loader />{' '}
+              <Loader />
               <span>
                 준비 대기({readyCount}/{players.length})
-              </span>{' '}
+              </span>
             </div>
           </Button>
         )}
@@ -102,7 +102,8 @@ const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
             onClick={handleGameChange}
           >
             <div className="flex items-center justify-center gap-2">
-              <SlidersHorizontal /> <span>게임 변경</span>
+              <SlidersHorizontal />
+              <span>게임 변경</span>
             </div>
           </Button>
         )}
@@ -116,7 +117,8 @@ const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
           onClick={handleUnready}
         >
           <div className="flex items-center justify-center gap-2">
-            <CheckCheck /> <span>준비 완료</span>
+            <CheckCheck />
+            <span>준비 완료</span>
           </div>
         </Button>
       )}
