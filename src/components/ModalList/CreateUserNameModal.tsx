@@ -47,6 +47,7 @@ const CreateUserNameModal = () => {
     <ModalShell closeModal={closeModal}>
       <Form {...form}>
         <form
+          noValidate
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8"
         >
