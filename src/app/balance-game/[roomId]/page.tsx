@@ -15,96 +15,20 @@ import { useToast } from '@/hooks/useToast';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
-import { Player } from '@/types/api';
+import { BalanceGameResultGetResponse, Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'lucide-react';
 import { redirect, usePathname } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PrevGame from './PrevGame';
 import BalanceGameProgress from '@/components/BalanceGameProgress';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import { SOCKET } from '@/constants/websocket';
-
-// 현재 상태를 가지고 있어야 함.
-
-const DUMMY_PARTIAL_DATA = [
-  {
-    round: 1,
-    q: '내가 더 좋아하는 동물은?',
-    a: '고양이',
-    b: '강아지',
-    result: {
-      a: ['스코티시', '길다길다길길다길다길길다길다길', '페르시안', '집사'],
-      b: ['치와와', '길다길다길길다길다길길다길다길', '포메라니안', '백구'],
-      c: ['선택못함', '길다길다길길다길다길길다길다길', '자유로운 영혼'],
-    },
-  },
-];
-
-const DUMMY_FINAL_DATA = [
-  {
-    candidate1: '강아지',
-    votes1: 2,
-    candidate2: '고양이',
-    votes2: 7,
-  },
-  {
-    candidate1: '강하띠',
-    votes1: 6,
-    candidate2: '코앵히',
-    votes2: 4,
-  },
-  {
-    candidate1: '사과',
-    votes1: 0,
-    candidate2: '바나나',
-    votes2: 9,
-  },
-  {
-    candidate1: '사과',
-    votes1: 10,
-    candidate2: '바나나',
-    votes2: 0,
-  },
-  {
-    candidate1: '사과',
-    votes1: 5,
-    candidate2: '바나나',
-    votes2: 5,
-  },
-  {
-    candidate1: '사과',
-    votes1: 10,
-    candidate2: '바나나',
-    votes2: 0,
-  },
-  {
-    candidate1: '사과',
-    votes1: 1,
-    candidate2: '바나나',
-    votes2: 9,
-  },
-  {
-    candidate1: '사과',
-    votes1: 5,
-    candidate2: '바나나',
-    votes2: 5,
-  },
-  {
-    candidate1: '사과',
-    votes1: 2,
-    candidate2: '바나나',
-    votes2: 8,
-  },
-];
+import { BarProps } from '@/components/FinalResultChart/Bar';
 
 const WaitingRoom = () => {
   const path = usePathname();
-  const {
-    roomStatus,
-    totalRounds,
-    round: { currentRound },
-  } = useBalanceGameStore();
+  const { roomStatus } = useBalanceGameStore();
   const roomId = path.split('/')[2];
 
   const { openModal, closeModal } = useModalStore();
@@ -115,6 +39,9 @@ const WaitingRoom = () => {
   const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
   const queryClient = useQueryClient();
   const players: Player[] = roomDetail?.players || [];
+
+  const [result, setResult] = useState<BalanceGameResultGetResponse[]>([]);
+  const [finalResult, setFinalResult] = useState<BarProps[]>([]);
 
   const isRoomManager = roomDetail?.hostName === myName;
 
@@ -149,7 +76,7 @@ const WaitingRoom = () => {
     return <Spinner />;
   }
 
-  const handleEnterNextRound = () => {
+  const handleEnterNextRound = async () => {
     sendMessage({
       destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
     });
@@ -192,13 +119,18 @@ const WaitingRoom = () => {
           />
         )}
         {roomStatus === 'progress' && (
-          <BalanceGameProgress sendMessage={sendMessage} />
+          <BalanceGameProgress
+            sendMessage={sendMessage}
+            setResult={setResult}
+            setFinalResult={setFinalResult}
+            roomId={roomId}
+          />
         )}
-        {roomStatus === 'result' && (
-          <PartialResultChart data={DUMMY_PARTIAL_DATA} />
+        {roomStatus === 'result' && result.length !== 0 && (
+          <PartialResultChart data={result} />
         )}
-        {roomStatus === 'finalResult' && (
-          <FinalResultChart data={DUMMY_FINAL_DATA} />
+        {roomStatus === 'finalResult' && finalResult.length !== 0 && (
+          <FinalResultChart data={finalResult} />
         )}
       </section>
 
