@@ -2,7 +2,7 @@
 
 import Input from '@/components/Input';
 import Item from './Item';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
 import * as StompJS from '@stomp/stompjs';
@@ -44,7 +44,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
 
   return (
     <section className="h-full">
-      <section className="bg-container-600 rounded-t-lg h-5/6 overflow-auto">
+      <section className="bg-container-600 rounded-t-lg h-[87%] overflow-auto">
         {chatMessages.map((item, index) => (
           <Item
             key={index}
