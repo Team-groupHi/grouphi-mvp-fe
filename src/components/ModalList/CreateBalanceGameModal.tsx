@@ -15,6 +15,7 @@ import { FORM } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { createRoom } from '@/services/rooms';
 import useRoomStore from '@/store/useRoomStore';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -37,7 +38,7 @@ const CreateBalanceGameModal = ({
   };
 
   const formSchema = z.object({
-    questionCount: z.number().min(QUESTIONS_COUNT.MIN).max(QUESTIONS_COUNT.MAX),
+    totalRounds: z.number().min(QUESTIONS_COUNT.MIN).max(QUESTIONS_COUNT.MAX),
     hostName: z
       .string()
       .trim()
@@ -50,7 +51,8 @@ const CreateBalanceGameModal = ({
   });
 
   const router = useRouter();
-  const { setRoomId, setHostName, setQuestionCount } = useRoomStore();
+  const { setRoomId, setHostName } = useRoomStore();
+  const { setTotalRounds } = useBalanceGameStore();
 
   const createRoomMutation = useMutation({
     mutationFn: () => createRoom(optionPropsNumber.toString()),
@@ -66,13 +68,13 @@ const CreateBalanceGameModal = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       hostName: '',
-      questionCount: QUESTIONS_COUNT.MIN,
+      totalRounds: QUESTIONS_COUNT.MIN,
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log('form values : ', values);
-    setQuestionCount(values.questionCount);
+    setTotalRounds(values.totalRounds);
     setHostName(values.hostName);
 
     createRoomMutation.mutate();
@@ -92,14 +94,14 @@ const CreateBalanceGameModal = ({
         >
           <FormField
             control={form.control}
-            name="questionCount"
+            name="totalRounds"
             render={({ field: { value, onChange } }) => (
               <FormItem>
                 <FormControl>
                   <section className="flex gap-500 items-center min-h-9">
                     <Label
                       className="w-24"
-                      htmlFor="question-count"
+                      htmlFor="total-rounds"
                     >
                       질문의 개수
                     </Label>
