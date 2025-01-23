@@ -22,6 +22,7 @@ import { useEffect } from 'react';
 import PrevGame from './PrevGame';
 import BalanceGameProgress from '@/components/BalanceGameProgress';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import { SOCKET } from '@/constants/websocket';
 
 // 현재 상태를 가지고 있어야 함.
 
@@ -38,6 +39,7 @@ const DUMMY_PARTIAL_DATA = [
     },
   },
 ];
+
 const WaitingRoom = () => {
   const path = usePathname();
   const { roomStatus } = useBalanceGameStore();
@@ -51,6 +53,8 @@ const WaitingRoom = () => {
   const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
   const queryClient = useQueryClient();
   const players: Player[] = roomDetail?.players || [];
+
+  const isRoomManager = roomDetail?.hostName === myName;
 
   useEffect(() => {
     if (!myName) {
@@ -83,6 +87,12 @@ const WaitingRoom = () => {
     return <Spinner />;
   }
 
+  const handleNextRound = () => {
+    sendMessage({
+      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
+    });
+  };
+
   return (
     <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
       <section className="flex flex-col gap-3 h-4/5 min-w-[15rem] max-w-[20rem] relative">
@@ -109,6 +119,7 @@ const WaitingRoom = () => {
           <PrevGame
             roomDetail={roomDetail}
             players={players}
+            isRoomManager={isRoomManager}
             sendMessage={sendMessage}
           />
         )}
@@ -121,12 +132,20 @@ const WaitingRoom = () => {
         {roomStatus === 'finalResult' && <div>finalResult</div>}
       </section>
 
-      <section className="h-4/5 min-w-[15rem] max-w-[20rem]">
+      <section className="flex flex-col h-4/5 min-w-[15rem] max-w-[20rem]">
         <Chatting
           myName={myName}
           chatMessages={chatMessages}
           sendMessage={sendMessage}
         />
+        {roomStatus === 'result' && isRoomManager && (
+          <Button
+            className="w-full"
+            onClick={handleNextRound}
+          >
+            다음 라운드로 이동
+          </Button>
+        )}
       </section>
     </section>
   );

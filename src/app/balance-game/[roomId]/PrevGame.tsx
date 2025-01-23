@@ -14,16 +14,21 @@ import useBalanceGameStore from '@/store/useBalanceGameStore';
 interface PrevGameProps {
   roomDetail: RoomGetResponse;
   players: Player[];
+  isRoomManager: boolean;
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
 }
 
-const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
+const PrevGame = ({
+  roomDetail,
+  players,
+  sendMessage,
+  isRoomManager,
+}: PrevGameProps) => {
   const { myName } = useRoomStore();
   const { setRoomStatus } = useBalanceGameStore();
 
-  const isRoomManager = roomDetail?.hostName === myName;
   const isReady = players.find((player) => player.name === myName)?.isReady;
   const readyCount = players.reduce(
     (count, { isReady }) => count + (isReady ? 1 : 0),

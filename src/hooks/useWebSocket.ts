@@ -148,6 +148,7 @@ export function useWebSocket() {
         break;
       case SOCKET.TYPE.BG_NEXT:
         setRoomStatus('progress');
+        setRound(content);
         break;
       case SOCKET.TYPE.BG_END:
         setRoomStatus('idle');
