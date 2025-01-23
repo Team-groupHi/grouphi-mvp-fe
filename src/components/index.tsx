@@ -28,6 +28,7 @@ export { MainHeader } from './MainHeader';
 export { ModalRenderer, ModalShell } from './Modal';
 export { Navigation } from './Navigation';
 export { PieChart } from './PieChart';
+export { PartialResultChart } from './PartialResultChart';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';
 export { Spinner } from './Spinner';
