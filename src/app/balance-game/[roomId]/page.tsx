@@ -3,6 +3,7 @@
 import {
   Button,
   Chatting,
+  FinalResultChart,
   PartialResultChart,
   Spinner,
   UserInfoCard,
@@ -40,9 +41,70 @@ const DUMMY_PARTIAL_DATA = [
   },
 ];
 
+const DUMMY_FINAL_DATA = [
+  {
+    candidate1: '강아지',
+    votes1: 2,
+    candidate2: '고양이',
+    votes2: 7,
+  },
+  {
+    candidate1: '강하띠',
+    votes1: 6,
+    candidate2: '코앵히',
+    votes2: 4,
+  },
+  {
+    candidate1: '사과',
+    votes1: 0,
+    candidate2: '바나나',
+    votes2: 9,
+  },
+  {
+    candidate1: '사과',
+    votes1: 10,
+    candidate2: '바나나',
+    votes2: 0,
+  },
+  {
+    candidate1: '사과',
+    votes1: 5,
+    candidate2: '바나나',
+    votes2: 5,
+  },
+  {
+    candidate1: '사과',
+    votes1: 10,
+    candidate2: '바나나',
+    votes2: 0,
+  },
+  {
+    candidate1: '사과',
+    votes1: 1,
+    candidate2: '바나나',
+    votes2: 9,
+  },
+  {
+    candidate1: '사과',
+    votes1: 5,
+    candidate2: '바나나',
+    votes2: 5,
+  },
+  {
+    candidate1: '사과',
+    votes1: 2,
+    candidate2: '바나나',
+    votes2: 8,
+  },
+];
+
 const WaitingRoom = () => {
   const path = usePathname();
-  const { roomStatus } = useBalanceGameStore();
+  const {
+    roomStatus,
+    totalRounds,
+    round: { currentRound },
+  } = useBalanceGameStore();
   const roomId = path.split('/')[2];
 
   const { openModal, closeModal } = useModalStore();
@@ -87,9 +149,15 @@ const WaitingRoom = () => {
     return <Spinner />;
   }
 
-  const handleNextRound = () => {
+  const handleEnterNextRound = () => {
     sendMessage({
       destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
+    });
+  };
+
+  const handleMoveToWaitingRoom = () => {
+    sendMessage({
+      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.END}`,
     });
   };
 
@@ -129,7 +197,9 @@ const WaitingRoom = () => {
         {roomStatus === 'result' && (
           <PartialResultChart data={DUMMY_PARTIAL_DATA} />
         )}
-        {roomStatus === 'finalResult' && <div>finalResult</div>}
+        {roomStatus === 'finalResult' && (
+          <FinalResultChart data={DUMMY_FINAL_DATA} />
+        )}
       </section>
 
       <section className="flex flex-col h-4/5 min-w-[15rem] max-w-[20rem]">
@@ -141,9 +211,17 @@ const WaitingRoom = () => {
         {roomStatus === 'result' && isRoomManager && (
           <Button
             className="w-full"
-            onClick={handleNextRound}
+            onClick={handleEnterNextRound}
           >
             다음 라운드로 이동
+          </Button>
+        )}
+        {roomStatus === 'finalResult' && isRoomManager && (
+          <Button
+            className="w-full"
+            onClick={handleMoveToWaitingRoom}
+          >
+            대기실로 이동
           </Button>
         )}
       </section>
