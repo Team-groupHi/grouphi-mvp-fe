@@ -1,19 +1,17 @@
 import { PieChart } from '@/components';
 
 interface PartialResultChartProps {
-  data: [
-    {
-      round: number;
-      q: string;
-      a: string;
-      b: string;
-      result: {
-        a: string[];
-        b: string[];
-        c: string[];
-      };
-    },
-  ];
+  data: {
+    round: number;
+    q: string;
+    a: string;
+    b: string;
+    result: {
+      a: string[];
+      b: string[];
+      c: string[];
+    };
+  }[];
 }
 
 const PartialResultChart = ({ data }: PartialResultChartProps) => {

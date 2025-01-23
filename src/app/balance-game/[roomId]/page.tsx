@@ -1,6 +1,12 @@
 'use client';
 
-import { Button, Chatting, Spinner, UserInfoCard } from '@/components';
+import {
+  Button,
+  Chatting,
+  PartialResultChart,
+  Spinner,
+  UserInfoCard,
+} from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { PATH } from '@/constants/router';
 import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
@@ -19,6 +25,19 @@ import useBalanceGameStore from '@/store/useBalanceGameStore';
 
 // 현재 상태를 가지고 있어야 함.
 
+const DUMMY_PARTIAL_DATA = [
+  {
+    round: 1,
+    q: '내가 더 좋아하는 동물은?',
+    a: '고양이',
+    b: '강아지',
+    result: {
+      a: ['스코티시', '길다길다길길다길다길길다길다길', '페르시안', '집사'],
+      b: ['치와와', '길다길다길길다길다길길다길다길', '포메라니안', '백구'],
+      c: ['선택못함', '길다길다길길다길다길길다길다길', '자유로운 영혼'],
+    },
+  },
+];
 const WaitingRoom = () => {
   const path = usePathname();
   const { roomStatus } = useBalanceGameStore();
@@ -96,7 +115,9 @@ const WaitingRoom = () => {
         {roomStatus === 'progress' && (
           <BalanceGameProgress sendMessage={sendMessage} />
         )}
-        {roomStatus === 'result' && <div>result</div>}
+        {roomStatus === 'result' && (
+          <PartialResultChart data={DUMMY_PARTIAL_DATA} />
+        )}
         {roomStatus === 'finalResult' && <div>finalResult</div>}
       </section>
 
