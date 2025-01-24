@@ -91,15 +91,17 @@ const WaitingRoom = () => {
   return (
     <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
       <section className="flex flex-col gap-3 h-4/5 min-w-[15rem] max-w-[20rem] relative">
-        <Button
-          className="absolute -top-12 left-0"
-          size={'sm'}
-          variant={'secondary'}
-          onClick={handleLinkCopy}
-        >
-          <Link />
-          초대 링크 복사
-        </Button>
+        {roomStatus === 'idle' && (
+          <Button
+            className="absolute -top-12 left-0"
+            size={'sm'}
+            variant={'secondary'}
+            onClick={handleLinkCopy}
+          >
+            <Link />
+            초대 링크 복사
+          </Button>
+        )}
         {players.map((data, index) => (
           <UserInfoCard
             key={index}
