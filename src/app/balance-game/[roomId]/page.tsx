@@ -17,7 +17,7 @@ import useModalStore from '@/store/useModalStore';
 import { BalanceGameResultGetResponse, Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'lucide-react';
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import PrevGame from './PrevGame';
 import BalanceGameProgress from '@/components/BalanceGameProgress';
@@ -25,14 +25,16 @@ import useBalanceGameStore from '@/store/useBalanceGameStore';
 import { SOCKET } from '@/constants/websocket';
 import { BarProps } from '@/components/FinalResultChart/Bar';
 import useRoomStore from '@/store/useRoomStore';
+import { useRouter } from 'next/navigation';
 
 const WaitingRoom = () => {
   const path = usePathname();
+  const router = useRouter();
   const { roomStatus } = useBalanceGameStore();
   const roomId = path.split('/')[2];
 
   const { myName } = useRoomStore();
-  const { openModal, closeModal } = useModalStore();
+  const { closeModal } = useModalStore();
   const { connect, sendMessage, chatMessages } = useWebSocket();
   const { toast } = useToast();
 
@@ -46,17 +48,29 @@ const WaitingRoom = () => {
   const isRoomManager = roomDetail?.hostName === myName;
 
   useEffect(() => {
-    connect({ roomId, name: myName });
-    queryClient.invalidateQueries({
-      queryKey: [QUERYKEY.ROOM_DETAIL],
-    });
+    if (myName !== '' && roomDetail) {
+      if (
+        roomDetail.status === 'PLAYING' &&
+        roomDetail.players.findIndex((user) => user.name === myName) === -1
+      ) {
+        toast({
+          title: '게임이 이미 시작되었어요! 게임이 끝나면 다시 들어와주세요.',
+        });
+        router.push(PATH.HOME);
+      } else {
+        connect({ roomId, name: myName });
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [myName]);
+  }, [myName, roomDetail]);
 
   if (isError) {
     //@TODO: 추후에 에러 시 홈으로 유도해주는 페이지 개발 후 해당 주소로 리다이렉트
     closeModal();
-    redirect(PATH.HOME);
+    router.push(PATH.HOME);
   }
 
   const handleLinkCopy = () => {
