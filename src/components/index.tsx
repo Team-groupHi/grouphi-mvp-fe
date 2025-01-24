@@ -21,6 +21,7 @@ export {
 } from './Form';
 export { GameListCard } from './GameListCard';
 export { HomeClient } from './HomeClient';
+export { InitialNickname } from './InitialNickname';
 export { default as Input } from './Input';
 export { default as Label } from './Label';
 export { default as Logo } from './Logo';
