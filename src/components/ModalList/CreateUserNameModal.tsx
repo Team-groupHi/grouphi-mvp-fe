@@ -13,6 +13,7 @@ import {
 import { STORAGE_KEY } from '@/constants/storage';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import useModalStore from '@/store/useModalStore';
+import useRoomStore from '@/store/useRoomStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -20,6 +21,7 @@ import { z } from 'zod';
 const CreateUserNameModal = () => {
   const { closeModal } = useModalStore();
   const { setItem } = useLocalStorage();
+  const { setMyName } = useRoomStore();
 
   const formSchema = z.object({
     username: z
@@ -40,7 +42,7 @@ const CreateUserNameModal = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // setMyName(values.username);
+    setMyName(values.username);
     setItem(STORAGE_KEY.NICKNAME, values.username);
     closeModal();
   };

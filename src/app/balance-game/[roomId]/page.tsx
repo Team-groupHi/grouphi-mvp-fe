@@ -46,14 +46,10 @@ const WaitingRoom = () => {
   const isRoomManager = roomDetail?.hostName === myName;
 
   useEffect(() => {
-    if (!myName) {
-      openModal('CreateUserNameModal');
-    } else {
-      connect({ roomId, name: myName });
-      queryClient.invalidateQueries({
-        queryKey: [QUERYKEY.ROOM_DETAIL],
-      });
-    }
+    connect({ roomId, name: myName });
+    queryClient.invalidateQueries({
+      queryKey: [QUERYKEY.ROOM_DETAIL],
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [myName]);
 
