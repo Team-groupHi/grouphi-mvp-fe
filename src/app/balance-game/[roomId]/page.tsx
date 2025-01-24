@@ -14,7 +14,6 @@ import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
 import { useToast } from '@/hooks/useToast';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import useModalStore from '@/store/useModalStore';
-import useRoomStore from '@/store/useRoomStore';
 import { BalanceGameResultGetResponse, Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'lucide-react';
@@ -25,14 +24,15 @@ import BalanceGameProgress from '@/components/BalanceGameProgress';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import { SOCKET } from '@/constants/websocket';
 import { BarProps } from '@/components/FinalResultChart/Bar';
+import useRoomStore from '@/store/useRoomStore';
 
 const WaitingRoom = () => {
   const path = usePathname();
   const { roomStatus } = useBalanceGameStore();
   const roomId = path.split('/')[2];
 
-  const { openModal, closeModal } = useModalStore();
   const { myName } = useRoomStore();
+  const { openModal, closeModal } = useModalStore();
   const { connect, sendMessage, chatMessages } = useWebSocket();
   const { toast } = useToast();
 

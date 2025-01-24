@@ -1,6 +1,5 @@
 import { GameListCard, Button } from '@/components';
 import { SOCKET } from '@/constants/websocket';
-import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomGetResponse } from '@/types/api';
 import {
   CheckCheck,
@@ -10,6 +9,7 @@ import {
 } from 'lucide-react';
 import * as StompJS from '@stomp/stompjs';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useRoomStore from '@/store/useRoomStore';
 
 interface PrevGameProps {
   roomDetail: RoomGetResponse;
@@ -26,8 +26,8 @@ const PrevGame = ({
   sendMessage,
   isRoomManager,
 }: PrevGameProps) => {
-  const { myName } = useRoomStore();
   const { setRoomStatus } = useBalanceGameStore();
+  const { myName } = useRoomStore();
 
   const isReady = players.find((player) => player.name === myName)?.isReady;
   const readyCount = players.reduce(
