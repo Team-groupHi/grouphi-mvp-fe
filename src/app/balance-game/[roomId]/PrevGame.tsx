@@ -91,14 +91,14 @@ const PrevGame = ({
         )}
         {isRoomManager && !isAllReady && (
           <Button
-            className="text-base font-semibold w-[12rem]"
+            className="text-base font-semibold w-[12rem] pointer-events-none"
             size="xl"
             variant={'waiting'}
           >
             <div className="flex items-center justify-center gap-2">
               <Loader />
               <span>
-                준비 대기({readyCount}/{players.length})
+                준비 대기중({readyCount}/{players.length})
               </span>
             </div>
           </Button>
