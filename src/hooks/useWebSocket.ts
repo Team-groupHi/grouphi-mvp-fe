@@ -22,6 +22,8 @@ export function useWebSocket() {
   const queryClient = useQueryClient();
 
   const connect = ({ roomId, name }: EnterRoomProps) => {
+    if (client.current) return;
+
     if (!BASE_WEBSOCKET_URL) {
       throw new Error('NEXT_PUBLIC_BASE_WEBSOCKET_URL is not defined.');
     }

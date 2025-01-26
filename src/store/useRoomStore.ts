@@ -21,7 +21,6 @@ const useRoomStore = create<RoomStoreProps>((set) => ({
     set({
       roomId: null,
       hostName: null,
-      myName: '',
     }),
 }));
 

@@ -35,7 +35,7 @@ const WaitingRoom = () => {
 
   const { myName } = useRoomStore();
   const { closeModal } = useModalStore();
-  const { connect, sendMessage, chatMessages } = useWebSocket();
+  const { connect, sendMessage, chatMessages, disconnect } = useWebSocket();
   const { toast } = useToast();
 
   const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
@@ -57,15 +57,25 @@ const WaitingRoom = () => {
           title: '게임이 이미 시작되었어요! 게임이 끝나면 다시 들어와주세요.',
         });
         router.push(PATH.HOME);
-      } else {
-        connect({ roomId, name: myName });
-        queryClient.invalidateQueries({
-          queryKey: [QUERYKEY.ROOM_DETAIL],
-        });
       }
+    } else {
+      connect({ roomId, name: myName });
+      queryClient.invalidateQueries({
+        queryKey: [QUERYKEY.ROOM_DETAIL],
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [myName, roomDetail]);
+
+  useEffect(() => {
+    return () => {
+      queryClient.removeQueries({
+        queryKey: [QUERYKEY.ROOM_DETAIL],
+      });
+      disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isError) {
     //@TODO: 추후에 에러 시 홈으로 유도해주는 페이지 개발 후 해당 주소로 리다이렉트

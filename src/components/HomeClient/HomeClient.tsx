@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useModalStore from '@/store/useModalStore';
 import {
   Carousel,
@@ -11,6 +11,8 @@ import {
   MainHeader,
 } from '@/components';
 import { GamesResponse } from '@/types/api';
+import useRoomStore from '@/store/useRoomStore';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
 
 interface HomeClientProps {
   games: GamesResponse[];
@@ -18,9 +20,17 @@ interface HomeClientProps {
 
 const HomeClient = ({ games }: HomeClientProps) => {
   const { openModal } = useModalStore();
+  const { reset: roomReset } = useRoomStore();
+  const { reset: balanceGameReset } = useBalanceGameStore();
 
   const MAX_CAROUSEL_ITEMS = 6;
   const isMultiplePages = games.length > MAX_CAROUSEL_ITEMS;
+
+  useEffect(() => {
+    roomReset();
+    balanceGameReset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main className="flex flex-col h-screen p-800">
