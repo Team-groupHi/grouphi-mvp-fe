@@ -10,6 +10,7 @@ import {
 import * as StompJS from '@stomp/stompjs';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
+import { useToast } from '@/hooks/useToast';
 
 interface PrevGameProps {
   roomDetail: RoomGetResponse;
@@ -26,8 +27,10 @@ const PrevGame = ({
   sendMessage,
   isRoomManager,
 }: PrevGameProps) => {
-  const { setRoomStatus } = useBalanceGameStore();
+  const { setRoomStatus, totalRounds } = useBalanceGameStore();
   const { myName } = useRoomStore();
+
+  const { toast } = useToast();
 
   const isReady = players.find((player) => player.name === myName)?.isReady;
   const readyCount = players.reduce(
@@ -49,15 +52,22 @@ const PrevGame = ({
   };
 
   const handleGameStart = () => {
-    sendMessage({
-      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
-      body: {
-        theme: 'GENERAL',
-        totalRounds: 10,
-      },
-    });
-    //@TODO: 중앙 컴포넌트 게임 화면으로 바꿔주기
-    setRoomStatus('progress');
+    if (roomDetail.players.length === 1) {
+      toast({
+        title: '2명 이상 모여야 게임을 시작할 수 있어요!',
+        description:
+          '왼쪽 위 친구 초대 버튼을 눌러 같이 할 친구를 초대해보세요.',
+      });
+    } else {
+      sendMessage({
+        destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
+        body: {
+          theme: 'GENERAL',
+          totalRounds: totalRounds,
+        },
+      });
+      setRoomStatus('progress');
+    }
   };
 
   const handleGameChange = () => {
