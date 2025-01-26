@@ -14,9 +14,14 @@ import { Link } from 'lucide-react';
 import { redirect, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import PrevGame from './PrevGame';
+import BalanceGameProgress from '@/components/BalanceGameProgress';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
+
+// 현재 상태를 가지고 있어야 함.
 
 const WaitingRoom = () => {
   const path = usePathname();
+  const { roomStatus } = useBalanceGameStore();
   const roomId = path.split('/')[2];
 
   const { openModal, closeModal } = useModalStore();
@@ -37,6 +42,7 @@ const WaitingRoom = () => {
         queryKey: [QUERYKEY.ROOM_DETAIL],
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [myName]);
 
   if (isError) {
@@ -80,11 +86,18 @@ const WaitingRoom = () => {
       </section>
 
       <section className="h-4/5 min-w-[45rem] max-w-[70rem] w-full bg-container/50 rounded-lg">
-        <PrevGame
-          roomDetail={roomDetail}
-          players={players}
-          sendMessage={sendMessage}
-        />
+        {roomStatus === 'idle' && (
+          <PrevGame
+            roomDetail={roomDetail}
+            players={players}
+            sendMessage={sendMessage}
+          />
+        )}
+        {roomStatus === 'progress' && (
+          <BalanceGameProgress sendMessage={sendMessage} />
+        )}
+        {roomStatus === 'result' && <div>result</div>}
+        {roomStatus === 'finalResult' && <div>finalResult</div>}
       </section>
 
       <section className="h-4/5 min-w-[15rem] max-w-[20rem]">
