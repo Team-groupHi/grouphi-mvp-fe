@@ -10,6 +10,8 @@ import {
   FormMessage,
   Button,
 } from '@/components';
+import { STORAGE_KEY } from '@/constants/storage';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,6 +20,7 @@ import { z } from 'zod';
 
 const CreateUserNameModal = () => {
   const { closeModal } = useModalStore();
+  const { setItem } = useLocalStorage();
   const { setMyName } = useRoomStore();
 
   const formSchema = z.object({
@@ -40,6 +43,7 @@ const CreateUserNameModal = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setMyName(values.username);
+    setItem(STORAGE_KEY.NICKNAME, values.username);
     closeModal();
   };
 
@@ -68,7 +72,7 @@ const CreateUserNameModal = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">입장하기</Button>
+          <Button type="submit">변경하기</Button>
         </form>
       </Form>
     </ModalShell>

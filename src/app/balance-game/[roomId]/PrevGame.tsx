@@ -1,6 +1,5 @@
 import { GameListCard, Button } from '@/components';
 import { SOCKET } from '@/constants/websocket';
-import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomGetResponse } from '@/types/api';
 import {
   CheckCheck,
@@ -10,20 +9,29 @@ import {
 } from 'lucide-react';
 import * as StompJS from '@stomp/stompjs';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useRoomStore from '@/store/useRoomStore';
+import { useToast } from '@/hooks/useToast';
 
 interface PrevGameProps {
   roomDetail: RoomGetResponse;
   players: Player[];
+  isRoomManager: boolean;
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
 }
 
-const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
+const PrevGame = ({
+  roomDetail,
+  players,
+  sendMessage,
+  isRoomManager,
+}: PrevGameProps) => {
+  const { setRoomStatus, totalRounds } = useBalanceGameStore();
   const { myName } = useRoomStore();
-  const { setRoomStatus } = useBalanceGameStore();
 
-  const isRoomManager = roomDetail?.hostName === myName;
+  const { toast } = useToast();
+
   const isReady = players.find((player) => player.name === myName)?.isReady;
   const readyCount = players.reduce(
     (count, { isReady }) => count + (isReady ? 1 : 0),
@@ -44,15 +52,22 @@ const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
   };
 
   const handleGameStart = () => {
-    sendMessage({
-      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
-      body: {
-        theme: 'GENERAL',
-        totalRounds: 10,
-      },
-    });
-    //@TODO: 중앙 컴포넌트 게임 화면으로 바꿔주기
-    setRoomStatus('progress');
+    if (roomDetail.players.length === 1) {
+      toast({
+        title: '2명 이상 모여야 게임을 시작할 수 있어요!',
+        description:
+          '왼쪽 위 친구 초대 버튼을 눌러 같이 할 친구를 초대해보세요.',
+      });
+    } else {
+      sendMessage({
+        destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
+        body: {
+          theme: 'GENERAL',
+          totalRounds: totalRounds,
+        },
+      });
+      setRoomStatus('progress');
+    }
   };
 
   const handleGameChange = () => {
@@ -86,14 +101,14 @@ const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
         )}
         {isRoomManager && !isAllReady && (
           <Button
-            className="text-base font-semibold w-[12rem]"
+            className="text-base font-semibold w-[12rem] pointer-events-none"
             size="xl"
             variant={'waiting'}
           >
             <div className="flex items-center justify-center gap-2">
               <Loader />
               <span>
-                준비 대기({readyCount}/{players.length})
+                준비 대기중({readyCount}/{players.length})
               </span>
             </div>
           </Button>

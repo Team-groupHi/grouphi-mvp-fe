@@ -1,9 +1,9 @@
 'use client';
 
 import { PieChart } from '@/components';
-import useRoomStore from '@/store/useRoomStore';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
 
-export interface PartialResultChartProps {
+interface PartialResultChartProps {
   data: {
     round: number;
     q: string;
@@ -14,10 +14,11 @@ export interface PartialResultChartProps {
       b: string[];
       c: string[];
     };
-  };
+  }[];
 }
 
-const PartialResultChart = ({ data: partialData }: PartialResultChartProps) => {
+const PartialResultChart = ({ data }: PartialResultChartProps) => {
+  const partialData = data[0];
   const UNSELECTED = '미선택';
   const chartData = [
     partialData.result.a.length,
@@ -25,7 +26,7 @@ const PartialResultChart = ({ data: partialData }: PartialResultChartProps) => {
     partialData.result.c.length,
   ];
   const chartLabels = [partialData.a, partialData.b, UNSELECTED];
-  const { questionCount } = useRoomStore();
+  const { totalRounds } = useBalanceGameStore();
 
   return (
     <section className="bg-container-600 h-full w-full border-white/50 flex flex-col justify-center items-center rounded-lg gap-8 p-8">
@@ -80,7 +81,7 @@ const PartialResultChart = ({ data: partialData }: PartialResultChartProps) => {
         </section>
       )}
       <section className="self-end">
-        {partialData.round} / {questionCount}
+        {partialData.round} / {totalRounds}
       </section>
     </section>
   );

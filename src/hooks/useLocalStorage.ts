@@ -28,6 +28,7 @@ export const useLocalStorage = (): LocalStorageReturnProps => {
       return value !== '' ? JSON.parse(value) : '';
     } catch (e) {
       console.error('[LocalStorage getItem() Error] ', e);
+      return '';
     }
   };
 
