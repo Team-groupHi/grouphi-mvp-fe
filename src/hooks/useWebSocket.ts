@@ -151,10 +151,9 @@ export function useWebSocket() {
       case SOCKET.TYPE.BG_NEXT:
         setRoomStatus('progress');
         setRound(content);
-        // todo: 마지막 라운드에 대한 백엔드 요청
-        if (content.totalRounds === content.currentRound) {
-          setRoomStatus('finalResult');
-        }
+        break;
+      case SOCKET.TYPE.BG_ALL_RESULTS:
+        setRoomStatus('finalResult');
         break;
       case SOCKET.TYPE.BG_END:
         setRoomStatus('idle');

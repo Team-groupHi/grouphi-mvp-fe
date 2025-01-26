@@ -33,6 +33,7 @@ export const SOCKET = {
     BG_SELECT: 'BG_SELECT',
     BG_UNSELECT: 'BG_UNSELECT',
     BG_NEXT: 'BG_NEXT',
+    BG_ALL_RESULTS: 'BG_ALL_RESULTS',
     BG_END: 'BG_END',
   },
   SYSTEM: 'system',
