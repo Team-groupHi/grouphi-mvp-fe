@@ -9,6 +9,7 @@ import {
   MousePointer2,
 } from 'lucide-react';
 import * as StompJS from '@stomp/stompjs';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
 
 interface PrevGameProps {
   roomDetail: RoomGetResponse;
@@ -20,6 +21,7 @@ interface PrevGameProps {
 
 const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
   const { myName } = useRoomStore();
+  const { setRoomStatus } = useBalanceGameStore();
 
   const isRoomManager = roomDetail?.hostName === myName;
   const isReady = players.find((player) => player.name === myName)?.isReady;
@@ -50,6 +52,7 @@ const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
       },
     });
     //@TODO: 중앙 컴포넌트 게임 화면으로 바꿔주기
+    setRoomStatus('progress');
   };
 
   const handleGameChange = () => {
@@ -97,6 +100,7 @@ const PrevGame = ({ roomDetail, players, sendMessage }: PrevGameProps) => {
         )}
         {isRoomManager && (
           <Button
+            variant={'secondary'}
             className="text-base font-semibold w-[12rem]"
             size="xl"
             onClick={handleGameChange}

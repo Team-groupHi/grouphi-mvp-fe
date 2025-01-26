@@ -1,6 +1,7 @@
 'use client';
 import { QUERYKEY } from '@/constants/querykey';
 import { SOCKET } from '@/constants/websocket';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
 import { ChatMessage } from '@/types';
 import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
@@ -16,6 +17,7 @@ export function useWebSocket() {
   const client = useRef<StompJS.Client | null>(null);
   const [, setSubscription] = useState<StompJS.StompSubscription | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const { setRoomStatus, setRound } = useBalanceGameStore();
 
   const queryClient = useQueryClient();
 
@@ -27,7 +29,7 @@ export function useWebSocket() {
       brokerURL: BASE_WEBSOCKET_URL,
       reconnectDelay: 5000,
       onWebSocketError: (error) => {
-        console.log('[WebSocket] Network Error', error);
+        console.error('[WebSocket] Network Error', error);
       },
       onStompError: (frame) => {
         console.error('[WebSocket] STOMP.js Error: ', frame.headers['message']);
@@ -135,6 +137,20 @@ export function useWebSocket() {
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
+        break;
+      case SOCKET.TYPE.BG_SELECT:
+        //@Todo
+        // 전원 다 선택을 했을 경우 바로 중간 결과로 가는 로직 필요
+        break;
+      case SOCKET.TYPE.BG_START:
+        setRoomStatus('progress');
+        setRound(content);
+        break;
+      case SOCKET.TYPE.BG_NEXT:
+        setRoomStatus('progress');
+        break;
+      case SOCKET.TYPE.BG_END:
+        setRoomStatus('idle');
         break;
       default:
         break;
