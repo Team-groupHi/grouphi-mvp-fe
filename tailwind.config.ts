@@ -90,6 +90,7 @@ const config: Config = {
         DEFAULT: '#F0F0F0',
         light: '#F0F0F0',
         dark: '#303030',
+        purple: '#352778',
       },
       backgroundImage: {
         'gradient-purple': 'linear-gradient(#352778 10%, #5D4DA6 50%)',
