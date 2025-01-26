@@ -114,17 +114,24 @@ const WaitingRoom = () => {
       roomId: roomId,
     });
 
-    const finalResult: BarProps[] = data.map((data) => ({
-      candidate1: data.a,
-      candidate2: data.b,
-      votes1: data.result.a.length,
-      votes2: data.result.b.length,
-    }));
+    if (data) {
+      const finalResult: BarProps[] = data.map((data) => ({
+        candidate1: data.a,
+        candidate2: data.b,
+        votes1: data.result.a.length,
+        votes2: data.result.b.length,
+      }));
 
-    sendMessage({
-      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
-    });
-    setFinalResult(finalResult);
+      sendMessage({
+        destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
+      });
+      setFinalResult(finalResult);
+    } else {
+      toast({
+        variant: 'destructive',
+        title: '문제가 생겼습니다. 다시 시도해주세요.',
+      });
+    }
   };
 
   return (
