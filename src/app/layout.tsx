@@ -1,4 +1,4 @@
-import { Toaster } from '@/components';
+import { InitialNickname, Toaster } from '@/components';
 import { ModalRenderer } from '@/components/Modal';
 import Providers from '@/utils/providers';
 import type { Metadata } from 'next';
@@ -50,7 +50,7 @@ export default function RootLayout({
           </>
         )}
         <Providers>
-          {children}
+          <InitialNickname>{children}</InitialNickname>
           <Toaster />
           <ModalRenderer />
         </Providers>
