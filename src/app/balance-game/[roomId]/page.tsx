@@ -26,11 +26,12 @@ import { SOCKET } from '@/constants/websocket';
 import { BarProps } from '@/components/FinalResultChart/Bar';
 import useRoomStore from '@/store/useRoomStore';
 import { useRouter } from 'next/navigation';
+import { getBalanceGameResults } from '@/services/balanceGames';
 
 const WaitingRoom = () => {
   const path = usePathname();
   const router = useRouter();
-  const { roomStatus } = useBalanceGameStore();
+  const { roomStatus, round } = useBalanceGameStore();
   const roomId = path.split('/')[2];
 
   const { myName } = useRoomStore();
@@ -48,7 +49,7 @@ const WaitingRoom = () => {
   const isRoomManager = roomDetail?.hostName === myName;
 
   useEffect(() => {
-    if (myName !== '' && roomDetail) {
+    if (roomDetail) {
       if (
         roomDetail.status === 'PLAYING' &&
         roomDetail.players.findIndex((user) => user.name === myName) === -1
@@ -57,12 +58,12 @@ const WaitingRoom = () => {
           title: '게임이 이미 시작되었어요! 게임이 끝나면 다시 들어와주세요.',
         });
         router.push(PATH.HOME);
+      } else if (myName !== '') {
+        connect({ roomId, name: myName });
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
       }
-    } else {
-      connect({ roomId, name: myName });
-      queryClient.invalidateQueries({
-        queryKey: [QUERYKEY.ROOM_DETAIL],
-      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [myName, roomDetail]);
@@ -108,6 +109,24 @@ const WaitingRoom = () => {
     });
   };
 
+  const handleGetFinalResult = async () => {
+    const data = await getBalanceGameResults({
+      roomId: roomId,
+    });
+
+    const finalResult: BarProps[] = data.map((data) => ({
+      candidate1: data.a,
+      candidate2: data.b,
+      votes1: data.result.a.length,
+      votes2: data.result.b.length,
+    }));
+
+    sendMessage({
+      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
+    });
+    setFinalResult(finalResult);
+  };
+
   return (
     <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
       <section className="flex flex-col gap-3 h-4/5 min-w-[15rem] max-w-[20rem] relative">
@@ -144,7 +163,6 @@ const WaitingRoom = () => {
           <BalanceGameProgress
             sendMessage={sendMessage}
             setResult={setResult}
-            setFinalResult={setFinalResult}
             roomId={roomId}
           />
         )}
@@ -162,14 +180,23 @@ const WaitingRoom = () => {
           chatMessages={chatMessages}
           sendMessage={sendMessage}
         />
-        {roomStatus === 'result' && isRoomManager && (
-          <Button
-            className="w-full"
-            onClick={handleEnterNextRound}
-          >
-            다음 라운드로 이동
-          </Button>
-        )}
+        {roomStatus === 'result' &&
+          isRoomManager &&
+          (round.currentRound === round.totalRounds ? (
+            <Button
+              className="w-full"
+              onClick={handleGetFinalResult}
+            >
+              최종 결과 보기
+            </Button>
+          ) : (
+            <Button
+              className="w-full"
+              onClick={handleEnterNextRound}
+            >
+              다음 라운드로 이동
+            </Button>
+          ))}
         {roomStatus === 'finalResult' && isRoomManager && (
           <Button
             className="w-full"
