@@ -4,6 +4,8 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { Button } from '@/components';
 import { Plus } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { PATH } from '@/constants/router';
 
 interface gameListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -20,9 +22,12 @@ const GameListCard = ({
   ...props
 }: gameListCardProps) => {
   const [isHover, setIsHover] = useState(false);
+  const pathname = usePathname();
 
   const containerClassName =
-    'basis-1/3 max-w-80 min-w-60 min-h-52 relative bg-primary-container shadow rounded-md overflow-hidden';
+    pathname === PATH.HOME
+      ? 'basis-1/3 max-w-80 min-w-60 min-h-52 relative bg-primary-container shadow rounded-md overflow-hidden'
+      : 'basis-1/3 max-w-md min-w-80 min-h-52 relative bg-primary-container shadow rounded-md overflow-hidden';
   return (
     <article
       data-testid="gamelistcard-container"
@@ -53,10 +58,18 @@ const GameListCard = ({
           </Button>
         ) : (
           description && (
+            // todo: 메인, 대기실 css 구분하기
             <p
-              className={`font-light text-sm text-gray-300 overflow-hidden text-ellipsis line-clamp-2 break-all`}
+              className={cn(
+                'font-light text-sm text-gray-300 break-all',
+                pathname === PATH.HOME
+                  ? 'overflow-hidden text-ellipsis line-clamp-4'
+                  : ''
+              )}
             >
-              {description}
+              {pathname === PATH.HOME
+                ? description.split('\n')[0]
+                : description}
             </p>
           )
         )}

@@ -22,6 +22,8 @@ export function useWebSocket() {
   const queryClient = useQueryClient();
 
   const connect = ({ roomId, name }: EnterRoomProps) => {
+    if (client.current) return;
+
     if (!BASE_WEBSOCKET_URL) {
       throw new Error('NEXT_PUBLIC_BASE_WEBSOCKET_URL is not defined.');
     }
@@ -148,6 +150,10 @@ export function useWebSocket() {
         break;
       case SOCKET.TYPE.BG_NEXT:
         setRoomStatus('progress');
+        setRound(content);
+        break;
+      case SOCKET.TYPE.BG_ALL_RESULTS:
+        setRoomStatus('finalResult');
         break;
       case SOCKET.TYPE.BG_END:
         setRoomStatus('idle');

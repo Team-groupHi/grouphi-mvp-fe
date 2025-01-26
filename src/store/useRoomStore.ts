@@ -3,7 +3,7 @@ import { create } from 'zustand';
 interface RoomStoreProps {
   roomId: string | null;
   hostName: string | null;
-  myName: string | null;
+  myName: string;
   setRoomId: (id: string) => void;
   setHostName: (name: string) => void;
   setMyName: (name: string) => void;
@@ -13,7 +13,7 @@ interface RoomStoreProps {
 const useRoomStore = create<RoomStoreProps>((set) => ({
   roomId: null,
   hostName: null,
-  myName: null,
+  myName: '',
   setRoomId: (id) => set({ roomId: id }),
   setHostName: (name) => set({ hostName: name }),
   setMyName: (name) => set({ myName: name }),
@@ -21,7 +21,6 @@ const useRoomStore = create<RoomStoreProps>((set) => ({
     set({
       roomId: null,
       hostName: null,
-      myName: null,
     }),
 }));
 

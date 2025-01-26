@@ -6,15 +6,23 @@ import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import * as StompJS from '@stomp/stompjs';
 import { SOCKET } from '@/constants/websocket';
+import { getBalanceGameResults } from '@/services/balanceGames';
+import { BalanceGameResultGetResponse } from '@/types/api';
 
 interface BalanceGameProgressProps {
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
+  setResult: (result: BalanceGameResultGetResponse[]) => void;
+  roomId: string;
 }
 
-const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
-  const { totalRounds, round, setRoomStatus } = useBalanceGameStore();
+const BalanceGameProgress = ({
+  sendMessage,
+  setResult,
+  roomId,
+}: BalanceGameProgressProps) => {
+  const { round, setRoomStatus } = useBalanceGameStore();
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
@@ -22,8 +30,21 @@ const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
   useEffect(() => {
     if (isTimeout === true) {
       setRoomStatus('result');
+      getBalanceGameResults({
+        roomId: roomId,
+        round: round.currentRound,
+      })
+        .then((data) => {
+          if (data) {
+            setResult(data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }, [isTimeout, setRoomStatus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTimeout]);
 
   const handleSelect = (option: string) => {
     setSelectedOption(option);
@@ -43,8 +64,10 @@ const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
     <main className="flex flex-col items-center justify-center p-8 h-full">
       <section className="w-full mb-4 flex flex-col items-center gap-4">
         <Timer
-          startTime={round.startTime}
-          endTime={round.endTime}
+          startTime={Date.now()}
+          endTime={Date.now() + 3000}
+          // startTime={round.startTime}
+          // endTime={round.endTime}
           setIsTimeout={setIsTimeout}
         />
       </section>

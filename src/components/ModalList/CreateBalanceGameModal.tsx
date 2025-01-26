@@ -6,12 +6,10 @@ import {
   FormField,
   FormItem,
   FormMessage,
-  Input,
   Label,
   ModalShell,
   Slider,
 } from '@/components';
-import { FORM } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { createRoom } from '@/services/rooms';
 import useRoomStore from '@/store/useRoomStore';
@@ -39,19 +37,10 @@ const CreateBalanceGameModal = ({
 
   const formSchema = z.object({
     totalRounds: z.number().min(QUESTIONS_COUNT.MIN).max(QUESTIONS_COUNT.MAX),
-    hostName: z
-      .string()
-      .trim()
-      .min(FORM.NAME.MIN, {
-        message: '닉네임은 2-15글자 이내 작성해주세요.(공백 제외)',
-      })
-      .max(FORM.NAME.MAX, {
-        message: '닉네임은 2-15글자 이내 작성해주세요.(공백 제외)',
-      }),
   });
 
   const router = useRouter();
-  const { setRoomId, setHostName } = useRoomStore();
+  const { setRoomId } = useRoomStore();
   const { setTotalRounds } = useBalanceGameStore();
 
   const createRoomMutation = useMutation({
@@ -67,15 +56,12 @@ const CreateBalanceGameModal = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      hostName: '',
       totalRounds: QUESTIONS_COUNT.MIN,
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log('form values : ', values);
     setTotalRounds(values.totalRounds);
-    setHostName(values.hostName);
 
     createRoomMutation.mutate();
     closeModal();
@@ -113,31 +99,6 @@ const CreateBalanceGameModal = ({
                       step={QUESTIONS_COUNT.STEP}
                     />
                     <span className="w-4 text-subtitle">{value}</span>
-                  </section>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="hostName"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <section className="flex gap-500 items-center">
-                    <Label
-                      className="w-24"
-                      htmlFor="nickname-input"
-                    >
-                      닉네임
-                    </Label>
-                    <section className="flex flex-col gap-200 w-full">
-                      <Input
-                        placeholder="2-15자 이내로 작성해주세요"
-                        {...field}
-                      />
-                    </section>
                   </section>
                 </FormControl>
                 <FormMessage />

@@ -2,8 +2,9 @@
 
 import { STORAGE_KEY } from '@/constants/storage';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import useRoomStore from '@/store/useRoomStore';
 import { generateRandomNickname } from '@/utils/randomNickname';
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 interface InitialNicknameProps {
   children: React.ReactNode;
@@ -11,17 +12,23 @@ interface InitialNicknameProps {
 
 const InitialNickname = ({ children }: InitialNicknameProps) => {
   const { setItem, getItem } = useLocalStorage();
+  const { setMyName } = useRoomStore();
 
-  const initialNickname = () => {
-    const nickname = getItem(STORAGE_KEY.NICKNAME);
+  const initialNickname = useCallback(() => {
+    let nickname = (getItem(STORAGE_KEY.NICKNAME) as string) || '';
 
     if (nickname === '') {
-      const newNickname = generateRandomNickname();
-      setItem(STORAGE_KEY.NICKNAME, newNickname);
+      nickname = generateRandomNickname();
+      setItem(STORAGE_KEY.NICKNAME, nickname);
     }
-  };
 
-  initialNickname();
+    setMyName(nickname);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    initialNickname();
+  }, [initialNickname]);
 
   return <>{children}</>;
 };

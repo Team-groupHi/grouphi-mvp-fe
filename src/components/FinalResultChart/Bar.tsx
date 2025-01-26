@@ -21,16 +21,16 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
 
   return (
     <div className="w-full flex items-center justify-center gap-6">
-      <span className="min-w-[20%] text-right">{candidate1}</span>
+      <span className="w-[25%] text-right">{candidate1}</span>
 
       {totalVotes === 0 ? (
         <div className="min-w-[50%] h-5 bg-container-100 rounded-full flex items-center justify-center">
-          <span className="font-bold text-sm bg-clip-text text-transparent bg-gradient-purple text-center w-full">
+          <span className="font-bold text-sm text-purple text-center w-full">
             0
           </span>
         </div>
       ) : (
-        <div className="flex h-8 min-w-[50%] h-5">
+        <div className="flex h-5 w-[50%]">
           <BarItem
             className={clsx('bg-primary', votes2 === 0 && 'rounded-r-full')}
             isLeft={true}
@@ -47,7 +47,7 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
         </div>
       )}
 
-      <span className="min-w-[20%]">{candidate2}</span>
+      <span className="w-[25%]">{candidate2}</span>
     </div>
   );
 };
