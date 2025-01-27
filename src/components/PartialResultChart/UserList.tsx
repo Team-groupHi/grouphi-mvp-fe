@@ -11,7 +11,7 @@ const UserList = ({ title, data, className, ...props }: UserListProps) => {
   return (
     <section
       className={cn(
-        'min-w-[13rem] py-500 px-400 rounded-sm flex flex-col gap-300 items-center',
+        'min-w-[13rem] max-w-[54rem] py-500 px-400 rounded-sm flex flex-col gap-300 items-center',
         className
       )}
       {...props}

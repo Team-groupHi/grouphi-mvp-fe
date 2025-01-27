@@ -22,7 +22,7 @@ const PartialResultChart = ({ data }: PartialResultChartProps) => {
   const { totalRounds } = useBalanceGameStore();
 
   return (
-    <section className="bg-container-600 h-full w-full min-w-fit border-white/50 flex flex-col justify-between items-center rounded-lg gap-8 p-8">
+    <section className="bg-container-600 h-full w-full min-h-fit border-white/50 flex flex-col justify-between items-center rounded-lg gap-8 p-8">
       <section>
         <h1 className="pt-600 text-title1 font-semibold">
           {partialData.round}라운드 결과
