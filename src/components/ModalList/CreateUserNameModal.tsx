@@ -75,7 +75,9 @@ const CreateUserNameModal = () => {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>닉네임</FormLabel>
+                <FormLabel className="text-title2 pb-400">
+                  닉네임 변경하기
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder={myName}
@@ -87,7 +89,19 @@ const CreateUserNameModal = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">변경하기</Button>
+          <span className="text-subtitle text-gray-400">
+            * 안전을 위해 개인 정보를 포함하지 마세요!
+          </span>
+          <section className="text-end">
+            <Button type="submit">변경하기</Button>
+            <Button
+              variant="secondary"
+              className="ml-300"
+              onClick={closeModal}
+            >
+              닫기
+            </Button>
+          </section>
         </form>
       </Form>
     </ModalShell>
