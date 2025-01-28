@@ -30,7 +30,13 @@ const useBalanceGameStore = create<BalanceGameStoreProps>((set) => ({
       round,
     }),
   setRoomStatus: (status) => set({ roomStatus: status }),
-  setTotalRounds: (count) => set({ totalRounds: count }),
+  setTotalRounds: (count) =>
+    set((state) => ({
+      round: {
+        ...state.round,
+        totalRounds: count,
+      },
+    })),
   reset: () =>
     set({
       totalRounds: 0,
