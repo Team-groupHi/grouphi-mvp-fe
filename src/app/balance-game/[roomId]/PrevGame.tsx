@@ -27,7 +27,7 @@ const PrevGame = ({
   sendMessage,
   isRoomManager,
 }: PrevGameProps) => {
-  const { setRoomStatus, totalRounds } = useBalanceGameStore();
+  const { setRoomStatus, round } = useBalanceGameStore();
   const { myName } = useRoomStore();
 
   const { toast } = useToast();
@@ -63,7 +63,7 @@ const PrevGame = ({
         destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
         body: {
           theme: 'GENERAL',
-          totalRounds: totalRounds,
+          totalRounds: round.totalRounds,
         },
       });
       setRoomStatus('progress');
