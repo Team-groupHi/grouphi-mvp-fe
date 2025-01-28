@@ -19,7 +19,7 @@ const PartialResultChart = ({ data }: PartialResultChartProps) => {
   ];
   const chartLabels = [partialData.a, partialData.b, UNSELECTED];
 
-  const { totalRounds } = useBalanceGameStore();
+  const { round } = useBalanceGameStore();
 
   return (
     <section className="bg-container-600 h-full w-full min-h-fit border-white/50 flex flex-col justify-between items-center rounded-lg gap-8 p-8">
@@ -52,7 +52,7 @@ const PartialResultChart = ({ data }: PartialResultChartProps) => {
         />
       )}
       <section className="self-end">
-        {partialData.round} / {totalRounds}
+        {partialData.round} / {round.totalRounds}
       </section>
     </section>
   );
