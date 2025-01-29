@@ -44,7 +44,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
 
   return (
     <section className="h-full">
-      <section className="bg-container-600 rounded-t-lg h-[87%] overflow-auto">
+      <section className="h-[calc(100%-4rem)] bg-container-600 rounded-t-lg overflow-auto">
         {chatMessages.map((item, index) => (
           <Item
             key={index}
@@ -61,7 +61,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
         ))}
         <div ref={messagesEndRef} />
       </section>
-      <section className="bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
+      <section className="h-[4rem] flex justify-center items-center bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
         <Input
           ref={inputRef}
           className="bg-container-700 border-transparent"

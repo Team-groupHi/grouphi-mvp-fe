@@ -190,7 +190,7 @@ const WaitingRoom = () => {
         )}
       </section>
 
-      <section className="flex flex-col h-4/5 min-w-[15rem] max-w-[20rem]">
+      <section className="flex flex-col h-4/5 min-w-[15rem] max-w-[20rem] gap-2">
         <Chatting
           myName={myName}
           chatMessages={chatMessages}
