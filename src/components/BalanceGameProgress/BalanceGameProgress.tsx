@@ -7,32 +7,49 @@ import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import * as StompJS from '@stomp/stompjs';
 import { SOCKET } from '@/constants/websocket';
-import { QUERYKEY } from '@/constants/querykey';
-import { useQueryClient } from '@tanstack/react-query';
+import { getBalanceGameResults } from '@/services/balanceGames';
+import { BalanceGameResultGetResponse } from '@/types/api';
 
 interface BalanceGameProgressProps {
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
+  roomId: string;
+  setPartialResult: (result: BalanceGameResultGetResponse[]) => void;
+  isAllSelected: boolean;
 }
 
-const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
-  const { round, setRoomStatus } = useBalanceGameStore();
+const BalanceGameProgress = ({
+  sendMessage,
+  roomId,
+  setPartialResult,
+  isAllSelected,
+}: BalanceGameProgressProps) => {
+  const { round, setRoomStatus, resetSelectedPlayers } = useBalanceGameStore();
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
 
-  const queryClient = useQueryClient();
-
   useEffect(() => {
-    if (isTimeout === true) {
+    if (isTimeout || isAllSelected) {
       setRoomStatus('result');
 
-      queryClient.invalidateQueries({
-        queryKey: [QUERYKEY.PARTIAL_RESULT, round.currentRound],
-      });
+      getBalanceGameResults({
+        roomId: roomId,
+        round: round.currentRound,
+      })
+        .then((data) => {
+          if (data) {
+            setPartialResult(data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      resetSelectedPlayers();
     }
-  }, [isTimeout]);
+  }, [isTimeout, isAllSelected]);
 
   const handleSelect = (option: string) => {
     setSelectedOption(option);

@@ -11,10 +11,10 @@ import {
 } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { PATH } from '@/constants/router';
-import { useFetchParticalResult, useFetchRoomDetail } from '@/hooks/api';
+import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
 import { useToast } from '@/hooks/useToast';
 import { useWebSocket } from '@/hooks/useWebSocket';
-import { Player } from '@/types/api';
+import { BalanceGameResultGetResponse, Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -31,45 +31,33 @@ import { getBalanceGameResults } from '@/services/balanceGames';
 const WaitingRoom = () => {
   const path = usePathname();
   const router = useRouter();
-  const {
-    roomStatus,
-    setRoomStatus,
-    round,
-    selectedPlayers,
-    resetSelectedPlayers,
-  } = useBalanceGameStore();
   const roomId = path.split('/')[2];
 
-  const { myName } = useRoomStore();
-  const { connect, sendMessage, chatMessages, disconnect } = useWebSocket();
   const { toast } = useToast();
+  const { connect, sendMessage, chatMessages, disconnect } = useWebSocket();
 
   const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
-  const { data: partialResult } = useFetchParticalResult({
-    roomId: roomId,
-    round: round.currentRound,
-  });
   const queryClient = useQueryClient();
-  const players: Player[] = roomDetail?.players || [];
 
+  const { myName } = useRoomStore();
+  const { roomStatus, round, selectedPlayers } = useBalanceGameStore();
+
+  const [partialResult, setPartialResult] = useState<
+    BalanceGameResultGetResponse[]
+  >([]);
   const [finalResult, setFinalResult] = useState<BarProps[]>([]);
 
+  const players: Player[] = roomDetail?.players || [];
   const isRoomManager = roomDetail?.hostName === myName;
 
   useEffect(() => {
-    if (
-      players.length !== 0 &&
-      new Set(selectedPlayers).size === players.length
-    ) {
-      setRoomStatus('result');
-
-      queryClient.invalidateQueries({
-        queryKey: [QUERYKEY.PARTIAL_RESULT, round.currentRound],
+    return () => {
+      queryClient.removeQueries({
+        queryKey: [QUERYKEY.ROOM_DETAIL],
       });
-
-      resetSelectedPlayers();
-    }
-  }, [selectedPlayers]);
+      disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     if (roomDetail) {
@@ -93,9 +81,9 @@ const WaitingRoom = () => {
   useEffect(() => {
     if (roomStatus === 'finalResult') {
       getBalanceGameResults({ roomId: roomId })
-        .then((data) => {
-          if (data) {
-            const finalResult: BarProps[] = data.map((data) => ({
+        .then((res) => {
+          if (res) {
+            const finalResult: BarProps[] = res.map((data) => ({
               candidate1: data.a,
               candidate2: data.b,
               votes1: data.result.a.length,
@@ -114,15 +102,6 @@ const WaitingRoom = () => {
     }
   }, [roomStatus]);
 
-  useEffect(() => {
-    return () => {
-      queryClient.removeQueries({
-        queryKey: [QUERYKEY.ROOM_DETAIL],
-      });
-      disconnect();
-    };
-  }, []);
-
   const handleLinkCopy = () => {
     const currentUrl = window.document.location.href;
     navigator.clipboard.writeText(currentUrl);
@@ -136,9 +115,7 @@ const WaitingRoom = () => {
     sendMessage({
       destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
     });
-    queryClient.removeQueries({
-      queryKey: [QUERYKEY.PARTIAL_RESULT],
-    });
+    setPartialResult([]);
   };
 
   const handleMoveToWaitingRoom = () => {
@@ -193,7 +170,15 @@ const WaitingRoom = () => {
           />
         )}
         {roomStatus === 'progress' && (
-          <BalanceGameProgress sendMessage={sendMessage} />
+          <BalanceGameProgress
+            sendMessage={sendMessage}
+            roomId={roomId}
+            setPartialResult={setPartialResult}
+            isAllSelected={
+              players.length !== 0 &&
+              new Set(selectedPlayers).size === players.length
+            }
+          />
         )}
         {roomStatus === 'result' &&
           partialResult &&
