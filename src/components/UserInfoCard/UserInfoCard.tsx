@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import useRoomStore from '@/store/useRoomStore';
 import Image from 'next/image';
 
 interface UserInfoCardProps {
@@ -8,6 +9,8 @@ interface UserInfoCardProps {
 }
 
 const UserInfoCard = ({ name, isReady, fileName }: UserInfoCardProps) => {
+  const { myName } = useRoomStore();
+
   return (
     <section
       className={cn(
@@ -23,7 +26,9 @@ const UserInfoCard = ({ name, isReady, fileName }: UserInfoCardProps) => {
         ></Image>
       </figure>
       <div className="w-3/4 px-5 flex items-center font-bold">
-        <span>{name}</span>
+        <span className={cn(myName === name && 'text-primary-400')}>
+          {name}
+        </span>
       </div>
     </section>
   );
