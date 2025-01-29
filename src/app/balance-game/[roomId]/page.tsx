@@ -14,7 +14,6 @@ import { PATH } from '@/constants/router';
 import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
 import { useToast } from '@/hooks/useToast';
 import { useWebSocket } from '@/hooks/useWebSocket';
-import useModalStore from '@/store/useModalStore';
 import { BalanceGameResultGetResponse, Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'lucide-react';
@@ -42,7 +41,6 @@ const WaitingRoom = () => {
   const roomId = path.split('/')[2];
 
   const { myName } = useRoomStore();
-  const { closeModal } = useModalStore();
   const { connect, sendMessage, chatMessages, disconnect } = useWebSocket();
   const { toast } = useToast();
 
@@ -118,7 +116,6 @@ const WaitingRoom = () => {
           });
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomStatus]);
 
   useEffect(() => {
@@ -129,16 +126,6 @@ const WaitingRoom = () => {
       disconnect();
     };
   }, []);
-
-  if (isError) {
-    //@TODO: 추후에 에러 시 홈으로 유도해주는 페이지 개발 후 해당 주소로 리다이렉트
-    closeModal();
-    router.push(PATH.HOME);
-  }
-
-  if (!myName || !roomDetail) {
-    return <Spinner />;
-  }
 
   const handleLinkCopy = () => {
     const currentUrl = window.document.location.href;
@@ -160,6 +147,18 @@ const WaitingRoom = () => {
       destination: `${SOCKET.ENDPOINT.BALANCE_GAME.END}`,
     });
   };
+
+  if (isError) {
+    toast({
+      variant: 'destructive',
+      title: '문제가 생겼습니다. 다시 시도해주세요.',
+    });
+    router.push(PATH.HOME);
+  }
+
+  if (!myName || !roomDetail) {
+    return <Spinner />;
+  }
 
   return (
     <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
