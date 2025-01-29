@@ -17,7 +17,7 @@ const BalanceGameQuestionCard = ({
   return (
     <section
       className={cn(
-        'max-h-60 max-w-60 min-h-40 min-w-40 flex items-center justify-center border-2 rounded-lg cursor-pointer bg-container p-2',
+        'max-h-60 max-w-60 min-h-40 min-w-40 flex items-center justify-center text-center border-2 rounded-lg cursor-pointer bg-container p-2',
         isSelected
           ? 'border-secondary-500'
           : 'border-transparent hover:border-gray-300'
