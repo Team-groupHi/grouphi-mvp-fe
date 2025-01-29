@@ -97,25 +97,27 @@ const WaitingRoom = () => {
   }, [myName, roomDetail]);
 
   useEffect(() => {
-    getBalanceGameResults({ roomId: roomId })
-      .then((data) => {
-        if (data) {
-          const finalResult: BarProps[] = data.map((data) => ({
-            candidate1: data.a,
-            candidate2: data.b,
-            votes1: data.result.a.length,
-            votes2: data.result.b.length,
-          }));
+    if (roomStatus === 'finalResult') {
+      getBalanceGameResults({ roomId: roomId })
+        .then((data) => {
+          if (data) {
+            const finalResult: BarProps[] = data.map((data) => ({
+              candidate1: data.a,
+              candidate2: data.b,
+              votes1: data.result.a.length,
+              votes2: data.result.b.length,
+            }));
 
-          setFinalResult(finalResult);
-        }
-      })
-      .catch(() => {
-        toast({
-          variant: 'destructive',
-          title: '문제가 생겼습니다. 다시 시도해주세요.',
+            setFinalResult(finalResult);
+          }
+        })
+        .catch(() => {
+          toast({
+            variant: 'destructive',
+            title: '문제가 생겼습니다. 다시 시도해주세요.',
+          });
         });
-      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomStatus]);
 
@@ -134,6 +136,10 @@ const WaitingRoom = () => {
     router.push(PATH.HOME);
   }
 
+  if (!myName || !roomDetail) {
+    return <Spinner />;
+  }
+
   const handleLinkCopy = () => {
     const currentUrl = window.document.location.href;
     navigator.clipboard.writeText(currentUrl);
@@ -142,10 +148,6 @@ const WaitingRoom = () => {
       duration: 1500,
     });
   };
-
-  if (!myName || !roomDetail) {
-    return <Spinner />;
-  }
 
   const handleEnterNextRound = async () => {
     sendMessage({
@@ -157,31 +159,6 @@ const WaitingRoom = () => {
     sendMessage({
       destination: `${SOCKET.ENDPOINT.BALANCE_GAME.END}`,
     });
-  };
-
-  const handleGetFinalResult = async () => {
-    const data = await getBalanceGameResults({
-      roomId: roomId,
-    });
-
-    if (data) {
-      const finalResult: BarProps[] = data.map((data) => ({
-        candidate1: data.a,
-        candidate2: data.b,
-        votes1: data.result.a.length,
-        votes2: data.result.b.length,
-      }));
-
-      sendMessage({
-        destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
-      });
-      setFinalResult(finalResult);
-    } else {
-      toast({
-        variant: 'destructive',
-        title: '문제가 생겼습니다. 다시 시도해주세요.',
-      });
-    }
   };
 
   return (
@@ -238,23 +215,16 @@ const WaitingRoom = () => {
           chatMessages={chatMessages}
           sendMessage={sendMessage}
         />
-        {roomStatus === 'result' &&
-          isRoomManager &&
-          (round.currentRound === round.totalRounds ? (
-            <Button
-              className="w-full"
-              onClick={handleGetFinalResult}
-            >
-              최종 결과 보기
-            </Button>
-          ) : (
-            <Button
-              className="w-full"
-              onClick={handleEnterNextRound}
-            >
-              다음 라운드로 이동
-            </Button>
-          ))}
+        {roomStatus === 'result' && isRoomManager && (
+          <Button
+            className="w-full"
+            onClick={handleEnterNextRound}
+          >
+            {round.currentRound === round.totalRounds
+              ? '최종 결과 보기'
+              : '다음 라운드로 이동'}
+          </Button>
+        )}
         {roomStatus === 'finalResult' && isRoomManager && (
           <Button
             className="w-full"
