@@ -11,10 +11,10 @@ import {
 } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { PATH } from '@/constants/router';
-import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
+import { useFetchParticalResult, useFetchRoomDetail } from '@/hooks/api';
 import { useToast } from '@/hooks/useToast';
 import { useWebSocket } from '@/hooks/useWebSocket';
-import { BalanceGameResultGetResponse, Player } from '@/types/api';
+import { Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -45,10 +45,13 @@ const WaitingRoom = () => {
   const { toast } = useToast();
 
   const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
+  const { data: partialResult } = useFetchParticalResult({
+    roomId: roomId,
+    round: round.currentRound,
+  });
   const queryClient = useQueryClient();
   const players: Player[] = roomDetail?.players || [];
 
-  const [result, setResult] = useState<BalanceGameResultGetResponse[]>([]);
   const [finalResult, setFinalResult] = useState<BarProps[]>([]);
 
   const isRoomManager = roomDetail?.hostName === myName;
@@ -59,18 +62,11 @@ const WaitingRoom = () => {
       new Set(selectedPlayers).size === players.length
     ) {
       setRoomStatus('result');
-      getBalanceGameResults({
-        roomId: roomId,
-        round: round.currentRound,
-      })
-        .then((data) => {
-          if (data) {
-            setResult(data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+
+      queryClient.invalidateQueries({
+        queryKey: [QUERYKEY.PARTIAL_RESULT, round.currentRound],
+      });
+
       resetSelectedPlayers();
     }
   }, [selectedPlayers]);
@@ -140,6 +136,9 @@ const WaitingRoom = () => {
     sendMessage({
       destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
     });
+    queryClient.removeQueries({
+      queryKey: [QUERYKEY.PARTIAL_RESULT],
+    });
   };
 
   const handleMoveToWaitingRoom = () => {
@@ -194,15 +193,13 @@ const WaitingRoom = () => {
           />
         )}
         {roomStatus === 'progress' && (
-          <BalanceGameProgress
-            sendMessage={sendMessage}
-            setResult={setResult}
-            roomId={roomId}
-          />
+          <BalanceGameProgress sendMessage={sendMessage} />
         )}
-        {roomStatus === 'result' && result.length !== 0 && (
-          <PartialResultChart data={result} />
-        )}
+        {roomStatus === 'result' &&
+          partialResult &&
+          partialResult.length !== 0 && (
+            <PartialResultChart data={partialResult} />
+          )}
         {roomStatus === 'finalResult' && finalResult.length !== 0 && (
           <FinalResultChart data={finalResult} />
         )}

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -6,44 +7,31 @@ import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import * as StompJS from '@stomp/stompjs';
 import { SOCKET } from '@/constants/websocket';
-import { getBalanceGameResults } from '@/services/balanceGames';
-import { BalanceGameResultGetResponse } from '@/types/api';
+import { QUERYKEY } from '@/constants/querykey';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface BalanceGameProgressProps {
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
-  setResult: (result: BalanceGameResultGetResponse[]) => void;
-  roomId: string;
 }
 
-const BalanceGameProgress = ({
-  sendMessage,
-  setResult,
-  roomId,
-}: BalanceGameProgressProps) => {
+const BalanceGameProgress = ({ sendMessage }: BalanceGameProgressProps) => {
   const { round, setRoomStatus } = useBalanceGameStore();
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
 
+  const queryClient = useQueryClient();
+
   useEffect(() => {
     if (isTimeout === true) {
       setRoomStatus('result');
-      getBalanceGameResults({
-        roomId: roomId,
-        round: round.currentRound,
-      })
-        .then((data) => {
-          if (data) {
-            setResult(data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+
+      queryClient.invalidateQueries({
+        queryKey: [QUERYKEY.PARTIAL_RESULT, round.currentRound],
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTimeout]);
 
   const handleSelect = (option: string) => {
