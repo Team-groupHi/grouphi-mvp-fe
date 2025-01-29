@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 'use client';
 import { QUERYKEY } from '@/constants/querykey';
 import { SOCKET } from '@/constants/websocket';
@@ -17,7 +18,7 @@ export function useWebSocket() {
   const client = useRef<StompJS.Client | null>(null);
   const [, setSubscription] = useState<StompJS.StompSubscription | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const { setRoomStatus, setRound } = useBalanceGameStore();
+  const { setRoomStatus, setRound, addSelectedPlayers } = useBalanceGameStore();
 
   const queryClient = useQueryClient();
 
@@ -141,8 +142,7 @@ export function useWebSocket() {
         });
         break;
       case SOCKET.TYPE.BG_SELECT:
-        //@Todo
-        // 전원 다 선택을 했을 경우 바로 중간 결과로 가는 로직 필요
+        addSelectedPlayers(sender);
         break;
       case SOCKET.TYPE.BG_START:
         setRoomStatus('progress');

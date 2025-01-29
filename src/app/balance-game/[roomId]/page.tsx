@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import {
@@ -31,7 +32,13 @@ import { getBalanceGameResults } from '@/services/balanceGames';
 const WaitingRoom = () => {
   const path = usePathname();
   const router = useRouter();
-  const { roomStatus, round } = useBalanceGameStore();
+  const {
+    roomStatus,
+    setRoomStatus,
+    round,
+    selectedPlayers,
+    resetSelectedPlayers,
+  } = useBalanceGameStore();
   const roomId = path.split('/')[2];
 
   const { myName } = useRoomStore();
@@ -47,6 +54,28 @@ const WaitingRoom = () => {
   const [finalResult, setFinalResult] = useState<BarProps[]>([]);
 
   const isRoomManager = roomDetail?.hostName === myName;
+
+  useEffect(() => {
+    if (
+      players.length !== 0 &&
+      new Set(selectedPlayers).size === players.length
+    ) {
+      setRoomStatus('result');
+      getBalanceGameResults({
+        roomId: roomId,
+        round: round.currentRound,
+      })
+        .then((data) => {
+          if (data) {
+            setResult(data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      resetSelectedPlayers();
+    }
+  }, [selectedPlayers]);
 
   useEffect(() => {
     if (roomDetail) {
@@ -65,7 +94,6 @@ const WaitingRoom = () => {
         });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [myName, roomDetail]);
 
   useEffect(() => {
@@ -75,7 +103,6 @@ const WaitingRoom = () => {
       });
       disconnect();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isError) {
@@ -151,7 +178,8 @@ const WaitingRoom = () => {
         {players.map((data, index) => (
           <UserInfoCard
             key={index}
-            {...data}
+            name={data.name}
+            isReady={roomStatus === 'idle' ? data.isReady : false}
             fileName={data.avatar}
           />
         ))}

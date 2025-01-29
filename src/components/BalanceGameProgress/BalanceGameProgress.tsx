@@ -64,10 +64,8 @@ const BalanceGameProgress = ({
     <main className="flex flex-col items-center justify-center p-8 h-full">
       <section className="w-full mb-4 flex flex-col items-center gap-4">
         <Timer
-          startTime={Date.now()}
-          endTime={Date.now() + 3000}
-          // startTime={round.startTime}
-          // endTime={round.endTime}
+          startTime={round.startTime}
+          endTime={round.endTime}
           setIsTimeout={setIsTimeout}
         />
       </section>
