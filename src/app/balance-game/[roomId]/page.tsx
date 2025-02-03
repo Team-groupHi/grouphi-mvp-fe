@@ -115,7 +115,6 @@ const WaitingRoom = () => {
     sendMessage({
       destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
     });
-    setPartialResult([]);
   };
 
   const handleMoveToWaitingRoom = () => {
@@ -137,8 +136,8 @@ const WaitingRoom = () => {
   }
 
   return (
-    <section className="w-screen h-screen flex items-center justify-center px-10 gap-10 shrink-0">
-      <section className="flex flex-col gap-3 h-4/5 min-w-[15rem] max-w-[20rem] relative">
+    <section className="w-screen h-screen flex items-center gap-10 shrink-0">
+      <section className="flex flex-col gap-3 h-4/5 min-w-[15rem] max-w-[20rem] relative ml-10">
         {roomStatus === 'idle' && (
           <Button
             className="absolute -top-12 left-0"
@@ -190,7 +189,7 @@ const WaitingRoom = () => {
         )}
       </section>
 
-      <section className="flex flex-col h-4/5 min-w-[15rem] max-w-[20rem] gap-2">
+      <section className="flex flex-col h-4/5 min-w-[15rem] max-w-[20rem] mr-10 gap-2">
         <Chatting
           myName={myName}
           chatMessages={chatMessages}
