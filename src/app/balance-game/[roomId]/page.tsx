@@ -1,30 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import {
-  Chatting,
-  FinalResultChart,
-  PartialResultChart,
-  Spinner,
-} from '@/components';
+import { Chatting, Spinner } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { PATH } from '@/constants/router';
 import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
 import { useToast } from '@/hooks/useToast';
 import { useWebSocket } from '@/hooks/useWebSocket';
-import { BalanceGameResultGetResponse, Player } from '@/types/api';
+import { Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import PrevGame from './PrevGame';
-import BalanceGameProgress from '@/components/BalanceGameProgress';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
-import { BarProps } from '@/components/FinalResultChart/Bar';
+import { useEffect } from 'react';
 import useRoomStore from '@/store/useRoomStore';
 import { useRouter } from 'next/navigation';
-import { getBalanceGameResults } from '@/services/balanceGames';
 import UserList from './UserList';
 import RoomControl from './RoomControl';
+import GamePanel from './GamePanel';
 
 const WaitingRoom = () => {
   const path = usePathname();
@@ -38,12 +29,6 @@ const WaitingRoom = () => {
   const queryClient = useQueryClient();
 
   const { myName } = useRoomStore();
-  const { roomStatus, selectedPlayers } = useBalanceGameStore();
-
-  const [partialResult, setPartialResult] = useState<
-    BalanceGameResultGetResponse[]
-  >([]);
-  const [finalResult, setFinalResult] = useState<BarProps[]>([]);
 
   const players: Player[] = roomDetail?.players || [];
   const isRoomManager = roomDetail?.hostName === myName;
@@ -76,30 +61,6 @@ const WaitingRoom = () => {
     }
   }, [myName, roomDetail]);
 
-  useEffect(() => {
-    if (roomStatus === 'finalResult') {
-      getBalanceGameResults({ roomId: roomId })
-        .then((res) => {
-          if (res) {
-            const finalResult: BarProps[] = res.map((data) => ({
-              candidate1: data.a,
-              candidate2: data.b,
-              votes1: data.result.a.length,
-              votes2: data.result.b.length,
-            }));
-
-            setFinalResult(finalResult);
-          }
-        })
-        .catch(() => {
-          toast({
-            variant: 'destructive',
-            title: '문제가 생겼습니다. 다시 시도해주세요.',
-          });
-        });
-    }
-  }, [roomStatus]);
-
   if (isError) {
     toast({
       variant: 'destructive',
@@ -114,39 +75,15 @@ const WaitingRoom = () => {
 
   return (
     <section className="w-screen h-screen flex items-center gap-10 shrink-0">
-      <section className="flex flex-col gap-3 h-4/5 min-w-[15rem] max-w-[20rem] relative ml-10">
-        <UserList players={players} />
-      </section>
+      <UserList players={players} />
 
-      <section className="h-4/5 min-w-[45rem] max-w-[70rem] w-full bg-container/50 rounded-lg">
-        {roomStatus === 'idle' && (
-          <PrevGame
-            roomDetail={roomDetail}
-            players={players}
-            isRoomManager={isRoomManager}
-            sendMessage={sendMessage}
-          />
-        )}
-        {roomStatus === 'progress' && (
-          <BalanceGameProgress
-            sendMessage={sendMessage}
-            roomId={roomId}
-            setPartialResult={setPartialResult}
-            isAllSelected={
-              players.length !== 0 &&
-              new Set(selectedPlayers).size === players.length
-            }
-          />
-        )}
-        {roomStatus === 'result' &&
-          partialResult &&
-          partialResult.length !== 0 && (
-            <PartialResultChart data={partialResult} />
-          )}
-        {roomStatus === 'finalResult' && finalResult.length !== 0 && (
-          <FinalResultChart data={finalResult} />
-        )}
-      </section>
+      <GamePanel
+        roomId={roomId}
+        roomDetail={roomDetail}
+        players={players}
+        isRoomManager={isRoomManager}
+        sendMessage={sendMessage}
+      />
 
       <section className="flex flex-col h-4/5 min-w-[15rem] max-w-[20rem] mr-10 gap-2">
         <Chatting
