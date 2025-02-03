@@ -2,12 +2,10 @@
 'use client';
 
 import {
-  Button,
   Chatting,
   FinalResultChart,
   PartialResultChart,
   Spinner,
-  UserInfoCard,
 } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { PATH } from '@/constants/router';
@@ -16,17 +14,17 @@ import { useToast } from '@/hooks/useToast';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { BalanceGameResultGetResponse, Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
-import { Link } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import PrevGame from './PrevGame';
 import BalanceGameProgress from '@/components/BalanceGameProgress';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
-import { SOCKET } from '@/constants/websocket';
 import { BarProps } from '@/components/FinalResultChart/Bar';
 import useRoomStore from '@/store/useRoomStore';
 import { useRouter } from 'next/navigation';
 import { getBalanceGameResults } from '@/services/balanceGames';
+import UserList from './UserList';
+import ManagerControl from './ManagerControl';
 
 const WaitingRoom = () => {
   const path = usePathname();
@@ -40,7 +38,7 @@ const WaitingRoom = () => {
   const queryClient = useQueryClient();
 
   const { myName } = useRoomStore();
-  const { roomStatus, round, selectedPlayers } = useBalanceGameStore();
+  const { roomStatus, selectedPlayers } = useBalanceGameStore();
 
   const [partialResult, setPartialResult] = useState<
     BalanceGameResultGetResponse[]
@@ -102,27 +100,6 @@ const WaitingRoom = () => {
     }
   }, [roomStatus]);
 
-  const handleLinkCopy = () => {
-    const currentUrl = window.document.location.href;
-    navigator.clipboard.writeText(currentUrl);
-    toast({
-      title: '클립보드에 복사되었어요!',
-      duration: 1500,
-    });
-  };
-
-  const handleEnterNextRound = async () => {
-    sendMessage({
-      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
-    });
-  };
-
-  const handleMoveToWaitingRoom = () => {
-    sendMessage({
-      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.END}`,
-    });
-  };
-
   if (isError) {
     toast({
       variant: 'destructive',
@@ -138,25 +115,7 @@ const WaitingRoom = () => {
   return (
     <section className="w-screen h-screen flex items-center gap-10 shrink-0">
       <section className="flex flex-col gap-3 h-4/5 min-w-[15rem] max-w-[20rem] relative ml-10">
-        {roomStatus === 'idle' && (
-          <Button
-            className="absolute -top-12 left-0"
-            size={'sm'}
-            variant={'secondary'}
-            onClick={handleLinkCopy}
-          >
-            <Link />
-            초대 링크 복사
-          </Button>
-        )}
-        {players.map((data, index) => (
-          <UserInfoCard
-            key={index}
-            name={data.name}
-            isReady={roomStatus === 'idle' ? data.isReady : false}
-            fileName={data.avatar}
-          />
-        ))}
+        <UserList players={players} />
       </section>
 
       <section className="h-4/5 min-w-[45rem] max-w-[70rem] w-full bg-container/50 rounded-lg">
@@ -195,24 +154,10 @@ const WaitingRoom = () => {
           chatMessages={chatMessages}
           sendMessage={sendMessage}
         />
-        {roomStatus === 'result' && isRoomManager && (
-          <Button
-            className="w-full"
-            onClick={handleEnterNextRound}
-          >
-            {round.currentRound === round.totalRounds
-              ? '최종 결과 보기'
-              : '다음 라운드로 이동'}
-          </Button>
-        )}
-        {roomStatus === 'finalResult' && isRoomManager && (
-          <Button
-            className="w-full"
-            onClick={handleMoveToWaitingRoom}
-          >
-            대기실로 이동
-          </Button>
-        )}
+        <ManagerControl
+          isRoomManager={isRoomManager}
+          sendMessage={sendMessage}
+        />
       </section>
     </section>
   );
