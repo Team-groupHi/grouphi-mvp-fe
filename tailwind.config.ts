@@ -183,7 +183,15 @@ const config: Config = {
       },
       boxShadow: {
         DEFAULT: '0 4px 4px rgba(0, 0, 0, 0.25)',
-        light: '0 4px 4px rgba(0, 0, 0, 0.10)',
+        light: '0 4px 4px rgba(0, 0, 0, 0.15)',
+        dark: '0 4px 4px rgba(0, 0, 0, 0.5)',
+      },
+      dropShadow: {
+        DEFAULT: '0 4px 4px rgba(0, 0, 0, 0.25)',
+        light: '0 4px 4px rgba(0, 0, 0, 0.15)',
+        dark: '0 4px 4px rgba(0, 0, 0, 0.5)',
+        'sm-light': '0 2px 2px rgba(0, 0, 0, 0.15)',
+        'sm-dark': '0 2px 2px rgba(0, 0, 0, 0.5)',
       },
       opacity: {
         DEFAULT: '.5',

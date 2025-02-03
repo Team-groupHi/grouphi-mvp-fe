@@ -152,6 +152,7 @@ const WaitingRoom = () => {
             key={index}
             {...data}
             fileName={data.avatar}
+            isHost={data.name === roomDetail.hostName}
           />
         ))}
       </section>
