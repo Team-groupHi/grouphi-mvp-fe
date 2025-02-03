@@ -35,6 +35,7 @@ export const SOCKET = {
     BG_NEXT: 'BG_NEXT',
     BG_ALL_RESULTS: 'BG_ALL_RESULTS',
     BG_END: 'BG_END',
+    ERROR: 'ERROR',
   },
   SYSTEM: 'system',
 };
