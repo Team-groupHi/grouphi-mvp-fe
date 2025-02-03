@@ -8,25 +8,24 @@ import {
   Spinner,
   UserInfoCard,
 } from '@/components';
+import BalanceGameProgress from '@/components/BalanceGameProgress';
+import { BarProps } from '@/components/FinalResultChart/Bar';
 import { QUERYKEY } from '@/constants/querykey';
 import { PATH } from '@/constants/router';
+import { SOCKET } from '@/constants/websocket';
 import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
 import { useToast } from '@/hooks/useToast';
 import { useWebSocket } from '@/hooks/useWebSocket';
+import { getBalanceGameResults } from '@/services/balanceGames';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useModalStore from '@/store/useModalStore';
+import useRoomStore from '@/store/useRoomStore';
 import { BalanceGameResultGetResponse, Player } from '@/types/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import PrevGame from './PrevGame';
-import BalanceGameProgress from '@/components/BalanceGameProgress';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
-import { SOCKET } from '@/constants/websocket';
-import { BarProps } from '@/components/FinalResultChart/Bar';
-import useRoomStore from '@/store/useRoomStore';
-import { useRouter } from 'next/navigation';
-import { getBalanceGameResults } from '@/services/balanceGames';
 
 const WaitingRoom = () => {
   const path = usePathname();
@@ -157,7 +156,7 @@ const WaitingRoom = () => {
         ))}
       </section>
 
-      <section className="h-4/5 min-w-[45rem] max-w-[70rem] w-full bg-container/50 rounded-lg">
+      <section className="h-4/5 min-w-max max-w-[70rem] w-full bg-container/50 rounded-lg">
         {roomStatus === 'idle' && (
           <PrevGame
             roomDetail={roomDetail}
