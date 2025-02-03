@@ -32,8 +32,6 @@ const BalanceGameProgress = ({
 
   useEffect(() => {
     if (isTimeout || isAllSelected) {
-      console.log('시간초과?', isTimeout);
-      console.log('전부선택?', isAllSelected);
       setRoomStatus('result');
       resetSelectedPlayers();
 
