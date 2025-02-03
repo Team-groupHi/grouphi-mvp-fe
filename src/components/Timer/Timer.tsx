@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { AlarmClock } from 'lucide-react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
@@ -12,7 +13,7 @@ type Time = string | number | Date | Dayjs;
 interface TimerProps {
   startTime: Time;
   endTime: Time;
-  setIsTimeout?: (props: boolean) => void;
+  setIsTimeout: (props: boolean) => void;
 }
 
 const Timer = ({ startTime, endTime, setIsTimeout }: TimerProps) => {
@@ -27,22 +28,19 @@ const Timer = ({ startTime, endTime, setIsTimeout }: TimerProps) => {
 
   const rafId = useRef(0);
 
-  const updateTimer = useCallback(() => {
+  const updateTimer = () => {
     const curTime = Date.now();
 
     setTimeLeft(() => {
       if (curTime >= localEndTime) {
         cancelAnimationFrame(rafId.current);
-        if (setIsTimeout) {
-          setIsTimeout(true);
-        }
         return 0;
       }
       return localEndTime - curTime;
     });
 
     rafId.current = requestAnimationFrame(updateTimer);
-  }, [localEndTime]);
+  };
 
   useEffect(() => {
     const curTime = Date.now();
@@ -58,6 +56,12 @@ const Timer = ({ startTime, endTime, setIsTimeout }: TimerProps) => {
       rafId.current = requestAnimationFrame(updateTimer);
     }
   }, [endTime, startTime, updateTimer]);
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      setIsTimeout(true);
+    }
+  }, [timeLeft, setIsTimeout]);
 
   return (
     <section className="flex items-center justify-center gap-2 w-full text-title1 font-semibold">
