@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { PartialResultChart, FinalResultChart } from '@/components';
 import BalanceGameProgress from '@/components/BalanceGameProgress';
-import PrevGame from './PrevGame';
+import PrevGame from '../PrevGame';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import {
   BalanceGameResultGetResponse,

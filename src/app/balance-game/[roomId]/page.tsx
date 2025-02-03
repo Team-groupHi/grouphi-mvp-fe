@@ -13,9 +13,9 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import useRoomStore from '@/store/useRoomStore';
 import { useRouter } from 'next/navigation';
-import UserList from './UserList';
-import RoomControl from './RoomControl';
-import GamePanel from './GamePanel';
+import UserList from './_component/UserList';
+import RoomControl from './_component/RoomControl';
+import GamePanel from './_component/GamePanel';
 
 const WaitingRoom = () => {
   const path = usePathname();
