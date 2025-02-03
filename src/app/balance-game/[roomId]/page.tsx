@@ -24,7 +24,7 @@ import useRoomStore from '@/store/useRoomStore';
 import { useRouter } from 'next/navigation';
 import { getBalanceGameResults } from '@/services/balanceGames';
 import UserList from './UserList';
-import ManagerControl from './ManagerControl';
+import RoomControl from './RoomControl';
 
 const WaitingRoom = () => {
   const path = usePathname();
@@ -154,7 +154,7 @@ const WaitingRoom = () => {
           chatMessages={chatMessages}
           sendMessage={sendMessage}
         />
-        <ManagerControl
+        <RoomControl
           isRoomManager={isRoomManager}
           sendMessage={sendMessage}
         />

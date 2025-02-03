@@ -12,10 +12,7 @@ interface ManagerControlProps {
   ) => void;
 }
 
-const ManagerControl = ({
-  isRoomManager,
-  sendMessage,
-}: ManagerControlProps) => {
+const RoomControl = ({ isRoomManager, sendMessage }: ManagerControlProps) => {
   const { roomStatus, round } = useBalanceGameStore();
 
   const handleEnterNextRound = async () => {
@@ -54,4 +51,4 @@ const ManagerControl = ({
   );
 };
 
-export default ManagerControl;
+export default RoomControl;
