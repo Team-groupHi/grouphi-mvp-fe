@@ -22,7 +22,7 @@ const UserList = ({ players }: UserListProps) => {
   };
 
   return (
-    <section className="flex flex-col gap-3 h-4/5 min-w-[15rem] max-w-[20rem] relative ml-10">
+    <section className="flex flex-col gap-3 h-4/5 w-1/6 min-w-[15rem] max-w-[20rem] relative ml-10">
       {roomStatus === 'idle' && (
         <Button
           className="absolute -top-12 left-0"

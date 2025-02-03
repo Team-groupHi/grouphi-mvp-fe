@@ -64,7 +64,7 @@ const GamePanel = ({
   }, [roomStatus]);
 
   return (
-    <section className="h-4/5 min-w-[45rem] max-w-[70rem] w-full bg-container/50 rounded-lg">
+    <section className="w-3/5 h-4/5 min-w-[45rem] max-w-[70rem] w-full bg-container/50 rounded-lg">
       {roomStatus === 'idle' && (
         <PrevGame
           roomDetail={roomDetail}
