@@ -1,5 +1,6 @@
 /* eslint-disable no-case-declarations */
 'use client';
+
 import { QUERYKEY } from '@/constants/querykey';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
@@ -7,6 +8,9 @@ import { ChatMessage } from '@/types';
 import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
+import { useToast } from './useToast';
+import { useRouter } from 'next/navigation';
+import { PATH } from '@/constants/router';
 
 interface EnterRoomProps {
   roomId: string;
@@ -21,6 +25,8 @@ export function useWebSocket() {
   const { setRoomStatus, setRound, addSelectedPlayers } = useBalanceGameStore();
 
   const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const router = useRouter();
 
   const connect = ({ roomId, name }: EnterRoomProps) => {
     if (client.current) return;
@@ -102,7 +108,7 @@ export function useWebSocket() {
   };
 
   const receiveMessage = (message: string) => {
-    console.log(`[WebSocket] 2-1. receiveMessage`, message);
+    console.log('[WebSocket] 2-1. receiveMessage', message);
     const { type, sender, content } = JSON.parse(message);
 
     switch (type) {
@@ -160,6 +166,13 @@ export function useWebSocket() {
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
+        break;
+      case SOCKET.TYPE.ERROR:
+        toast({
+          variant: 'destructive',
+          title: '문제가 생겼습니다. 다시 시도해주세요.',
+        });
+        router.push(PATH.HOME);
         break;
       default:
         break;
