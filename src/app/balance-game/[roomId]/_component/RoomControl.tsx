@@ -28,7 +28,7 @@ const RoomControl = ({ isRoomManager, sendMessage }: ManagerControlProps) => {
   };
 
   return (
-    <section>
+    <>
       {roomStatus === 'result' && isRoomManager && (
         <Button
           className="w-full"
@@ -47,7 +47,7 @@ const RoomControl = ({ isRoomManager, sendMessage }: ManagerControlProps) => {
           대기실로 이동
         </Button>
       )}
-    </section>
+    </>
   );
 };
 
