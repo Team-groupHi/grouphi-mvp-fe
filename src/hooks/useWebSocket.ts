@@ -147,6 +147,11 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
+      case SOCKET.TYPE.CHANGE_PLAYER_NAME:
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
       case SOCKET.TYPE.BG_SELECT:
         addSelectedPlayers(sender);
         break;
@@ -162,6 +167,12 @@ export function useWebSocket() {
         setRoomStatus('finalResult');
         break;
       case SOCKET.TYPE.BG_END:
+        setChatMessages(() => [
+          {
+            sender: SOCKET.SYSTEM,
+            content: '게임이 종료되었습니다.',
+          },
+        ]);
         setRoomStatus('idle');
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
