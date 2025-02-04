@@ -43,7 +43,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
   }, [chatMessages]);
 
   return (
-    <section className="h-full">
+    <section className="h-[calc(100%-3rem)]">
       <section className="h-[calc(100%-4rem)] bg-container-600 rounded-t-lg overflow-auto">
         {chatMessages.map((item, index) => (
           <Item
