@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import UserList from './_component/UserList';
 import RoomControl from './_component/RoomControl';
 import GamePanel from './_component/GamePanel';
+import { SOCKET } from '@/constants/websocket';
 
 const WaitingRoom = () => {
   const path = usePathname();
@@ -60,6 +61,16 @@ const WaitingRoom = () => {
       }
     }
   }, [myName, roomDetail]);
+
+  useEffect(() => {
+    //@TODO: 현재 이름이 바뀌면 새로운 유저가 생기는 문제 발생. 확인 후 수정 필요.
+    sendMessage({
+      destination: `${SOCKET.ENDPOINT.ROOM.CHANGE_PLAYER_NAME}`,
+      body: {
+        name: myName,
+      },
+    });
+  }, [myName]);
 
   if (isError) {
     toast({

@@ -1,6 +1,9 @@
 import { cn } from '@/lib/utils';
 import useRoomStore from '@/store/useRoomStore';
 import Image from 'next/image';
+import { Button } from '../Button';
+import { Edit } from 'lucide-react';
+import useModalStore from '@/store/useModalStore';
 
 interface UserInfoCardProps {
   name: string;
@@ -10,6 +13,11 @@ interface UserInfoCardProps {
 
 const UserInfoCard = ({ name, isReady, fileName }: UserInfoCardProps) => {
   const { myName } = useRoomStore();
+  const { openModal } = useModalStore();
+
+  const handleEditUserName = () => {
+    openModal('CreateUserNameModal');
+  };
 
   return (
     <section
@@ -25,10 +33,19 @@ const UserInfoCard = ({ name, isReady, fileName }: UserInfoCardProps) => {
           fill={true}
         ></Image>
       </figure>
-      <div className="w-3/4 px-5 flex items-center font-bold">
+      <div className="w-[calc(100%-4rem)] pl-4 pr-1 flex items-center font-bold justify-between gap-1">
         <span className={cn(myName === name && 'text-primary-400')}>
           {name}
         </span>
+        {name === myName && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleEditUserName}
+          >
+            <Edit />
+          </Button>
+        )}
       </div>
     </section>
   );
