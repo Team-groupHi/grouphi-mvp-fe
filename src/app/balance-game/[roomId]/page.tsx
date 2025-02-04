@@ -68,6 +68,29 @@ const WaitingRoom = () => {
   }, [myName, roomDetail]);
 
   useEffect(() => {
+    getBalanceGameResults({ roomId: roomId })
+      .then((data) => {
+        if (data) {
+          const finalResult: BarProps[] = data.map((data) => ({
+            candidate1: data.a,
+            candidate2: data.b,
+            votes1: data.result.a.length,
+            votes2: data.result.b.length,
+          }));
+
+          setFinalResult(finalResult);
+        }
+      })
+      .catch(() => {
+        toast({
+          variant: 'destructive',
+          title: '문제가 생겼습니다. 다시 시도해주세요.',
+        });
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomStatus]);
+
+  useEffect(() => {
     return () => {
       queryClient.removeQueries({
         queryKey: [QUERYKEY.ROOM_DETAIL],

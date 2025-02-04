@@ -6,6 +6,7 @@ import Script from 'next/script';
 import React from 'react';
 import { notoSans, pretendard } from './fonts/fonts';
 import './globals.css';
+import { ShootingStars, StarsBackground } from '@/components';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -50,6 +51,8 @@ export default function RootLayout({
           </>
         )}
         <Providers>
+          <StarsBackground />
+          <ShootingStars />
           <InitialNickname>{children}</InitialNickname>
           <Toaster />
           <ModalRenderer />
