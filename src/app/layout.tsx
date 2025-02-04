@@ -51,8 +51,10 @@ export default function RootLayout({
           </>
         )}
         <Providers>
-          <StarsBackground />
-          <ShootingStars />
+          <div className="fixed w-full h-screen -z-10">
+            <StarsBackground />
+            <ShootingStars />
+          </div>
           <InitialNickname>{children}</InitialNickname>
           <Toaster />
           <ModalRenderer />
