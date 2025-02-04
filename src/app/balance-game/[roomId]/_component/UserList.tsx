@@ -6,9 +6,10 @@ import { Link } from 'lucide-react';
 
 interface UserListProps {
   players: Player[];
+  hostName: string;
 }
 
-const UserList = ({ players }: UserListProps) => {
+const UserList = ({ players, hostName }: UserListProps) => {
   const { toast } = useToast();
   const { roomStatus } = useBalanceGameStore();
 
@@ -40,6 +41,7 @@ const UserList = ({ players }: UserListProps) => {
           name={data.name}
           isReady={roomStatus === 'idle' ? data.isReady : false}
           fileName={data.avatar}
+          isHost={data.name === hostName}
         />
       ))}
     </section>

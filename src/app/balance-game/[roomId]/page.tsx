@@ -86,7 +86,10 @@ const WaitingRoom = () => {
 
   return (
     <section className="w-screen h-screen flex items-center gap-10 shrink-0">
-      <UserList players={players} />
+      <UserList
+        players={players}
+        hostName={roomDetail.hostName}
+      />
 
       <GamePanel
         roomId={roomId}

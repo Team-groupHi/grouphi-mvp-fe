@@ -1,16 +1,16 @@
-import { GameListCard, Button } from '@/components';
+import { Button, GameListCard } from '@/components';
 import { SOCKET } from '@/constants/websocket';
+import { useToast } from '@/hooks/useToast';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomGetResponse } from '@/types/api';
+import * as StompJS from '@stomp/stompjs';
 import {
   CheckCheck,
   Loader,
-  SlidersHorizontal,
   MousePointer2,
+  SlidersHorizontal,
 } from 'lucide-react';
-import * as StompJS from '@stomp/stompjs';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
-import useRoomStore from '@/store/useRoomStore';
-import { useToast } from '@/hooks/useToast';
 
 interface PrevGameProps {
   roomDetail: RoomGetResponse;
@@ -76,7 +76,7 @@ const PrevGame = ({
   };
 
   return (
-    <section className="w-full h-full flex flex-col justify-center items-center gap-7">
+    <section className="w-full h-full flex flex-col justify-center items-center gap-7 px-900">
       <span className="font-semibold">잠시 후 게임이 시작됩니다.</span>
       <GameListCard
         title={roomDetail.game.nameKr}

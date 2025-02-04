@@ -4,7 +4,6 @@ import { create } from 'zustand';
 type roomStatusType = 'idle' | 'progress' | 'result' | 'finalResult';
 
 interface BalanceGameStoreProps {
-  totalRounds: number; // === totalRounds, 리셋 시 0?
   roomStatus: roomStatusType;
   round: BalanceGameRoundResponse;
   selectedPlayers: string[];
@@ -17,7 +16,6 @@ interface BalanceGameStoreProps {
 }
 
 const useBalanceGameStore = create<BalanceGameStoreProps>((set) => ({
-  totalRounds: 0,
   round: {
     totalRounds: 0,
     q: '',
@@ -52,7 +50,6 @@ const useBalanceGameStore = create<BalanceGameStoreProps>((set) => ({
   },
   reset: () =>
     set({
-      totalRounds: 0,
       roomStatus: 'idle',
     }),
 }));
