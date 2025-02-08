@@ -11,6 +11,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Ensure Issue is Added to @grouphi Project
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ORGANIZATION="@grouphi"
+          PROJECT_NUMBER="1"  # 프로젝트 번호 (필요시 확인 후 변경)
+
+          ISSUE_ID=$(gh issue view ${{ github.event.issue.number }} --json id --jq '.id')
+
+          # 이슈가 프로젝트에 속해 있는지 확인
+          PROJECT_ISSUES=$(gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format json | jq -r '.[].content.id')
+
+          if echo "$PROJECT_ISSUES" | grep -q "$ISSUE_ID"; then
+            echo "✅ 이슈가 이미 @grouphi 프로젝트에 포함됨."
+          else
+            echo "🔄 이슈를 @grouphi 프로젝트에 추가 중..."
+            gh project item-add $PROJECT_NUMBER --owner $ORGANIZATION --content-id $ISSUE_ID
+            echo "✅ 이슈가 @grouphi 프로젝트에 추가됨."
+          fi
+
       - name: Issue Parser
         uses: stefanbuck/github-issue-parser@v3
         id: issue-parser
