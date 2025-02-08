@@ -4,19 +4,10 @@ labels: [feat]
 title: '이슈 이름을 작성해주세요'
 body:
   - type: input
-    id: parentKey
-    attributes:
-      label: '🎟️ 상위 작업 (Ticket Number)'
-      description: '상위 작업의 Ticket Number를 기입해주세요'
-      placeholder: 'GRPHI-00'
-    validations:
-      required: true
-
-  - type: input
     id: branch
     attributes:
       label: '🌳 브랜치명 (Branch)'
-      description: '영어로 브랜치명을 작성해주세요'
+      description: '영어로 브랜치 접미사명을 작성해주세요'
     validations:
       required: true
 
