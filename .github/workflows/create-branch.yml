@@ -11,10 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Main Code
-        uses: actions/checkout@v4
-        with:
-          ref: main
+      - name: Ensure Issue is Added to @grouphi Project
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ORGANIZATION="@grouphi"
+          PROJECT_NUMBER="1"  # 프로젝트 번호 (필요시 확인 후 변경)
+
+          ISSUE_ID=$(gh issue view ${{ github.event.issue.number }} --json id --jq '.id')
+
+          # 이슈가 프로젝트에 속해 있는지 확인
+          PROJECT_ISSUES=$(gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format json | jq -r '.[].content.id')
+
+          if echo "$PROJECT_ISSUES" | grep -q "$ISSUE_ID"; then
+            echo "✅ 이슈가 이미 @grouphi 프로젝트에 포함됨."
+          else
+            echo "🔄 이슈를 @grouphi 프로젝트에 추가 중..."
+            gh project item-add $PROJECT_NUMBER --owner $ORGANIZATION --content-id $ISSUE_ID
+            echo "✅ 이슈가 @grouphi 프로젝트에 추가됨."
+          fi
 
       - name: Issue Parser
         uses: stefanbuck/github-issue-parser@v3
@@ -35,6 +50,7 @@ jobs:
 
       - name: Create Branch from Issue
         run: |
+          ISSUE_NUMBER="${{ github.event.issue.number }}"  # 깃허브 이슈 번호
           ISSUE_TITLE="${{ steps.issue-parser.outputs.issueparser_branch }}" # 브랜치명 필드에서 값 추출
 
           if [[ -z "$ISSUE_TITLE" ]]; then
@@ -42,7 +58,7 @@ jobs:
             exit 1
           fi
 
-          BRANCH_NAME="GRPHI-feat/$(echo ${ISSUE_TITLE} | sed 's/ /-/g')"
+          BRANCH_NAME="GRPHI-${ISSUE_NUMBER}-feat/$(echo ${ISSUE_TITLE} | sed 's/ /-/g')"
           echo "Creating Branch: $BRANCH_NAME"
 
           git checkout -b "${BRANCH_NAME}"
@@ -53,7 +69,7 @@ jobs:
         with:
           actions: 'update-issue'
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: '[${{ github.event.issue.number }}] ${{ github.event.issue.title }}'
+          title: '[GRPHI-${{ github.event.issue.number }}] ${{ github.event.issue.title }}'
 
       - name: Add Comment with Branch Info
         uses: actions-cool/issues-helper@v3
@@ -61,4 +77,4 @@ jobs:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
-          body: 'Branch Created: `GRPHI-feat/${{ steps.issue-parser.outputs.issueparser_branch }}`'
+          body: 'Branch Created: `GRPHI-${{ github.event.issue.number }}-feat/${{ steps.issue-parser.outputs.issueparser_branch }}`'
