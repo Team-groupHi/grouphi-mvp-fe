@@ -35,7 +35,6 @@ jobs:
 
       - name: Create Branch from Issue
         run: |
-          ISSUE_NUMBER="${{ github.event.issue.number }}"  # 깃허브 이슈 번호 사용
           ISSUE_TITLE="${{ steps.issue-parser.outputs.issueparser_branch }}" # 브랜치명 필드에서 값 추출
 
           if [[ -z "$ISSUE_TITLE" ]]; then
@@ -43,7 +42,7 @@ jobs:
             exit 1
           fi
 
-          BRANCH_NAME="${ISSUE_NUMBER}-$(echo ${ISSUE_TITLE} | sed 's/ /-/g')"
+          BRANCH_NAME="GRPHI-feat/$(echo ${ISSUE_TITLE} | sed 's/ /-/g')"
           echo "Creating Branch: $BRANCH_NAME"
 
           git checkout -b "${BRANCH_NAME}"
@@ -62,4 +61,4 @@ jobs:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
-          body: 'Branch Created: `${{ github.event.issue.number }}-${{ steps.issue-parser.outputs.issueparser_branch }}`'
+          body: 'Branch Created: `GRPHI-feat/${{ steps.issue-parser.outputs.issueparser_branch }}`'
