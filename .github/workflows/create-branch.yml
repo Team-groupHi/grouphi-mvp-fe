@@ -14,28 +14,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Ensure Issue is Added to @grouphi Project
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ORGANIZATION="grouphi"  # @ 제외
-          PROJECT_NUMBER="1"  # 프로젝트 번호 (이 값이 확실하므로 조회 생략)
-          REPO_NAME="${{ github.repository }}"
-          ISSUE_ID=$(gh issue view ${{ github.event.issue.number }} --repo $REPO_NAME --json id --jq '.id')
-
-          echo "🔍 이슈가 프로젝트에 속해 있는지 확인..."
-          PROJECT_ISSUES=$(gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format json | jq -r '.[].content.id')
-
-          if echo "$PROJECT_ISSUES" | grep -q "$ISSUE_ID"; then
-            echo "✅ 이슈가 이미 @grouphi 조직 프로젝트에 추가됨. 추가 작업 불필요."
-            echo "PROJECT_ALREADY_EXISTS=true" >> $GITHUB_ENV  # 환경 변수 설정
-          else
-            echo "🔄 이슈를 @grouphi 조직 프로젝트에 추가 중..."
-            gh project item-add $PROJECT_NUMBER --owner $ORGANIZATION --url "https://github.com/$REPO_NAME/issues/${{ github.event.issue.number }}"
-            echo "✅ 이슈가 @grouphi 조직 프로젝트에 추가됨."
-            echo "PROJECT_ALREADY_EXISTS=false" >> $GITHUB_ENV  # 환경 변수 설정
-          fi
-
       - name: Issue Parser
         uses: stefanbuck/github-issue-parser@v3
         id: issue-parser
