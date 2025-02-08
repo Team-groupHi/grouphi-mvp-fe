@@ -11,16 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Ensure Issue is Added to @grouphi Project
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ORGANIZATION="@grouphi"
+          ORGANIZATION="grouphi"  # @ 제외
           PROJECT_NUMBER="1"  # 프로젝트 번호 (필요시 확인 후 변경)
+          REPO_NAME="${{ github.repository }}" # 현재 리포지토리 이름
+          ISSUE_ID=$(gh issue view ${{ github.event.issue.number }} --repo $REPO_NAME --json id --jq '.id')
 
-          ISSUE_ID=$(gh issue view ${{ github.event.issue.number }} --json id --jq '.id')
-
-          # 이슈가 프로젝트에 속해 있는지 확인
+          # 이슈가 프로젝트에 속해 있는지 확인 (깃허브 프로젝트 v2)
           PROJECT_ISSUES=$(gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format json | jq -r '.[].content.id')
 
           if echo "$PROJECT_ISSUES" | grep -q "$ISSUE_ID"; then
