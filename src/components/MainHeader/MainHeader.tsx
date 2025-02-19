@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Edit } from 'lucide-react';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
+import { MODAL_TYPE } from '@/constants/modal';
 
 const MainHeader = () => {
   const currentPath = usePathname();
@@ -26,7 +27,7 @@ const MainHeader = () => {
   ];
 
   const handleNicknameEdit = () => {
-    openModal('CreateUserNameModal');
+    openModal(MODAL_TYPE.CREATE_USERNAME);
   };
 
   return (

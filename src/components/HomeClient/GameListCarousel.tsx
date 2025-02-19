@@ -7,7 +7,7 @@ import {
   GameListCard,
 } from '@/components';
 import { GAME } from '@/constants/game';
-import { MODAL } from '@/constants/modal';
+import { MODAL_TYPE } from '@/constants/modal';
 import useModalStore from '@/store/useModalStore';
 import { GamesResponse } from '@/types/api';
 
@@ -44,7 +44,7 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
                   case GAME.FOOD_BALANCE_GAME:
                   case GAME.DATING_BALANCE_GAME:
                 }
-                return openModal(MODAL.CREATE_BALANCE_GAME, game.id);
+                return openModal(MODAL_TYPE.CREATE_BALANCE_GAME, game.id);
               }}
             />
           </CarouselItem>
