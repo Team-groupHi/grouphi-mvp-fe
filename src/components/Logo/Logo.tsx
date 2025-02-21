@@ -13,6 +13,7 @@ const Logo = (props: React.HTMLAttributes<HTMLDivElement>) => {
           alt="logo"
           fill
           style={{ objectFit: 'contain' }}
+          priority
         />
       </div>
       <div className="relative w-16">
