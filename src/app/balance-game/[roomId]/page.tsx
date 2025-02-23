@@ -1,22 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
 import { Chatting, Spinner } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { PATH } from '@/constants/router';
+import { SOCKET } from '@/constants/websocket';
 import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
 import { useToast } from '@/hooks/useToast';
 import { useWebSocket } from '@/hooks/useWebSocket';
-import { Player } from '@/types/api';
-import { useQueryClient } from '@tanstack/react-query';
-import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
 import useRoomStore from '@/store/useRoomStore';
-import { useRouter } from 'next/navigation';
-import UserList from './_component/UserList';
-import RoomControl from './_component/RoomControl';
+import { Player } from '@/types/api';
+
 import GamePanel from './_component/GamePanel';
-import { SOCKET } from '@/constants/websocket';
+import RoomControl from './_component/RoomControl';
+import UserList from './_component/UserList';
 
 const WaitingRoom = () => {
   const path = usePathname();

@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Timer from '@/components/Timer';
-import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
 import * as StompJS from '@stomp/stompjs';
+import React, { useEffect, useState } from 'react';
+
+import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
+import Timer from '@/components/Timer';
 import { SOCKET } from '@/constants/websocket';
 import { getBalanceGameResults } from '@/services/balanceGames';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
 import { BalanceGameResultGetResponse } from '@/types/api';
 
 interface BalanceGameProgressProps {

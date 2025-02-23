@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import UserInfoCard from './UserInfoCard';
 
 describe('UserInfoCard 테스트 코드', () => {

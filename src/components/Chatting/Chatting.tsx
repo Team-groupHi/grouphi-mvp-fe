@@ -1,11 +1,13 @@
 'use client';
 
+import * as StompJS from '@stomp/stompjs';
+import React, { useEffect, useRef } from 'react';
+
 import Input from '@/components/Input';
-import Item from './Item';
-import React, { useRef, useEffect } from 'react';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
-import * as StompJS from '@stomp/stompjs';
+
+import Item from './Item';
 
 interface ChattingProps {
   myName: string;

@@ -1,6 +1,7 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { QUERYKEY } from '@/constants/querykey';
 import { getRoomDetail } from '@/services/rooms';
-import { useQuery } from '@tanstack/react-query';
 
 const useFetchRoomDetail = (roomId: string) => {
   return useQuery({

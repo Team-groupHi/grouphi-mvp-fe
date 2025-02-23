@@ -1,18 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { PartialResultChart, FinalResultChart } from '@/components';
+import * as StompJS from '@stomp/stompjs';
+import { useEffect, useState } from 'react';
+
+import { FinalResultChart, PartialResultChart } from '@/components';
 import BalanceGameProgress from '@/components/BalanceGameProgress';
-import PrevGame from './PrevGame';
+import { BarProps } from '@/components/FinalResultChart/Bar';
+import { useToast } from '@/hooks/useToast';
+import { getBalanceGameResults } from '@/services/balanceGames';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import {
   BalanceGameResultGetResponse,
   Player,
   RoomGetResponse,
 } from '@/types/api';
-import * as StompJS from '@stomp/stompjs';
-import { useEffect, useState } from 'react';
-import { BarProps } from '@/components/FinalResultChart/Bar';
-import { getBalanceGameResults } from '@/services/balanceGames';
-import { useToast } from '@/hooks/useToast';
+
+import PrevGame from './PrevGame';
 
 interface GamePanelProps {
   roomId: string;

@@ -1,12 +1,14 @@
 'use client';
 
-import { useRef } from 'react';
-import { Button } from '@/components/Button';
-import Bar, { BarProps } from './Bar';
-import { Download } from 'lucide-react';
 import html2canvas from 'html2canvas';
-import useModalStore from '@/store/useModalStore';
+import { Download } from 'lucide-react';
+import { useRef } from 'react';
+
+import { Button } from '@/components/Button';
 import { useToast } from '@/hooks/useToast';
+import useModalStore from '@/store/useModalStore';
+
+import Bar, { BarProps } from './Bar';
 
 interface FinalResultChartProps {
   data: BarProps[];

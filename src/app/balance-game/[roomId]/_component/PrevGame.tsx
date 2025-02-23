@@ -1,9 +1,3 @@
-import { Button, GameListCard } from '@/components';
-import { SOCKET } from '@/constants/websocket';
-import { useToast } from '@/hooks/useToast';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
-import useRoomStore from '@/store/useRoomStore';
-import { Player, RoomGetResponse } from '@/types/api';
 import * as StompJS from '@stomp/stompjs';
 import {
   CheckCheck,
@@ -11,6 +5,13 @@ import {
   MousePointer2,
   SlidersHorizontal,
 } from 'lucide-react';
+
+import { Button, GameListCard } from '@/components';
+import { SOCKET } from '@/constants/websocket';
+import { useToast } from '@/hooks/useToast';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useRoomStore from '@/store/useRoomStore';
+import { Player, RoomGetResponse } from '@/types/api';
 
 interface PrevGameProps {
   roomDetail: RoomGetResponse;

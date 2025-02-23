@@ -1,9 +1,11 @@
-import { cn } from '@/lib/utils';
-import useRoomStore from '@/store/useRoomStore';
-import Image from 'next/image';
-import { Button } from '../Button';
 import { Edit } from 'lucide-react';
+import Image from 'next/image';
+
+import { cn } from '@/lib/utils';
 import useModalStore from '@/store/useModalStore';
+import useRoomStore from '@/store/useRoomStore';
+
+import { Button } from '../Button';
 
 interface UserInfoCardProps {
   name: string;

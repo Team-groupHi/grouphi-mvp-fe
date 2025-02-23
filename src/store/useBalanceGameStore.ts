@@ -1,5 +1,6 @@
-import { BalanceGameRoundResponse, Player } from '@/types/api';
 import { create } from 'zustand';
+
+import { BalanceGameRoundResponse } from '@/types/api';
 
 type roomStatusType = 'idle' | 'progress' | 'result' | 'finalResult';
 

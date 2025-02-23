@@ -1,9 +1,10 @@
 'use client';
 
+import * as StompJS from '@stomp/stompjs';
+
 import { Button } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
-import * as StompJS from '@stomp/stompjs';
 
 interface ManagerControlProps {
   isRoomManager: boolean;

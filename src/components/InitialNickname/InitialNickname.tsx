@@ -1,10 +1,11 @@
 'use client';
 
+import React, { useCallback, useEffect } from 'react';
+
 import { STORAGE_KEY } from '@/constants/storage';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import useRoomStore from '@/store/useRoomStore';
 import { generateRandomNickname } from '@/utils/randomNickname';
-import React, { useCallback, useEffect } from 'react';
 
 interface InitialNicknameProps {
   children: React.ReactNode;

@@ -1,8 +1,9 @@
+import { Link } from 'lucide-react';
+
 import { Button, UserInfoCard } from '@/components';
 import { useToast } from '@/hooks/useToast';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import { Player } from '@/types/api';
-import { Link } from 'lucide-react';
 
 interface UserListProps {
   players: Player[];
