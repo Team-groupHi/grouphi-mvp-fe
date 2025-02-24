@@ -36,9 +36,9 @@ const UserList = ({ players, hostName }: UserListProps) => {
           초대 링크 복사
         </Button>
       )}
-      {players.map((data, index) => (
+      {players.map((data) => (
         <UserInfoCard
-          key={index}
+          key={data.name}
           name={data.name}
           isReady={roomStatus === 'idle' ? data.isReady : false}
           fileName={data.avatar}
