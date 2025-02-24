@@ -39,7 +39,8 @@ const UserInfoCard = ({
           <Image
             src={`/images/crown.png`}
             alt="crown"
-            fill={true}
+            width={29}
+            height={29}
           />
         </section>
       )}
@@ -47,7 +48,8 @@ const UserInfoCard = ({
         <Image
           src={`/images/characters/${fileName}.webp`}
           alt="profile"
-          fill={true}
+          width={64}
+          height={64}
         />
       </figure>
       <div className="w-[calc(100%-4rem)] pl-4 pr-1 flex items-center font-bold justify-between gap-1">
