@@ -80,7 +80,11 @@ const WaitingRoom = () => {
     router.push(PATH.HOME);
   }
 
-  if (!myName || !roomDetail) {
+  if (
+    !myName ||
+    !roomDetail ||
+    (roomDetail.status === 'PLAYING' && !isSelfInPlayers)
+  ) {
     return <Spinner />;
   }
 
