@@ -35,6 +35,7 @@
       }
     ],
     "simple-import-sort/imports": "warn",
-    "simple-import-sort/exports": "warn"
+    "simple-import-sort/exports": "warn",
+    "require-await": "warn"
   }
 }
