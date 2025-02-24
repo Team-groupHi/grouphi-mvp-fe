@@ -35,6 +35,8 @@ const WaitingRoom = () => {
 
   const players: Player[] = roomDetail?.players || [];
   const isRoomManager = roomDetail?.hostName === myName;
+  const isSelfInPlayers =
+    roomDetail?.players.findIndex((user) => user.name === myName) !== -1;
 
   useEffect(() => {
     return () => {
@@ -46,20 +48,16 @@ const WaitingRoom = () => {
   }, []);
 
   useEffect(() => {
-    if (roomDetail) {
-      if (
-        roomDetail.status === 'PLAYING' &&
-        roomDetail.players.findIndex((user) => user.name === myName) === -1
-      ) {
+    if (roomDetail && !isSelfInPlayers) {
+      if (roomDetail.status === 'PLAYING') {
         toast({
           title: '게임이 이미 시작되었어요! 게임이 끝나면 다시 들어와주세요.',
         });
         router.push(PATH.HOME);
-      } else if (myName !== '') {
-        connect({ roomId, name: myName });
-        queryClient.invalidateQueries({
-          queryKey: [QUERYKEY.ROOM_DETAIL],
-        });
+      } else {
+        if (myName !== '') {
+          connect({ roomId, name: myName });
+        }
       }
     }
   }, [myName, roomDetail]);
