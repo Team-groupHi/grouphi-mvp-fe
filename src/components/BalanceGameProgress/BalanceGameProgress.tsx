@@ -17,14 +17,14 @@ interface BalanceGameProgressProps {
   ) => void;
   roomId: string;
   setPartialResult: (result: BalanceGameResultGetResponse[]) => void;
-  isAllSelected: boolean;
+  isAllSelected?: boolean;
 }
 
 const BalanceGameProgress = ({
   sendMessage,
   roomId,
   setPartialResult,
-  isAllSelected,
+  isAllSelected = false,
 }: BalanceGameProgressProps) => {
   const { round, setRoomStatus, resetSelectedPlayers } = useBalanceGameStore();
 

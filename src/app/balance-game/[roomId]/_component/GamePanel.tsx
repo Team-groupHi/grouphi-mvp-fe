@@ -34,7 +34,7 @@ const GamePanel = ({
   sendMessage,
 }: GamePanelProps) => {
   const { toast } = useToast();
-  const { roomStatus, selectedPlayers } = useBalanceGameStore();
+  const { roomStatus } = useBalanceGameStore();
 
   const [partialResult, setPartialResult] = useState<
     BalanceGameResultGetResponse[]
@@ -80,10 +80,13 @@ const GamePanel = ({
           sendMessage={sendMessage}
           roomId={roomId}
           setPartialResult={setPartialResult}
+          /* 
+          // @brief: 전체 선택 시 넘어가는 기능 잠시 보류
           isAllSelected={
             players.length !== 0 &&
             new Set(selectedPlayers).size === players.length
           }
+          */
         />
       )}
       {roomStatus === 'result' &&
