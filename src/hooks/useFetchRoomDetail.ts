@@ -7,7 +7,6 @@ const useFetchRoomDetail = (roomId: string) => {
   return useQuery({
     queryKey: [QUERYKEY.ROOM_DETAIL],
     queryFn: () => getRoomDetail(roomId),
-    enabled: !!roomId,
   });
 };
 
