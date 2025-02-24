@@ -1,11 +1,12 @@
 'use client';
-import { cn } from '@/lib/utils';
-import Image from 'next/image';
-import React, { useState } from 'react';
-import { Button } from '@/components';
 import { Plus } from 'lucide-react';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import React, { useState } from 'react';
+
+import { Button } from '@/components';
 import { PATH } from '@/constants/router';
+import { cn } from '@/lib/utils';
 
 interface gameListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import FinalResultChart from './FinalResultChart';
 
 describe('FinalResultChart 컴포넌트 테스트', () => {

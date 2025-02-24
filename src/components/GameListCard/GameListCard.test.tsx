@@ -1,7 +1,8 @@
-import { describe, test, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { GameListCard } from './';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Image from 'next/image';
+import { describe, expect, test, vi } from 'vitest';
+
+import { GameListCard } from './';
 
 describe('GameListCard', () => {
   test('1) title, description이 잘 렌더링된다.', () => {

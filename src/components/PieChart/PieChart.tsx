@@ -1,14 +1,15 @@
 'use client';
-import React, { HTMLAttributes } from 'react';
 import {
-  Chart as ChartJS,
   ArcElement,
-  Tooltip,
-  Legend,
+  Chart as ChartJS,
   ChartData,
   ChartOptions,
+  Legend,
+  Tooltip,
 } from 'chart.js';
+import React, { HTMLAttributes } from 'react';
 import { Doughnut } from 'react-chartjs-2';
+
 import { cn } from '@/lib/utils';
 
 ChartJS.register(ArcElement, Tooltip, Legend);

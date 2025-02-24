@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect, MouseEvent } from 'react';
+import { MouseEvent, ReactNode, useEffect } from 'react';
 
 interface ModalShellProps {
   children: ReactNode;

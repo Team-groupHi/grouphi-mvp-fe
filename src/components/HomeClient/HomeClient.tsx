@@ -1,18 +1,19 @@
 'use client';
 import React, { useEffect } from 'react';
-import useModalStore from '@/store/useModalStore';
+
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  GameListCard,
-  CarouselPrevious,
   CarouselNext,
+  CarouselPrevious,
+  GameListCard,
   MainHeader,
 } from '@/components';
-import { GamesResponse } from '@/types/api';
-import useRoomStore from '@/store/useRoomStore';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useModalStore from '@/store/useModalStore';
+import useRoomStore from '@/store/useRoomStore';
+import { GamesResponse } from '@/types/api';
 
 interface HomeClientProps {
   games: GamesResponse[];

@@ -37,14 +37,14 @@ export { default as Timer } from './Timer';
 export {
   Toast,
   ToastAction,
+  type ToastActionElement,
   ToastClose,
   ToastDescription,
+  Toaster,
+  type ToastProps,
   ToastProvider,
   ToastTitle,
   ToastViewport,
-  Toaster,
-  type ToastActionElement,
-  type ToastProps,
 } from './Toast';
 export {
   Tooltip,
