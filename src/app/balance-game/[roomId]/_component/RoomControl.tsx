@@ -16,7 +16,7 @@ interface ManagerControlProps {
 const RoomControl = ({ isRoomManager, sendMessage }: ManagerControlProps) => {
   const { roomStatus, round } = useBalanceGameStore();
 
-  const handleEnterNextRound = async () => {
+  const handleEnterNextRound = () => {
     sendMessage({
       destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
     });
