@@ -150,6 +150,10 @@ export function useWebSocket() {
         });
         break;
       case SOCKET.TYPE.CHANGE_PLAYER_NAME:
+        addChatMessage({
+          sender: SOCKET.SYSTEM,
+          content: `${sender}님이 ${content}님으로 닉네임을 변경했어요.`,
+        });
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
