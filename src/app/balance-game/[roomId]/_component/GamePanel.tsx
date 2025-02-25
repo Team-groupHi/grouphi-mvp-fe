@@ -8,17 +8,13 @@ import { BarProps } from '@/components/FinalResultChart/Bar';
 import { useToast } from '@/hooks/useToast';
 import { getBalanceGameResults } from '@/services/balanceGames';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
-import {
-  BalanceGameResultGetResponse,
-  Player,
-  RoomGetResponse,
-} from '@/types/api';
+import { BalanceGameResultResponse, Player, RoomResponse } from '@/types/api';
 
 import PrevGame from './PrevGame';
 
 interface GamePanelProps {
   roomId: string;
-  roomDetail: RoomGetResponse;
+  roomDetail: RoomResponse;
   players: Player[];
   isRoomManager: boolean;
   sendMessage: <T>(
@@ -37,7 +33,7 @@ const GamePanel = ({
   const { roomStatus } = useBalanceGameStore();
 
   const [partialResult, setPartialResult] = useState<
-    BalanceGameResultGetResponse[]
+    BalanceGameResultResponse[]
   >([]);
   const [finalResult, setFinalResult] = useState<BarProps[]>([]);
 

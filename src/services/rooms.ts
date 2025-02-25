@@ -1,7 +1,7 @@
 import { axiosErrorHandler } from '@/app/api/axiosErrorHandler';
 import { axiosInstance } from '@/app/api/axiosInstance';
 import { DOMAIN } from '@/constants/api';
-import { RoomGetResponse, RoomPlayerNameValidationRequest } from '@/types/api';
+import { RoomPlayerNameValidationRequest, RoomResponse } from '@/types/api';
 
 export const createRoom = async (gameId: string) => {
   try {
@@ -16,7 +16,7 @@ export const createRoom = async (gameId: string) => {
 
 export const getRoomDetail = async (roomId: string) => {
   try {
-    const response = await axiosInstance.get<RoomGetResponse>(
+    const response = await axiosInstance.get<RoomResponse>(
       DOMAIN.GET_ROOM_DETAIL(roomId)
     );
     return response.data;

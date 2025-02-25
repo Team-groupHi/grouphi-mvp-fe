@@ -1,19 +1,17 @@
 import { axiosErrorHandler } from '@/app/api/axiosErrorHandler';
 import { axiosInstance } from '@/app/api/axiosInstance';
 import { DOMAIN } from '@/constants/api';
-import { BalanceGameResultGetResponse } from '@/types/api';
-
-interface getBalanceGameResultsProps {
-  roomId: string;
-  round?: number;
-}
+import {
+  BalanceGameResultRequest,
+  BalanceGameResultResponse,
+} from '@/types/api';
 
 export const getBalanceGameResults = async ({
   roomId,
   round,
-}: getBalanceGameResultsProps) => {
+}: BalanceGameResultRequest) => {
   try {
-    const response = await axiosInstance.get<BalanceGameResultGetResponse[]>(
+    const response = await axiosInstance.get<BalanceGameResultResponse[]>(
       DOMAIN.GET_BALANCEGAME_RESULT,
       {
         params: {
