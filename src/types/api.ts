@@ -1,3 +1,8 @@
+export interface RoomPlayerNameValidationRequest {
+  roomId: string;
+  name: string;
+}
+
 export interface GamesResponse {
   id: 'string';
   nameKr: 'string';
