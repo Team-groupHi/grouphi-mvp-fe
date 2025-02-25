@@ -11,13 +11,14 @@ export interface RoomGetResponse {
   id: string;
   status: 'WAITING' | 'PLAYING';
   game: GamesResponse;
-  hostName: string;
+  hostName: string; //@TODO: 백엔드에서 삭제 예정
   players: Player[];
 }
 
 export interface Player {
   name: string;
   isReady: boolean;
+  isHost: boolean;
   avatar: string;
 }
 
