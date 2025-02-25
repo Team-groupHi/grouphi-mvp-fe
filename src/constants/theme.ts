@@ -1,0 +1,6 @@
+export const BALANCE_GAME_THEME = {
+  ALL: 'ALL',
+  CLASSIC: 'CLASSIC',
+  FOOD: 'FOOD',
+  DATING: 'DATING',
+};
