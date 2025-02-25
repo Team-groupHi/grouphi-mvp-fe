@@ -1,10 +1,12 @@
 import * as StompJS from '@stomp/stompjs';
+import { throttle } from 'lodash';
 import {
   CheckCheck,
   Loader,
   MousePointer2,
   SlidersHorizontal,
 } from 'lucide-react';
+import { useMemo } from 'react';
 
 import { Button, GameListCard } from '@/components';
 import { SOCKET } from '@/constants/websocket';
@@ -40,17 +42,25 @@ const PrevGame = ({
   );
   const isAllReady = readyCount === players.length;
 
-  const handleUnready = () => {
-    sendMessage({
-      destination: `${SOCKET.ENDPOINT.ROOM.UNREADY}`,
-    });
-  };
+  const handleReady = useMemo(
+    () =>
+      throttle(() => {
+        sendMessage({
+          destination: `${SOCKET.ENDPOINT.ROOM.READY}`,
+        });
+      }, 1000),
+    []
+  );
 
-  const handleReady = () => {
-    sendMessage({
-      destination: `${SOCKET.ENDPOINT.ROOM.READY}`,
-    });
-  };
+  const handleUnready = useMemo(
+    () =>
+      throttle(() => {
+        sendMessage({
+          destination: `${SOCKET.ENDPOINT.ROOM.UNREADY}`,
+        });
+      }, 1000),
+    []
+  );
 
   const handleGameStart = () => {
     if (roomDetail.players.length === 1) {
@@ -84,7 +94,7 @@ const PrevGame = ({
         description={roomDetail.game.descriptionKr}
         src={roomDetail.game.thumbnailUrl}
         className="h-16 pointer-events-none"
-      ></GameListCard>
+      />
 
       <section className="flex flex-col gap-2">
         {isRoomManager && isAllReady && (
@@ -118,39 +128,35 @@ const PrevGame = ({
         {isRoomManager && (
           <Button
             variant={'secondary'}
-            className="text-base font-semibold w-[12rem]"
+            className="text-base font-semibold w-[12rem] flex items-center justify-center gap-2"
             size="xl"
             onClick={handleGameChange}
           >
-            <div className="flex items-center justify-center gap-2">
-              <SlidersHorizontal />
-              <span>게임 변경</span>
-            </div>
+            <SlidersHorizontal />
+            <span>게임 변경</span>
           </Button>
         )}
       </section>
 
-      {!isRoomManager && isReady && (
+      {!isRoomManager && (
         <Button
           className="text-base font-semibold w-[12rem]"
           size="xl"
-          variant={'waiting'}
-          onClick={handleUnready}
+          variant={isReady ? 'waiting' : 'default'}
+          onClick={isReady ? handleUnready : handleReady}
         >
           <div className="flex items-center justify-center gap-2">
-            <CheckCheck />
-            <span>준비 완료</span>
-          </div>
-        </Button>
-      )}
-      {!isRoomManager && !isReady && (
-        <Button
-          className="text-base font-semibold w-[12rem]"
-          size="xl"
-          onClick={handleReady}
-        >
-          <div className="flex items-center justify-center gap-2">
-            <MousePointer2 /> <span>준비 하기</span>
+            {isReady ? (
+              <>
+                <CheckCheck />
+                <span>준비 완료</span>
+              </>
+            ) : (
+              <>
+                <MousePointer2 />
+                <span>준비 하기</span>
+              </>
+            )}
           </div>
         </Button>
       )}
