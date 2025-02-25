@@ -15,10 +15,10 @@ import { SOCKET } from '@/constants/websocket';
 import { useToast } from '@/hooks/useToast';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
-import { Player, RoomGetResponse } from '@/types/api';
+import { Player, RoomResponse } from '@/types/api';
 
 interface PrevGameProps {
-  roomDetail: RoomGetResponse;
+  roomDetail: RoomResponse;
   players: Player[];
   isRoomManager: boolean;
   sendMessage: <T>(

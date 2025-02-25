@@ -13,10 +13,10 @@ import {
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
-import { GamesResponse } from '@/types/api';
+import { GameResponse } from '@/types/api';
 
 interface HomeClientProps {
-  games: GamesResponse[];
+  games: GameResponse[];
 }
 
 const HomeClient = ({ games }: HomeClientProps) => {

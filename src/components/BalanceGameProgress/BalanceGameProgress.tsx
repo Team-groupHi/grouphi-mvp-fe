@@ -9,14 +9,14 @@ import Timer from '@/components/Timer';
 import { SOCKET } from '@/constants/websocket';
 import { getBalanceGameResults } from '@/services/balanceGames';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
-import { BalanceGameResultGetResponse } from '@/types/api';
+import { BalanceGameResultResponse } from '@/types/api';
 
 interface BalanceGameProgressProps {
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
   roomId: string;
-  setPartialResult: (result: BalanceGameResultGetResponse[]) => void;
+  setPartialResult: (result: BalanceGameResultResponse[]) => void;
   isAllSelected?: boolean;
 }
 
