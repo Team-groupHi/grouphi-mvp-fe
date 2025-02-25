@@ -10,6 +10,7 @@ import {
 import { useMemo } from 'react';
 
 import { Button, GameListCard } from '@/components';
+import { BALANCE_GAME_THEME } from '@/constants/theme';
 import { SOCKET } from '@/constants/websocket';
 import { useToast } from '@/hooks/useToast';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
@@ -74,8 +75,8 @@ const PrevGame = ({
       sendMessage({
         destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
         body: {
-          //@TODO: 추후에 테마 추가시 변경
-          theme: 'GENERAL',
+          //@TODO: 추후에 테마 변경 기능에 따라 바꿔주기
+          theme: BALANCE_GAME_THEME.ALL,
           totalRounds: round.totalRounds,
         },
       });
