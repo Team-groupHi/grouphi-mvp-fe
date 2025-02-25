@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as StompJS from '@stomp/stompjs';
 import { throttle } from 'lodash';
 import {
