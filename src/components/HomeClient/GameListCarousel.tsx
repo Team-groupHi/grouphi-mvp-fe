@@ -6,7 +6,6 @@ import {
   CarouselPrevious,
   GameListCard,
 } from '@/components';
-import { GAME } from '@/constants/game';
 import { MODAL_TYPE } from '@/constants/modal';
 import useModalStore from '@/store/useModalStore';
 import { GamesResponse } from '@/types/api';
@@ -37,13 +36,6 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
               description={game.descriptionKr}
               src={game.thumbnailUrl}
               onClick={() => {
-                const modalName = game.nameEn.replaceAll(' ', '');
-                switch (modalName) {
-                  case GAME.COMPREHENSIVE_BALANCE_GAME:
-                  case GAME.CLASSIC_BALANCE_GAME:
-                  case GAME.FOOD_BALANCE_GAME:
-                  case GAME.DATING_BALANCE_GAME:
-                }
                 return openModal(MODAL_TYPE.CREATE_BALANCE_GAME, game.id);
               }}
             />
