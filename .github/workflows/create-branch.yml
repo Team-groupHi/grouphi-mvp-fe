@@ -41,7 +41,7 @@ jobs:
             exit 1
           fi
 
-          BRANCH_NAME="GRPHI-${ISSUE_NUMBER}-feat/$(echo ${ISSUE_TITLE} | sed 's/ /-/g')"
+          BRANCH_NAME="GRPHI-${ISSUE_NUMBER}-$(echo ${ISSUE_TITLE} | sed 's/ /-/g')"
           echo "Creating Branch: $BRANCH_NAME"
 
           git checkout -b "${BRANCH_NAME}"
@@ -60,4 +60,4 @@ jobs:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
-          body: 'Branch Created: `GRPHI-${{ github.event.issue.number }}-feat/${{ steps.issue-parser.outputs.issueparser_branch }}`'
+          body: 'Branch Created: `GRPHI-${{ github.event.issue.number }}-${{ steps.issue-parser.outputs.issueparser_branch }}`'

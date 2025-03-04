@@ -1,8 +1,10 @@
 'use client';
 import Link from 'next/link';
 import Lottie from 'react-lottie-player';
-import groupHi_Spinner from '../../public/groupHi_404.json';
+
 import { Button, ShootingStars, StarsBackground } from '@/components';
+
+import groupHi_Spinner from '../../public/groupHi_404.json';
 
 export default function NotFound() {
   return (

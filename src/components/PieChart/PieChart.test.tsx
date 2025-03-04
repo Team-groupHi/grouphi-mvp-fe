@@ -1,8 +1,9 @@
-import React from 'react';
-import { describe, test, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import PieChart from './PieChart';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { ChartData, ChartOptions } from 'chart.js';
+import React from 'react';
+import { describe, expect, test, vi } from 'vitest';
+
+import PieChart from './PieChart';
 
 vi.mock('react-chartjs-2', () => ({
   Doughnut: ({

@@ -1,13 +1,14 @@
 'use client';
 
-import React from 'react';
-import { Button, Logo, Navigation } from '@/components';
-import { PATH } from '@/constants/router';
-import { usePathname, useRouter } from 'next/navigation';
 import { Edit } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import React from 'react';
+
+import { Button, Logo, Navigation } from '@/components';
+import { MODAL_TYPE } from '@/constants/modal';
+import { PATH } from '@/constants/router';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
-import { MODAL_TYPE } from '@/constants/modal';
 
 const MainHeader = () => {
   const currentPath = usePathname();

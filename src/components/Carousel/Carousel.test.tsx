@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import * as React from 'react';
+import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
+
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
   CarouselNext,
+  CarouselPrevious,
 } from './Carousel';
-import * as React from 'react';
 
 // Embla Carousel을 모의 처리
 vi.mock('embla-carousel-react', () => ({

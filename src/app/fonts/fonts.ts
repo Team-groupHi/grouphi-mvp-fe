@@ -1,5 +1,5 @@
-import localFont from 'next/font/local';
 import { Noto_Sans_KR } from 'next/font/google';
+import localFont from 'next/font/local';
 
 const notoSans = Noto_Sans_KR({
   subsets: ['latin'],
@@ -13,4 +13,4 @@ const pretendard = localFont({
   display: 'swap',
 });
 
-export { pretendard, notoSans };
+export { notoSans, pretendard };
