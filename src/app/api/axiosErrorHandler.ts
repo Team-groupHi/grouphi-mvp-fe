@@ -9,13 +9,16 @@ const logOnDev = (message: string) => {
 export const axiosErrorHandler = (error: unknown) => {
   if (!(error instanceof AxiosError)) return;
 
-  const { message, response, request } = error;
+  console.log(error);
+  throw new Error(error.message);
 
-  if (response) {
-    logOnDev(`${response.status} ${response.data}`);
-  } else if (request) {
-    logOnDev(`No Response Received From Server. ${message}`);
-  } else {
-    logOnDev(`${message}`);
-  }
+  //const { message, response, request } = error;
+
+  // if (response) {
+  //   logOnDev(`${response.status} ${response.data}`);
+  // } else if (request) {
+  //   logOnDev(`No Response Received From Server. ${message}`);
+  // } else {
+  //   logOnDev(`${message}`);
+  // }
 };
