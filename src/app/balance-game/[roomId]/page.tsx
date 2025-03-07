@@ -5,7 +5,9 @@ import { Spinner } from '@/components';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
 import ErrorHandlingWrapper from '@/components/ErrorBoundary/ErrorHandlingWrapper';
 
-const WaitingRoom = () => {
+import WaitingRoom from './WaitingRoom';
+
+const BalanceGame = () => {
   return (
     <ErrorHandlingWrapper
       fallbackComponent={ErrorFallback}
@@ -16,4 +18,4 @@ const WaitingRoom = () => {
   );
 };
 
-export default WaitingRoom;
+export default BalanceGame;

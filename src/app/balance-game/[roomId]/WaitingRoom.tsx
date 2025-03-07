@@ -28,7 +28,8 @@ const WaitingRoom = () => {
   const { toast } = useToast();
   const { connect, sendMessage, chatMessages, disconnect } = useWebSocket();
 
-  const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
+  const { data: roomDetail } = useFetchRoomDetail(roomId);
+
   const queryClient = useQueryClient();
 
   const { myName } = useRoomStore();
@@ -56,7 +57,9 @@ const WaitingRoom = () => {
         router.push(PATH.HOME);
       } else {
         if (myName !== '') {
-          connect({ roomId, name: myName });
+          setTimeout(() => {
+            connect({ roomId, name: myName });
+          });
         }
       }
     }
