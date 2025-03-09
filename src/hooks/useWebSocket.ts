@@ -1,11 +1,18 @@
+/* eslint-disable no-case-declarations */
 'use client';
+
+import * as StompJS from '@stomp/stompjs';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
+
 import { QUERYKEY } from '@/constants/querykey';
+import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import { ChatMessage } from '@/types';
-import * as StompJS from '@stomp/stompjs';
-import { useQueryClient } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+
+import { useToast } from './useToast';
 
 interface EnterRoomProps {
   roomId: string;
@@ -17,9 +24,11 @@ export function useWebSocket() {
   const client = useRef<StompJS.Client | null>(null);
   const [, setSubscription] = useState<StompJS.StompSubscription | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const { setRoomStatus, setRound } = useBalanceGameStore();
+  const { setRoomStatus, setRound, addSelectedPlayers } = useBalanceGameStore();
 
   const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const router = useRouter();
 
   const connect = ({ roomId, name }: EnterRoomProps) => {
     if (client.current) return;
@@ -101,7 +110,7 @@ export function useWebSocket() {
   };
 
   const receiveMessage = (message: string) => {
-    console.log(`[WebSocket] 2-1. receiveMessage`, message);
+    console.log('[WebSocket] 2-1. receiveMessage', message);
     const { type, sender, content } = JSON.parse(message);
 
     switch (type) {
@@ -140,9 +149,13 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
+      case SOCKET.TYPE.CHANGE_PLAYER_NAME:
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
       case SOCKET.TYPE.BG_SELECT:
-        //@Todo
-        // 전원 다 선택을 했을 경우 바로 중간 결과로 가는 로직 필요
+        addSelectedPlayers(sender);
         break;
       case SOCKET.TYPE.BG_START:
         setRoomStatus('progress');
@@ -156,10 +169,23 @@ export function useWebSocket() {
         setRoomStatus('finalResult');
         break;
       case SOCKET.TYPE.BG_END:
+        setChatMessages(() => [
+          {
+            sender: SOCKET.SYSTEM,
+            content: '게임이 종료되었습니다.',
+          },
+        ]);
         setRoomStatus('idle');
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
+        break;
+      case SOCKET.TYPE.ERROR:
+        toast({
+          variant: 'destructive',
+          title: '문제가 생겼습니다. 다시 시도해주세요.',
+        });
+        router.push(PATH.HOME);
         break;
       default:
         break;

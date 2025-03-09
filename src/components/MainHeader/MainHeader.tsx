@@ -1,10 +1,12 @@
 'use client';
 
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
+
 import { Logo, Navigation } from '@/components';
 import { PATH } from '@/constants/router';
-import { usePathname, useRouter } from 'next/navigation';
 import useRoomStore from '@/store/useRoomStore';
+
 import NicknameBar from './NicknameBar';
 
 const MainHeader = () => {

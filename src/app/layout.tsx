@@ -1,12 +1,15 @@
-import { InitialNickname, Toaster } from '@/components';
-import { ModalRenderer } from '@/components/Modal';
-import Providers from '@/utils/providers';
+import './globals.css';
+
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import React from 'react';
-import { notoSans, pretendard } from './fonts/fonts';
-import './globals.css';
+
+import { InitialNickname, Toaster } from '@/components';
 import { ShootingStars, StarsBackground } from '@/components';
+import { ModalRenderer } from '@/components/Modal';
+import Providers from '@/utils/providers';
+
+import { notoSans, pretendard } from './fonts/fonts';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -51,8 +54,10 @@ export default function RootLayout({
           </>
         )}
         <Providers>
-          <StarsBackground />
-          <ShootingStars />
+          <div className="fixed w-full h-screen -z-10">
+            <StarsBackground />
+            <ShootingStars />
+          </div>
           <InitialNickname>{children}</InitialNickname>
           <Toaster />
           <ModalRenderer />

@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import Chatting from './Chatting';
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+
+import Chatting from './Chatting';
 
 describe('채팅 컴포넌트 테스트', () => {
   it('1) 내가 채팅을 치면 primary 색의 텍스트를 출력한다.', () => {

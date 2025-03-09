@@ -1,3 +1,7 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
 import {
   Button,
   Form,
@@ -15,9 +19,6 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useToast } from '@/hooks/useToast';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 const CreateUserNameModal = () => {
   const { closeModal } = useModalStore();

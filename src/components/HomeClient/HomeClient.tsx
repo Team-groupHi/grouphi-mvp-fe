@@ -1,9 +1,12 @@
 'use client';
+
+import { useEffect } from 'react';
+
 import { MainHeader } from '@/components';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { GamesResponse } from '@/types/api';
-import { useEffect } from 'react';
+
 import GameListCarousel from './GameListCarousel';
 
 interface HomeClientProps {
