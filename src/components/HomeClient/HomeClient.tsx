@@ -88,9 +88,7 @@ const HomeClient = ({ games }: HomeClientProps) => {
           </section>
         )}
       </main>
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </>
   );
 };
