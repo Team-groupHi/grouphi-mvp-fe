@@ -16,9 +16,9 @@ import { useWebSocket } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
 import { Player } from '@/types/api';
 
-import GamePanel from './_component/GamePanel';
-import RoomControl from './_component/RoomControl';
-import UserList from './_component/UserList';
+import GamePanel from './GamePanel';
+import RoomControl from './RoomControl';
+import UserList from './UserList';
 
 const WaitingRoom = () => {
   const path = usePathname();

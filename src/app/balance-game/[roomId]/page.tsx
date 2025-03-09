@@ -5,7 +5,7 @@ import { Spinner } from '@/components';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
 import ErrorHandlingWrapper from '@/components/ErrorBoundary/ErrorHandlingWrapper';
 
-import WaitingRoom from './WaitingRoom';
+import WaitingRoom from './_component/WaitingRoom';
 
 const BalanceGame = () => {
   return (
