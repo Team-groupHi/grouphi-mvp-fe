@@ -9,6 +9,7 @@ export {
 } from './Carousel';
 export { default as Chatting } from './Chatting';
 export { default as FinalResultChart } from './FinalResultChart';
+export { default as Footer } from './Footer';
 export {
   Form,
   FormControl,
