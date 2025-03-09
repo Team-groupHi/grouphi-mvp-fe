@@ -1,7 +1,7 @@
 export const SOCKET = {
   ENDPOINT: {
-    SUBSCRIBE: '/sub',
-    PUBLICATION: '/pub',
+    SUBSCRIBE: '/topic',
+    PUBLICATION: '/app',
     ROOM: {
       ROOMS: '/rooms',
       ENTER: '/rooms/enter',
