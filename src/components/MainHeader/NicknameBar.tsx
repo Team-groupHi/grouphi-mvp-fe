@@ -1,6 +1,7 @@
-import React from 'react';
-import { Button } from '@/components';
 import { Edit, Loader } from 'lucide-react';
+import React from 'react';
+
+import { Button } from '@/components';
 import { MODAL_TYPE } from '@/constants/modal';
 import useModalStore from '@/store/useModalStore';
 
