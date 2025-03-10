@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { MainHeader } from '@/components';
+import { Footer, MainHeader } from '@/components';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { GamesResponse } from '@/types/api';
@@ -24,25 +24,28 @@ const HomeClient = ({ games }: HomeClientProps) => {
   }, []);
 
   return (
-    <main className="flex flex-col h-screen p-800">
-      <MainHeader />
-      {games.length > 0 ? (
-        <>
-          <section
-            id="gamelist"
-            className="flex flex-col grow items-center"
-          >
-            <span className="text-lg pt-950">Game List</span>
-            <span className="text-md pb-300">▽</span>
-            <GameListCarousel games={games} />
+    <>
+      <main className="flex flex-col h-screen p-800">
+        <MainHeader />
+        {games.length > 0 ? (
+          <>
+            <section
+              id="gamelist"
+              className="flex flex-col grow items-center"
+            >
+              <span className="text-lg pt-950">Game List</span>
+              <span className="text-md pb-300">▽</span>
+              <GameListCarousel games={games} />
+            </section>
+          </>
+        ) : (
+          <section className="flex h-full justify-center items-center">
+            <span>게임 준비중입니다</span>
           </section>
-        </>
-      ) : (
-        <section className="flex h-full justify-center items-center">
-          <span>게임 준비중입니다</span>
-        </section>
-      )}
-    </main>
+        )}
+      </main>
+      <Footer />
+    </>
   );
 };
 export default HomeClient;
