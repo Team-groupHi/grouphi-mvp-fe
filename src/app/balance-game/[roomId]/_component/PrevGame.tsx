@@ -60,14 +60,19 @@ const PrevGame = ({
           '왼쪽 위 친구 초대 버튼을 눌러 같이 할 친구를 초대해보세요.',
       });
     } else {
+      const balanceGameTheme = roomDetail.game.nameEn
+        .split(' ')[0]
+        .toUpperCase()
+        .replace('COMPREHENSIVE', 'ALL');
+
       sendMessage({
         destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
         body: {
-          //@TODO: 추후에 테마 추가시 변경
-          theme: 'GENERAL',
+          theme: balanceGameTheme,
           totalRounds: round.totalRounds,
         },
       });
+
       setRoomStatus('progress');
     }
   };

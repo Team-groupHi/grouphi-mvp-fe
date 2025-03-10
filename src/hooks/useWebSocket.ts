@@ -22,7 +22,9 @@ interface EnterRoomProps {
 export function useWebSocket() {
   const BASE_WEBSOCKET_URL = process.env.NEXT_PUBLIC_BASE_WEBSOCKET_URL;
   const client = useRef<StompJS.Client | null>(null);
-  const [, setSubscription] = useState<StompJS.StompSubscription | null>(null);
+  const [subscriptions, setSubscription] = useState<
+    StompJS.StompSubscription[] | null
+  >(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const { setRoomStatus, setRound, addSelectedPlayers } = useBalanceGameStore();
 
@@ -51,19 +53,32 @@ export function useWebSocket() {
     client.current.onConnect = (frame) => {
       console.log('[WebSocket] 1. Connected', frame);
 
-      const subscribeId = client.current?.subscribe(
+      const subscribeId1 = client.current?.subscribe(
         `${SOCKET.ENDPOINT.SUBSCRIBE}${SOCKET.ENDPOINT.ROOM.ROOMS}/${roomId}`,
         (message) => {
           console.log(
-            '[WebSocket] 2. Subscribe - Receive Message',
+            '[WebSocket] 2. Subscribe1 - Receive Message',
             message.body
           );
           receiveMessage(message.body);
-        }
+        },
+        { id: `sub1-${roomId}` }
       );
 
-      if (subscribeId) {
-        setSubscription(subscribeId);
+      const subscribeId2 = client.current?.subscribe(
+        `${SOCKET.ENDPOINT.SUBSCRIBE}${SOCKET.ENDPOINT.USER.QUEUE_ERRORS}`,
+        (message) => {
+          console.log(
+            '[WebSocket] 2. Subscribe2 - Receive Message',
+            message.body
+          );
+          receiveMessage(message.body);
+        },
+        { id: `sub2-${roomId}` }
+      );
+
+      if (subscribeId1 && subscribeId2) {
+        setSubscription([subscribeId1, subscribeId2]);
 
         sendMessage({
           destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
@@ -88,10 +103,11 @@ export function useWebSocket() {
       destination: `${SOCKET.ENDPOINT.ROOM.EXIT}`,
     });
 
+    subscriptions?.forEach((subscription) => subscription.unsubscribe());
+    client.current.deactivate();
+
     setSubscription(null);
     setChatMessages([]);
-
-    client.current.deactivate();
     client.current = null;
     console.log('[WebSocket] Disconnected');
   };

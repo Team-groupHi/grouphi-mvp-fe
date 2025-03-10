@@ -26,7 +26,7 @@ export { InitialNickname } from './InitialNickname';
 export { default as Input } from './Input';
 export { default as Label } from './Label';
 export { default as Logo } from './Logo';
-export { MainHeader } from './MainHeader';
+export { MainHeader, Nicknamebar } from './MainHeader';
 export { ModalRenderer, ModalShell } from './Modal';
 export { Navigation } from './Navigation';
 export { PartialResultChart, UserList } from './PartialResultChart';
