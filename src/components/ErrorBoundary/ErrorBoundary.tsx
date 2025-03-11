@@ -1,14 +1,15 @@
 'use client';
 
+import { AxiosError } from 'axios';
 import { Component, ComponentType, ErrorInfo, ReactNode } from 'react';
 
 interface ErrorBoundaryState {
   hasError: boolean;
-  error: Error | null;
+  error: Error | AxiosError | null;
 }
 
 export interface FallbackProps {
-  error: Error | null;
+  error: Error | AxiosError | null;
   resetErrorBoundary: () => void;
 }
 
