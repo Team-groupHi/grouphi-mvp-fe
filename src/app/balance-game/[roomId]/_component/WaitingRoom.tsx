@@ -28,7 +28,7 @@ const WaitingRoom = () => {
   const { toast } = useToast();
   const { connect, sendMessage, chatMessages, disconnect } = useWebSocket();
 
-  const { data: roomDetail } = useFetchRoomDetail(roomId);
+  const { data: roomDetail, error } = useFetchRoomDetail(roomId);
 
   const queryClient = useQueryClient();
 
@@ -57,6 +57,7 @@ const WaitingRoom = () => {
         router.push(PATH.HOME);
       } else {
         if (myName !== '') {
+          // @TODO: 조금 더 근본적인 해결책 찾기
           setTimeout(() => {
             connect({ roomId, name: myName });
           });
@@ -75,9 +76,11 @@ const WaitingRoom = () => {
     });
   }, [myName]);
 
-  // if (isError) {
-  //   return <ErrorFallback />;
-  // }
+  // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
+  if (error) {
+    console.log(error);
+    throw error;
+  }
 
   if (
     !myName ||
