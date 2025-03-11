@@ -53,7 +53,7 @@ export function useWebSocket() {
     client.current.onConnect = (frame) => {
       console.log('[WebSocket] 1. Connected', frame);
 
-      const subscribeId1 = client.current?.subscribe(
+      const subscribeRoomId = client.current?.subscribe(
         `${SOCKET.ENDPOINT.SUBSCRIBE}${SOCKET.ENDPOINT.ROOM.ROOMS}/${roomId}`,
         (message) => {
           console.log(
@@ -62,10 +62,10 @@ export function useWebSocket() {
           );
           receiveMessage(message.body);
         },
-        { id: `sub1-${roomId}` }
+        { id: `sub-room-${roomId}` }
       );
 
-      const subscribeId2 = client.current?.subscribe(
+      const subscribeErrorId = client.current?.subscribe(
         `${SOCKET.ENDPOINT.SUBSCRIBE}${SOCKET.ENDPOINT.USER.QUEUE_ERRORS}`,
         (message) => {
           console.log(
@@ -74,11 +74,11 @@ export function useWebSocket() {
           );
           receiveMessage(message.body);
         },
-        { id: `sub2-${roomId}` }
+        { id: `sub-error-${roomId}` }
       );
 
-      if (subscribeId1 && subscribeId2) {
-        setSubscription([subscribeId1, subscribeId2]);
+      if (subscribeRoomId && subscribeErrorId) {
+        setSubscription([subscribeRoomId, subscribeErrorId]);
 
         sendMessage({
           destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
