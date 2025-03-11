@@ -5,9 +5,8 @@ declare module 'axios' {
   export interface AxiosError {
     response?: {
       data?: {
-        code: string; // 또는 number
+        code: string;
         message: string;
-        // 다른 속성이 필요하다면 추가
       };
     };
   }
