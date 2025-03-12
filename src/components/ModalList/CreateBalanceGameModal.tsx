@@ -26,7 +26,7 @@ interface BalanceGameModalProps {
   optionPropsNumber: number | string;
 }
 
-const CreateComprehensiveBalanceGameModal = ({
+const CreateBalanceGameModal = ({
   closeModal,
   optionPropsNumber,
 }: BalanceGameModalProps) => {
@@ -121,4 +121,4 @@ const CreateComprehensiveBalanceGameModal = ({
   );
 };
 
-export default CreateComprehensiveBalanceGameModal;
+export default CreateBalanceGameModal;
