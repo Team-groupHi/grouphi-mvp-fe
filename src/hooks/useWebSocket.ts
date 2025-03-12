@@ -14,7 +14,7 @@ import { ChatMessage } from '@/types';
 
 import { useToast } from './useToast';
 
-interface EnterRoomProps {
+export interface EnterRoomProps {
   roomId: string;
   name: string;
 }
