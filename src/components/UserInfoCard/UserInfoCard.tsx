@@ -1,6 +1,7 @@
 import { Edit } from 'lucide-react';
 import Image from 'next/image';
 
+import { MODAL_TYPE } from '@/constants/modal';
 import { cn } from '@/lib/utils';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
@@ -24,7 +25,7 @@ const UserInfoCard = ({
   const { openModal } = useModalStore();
 
   const handleEditUserName = () => {
-    openModal('CreateUserNameModal');
+    openModal(MODAL_TYPE.CREATE_USERNAME);
   };
 
   return (
