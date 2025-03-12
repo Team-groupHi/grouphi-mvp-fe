@@ -1,36 +1,44 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
+import * as StompJS from '@stomp/stompjs';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { Chatting, Spinner } from '@/components';
-import { QUERYKEY } from '@/constants/querykey';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
 import { useToast } from '@/hooks/useToast';
-import { useWebSocket } from '@/hooks/useWebSocket';
+import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
+import { ChatMessage } from '@/types';
 import { Player } from '@/types/api';
 
 import GamePanel from './GamePanel';
 import RoomControl from './RoomControl';
 import UserList from './UserList';
+interface WaitingRoomProps {
+  connect: (params: EnterRoomProps) => void;
+  chatMessages: ChatMessage[];
+  sendMessage: <T>(
+    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
+  ) => void;
+}
 
-const WaitingRoom = () => {
+const WaitingRoom = ({
+  connect,
+  chatMessages,
+  sendMessage,
+}: WaitingRoomProps) => {
   const path = usePathname();
   const router = useRouter();
   const roomId = path.split('/')[2];
 
   const { toast } = useToast();
-  const { connect, sendMessage, chatMessages, disconnect } = useWebSocket();
 
-  const { data: roomDetail, error } = useFetchRoomDetail(roomId);
-
-  const queryClient = useQueryClient();
+  const { data: roomDetail, error, isError } = useFetchRoomDetail(roomId);
 
   const { myName } = useRoomStore();
 
@@ -40,15 +48,6 @@ const WaitingRoom = () => {
     roomDetail?.players.findIndex((user) => user.name === myName) !== -1;
 
   useEffect(() => {
-    return () => {
-      queryClient.removeQueries({
-        queryKey: [QUERYKEY.ROOM_DETAIL],
-      });
-      disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
     if (roomDetail && !isSelfInPlayers) {
       if (roomDetail.status === 'PLAYING') {
         toast({
@@ -56,7 +55,7 @@ const WaitingRoom = () => {
         });
         router.push(PATH.HOME);
       } else {
-        if (myName !== '') {
+        if (!isError && myName !== '') {
           // @TODO: 조금 더 근본적인 해결책 찾기
           setTimeout(() => {
             connect({ roomId, name: myName });
@@ -67,7 +66,7 @@ const WaitingRoom = () => {
   }, [myName, roomDetail]);
 
   useEffect(() => {
-    //@TODO: 현재 이름이 바뀌면 새로운 유저가 생기는 문제 발생. 확인 후 수정 필요.
+    //@TODO: 현제 pub인 경우에만 전송되며 receive 없는 현상 확인 필요.
     sendMessage({
       destination: `${SOCKET.ENDPOINT.ROOM.CHANGE_PLAYER_NAME}`,
       body: {
@@ -77,16 +76,14 @@ const WaitingRoom = () => {
   }, [myName]);
 
   // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
-  if (error) {
-    console.log(error);
-    throw error;
-  }
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+      throw error;
+    }
+  }, [isError]);
 
-  if (
-    !myName ||
-    !roomDetail ||
-    (roomDetail.status === 'PLAYING' && !isSelfInPlayers)
-  ) {
+  if (!isSelfInPlayers) {
     return <Spinner />;
   }
 
