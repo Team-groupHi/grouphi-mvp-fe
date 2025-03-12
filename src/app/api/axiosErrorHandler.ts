@@ -19,5 +19,5 @@ export const axiosErrorHandler = (error: unknown) => {
     logOnDev(`${message}`);
   }
 
-  throw new Error(error.message);
+  throw error;
 };
