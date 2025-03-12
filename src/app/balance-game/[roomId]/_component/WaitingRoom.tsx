@@ -48,6 +48,21 @@ const WaitingRoom = ({
     roomDetail?.players.findIndex((user) => user.name === myName) !== -1;
 
   useEffect(() => {
+    if (
+      isRoomManager &&
+      roomDetail.players.length == 1 &&
+      roomDetail.status === 'PLAYING'
+    ) {
+      sendMessage({
+        destination: `${SOCKET.ENDPOINT.BALANCE_GAME.END}`,
+      });
+      toast({
+        title: '최소 인원 수가 부족해 게임을 종료하고 대기실로 이동합니다.',
+      });
+    }
+  }, [isRoomManager, roomDetail]);
+
+  useEffect(() => {
     if (roomDetail && !isSelfInPlayers) {
       if (roomDetail.status === 'PLAYING') {
         toast({
