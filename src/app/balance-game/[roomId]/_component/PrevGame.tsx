@@ -10,7 +10,6 @@ import {
 import { useMemo } from 'react';
 
 import { Button, GameListCard } from '@/components';
-import { BALANCE_GAME_THEME } from '@/constants/theme';
 import { SOCKET } from '@/constants/websocket';
 import { useToast } from '@/hooks/useToast';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
@@ -72,14 +71,19 @@ const PrevGame = ({
           '왼쪽 위 친구 초대 버튼을 눌러 같이 할 친구를 초대해보세요.',
       });
     } else {
+      const balanceGameTheme = roomDetail.game.nameEn
+        .split(' ')[0]
+        .toUpperCase()
+        .replace('COMPREHENSIVE', 'ALL');
+
       sendMessage({
         destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
         body: {
-          //@TODO: 추후에 테마 변경 기능에 따라 바꿔주기
-          theme: BALANCE_GAME_THEME.ALL,
+          theme: balanceGameTheme,
           totalRounds: round.totalRounds,
         },
       });
+
       setRoomStatus('progress');
     }
   };

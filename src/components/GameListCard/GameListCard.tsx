@@ -25,10 +25,13 @@ const GameListCard = ({
   const [isHover, setIsHover] = useState(false);
   const pathname = usePathname();
 
+  const containerDefaultClassName =
+    'basis-1/3 max-w-80 min-w-60 h-full min-h-52 relative bg-primary-container shadow rounded-md overflow-hidden';
   const containerClassName =
     pathname === PATH.HOME
-      ? 'basis-1/3 max-w-80 min-w-60 min-h-52 relative bg-primary-container shadow rounded-md overflow-hidden'
-      : 'basis-1/3 max-w-md min-w-80 min-h-52 relative bg-primary-container shadow rounded-md overflow-hidden';
+      ? containerDefaultClassName
+      : cn(containerDefaultClassName, 'max-w-md min-w-80');
+
   return (
     <article
       data-testid="gamelistcard-container"

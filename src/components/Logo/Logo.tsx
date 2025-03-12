@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-const Logo = ({ ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+const Logo = (props: React.HTMLAttributes<HTMLDivElement>) => {
   return (
     <section
       className="logo flex gap-300 cursor-pointer"
@@ -14,6 +14,7 @@ const Logo = ({ ...props }: React.HTMLAttributes<HTMLDivElement>) => {
           height={40}
           width={40}
           style={{ objectFit: 'contain' }}
+          priority
         />
       </div>
       <div className="relative w-16 flex items-center">
@@ -23,6 +24,7 @@ const Logo = ({ ...props }: React.HTMLAttributes<HTMLDivElement>) => {
           height={24}
           width={64}
           style={{ objectFit: 'contain' }}
+          priority
         />
       </div>
     </section>
