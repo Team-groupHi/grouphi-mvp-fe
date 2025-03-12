@@ -12,6 +12,7 @@ import { useMemo } from 'react';
 import { Button, GameListCard } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import { useToast } from '@/hooks/useToast';
+import { cn } from '@/lib/utils';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
@@ -103,44 +104,50 @@ const PrevGame = ({
       />
 
       <section className="flex flex-col gap-2">
-        {isRoomManager && isAllReady && (
-          <Button
-            className="text-base font-semibold w-[12rem]"
-            size="xl"
-            onClick={handleGameStart}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <CheckCheck />
-              <span>
-                게임 시작({readyCount}/{players.length})
-              </span>
-            </div>
-          </Button>
-        )}
-        {isRoomManager && !isAllReady && (
-          <Button
-            className="text-base font-semibold w-[12rem] pointer-events-none"
-            size="xl"
-            variant={'waiting'}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <Loader />
-              <span>
-                준비 대기중({readyCount}/{players.length})
-              </span>
-            </div>
-          </Button>
-        )}
         {isRoomManager && (
-          <Button
-            variant={'secondary'}
-            className="text-base font-semibold w-[12rem] flex items-center justify-center gap-2"
-            size="xl"
-            onClick={handleGameChange}
-          >
-            <SlidersHorizontal />
-            <span>게임 변경</span>
-          </Button>
+          <>
+            <Button
+              className={cn(
+                'text-base font-semibold w-[12rem]',
+                !isAllReady && 'pointer-events-none'
+              )}
+              size="xl"
+              variant={
+                isAllReady && roomDetail.players.length !== 1
+                  ? 'default'
+                  : 'waiting'
+              }
+              onClick={handleGameStart}
+            >
+              <div className="flex items-center justify-center gap-2">
+                {isAllReady ? (
+                  <>
+                    <CheckCheck />
+                    <span>
+                      게임 시작({readyCount}/{players.length})
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Loader />
+                    <span>
+                      준비 대기중({readyCount}/{players.length})
+                    </span>
+                  </>
+                )}
+              </div>
+            </Button>
+
+            <Button
+              variant={'secondary'}
+              className="text-base font-semibold w-[12rem] flex items-center justify-center gap-2"
+              size="xl"
+              onClick={handleGameChange}
+            >
+              <SlidersHorizontal />
+              <span>게임 변경</span>
+            </Button>
+          </>
         )}
       </section>
 
