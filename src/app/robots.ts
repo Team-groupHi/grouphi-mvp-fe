@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const DOMAIN_URL = process.env.DOMAIN_URL;
+import { DOMAIN_URL } from '@/constants/metadata';
 
 export default function robots(): MetadataRoute.Robots {
   return {

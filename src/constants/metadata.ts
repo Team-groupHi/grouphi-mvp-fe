@@ -1,7 +1,6 @@
 import { Metadata } from 'next/types';
 
-const DOMAIN_URL = process.env.DOMAIN_URL;
-
+export const DOMAIN_URL = 'https://grouphi.kr';
 export const METADATA: Metadata = {
   title: 'groupHi',
   description: '그루파이에서 아이스브레이킹 게임을 즐기고 추억을 남겨보세요!',
