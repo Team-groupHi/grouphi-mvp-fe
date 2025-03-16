@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss';
 import animate from 'tailwindcss-animate';
 
-import { colors } from './src/styles/colors';
+import { theme } from './src/styles/theme';
 
 const config: Config = {
   darkMode: ['class'],
@@ -12,7 +12,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors,
+      colors: theme.colors,
       textColor: {
         DEFAULT: '#F0F0F0',
         light: '#F0F0F0',
