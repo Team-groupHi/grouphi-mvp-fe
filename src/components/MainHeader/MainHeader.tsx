@@ -5,8 +5,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Logo, Navigation } from '@/components';
 import { PATH } from '@/constants/router';
 import useRoomStore from '@/store/useRoomStore';
+import { isDevelopment } from '@/utils/env';
 
 import NicknameBar from './NicknameBar';
+
+interface NavigationItem {
+  title: string;
+  href: string;
+}
 
 const MainHeader = () => {
   const currentPath = usePathname();
@@ -18,11 +24,13 @@ const MainHeader = () => {
       title: 'HOME',
       href: PATH.HOME,
     },
-    {
-      title: 'ABOUT US',
-      href: PATH.ABOUT,
-    },
-  ];
+    isDevelopment
+      ? {
+          title: 'ABOUT US',
+          href: PATH.ABOUT,
+        }
+      : null,
+  ].filter((item): item is NavigationItem => Boolean(item));
 
   return (
     <section
