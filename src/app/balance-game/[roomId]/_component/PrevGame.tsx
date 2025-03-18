@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+'use client';
+
 import * as StompJS from '@stomp/stompjs';
 import { throttle } from 'lodash';
 import {
