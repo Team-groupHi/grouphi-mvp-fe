@@ -25,13 +25,14 @@ const ErrorFallback = ({ error, resetErrorBoundary }: ErrorProps) => {
 
   const gotoHome = () => {
     router.push(PATH.HOME);
+    resetErrorBoundary();
   };
 
   return (
     <section className="w-screen h-screen flex flex-col justify-center items-center gap-3">
       <Label>{message}</Label>
       <Button onClick={gotoHome}>메인으로 이동</Button>
-      <Button onClick={resetErrorBoundary}>다시 불러오기</Button>
+      <Button onClick={() => resetErrorBoundary()}>다시 불러오기</Button>
     </section>
   );
 };
