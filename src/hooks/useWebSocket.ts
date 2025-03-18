@@ -184,11 +184,15 @@ export function useWebSocket() {
       case SOCKET.TYPE.BG_NEXT:
         setRoomStatus('progress');
         setRound(content);
-        queryClient.removeQueries({ queryKey: ['balanceGameResults'] });
+        queryClient.removeQueries({
+          queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
+        });
         break;
       case SOCKET.TYPE.BG_ALL_RESULTS:
         setRoomStatus('finalResult');
-        queryClient.removeQueries({ queryKey: ['balanceGameResults'] });
+        queryClient.removeQueries({
+          queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
+        });
         break;
       case SOCKET.TYPE.BG_END:
         setChatMessages(() => [

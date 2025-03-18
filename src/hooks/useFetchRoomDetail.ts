@@ -19,7 +19,7 @@ export const useFetchBalanceGameResults = ({
   round: number | undefined;
 }) => {
   return useSuspenseQuery({
-    queryKey: ['balanceGameResults'],
+    queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
     queryFn: () => getBalanceGameResults({ roomId, round }),
   });
 };
