@@ -37,6 +37,7 @@ const GamePanel = ({
   const {
     data: gameResults,
     refetch,
+    isError,
     error,
   } = useFetchBalanceGameResults({
     roomId,
@@ -59,9 +60,12 @@ const GamePanel = ({
     }
   }, [isTimeout]);
 
-  if (error) {
-    throw error;
-  }
+  // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
+  useEffect(() => {
+    if (isError) {
+      throw error;
+    }
+  }, [isError]);
 
   return (
     <>
@@ -77,8 +81,6 @@ const GamePanel = ({
         <BalanceGameProgress
           sendMessage={sendMessage}
           setIsTimeout={setIsTimeout}
-          // roomId={roomId}
-          // setPartialResult={setPartialResult}
           /* 
               // @brief: 전체 선택 시 넘어가는 기능 잠시 보류
               isAllSelected={

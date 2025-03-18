@@ -13,9 +13,6 @@ interface BalanceGameProgressProps {
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
-  // roomId: string;
-  // setPartialResult: (result: BalanceGameResultResponse[]) => void;
-  // isAllSelected?: boolean;
   setIsTimeout: (state: boolean) => void;
 }
 
