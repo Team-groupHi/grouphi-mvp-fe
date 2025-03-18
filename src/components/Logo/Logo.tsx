@@ -11,16 +11,18 @@ const Logo = (props: React.HTMLAttributes<HTMLDivElement>) => {
         <Image
           src="/images/logos/grouphi_logo_origin.png"
           alt="logo"
-          fill
+          height={40}
+          width={40}
           style={{ objectFit: 'contain' }}
           priority
         />
       </div>
-      <div className="relative w-16">
+      <div className="relative w-16 flex items-center">
         <Image
           src="/images/logos/grouphi_logo_text_white.png"
           alt="logo-text"
-          fill
+          height={24}
+          width={64}
           style={{ objectFit: 'contain' }}
           priority
         />

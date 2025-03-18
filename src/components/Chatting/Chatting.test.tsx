@@ -7,25 +7,26 @@ describe('채팅 컴포넌트 테스트', () => {
   it('1) 내가 채팅을 치면 primary 색의 텍스트를 출력한다.', () => {
     const DUMMY = [
       {
-        name: '한나',
-        message:
+        sender: '한나',
+        content:
           '채팅어쩌공채팅어쩌공채팅어쩌공채팅어쩌공채팅어쩌공채팅어쩌공쩌공채팅어쩌공채팅어쩌공채팅어쩌공채팅어쩌공',
       },
       {
-        name: '개울가의 나뭇잎',
-        message: '나야나~',
+        sender: '개울가의 나뭇잎',
+        content: '나야나~',
       },
       {
-        name: 'system',
-        message: '시스템 알림!',
+        sender: 'system',
+        content: '시스템 알림!',
       },
     ];
 
     render(
       <Chatting
-        messages={DUMMY}
+        chatMessages={DUMMY}
         myName="개울가의 나뭇잎"
-      ></Chatting>
+        sendMessage={() => {}}
+      />
     );
 
     const element = screen.getByText('개울가의 나뭇잎');
@@ -38,16 +39,17 @@ describe('채팅 컴포넌트 테스트', () => {
   it('2) 시스템 알림이 오면 primary 색의 텍스트와 primary/20 배경을 출력한다.', () => {
     const DUMMY = [
       {
-        name: 'system',
-        message: '시스템 알림!',
+        sender: 'system',
+        content: '시스템 알림!',
       },
     ];
 
     render(
       <Chatting
-        messages={DUMMY}
+        chatMessages={DUMMY}
         myName="개울가의 나뭇잎"
-      ></Chatting>
+        sendMessage={() => {}}
+      />
     );
 
     const element = screen.getByText('시스템 알림!');

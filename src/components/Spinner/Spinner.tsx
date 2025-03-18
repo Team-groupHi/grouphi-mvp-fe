@@ -1,3 +1,5 @@
+'use client';
+
 import Lottie from 'react-lottie-player';
 
 import groupHi_Spinner_bg from '../../../public/loading/groupHi_Spinner_background.json';

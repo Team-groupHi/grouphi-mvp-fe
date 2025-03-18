@@ -2,54 +2,27 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
 import Timer from '@/components/Timer';
 import { SOCKET } from '@/constants/websocket';
-import { getBalanceGameResults } from '@/services/balanceGames';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
-import { BalanceGameResultGetResponse } from '@/types/api';
 
 interface BalanceGameProgressProps {
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
-  roomId: string;
-  setPartialResult: (result: BalanceGameResultGetResponse[]) => void;
-  isAllSelected?: boolean;
+  setIsTimeout: (state: boolean) => void;
 }
 
 const BalanceGameProgress = ({
   sendMessage,
-  roomId,
-  setPartialResult,
-  isAllSelected = false,
+  setIsTimeout,
 }: BalanceGameProgressProps) => {
-  const { round, setRoomStatus, resetSelectedPlayers } = useBalanceGameStore();
+  const { round } = useBalanceGameStore();
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [isTimeout, setIsTimeout] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (isTimeout || isAllSelected) {
-      setRoomStatus('result');
-      resetSelectedPlayers();
-
-      getBalanceGameResults({
-        roomId: roomId,
-        round: round.currentRound,
-      })
-        .then((data) => {
-          if (data) {
-            setPartialResult(data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [isTimeout, isAllSelected]);
 
   const handleSelect = (option: string) => {
     setSelectedOption(option);

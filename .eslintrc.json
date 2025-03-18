@@ -36,6 +36,7 @@
     ],
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
-    "require-await": "warn"
+    "require-await": "warn",
+    "react/self-closing-comp": "warn"
   }
 }

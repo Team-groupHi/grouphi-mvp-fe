@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 
 const logOnDev = (message: string) => {
   if (process.env.NODE_ENV === 'development') {
@@ -7,7 +7,7 @@ const logOnDev = (message: string) => {
 };
 
 export const axiosErrorHandler = (error: unknown) => {
-  if (!(error instanceof AxiosError)) return;
+  if (!isAxiosError(error)) return;
 
   const { message, response, request } = error;
 
@@ -18,4 +18,6 @@ export const axiosErrorHandler = (error: unknown) => {
   } else {
     logOnDev(`${message}`);
   }
+
+  throw error;
 };

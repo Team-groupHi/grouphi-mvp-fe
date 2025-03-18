@@ -2,12 +2,12 @@
 
 import { PieChart } from '@/components';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
-import { BalanceGameResultGetResponse } from '@/types/api';
+import { BalanceGameResultResponse } from '@/types/api';
 
 import { UserList } from '.';
 
 interface PartialResultChartProps {
-  data: BalanceGameResultGetResponse[];
+  data: BalanceGameResultResponse[];
 }
 
 const PartialResultChart = ({ data }: PartialResultChartProps) => {
