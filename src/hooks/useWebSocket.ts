@@ -1,11 +1,18 @@
+/* eslint-disable no-case-declarations */
 'use client';
+
+import * as StompJS from '@stomp/stompjs';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
+
 import { QUERYKEY } from '@/constants/querykey';
+import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import { ChatMessage } from '@/types';
-import * as StompJS from '@stomp/stompjs';
-import { useQueryClient } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+
+import { useToast } from './useToast';
 
 interface EnterRoomProps {
   roomId: string;
@@ -15,11 +22,15 @@ interface EnterRoomProps {
 export function useWebSocket() {
   const BASE_WEBSOCKET_URL = process.env.NEXT_PUBLIC_BASE_WEBSOCKET_URL;
   const client = useRef<StompJS.Client | null>(null);
-  const [, setSubscription] = useState<StompJS.StompSubscription | null>(null);
+  const [subscriptions, setSubscription] = useState<
+    StompJS.StompSubscription[] | null
+  >(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const { setRoomStatus, setRound } = useBalanceGameStore();
+  const { setRoomStatus, setRound, addSelectedPlayers } = useBalanceGameStore();
 
   const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const router = useRouter();
 
   const connect = ({ roomId, name }: EnterRoomProps) => {
     if (client.current) return;
@@ -42,19 +53,32 @@ export function useWebSocket() {
     client.current.onConnect = (frame) => {
       console.log('[WebSocket] 1. Connected', frame);
 
-      const subscribeId = client.current?.subscribe(
+      const subscribeRoomId = client.current?.subscribe(
         `${SOCKET.ENDPOINT.SUBSCRIBE}${SOCKET.ENDPOINT.ROOM.ROOMS}/${roomId}`,
         (message) => {
           console.log(
-            '[WebSocket] 2. Subscribe - Receive Message',
+            '[WebSocket] 2. Subscribe1 - Receive Message',
             message.body
           );
           receiveMessage(message.body);
-        }
+        },
+        { id: `sub-room-${roomId}` }
       );
 
-      if (subscribeId) {
-        setSubscription(subscribeId);
+      const subscribeErrorId = client.current?.subscribe(
+        `${SOCKET.ENDPOINT.USER.QUEUE_ERRORS}`,
+        (message) => {
+          console.log(
+            '[WebSocket] 2. Subscribe2 - Receive Message',
+            message.body
+          );
+          receiveMessage(message.body);
+        },
+        { id: `sub-error-${roomId}` }
+      );
+
+      if (subscribeRoomId && subscribeErrorId) {
+        setSubscription([subscribeRoomId, subscribeErrorId]);
 
         sendMessage({
           destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
@@ -79,10 +103,11 @@ export function useWebSocket() {
       destination: `${SOCKET.ENDPOINT.ROOM.EXIT}`,
     });
 
+    subscriptions?.forEach((subscription) => subscription.unsubscribe());
+    client.current.deactivate();
+
     setSubscription(null);
     setChatMessages([]);
-
-    client.current.deactivate();
     client.current = null;
     console.log('[WebSocket] Disconnected');
   };
@@ -101,7 +126,7 @@ export function useWebSocket() {
   };
 
   const receiveMessage = (message: string) => {
-    console.log(`[WebSocket] 2-1. receiveMessage`, message);
+    console.log('[WebSocket] 2-1. receiveMessage', message);
     const { type, sender, content } = JSON.parse(message);
 
     switch (type) {
@@ -140,9 +165,13 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
+      case SOCKET.TYPE.CHANGE_PLAYER_NAME:
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
       case SOCKET.TYPE.BG_SELECT:
-        //@Todo
-        // 전원 다 선택을 했을 경우 바로 중간 결과로 가는 로직 필요
+        addSelectedPlayers(sender);
         break;
       case SOCKET.TYPE.BG_START:
         setRoomStatus('progress');
@@ -156,7 +185,23 @@ export function useWebSocket() {
         setRoomStatus('finalResult');
         break;
       case SOCKET.TYPE.BG_END:
+        setChatMessages(() => [
+          {
+            sender: SOCKET.SYSTEM,
+            content: '게임이 종료되었습니다.',
+          },
+        ]);
         setRoomStatus('idle');
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
+      case SOCKET.TYPE.ERROR:
+        toast({
+          variant: 'destructive',
+          title: '문제가 생겼습니다. 다시 시도해주세요.',
+        });
+        router.push(PATH.HOME);
         break;
       default:
         break;

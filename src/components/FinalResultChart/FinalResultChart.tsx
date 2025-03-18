@@ -1,12 +1,15 @@
 'use client';
 
-import { useRef } from 'react';
-import { Button } from '@/components/Button';
-import Bar, { BarProps } from './Bar';
-import { Download } from 'lucide-react';
 import html2canvas from 'html2canvas';
-import useModalStore from '@/store/useModalStore';
+import { Download } from 'lucide-react';
+import { useRef } from 'react';
+
+import { Button } from '@/components/Button';
+import { MODAL_TYPE } from '@/constants/modal';
 import { useToast } from '@/hooks/useToast';
+import useModalStore from '@/store/useModalStore';
+
+import Bar, { BarProps } from './Bar';
 
 interface FinalResultChartProps {
   data: BarProps[];
@@ -31,7 +34,7 @@ const FinalResultChart = ({ data }: FinalResultChartProps) => {
         style.remove();
 
         const dataUrl = canvas.toDataURL('image/png');
-        openModal('SaveImageModal', dataUrl);
+        openModal(MODAL_TYPE.SAVE_IMAGE, dataUrl);
       } catch {
         toast({
           title: '결과 사진 캡처에 실패했어요! 다시 시도해주세요.',

@@ -1,11 +1,13 @@
 'use client';
 
+import * as StompJS from '@stomp/stompjs';
+import React, { useEffect, useRef } from 'react';
+
 import Input from '@/components/Input';
-import Item from './Item';
-import React, { useRef, useEffect } from 'react';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
-import * as StompJS from '@stomp/stompjs';
+
+import Item from './Item';
 
 interface ChattingProps {
   myName: string;
@@ -43,8 +45,8 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
   }, [chatMessages]);
 
   return (
-    <section className="h-full">
-      <section className="bg-container-600 rounded-t-lg h-[87%] overflow-auto">
+    <section className="h-[calc(100%-3rem)]">
+      <section className="h-[calc(100%-4rem)] bg-container-600 rounded-t-lg overflow-auto">
         {chatMessages.map((item, index) => (
           <Item
             key={index}
@@ -61,7 +63,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
         ))}
         <div ref={messagesEndRef} />
       </section>
-      <section className="bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
+      <section className="h-[4rem] flex justify-center items-center bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
         <Input
           ref={inputRef}
           className="bg-container-700 border-transparent"

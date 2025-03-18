@@ -1,7 +1,8 @@
-import { describe, test, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Button } from './Button';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Link from 'next/link';
+import { describe, expect, test, vi } from 'vitest';
+
+import { Button } from './Button';
 
 describe('Button', () => {
   test('1) 기본 버튼이 잘 렌더링된다.', () => {

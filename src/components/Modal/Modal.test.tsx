@@ -1,11 +1,12 @@
 import {
+  act,
+  fireEvent,
   render,
   screen,
-  fireEvent,
-  act,
   waitFor,
 } from '@testing-library/react';
-import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import useModalStore from '../../store/useModalStore';
 import ModalRenderer from './ModalRenderer';
 import ModalShell from './ModalShell';

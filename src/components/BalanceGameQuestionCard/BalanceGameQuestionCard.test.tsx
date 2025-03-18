@@ -1,6 +1,7 @@
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react'; // React 임포트 추가
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
 import BalanceGameQuestionCard from './BalanceGameQuestionCard';
 
 describe('밸런스 게임 질문 카드 테스트', () => {

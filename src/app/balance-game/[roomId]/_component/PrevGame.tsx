@@ -1,16 +1,18 @@
-import { GameListCard, Button } from '@/components';
-import { SOCKET } from '@/constants/websocket';
-import { Player, RoomGetResponse } from '@/types/api';
+import * as StompJS from '@stomp/stompjs';
 import {
   CheckCheck,
   Loader,
-  SlidersHorizontal,
   MousePointer2,
+  SlidersHorizontal,
 } from 'lucide-react';
-import * as StompJS from '@stomp/stompjs';
+
+import { Button, GameListCard } from '@/components';
+import { SOCKET } from '@/constants/websocket';
+import { useToast } from '@/hooks/useToast';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
-import { useToast } from '@/hooks/useToast';
+import { Player, RoomGetResponse } from '@/types/api';
+import { isDevelopment } from '@/utils/env';
 
 interface PrevGameProps {
   roomDetail: RoomGetResponse;
@@ -27,7 +29,7 @@ const PrevGame = ({
   sendMessage,
   isRoomManager,
 }: PrevGameProps) => {
-  const { setRoomStatus, totalRounds } = useBalanceGameStore();
+  const { setRoomStatus, round } = useBalanceGameStore();
   const { myName } = useRoomStore();
 
   const { toast } = useToast();
@@ -59,13 +61,19 @@ const PrevGame = ({
           '왼쪽 위 친구 초대 버튼을 눌러 같이 할 친구를 초대해보세요.',
       });
     } else {
+      const balanceGameTheme = roomDetail.game.nameEn
+        .split(' ')[0]
+        .toUpperCase()
+        .replace('COMPREHENSIVE', 'ALL');
+
       sendMessage({
         destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
         body: {
-          theme: 'GENERAL',
-          totalRounds: totalRounds,
+          theme: balanceGameTheme,
+          totalRounds: round.totalRounds,
         },
       });
+
       setRoomStatus('progress');
     }
   };
@@ -75,7 +83,7 @@ const PrevGame = ({
   };
 
   return (
-    <section className="w-full h-full flex flex-col justify-center items-center gap-7">
+    <section className="w-full h-full flex flex-col justify-center items-center gap-7 px-900">
       <span className="font-semibold">잠시 후 게임이 시작됩니다.</span>
       <GameListCard
         title={roomDetail.game.nameKr}
@@ -113,7 +121,7 @@ const PrevGame = ({
             </div>
           </Button>
         )}
-        {isRoomManager && (
+        {isDevelopment && isRoomManager && (
           <Button
             variant={'secondary'}
             className="text-base font-semibold w-[12rem]"
