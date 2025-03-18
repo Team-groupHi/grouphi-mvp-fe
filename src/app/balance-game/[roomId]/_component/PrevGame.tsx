@@ -18,6 +18,7 @@ import { cn } from '@/lib/utils';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
+import { isDevelopment } from '@/utils/env';
 
 interface PrevGameProps {
   roomDetail: RoomResponse;
@@ -140,15 +141,17 @@ const PrevGame = ({
               </div>
             </Button>
 
-            <Button
-              variant={'secondary'}
-              className="text-base font-semibold w-[12rem] flex items-center justify-center gap-2"
-              size="xl"
-              onClick={handleGameChange}
-            >
-              <SlidersHorizontal />
-              <span>게임 변경</span>
-            </Button>
+            {isDevelopment && (
+              <Button
+                variant={'secondary'}
+                className="text-base font-semibold w-[12rem] flex items-center justify-center gap-2"
+                size="xl"
+                onClick={handleGameChange}
+              >
+                <SlidersHorizontal />
+                <span>게임 변경</span>
+              </Button>
+            )}
           </>
         )}
       </section>
