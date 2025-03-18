@@ -16,7 +16,7 @@ export const METADATA: Metadata = {
         url: '/images/opengraph-image.png',
         width: 1200,
         height: 630,
-        alt: 'grouphi logo',
+        alt: 'groupHi logo',
       },
     ],
   },
