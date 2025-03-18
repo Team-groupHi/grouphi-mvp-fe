@@ -1,8 +1,9 @@
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
-import { describe, test, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { useToast } from '@/hooks/useToast';
+import { describe, expect, test } from 'vitest';
+
 import { ToastAction, ToastActionElement, Toaster } from '@/components';
+import { useToast } from '@/hooks/useToast';
 
 const TOAST_TIMEOUT = 1000;
 const TestToast = ({

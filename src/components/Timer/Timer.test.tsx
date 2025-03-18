@@ -1,6 +1,7 @@
-import React from 'react';
 import { act, render, screen } from '@testing-library/react';
-import { describe, it, expect, beforeEach } from 'vitest';
+import React from 'react';
+import { beforeEach, describe, expect, it } from 'vitest';
+
 import Timer from './Timer';
 
 describe('Timer Component', () => {

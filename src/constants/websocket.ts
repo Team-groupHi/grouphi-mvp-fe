@@ -1,7 +1,10 @@
 export const SOCKET = {
   ENDPOINT: {
-    SUBSCRIBE: '/sub',
-    PUBLICATION: '/pub',
+    SUBSCRIBE: '/topic',
+    PUBLICATION: '/app',
+    USER: {
+      QUEUE_ERRORS: '/user/queue/errors',
+    },
     ROOM: {
       ROOMS: '/rooms',
       ENTER: '/rooms/enter',
@@ -35,6 +38,7 @@ export const SOCKET = {
     BG_NEXT: 'BG_NEXT',
     BG_ALL_RESULTS: 'BG_ALL_RESULTS',
     BG_END: 'BG_END',
+    ERROR: 'ERROR',
   },
   SYSTEM: 'system',
 };

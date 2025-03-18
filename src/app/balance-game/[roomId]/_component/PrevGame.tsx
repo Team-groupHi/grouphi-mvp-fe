@@ -1,9 +1,3 @@
-import { Button, GameListCard } from '@/components';
-import { SOCKET } from '@/constants/websocket';
-import { useToast } from '@/hooks/useToast';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
-import useRoomStore from '@/store/useRoomStore';
-import { Player, RoomGetResponse } from '@/types/api';
 import * as StompJS from '@stomp/stompjs';
 import {
   CheckCheck,
@@ -11,6 +5,13 @@ import {
   MousePointer2,
   SlidersHorizontal,
 } from 'lucide-react';
+
+import { Button, GameListCard } from '@/components';
+import { SOCKET } from '@/constants/websocket';
+import { useToast } from '@/hooks/useToast';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useRoomStore from '@/store/useRoomStore';
+import { Player, RoomGetResponse } from '@/types/api';
 
 interface PrevGameProps {
   roomDetail: RoomGetResponse;
@@ -59,13 +60,19 @@ const PrevGame = ({
           '왼쪽 위 친구 초대 버튼을 눌러 같이 할 친구를 초대해보세요.',
       });
     } else {
+      const balanceGameTheme = roomDetail.game.nameEn
+        .split(' ')[0]
+        .toUpperCase()
+        .replace('COMPREHENSIVE', 'ALL');
+
       sendMessage({
         destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
         body: {
-          theme: 'GENERAL',
+          theme: balanceGameTheme,
           totalRounds: round.totalRounds,
         },
       });
+
       setRoomStatus('progress');
     }
   };

@@ -1,5 +1,6 @@
-import { MainHeader } from '@/components';
 import React from 'react';
+
+import { MainHeader } from '@/components';
 
 const AboutPage = () => {
   return (
