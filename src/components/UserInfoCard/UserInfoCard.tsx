@@ -42,6 +42,7 @@ const UserInfoCard = ({
             alt="crown"
             width={29}
             height={29}
+            priority
           />
         </section>
       )}
@@ -51,6 +52,7 @@ const UserInfoCard = ({
           alt="profile"
           width={64}
           height={64}
+          priority
         />
       </figure>
       <div className="w-[calc(100%-4rem)] pl-4 pr-1 flex items-center font-bold justify-between gap-1">
