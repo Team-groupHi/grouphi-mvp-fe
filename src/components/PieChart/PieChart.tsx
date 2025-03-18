@@ -11,6 +11,7 @@ import React, { HTMLAttributes } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
 import { cn } from '@/lib/utils';
+import { theme } from '@/styles/theme';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -38,7 +39,11 @@ const PieChart = ({
       {
         label: '총 합계: ',
         data,
-        backgroundColor: ['#32e4d0', '#cb78ea', '#fff0b6'],
+        backgroundColor: [
+          theme.colors.primary[500],
+          theme.colors.secondary[500],
+          theme.colors.tertiary[500],
+        ],
         borderWidth: 0,
         hoverBackgroundColor: '#93d6ce80',
         hoverBorderWidth: 2,
