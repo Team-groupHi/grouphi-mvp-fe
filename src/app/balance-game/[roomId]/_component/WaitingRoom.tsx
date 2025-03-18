@@ -7,9 +7,11 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { Chatting, Spinner } from '@/components';
+import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
+import ErrorHandlingWrapper from '@/components/ErrorBoundary/ErrorHandlingWrapper';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
-import useFetchRoomDetail from '@/hooks/useFetchRoomDetail';
+import { useFetchRoomDetail } from '@/hooks/useFetchRoomDetail';
 import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
@@ -110,13 +112,20 @@ const WaitingRoom = ({
         hostName={roomDetail.hostName}
       />
 
-      <GamePanel
-        roomId={roomId}
-        roomDetail={roomDetail}
-        players={players}
-        isRoomManager={isRoomManager}
-        sendMessage={sendMessage}
-      />
+      <section className="h-4/5 min-w-max max-w-[70rem] w-full bg-container/50 rounded-lg">
+        <ErrorHandlingWrapper
+          fallbackComponent={ErrorFallback}
+          suspenseFallback={<Spinner />}
+        >
+          <GamePanel
+            roomId={roomId}
+            roomDetail={roomDetail}
+            players={players}
+            isRoomManager={isRoomManager}
+            sendMessage={sendMessage}
+          />
+        </ErrorHandlingWrapper>
+      </section>
 
       <section className="flex flex-col h-4/5 w-1/4 min-w-[18rem] max-w-[23rem] pr-10 gap-2">
         <Chatting
