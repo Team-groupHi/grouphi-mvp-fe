@@ -1,6 +1,8 @@
 import type { Config } from 'tailwindcss';
 import animate from 'tailwindcss-animate';
 
+import { theme } from './src/styles/theme';
+
 const config: Config = {
   darkMode: ['class'],
   content: [
@@ -10,82 +12,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        primary: {
-          DEFAULT: '#32e4d0',
-          '50': '#f2fcfc',
-          '100': '#e8fcfb',
-          '200': '#c8f7f4',
-          '300': '#a9f5ee',
-          '400': '#6aebde',
-          '500': '#32e4d0',
-          '600': '#29ccb1',
-          '700': '#1bab89',
-          '800': '#128764',
-          '900': '#0a6644',
-          '950': '#044227',
-          container: '#352778',
-        },
-        secondary: {
-          DEFAULT: '#cb78ea',
-          '50': '#fefaff',
-          '100': '#fbf0fc',
-          '200': '#f5dcfa',
-          '300': '#eec6f7',
-          '400': '#dd9ef0',
-          '500': '#cb78ea',
-          '600': '#b161d4',
-          '700': '#8a43b0',
-          '800': '#642b8c',
-          '900': '#431869',
-          '950': '#260a45',
-          container: '#a9f5ee',
-        },
-        tertiary: {
-          DEFAULT: '#fff0b6',
-          '50': '#fffffc',
-          '100': '#fffef7',
-          '200': '#fffded',
-          '300': '#fffbe0',
-          '400': '#fff7cc',
-          '500': '#fff0b6',
-          '600': '#e6d293',
-          '700': '#bfa465',
-          '800': '#997942',
-          '900': '#735225',
-          '950': '#4a2e10',
-          container: '#352778',
-        },
-        warning: {
-          DEFAULT: '#ef4444',
-          '50': '#fffaf5',
-          '100': '#fcf3eb',
-          '200': '#fce0cf',
-          '300': '#fac7b1',
-          '400': '#f58d7a',
-          '500': '#ef4444',
-          '600': '#d93636',
-          '700': '#b32525',
-          '800': '#8f1818',
-          '900': '#6b0e0e',
-          '950': '#450606',
-          container: '#fffaf5',
-        },
-        container: {
-          DEFAULT: '#352778',
-          '50': '#f4f0f7',
-          '100': '#ebe1f2',
-          '200': '#cab8de',
-          '300': '#aa93c9',
-          '400': '#6b54a1',
-          '500': '#352778',
-          '600': '#2c1f6b',
-          '700': '#201559',
-          '800': '#150e47',
-          '900': '#0d0736',
-          '950': '#060324',
-        },
-      },
+      colors: theme.colors,
       textColor: {
         DEFAULT: '#F0F0F0',
         light: '#F0F0F0',

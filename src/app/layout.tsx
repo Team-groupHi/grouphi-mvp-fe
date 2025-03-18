@@ -1,20 +1,17 @@
 import './globals.css';
 
-import type { Metadata } from 'next';
 import Script from 'next/script';
 import React from 'react';
 
 import { InitialNickname, Toaster } from '@/components';
 import { ShootingStars, StarsBackground } from '@/components';
 import { ModalRenderer } from '@/components/Modal';
+import { METADATA } from '@/constants/metadata';
 import Providers from '@/utils/providers';
 
 import { notoSans, pretendard } from './fonts/fonts';
 
-export const metadata: Metadata = {
-  title: 'groupHi',
-  description: '그루파이에서 아이스브레이킹 게임을 즐기고 추억을 남겨보세요!',
-};
+export const metadata = METADATA;
 
 export default function RootLayout({
   children,
@@ -26,9 +23,18 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <link
-          rel="icon"
+          rel="shortcut icon"
           href="/favicon.ico"
           sizes="32x32"
+        />
+        <link
+          rel="icon"
+          href="/icons/icon.svg"
+          sizes="any"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="/icons/apple-icon.png"
         />
       </head>
       <body
