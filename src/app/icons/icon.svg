@@ -1,11 +1,11 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<rect width="512" height="512" fill="url(#paint0_linear_1070_2040)" style=""/>
-<rect x="38" y="38" width="436.482" height="436.482" fill="url(#pattern0_1070_2040)" style=""/>
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="192" height="192" fill="url(#paint0_linear_1070_2040)" style=""/>
+<rect x="14.25" y="14.25" width="163.681" height="163.681" fill="url(#pattern0_1070_2040)" style=""/>
 <defs>
 <pattern id="pattern0_1070_2040" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_1070_2040" transform="scale(0.002)"/>
 </pattern>
-<linearGradient id="paint0_linear_1070_2040" x1="256" y1="0" x2="256" y2="512" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint0_linear_1070_2040" x1="96" y1="0" x2="96" y2="192" gradientUnits="userSpaceOnUse">
 <stop offset="0.1" stop-color="#352778" style="stop-color:#352778;stop-color:color(display-p3 0.2078 0.1529 0.4706);stop-opacity:1;"/>
 <stop offset="0.5" stop-color="#5D4DA6" style="stop-color:#5D4DA6;stop-color:color(display-p3 0.3647 0.3020 0.6510);stop-opacity:1;"/>
 </linearGradient>
