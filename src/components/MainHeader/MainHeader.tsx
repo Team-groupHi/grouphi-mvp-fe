@@ -9,11 +9,6 @@ import { isDevelopment } from '@/utils/env';
 
 import NicknameBar from './NicknameBar';
 
-interface NavigationItem {
-  title: string;
-  href: string;
-}
-
 const MainHeader = () => {
   const currentPath = usePathname();
   const router = useRouter();
@@ -23,14 +18,14 @@ const MainHeader = () => {
     {
       title: 'HOME',
       href: PATH.HOME,
+      isShow: true,
     },
-    isDevelopment
-      ? {
-          title: 'ABOUT US',
-          href: PATH.ABOUT,
-        }
-      : null,
-  ].filter((item): item is NavigationItem => Boolean(item));
+    {
+      title: 'ABOUT US',
+      href: PATH.ABOUT,
+      isShow: isDevelopment === null ? false : isDevelopment,
+    },
+  ];
 
   return (
     <section
