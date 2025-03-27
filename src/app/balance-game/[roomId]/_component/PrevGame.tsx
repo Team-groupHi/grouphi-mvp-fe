@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/useToast';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomGetResponse } from '@/types/api';
+import { isDevelopment } from '@/utils/env';
 
 interface PrevGameProps {
   roomDetail: RoomGetResponse;
@@ -120,7 +121,7 @@ const PrevGame = ({
             </div>
           </Button>
         )}
-        {isRoomManager && (
+        {isDevelopment && isRoomManager && (
           <Button
             variant={'secondary'}
             className="text-base font-semibold w-[12rem]"

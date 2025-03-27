@@ -66,7 +66,7 @@ export function useWebSocket() {
       );
 
       const subscribeErrorId = client.current?.subscribe(
-        `${SOCKET.ENDPOINT.SUBSCRIBE}${SOCKET.ENDPOINT.USER.QUEUE_ERRORS}`,
+        `${SOCKET.ENDPOINT.USER.QUEUE_ERRORS}`,
         (message) => {
           console.log(
             '[WebSocket] 2. Subscribe2 - Receive Message',

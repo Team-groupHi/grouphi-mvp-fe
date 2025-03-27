@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Logo, Navigation } from '@/components';
 import { PATH } from '@/constants/router';
 import useRoomStore from '@/store/useRoomStore';
+import { isDevelopment } from '@/utils/env';
 
 import NicknameBar from './NicknameBar';
 
@@ -17,10 +18,12 @@ const MainHeader = () => {
     {
       title: 'HOME',
       href: PATH.HOME,
+      isShow: true,
     },
     {
       title: 'ABOUT US',
       href: PATH.ABOUT,
+      isShow: isDevelopment === null ? false : isDevelopment,
     },
   ];
 
