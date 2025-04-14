@@ -25,7 +25,6 @@ export interface RoomResponse {
   id: string;
   status: 'WAITING' | 'PLAYING';
   game: GameResponse;
-  hostName: string; //@TODO: 백엔드에서 삭제 예정
   players: Player[];
 }
 
