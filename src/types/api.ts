@@ -1,4 +1,18 @@
-export interface GamesResponse {
+/* Request */
+
+export interface RoomPlayerNameValidationRequest {
+  roomId: string;
+  name: string;
+}
+
+export interface BalanceGameResultRequest {
+  roomId: string;
+  round?: number;
+}
+
+/* Response */
+
+export interface GameResponse {
   id: 'string';
   nameKr: 'string';
   nameEn: 'string';
@@ -7,21 +21,21 @@ export interface GamesResponse {
   thumbnailUrl: 'string' | null;
 }
 
-export interface RoomGetResponse {
+export interface RoomResponse {
   id: string;
   status: 'WAITING' | 'PLAYING';
-  game: GamesResponse;
-  hostName: string;
+  game: GameResponse;
   players: Player[];
 }
 
 export interface Player {
   name: string;
   isReady: boolean;
+  isHost: boolean;
   avatar: string;
 }
 
-export interface BalanceGameResultGetResponse {
+export interface BalanceGameResultResponse {
   round: number;
   q: string;
   a: string;
@@ -33,14 +47,4 @@ export interface BalanceGameSelectionsResponse {
   a: string[];
   b: string[];
   c: string[];
-}
-
-export interface BalanceGameRoundResponse {
-  totalRounds: number;
-  currentRound: number;
-  startTime: string;
-  endTime: string;
-  q: string;
-  a: string;
-  b: string;
 }
