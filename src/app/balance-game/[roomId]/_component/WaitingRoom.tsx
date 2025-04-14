@@ -45,9 +45,11 @@ const WaitingRoom = ({
   const { myName } = useRoomStore();
 
   const players: Player[] = roomDetail?.players || [];
-  const isRoomManager = roomDetail?.hostName === myName;
+  const isRoomManager = players.some(
+    (player) => player.name === myName && player.isHost
+  );
   const isSelfInPlayers =
-    roomDetail?.players.findIndex((user) => user.name === myName) !== -1;
+    players.findIndex((user) => user.name === myName) !== -1;
 
   useEffect(() => {
     if (
@@ -106,10 +108,7 @@ const WaitingRoom = ({
 
   return (
     <section className="w-screen h-screen flex items-center gap-10 shrink-0">
-      <UserList
-        players={players}
-        hostName={roomDetail.hostName}
-      />
+      <UserList players={players} />
 
       <section className="h-4/5 min-w-max max-w-[70rem] w-full bg-container/50 rounded-lg">
         <ErrorHandlingWrapper
