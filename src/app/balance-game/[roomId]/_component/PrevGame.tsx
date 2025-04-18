@@ -2,17 +2,16 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import { throttle } from 'lodash';
 import {
   CheckCheck,
   Loader,
   MousePointer2,
   SlidersHorizontal,
 } from 'lucide-react';
-import { useMemo } from 'react';
 
 import { Button, GameListCard } from '@/components';
 import { SOCKET } from '@/constants/websocket';
+import useThrottleReadyHandlers from '@/hooks/useThrottleHandlers';
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
@@ -40,32 +39,14 @@ const PrevGame = ({
 
   const { toast } = useToast();
 
+  const { handleReady, handleUnready } = useThrottleReadyHandlers(sendMessage);
+
   const isReady = players.find((player) => player.name === myName)?.isReady;
   const readyCount = players.reduce(
     (count, { isReady }) => count + (isReady ? 1 : 0),
     0
   );
   const isAllReady = readyCount === players.length;
-
-  const handleReady = useMemo(
-    () =>
-      throttle(() => {
-        sendMessage({
-          destination: `${SOCKET.ENDPOINT.ROOM.READY}`,
-        });
-      }, 1000),
-    []
-  );
-
-  const handleUnready = useMemo(
-    () =>
-      throttle(() => {
-        sendMessage({
-          destination: `${SOCKET.ENDPOINT.ROOM.UNREADY}`,
-        });
-      }, 1000),
-    []
-  );
 
   const handleGameStart = () => {
     if (roomDetail.players.length === 1) {
