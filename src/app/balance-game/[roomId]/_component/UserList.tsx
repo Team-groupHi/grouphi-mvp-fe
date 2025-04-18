@@ -1,3 +1,5 @@
+'use client';
+
 import { Link } from 'lucide-react';
 
 import { Button, UserInfoCard } from '@/components';
@@ -7,10 +9,9 @@ import { Player } from '@/types/api';
 
 interface UserListProps {
   players: Player[];
-  hostName: string;
 }
 
-const UserList = ({ players, hostName }: UserListProps) => {
+const UserList = ({ players }: UserListProps) => {
   const { toast } = useToast();
   const { roomStatus } = useBalanceGameStore();
 
@@ -36,13 +37,13 @@ const UserList = ({ players, hostName }: UserListProps) => {
           초대 링크 복사
         </Button>
       )}
-      {players.map((data) => (
+      {players.map((player) => (
         <UserInfoCard
-          key={data.name}
-          name={data.name}
-          isReady={roomStatus === 'idle' ? data.isReady : false}
-          fileName={data.avatar}
-          isHost={data.name === hostName}
+          key={player.name}
+          name={player.name}
+          isReady={roomStatus === 'idle' ? player.isReady : false}
+          fileName={player.avatar}
+          isHost={player.isHost}
         />
       ))}
     </section>

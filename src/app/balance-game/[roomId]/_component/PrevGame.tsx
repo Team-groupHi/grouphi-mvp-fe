@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client';
+
 import * as StompJS from '@stomp/stompjs';
 import {
   CheckCheck,
@@ -8,14 +11,16 @@ import {
 
 import { Button, GameListCard } from '@/components';
 import { SOCKET } from '@/constants/websocket';
+import useThrottleReadyHandlers from '@/hooks/useThrottleHandlers';
 import { useToast } from '@/hooks/useToast';
+import { cn } from '@/lib/utils';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
-import { Player, RoomGetResponse } from '@/types/api';
+import { Player, RoomResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
 
 interface PrevGameProps {
-  roomDetail: RoomGetResponse;
+  roomDetail: RoomResponse;
   players: Player[];
   isRoomManager: boolean;
   sendMessage: <T>(
@@ -34,24 +39,14 @@ const PrevGame = ({
 
   const { toast } = useToast();
 
+  const { handleReady, handleUnready } = useThrottleReadyHandlers(sendMessage);
+
   const isReady = players.find((player) => player.name === myName)?.isReady;
   const readyCount = players.reduce(
     (count, { isReady }) => count + (isReady ? 1 : 0),
     0
   );
   const isAllReady = readyCount === players.length;
-
-  const handleUnready = () => {
-    sendMessage({
-      destination: `${SOCKET.ENDPOINT.ROOM.UNREADY}`,
-    });
-  };
-
-  const handleReady = () => {
-    sendMessage({
-      destination: `${SOCKET.ENDPOINT.ROOM.READY}`,
-    });
-  };
 
   const handleGameStart = () => {
     if (roomDetail.players.length === 1) {
@@ -90,73 +85,77 @@ const PrevGame = ({
         description={roomDetail.game.descriptionKr}
         src={roomDetail.game.thumbnailUrl}
         className="h-16 pointer-events-none"
-      ></GameListCard>
+      />
 
       <section className="flex flex-col gap-2">
-        {isRoomManager && isAllReady && (
-          <Button
-            className="text-base font-semibold w-[12rem]"
-            size="xl"
-            onClick={handleGameStart}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <CheckCheck />
-              <span>
-                게임 시작({readyCount}/{players.length})
-              </span>
-            </div>
-          </Button>
-        )}
-        {isRoomManager && !isAllReady && (
-          <Button
-            className="text-base font-semibold w-[12rem] pointer-events-none"
-            size="xl"
-            variant={'waiting'}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <Loader />
-              <span>
-                준비 대기중({readyCount}/{players.length})
-              </span>
-            </div>
-          </Button>
-        )}
-        {isDevelopment && isRoomManager && (
-          <Button
-            variant={'secondary'}
-            className="text-base font-semibold w-[12rem]"
-            size="xl"
-            onClick={handleGameChange}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <SlidersHorizontal />
-              <span>게임 변경</span>
-            </div>
-          </Button>
+        {isRoomManager && (
+          <>
+            <Button
+              className={cn(
+                'text-base font-semibold w-[12rem]',
+                !isAllReady && 'pointer-events-none'
+              )}
+              size="xl"
+              variant={
+                isAllReady && roomDetail.players.length !== 1
+                  ? 'default'
+                  : 'waiting'
+              }
+              onClick={handleGameStart}
+            >
+              <div className="flex items-center justify-center gap-2">
+                {isAllReady ? (
+                  <>
+                    <CheckCheck />
+                    <span>
+                      게임 시작({readyCount}/{players.length})
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Loader />
+                    <span>
+                      준비 대기중({readyCount}/{players.length})
+                    </span>
+                  </>
+                )}
+              </div>
+            </Button>
+
+            {isDevelopment && (
+              <Button
+                variant={'secondary'}
+                className="text-base font-semibold w-[12rem] flex items-center justify-center gap-2"
+                size="xl"
+                onClick={handleGameChange}
+              >
+                <SlidersHorizontal />
+                <span>게임 변경</span>
+              </Button>
+            )}
+          </>
         )}
       </section>
 
-      {!isRoomManager && isReady && (
+      {!isRoomManager && (
         <Button
           className="text-base font-semibold w-[12rem]"
           size="xl"
-          variant={'waiting'}
-          onClick={handleUnready}
+          variant={isReady ? 'waiting' : 'default'}
+          onClick={isReady ? handleUnready : handleReady}
         >
           <div className="flex items-center justify-center gap-2">
-            <CheckCheck />
-            <span>준비 완료</span>
-          </div>
-        </Button>
-      )}
-      {!isRoomManager && !isReady && (
-        <Button
-          className="text-base font-semibold w-[12rem]"
-          size="xl"
-          onClick={handleReady}
-        >
-          <div className="flex items-center justify-center gap-2">
-            <MousePointer2 /> <span>준비 하기</span>
+            {isReady ? (
+              <>
+                <CheckCheck />
+                <span>준비 완료</span>
+              </>
+            ) : (
+              <>
+                <MousePointer2 />
+                <span>준비 하기</span>
+              </>
+            )}
           </div>
         </Button>
       )}

@@ -5,12 +5,12 @@ import { useEffect } from 'react';
 import { Footer, MainHeader } from '@/components';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
-import { GamesResponse } from '@/types/api';
+import { GameResponse } from '@/types/api';
 
 import GameListCarousel from './GameListCarousel';
 
 interface HomeClientProps {
-  games: GamesResponse[];
+  games: GameResponse[];
 }
 
 const HomeClient = ({ games }: HomeClientProps) => {
