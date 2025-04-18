@@ -53,7 +53,7 @@ const PrevGame = ({
         sendMessage({
           destination: `${SOCKET.ENDPOINT.ROOM.READY}`,
         });
-      }, 1000),
+      }, 500),
     []
   );
 
@@ -63,7 +63,7 @@ const PrevGame = ({
         sendMessage({
           destination: `${SOCKET.ENDPOINT.ROOM.UNREADY}`,
         });
-      }, 1000),
+      }, 500),
     []
   );
 
