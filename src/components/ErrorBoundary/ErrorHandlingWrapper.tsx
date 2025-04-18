@@ -5,7 +5,7 @@ import { ComponentType, ReactNode, Suspense } from 'react';
 
 import ErrorBoundary, { FallbackProps } from './ErrorBoundary';
 
-interface PropsType {
+interface ErrorHandlingWrapperProps {
   children: ReactNode;
   fallbackComponent: ComponentType<FallbackProps>;
   suspenseFallback: ReactNode;
@@ -15,7 +15,7 @@ export default function ErrorHandlingWrapper({
   children,
   fallbackComponent: FallbackComponent,
   suspenseFallback: SuspenseFallback,
-}: PropsType) {
+}: ErrorHandlingWrapperProps) {
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (
