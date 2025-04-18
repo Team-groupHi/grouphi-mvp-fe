@@ -2,7 +2,6 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import { throttle } from 'lodash';
 import {
   CheckCheck,
   Loader,
@@ -19,6 +18,7 @@ import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
+import { throttle } from '@/utils/throttle';
 
 interface PrevGameProps {
   roomDetail: RoomResponse;
