@@ -130,13 +130,13 @@ export function useWebSocket() {
     const { type, sender, content } = JSON.parse(message);
 
     switch (type) {
-      case SOCKET.TYPE.CHAT:
+      case SOCKET.TYPE.ROOM.CHAT:
         addChatMessage({
           sender,
           content,
         });
         break;
-      case SOCKET.TYPE.ENTER:
+      case SOCKET.TYPE.ROOM.ENTER:
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 입장했어요.`,
@@ -145,7 +145,7 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.EXIT:
+      case SOCKET.TYPE.ROOM.EXIT:
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 퇴장했어요.`,
@@ -155,36 +155,36 @@ export function useWebSocket() {
         });
         break;
       //@TODO: players 데이터 내부 store로 관리하도록 변경하면서 refetch 로직 제거하기
-      case SOCKET.TYPE.READY:
+      case SOCKET.TYPE.ROOM.READY:
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.UNREADY:
+      case SOCKET.TYPE.ROOM.UNREADY:
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.CHANGE_PLAYER_NAME:
+      case SOCKET.TYPE.ROOM.CHANGE_PLAYER_NAME:
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.BG_SELECT:
+      case SOCKET.TYPE.BALANCE_GAME.SELECT:
         addSelectedPlayers(sender);
         break;
-      case SOCKET.TYPE.BG_START:
+      case SOCKET.TYPE.BALANCE_GAME.START:
         setRoomStatus('progress');
         setRound(content);
         break;
-      case SOCKET.TYPE.BG_NEXT:
+      case SOCKET.TYPE.BALANCE_GAME.NEXT:
         setRoomStatus('progress');
         setRound(content);
         break;
-      case SOCKET.TYPE.BG_ALL_RESULTS:
+      case SOCKET.TYPE.BALANCE_GAME.ALL_RESULTS:
         setRoomStatus('finalResult');
         break;
-      case SOCKET.TYPE.BG_END:
+      case SOCKET.TYPE.BALANCE_GAME.END:
         setChatMessages(() => [
           {
             sender: SOCKET.SYSTEM,
@@ -196,7 +196,7 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.ERROR:
+      case SOCKET.TYPE.ROOM.ERROR:
         toast({
           variant: 'destructive',
           title: '문제가 생겼습니다. 다시 시도해주세요.',
