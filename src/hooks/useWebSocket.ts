@@ -14,7 +14,7 @@ import { ChatMessage } from '@/types';
 
 import { useToast } from './useToast';
 
-interface EnterRoomProps {
+export interface EnterRoomProps {
   roomId: string;
   name: string;
 }
@@ -166,6 +166,10 @@ export function useWebSocket() {
         });
         break;
       case SOCKET.TYPE.CHANGE_PLAYER_NAME:
+        addChatMessage({
+          sender: SOCKET.SYSTEM,
+          content: `${sender}님이 ${content}님으로 닉네임을 변경했어요.`,
+        });
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
@@ -180,9 +184,15 @@ export function useWebSocket() {
       case SOCKET.TYPE.BG_NEXT:
         setRoomStatus('progress');
         setRound(content);
+        queryClient.removeQueries({
+          queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
+        });
         break;
       case SOCKET.TYPE.BG_ALL_RESULTS:
         setRoomStatus('finalResult');
+        queryClient.removeQueries({
+          queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
+        });
         break;
       case SOCKET.TYPE.BG_END:
         setChatMessages(() => [

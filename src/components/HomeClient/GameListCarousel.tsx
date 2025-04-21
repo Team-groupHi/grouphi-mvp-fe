@@ -8,10 +8,10 @@ import {
 } from '@/components';
 import { MODAL_TYPE } from '@/constants/modal';
 import useModalStore from '@/store/useModalStore';
-import { GamesResponse } from '@/types/api';
+import { GameResponse } from '@/types/api';
 
 interface GameListCarouselProps {
-  games: GamesResponse[];
+  games: GameResponse[];
 }
 
 const GameListCarousel = ({ games }: GameListCarouselProps) => {
