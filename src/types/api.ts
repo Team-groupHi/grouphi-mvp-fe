@@ -1,10 +1,10 @@
 export interface GamesResponse {
-  id: 'string';
-  nameKr: 'string';
-  nameEn: 'string';
-  descriptionKr: 'string';
-  descriptionEn: 'string';
-  thumbnailUrl: 'string' | null;
+  id: string;
+  nameKr: string;
+  nameEn: string;
+  descriptionKr: string;
+  descriptionEn: string;
+  thumbnailUrl: string | null;
 }
 
 export interface RoomGetResponse {
@@ -43,4 +43,16 @@ export interface BalanceGameRoundResponse {
   q: string;
   a: string;
   b: string;
+}
+
+export type QnaGameResult = {
+  name: string;
+  answer: string;
+  likes: number;
+};
+
+export interface QnaGameResultGetResponse {
+  round: number;
+  question: string;
+  result: QnaGameResult[];
 }
