@@ -1,1 +1,1 @@
-export { default as qnaGameAvatarStatus } from './QnaGameAvatarStatus';
+export { default as QnaGameAvatarStatus } from './QnaGameAvatarStatus';
