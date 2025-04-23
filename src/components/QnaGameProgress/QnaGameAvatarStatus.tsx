@@ -17,7 +17,7 @@ const QnaGameAvatarStatus = ({
     <div
       className={cn(
         'w-20 h-20 flex items-center justify-center rounded-full bg-container-700',
-        isSelected && 'border-[3px] border-primary-500'
+        isSelected && 'border-3 border-primary-500'
       )}
     >
       <Image
