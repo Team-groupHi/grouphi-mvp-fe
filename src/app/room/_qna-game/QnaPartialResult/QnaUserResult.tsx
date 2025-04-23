@@ -9,13 +9,21 @@ import { QnaGameResult } from '@/types/api';
 
 interface QnaUserResultProps {
   result: QnaGameResult;
+  onLike: (receiver: string) => void;
+  onUnlike: (receiver: string) => void;
 }
 
-const QnaUserResult = ({ result }: QnaUserResultProps) => {
+const QnaUserResult = ({ result, onLike, onUnlike }: QnaUserResultProps) => {
   const { name, answer } = result;
   const [isLike, setIsLike] = useState(false);
 
   const handleClickHeart = () => {
+    if (isLike) {
+      onUnlike(name);
+    } else {
+      onLike(name);
+    }
+
     setIsLike(() => !isLike);
   };
 
