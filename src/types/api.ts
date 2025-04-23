@@ -59,11 +59,11 @@ export interface BalanceGameRoundResponse {
   b: string;
 }
 
-export type QnaGameResult = {
+export interface QnaGameResult {
   name: string;
   answer: string;
   likes: number;
-};
+}
 
 export interface QnaGameResultGetResponse {
   round: number;
