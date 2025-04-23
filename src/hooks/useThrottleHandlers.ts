@@ -12,7 +12,7 @@ const useThrottleReadyHandlers = (
   const handleReady = useMemo(() => {
     const throttledFn = throttle(() => {
       sendMessage({
-        destination: `${SOCKET.ENDPOINT.ROOM.READY}`,
+        destination: `${SOCKET.ROOM.READY}`,
       });
     }, 500);
 
@@ -22,7 +22,7 @@ const useThrottleReadyHandlers = (
   const handleUnready = useMemo(() => {
     const throttledFn = throttle(() => {
       sendMessage({
-        destination: `${SOCKET.ENDPOINT.ROOM.UNREADY}`,
+        destination: `${SOCKET.ROOM.UNREADY}`,
       });
     }, 500);
 

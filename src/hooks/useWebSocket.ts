@@ -54,7 +54,7 @@ export function useWebSocket() {
       console.log('[WebSocket] 1. Connected', frame);
 
       const subscribeRoomId = client.current?.subscribe(
-        `${SOCKET.ENDPOINT.SUBSCRIBE}${SOCKET.ENDPOINT.ROOM.ROOMS}/${roomId}`,
+        `${SOCKET.SUBSCRIBE}${SOCKET.ROOM.ROOMS}/${roomId}`,
         (message) => {
           console.log(
             '[WebSocket] 2. Subscribe1 - Receive Message',
@@ -66,7 +66,7 @@ export function useWebSocket() {
       );
 
       const subscribeErrorId = client.current?.subscribe(
-        `${SOCKET.ENDPOINT.USER.QUEUE_ERRORS}`,
+        `${SOCKET.USER.QUEUE_ERRORS}`,
         (message) => {
           console.log(
             '[WebSocket] 2. Subscribe2 - Receive Message',
@@ -81,7 +81,7 @@ export function useWebSocket() {
         setSubscription([subscribeRoomId, subscribeErrorId]);
 
         sendMessage({
-          destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
+          destination: `${SOCKET.ROOM.ENTER}`,
           body: {
             roomId,
             name,
@@ -100,7 +100,7 @@ export function useWebSocket() {
   const disconnect = () => {
     if (!client.current) return;
     sendMessage({
-      destination: `${SOCKET.ENDPOINT.ROOM.EXIT}`,
+      destination: `${SOCKET.ROOM.EXIT}`,
     });
 
     subscriptions?.forEach((subscription) => subscription.unsubscribe());
@@ -120,7 +120,7 @@ export function useWebSocket() {
 
     client.current?.publish({
       ...params,
-      destination: `${SOCKET.ENDPOINT.PUBLICATION}${destination}`,
+      destination: `${SOCKET.PUBLICATION}${destination}`,
       body: text,
     });
   };

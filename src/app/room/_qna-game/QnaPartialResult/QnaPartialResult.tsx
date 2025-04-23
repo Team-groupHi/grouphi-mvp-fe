@@ -19,7 +19,7 @@ const QnaPartialResult = ({ data, sendMessage }: QnaPartialResultProps) => {
 
   const handleClickLike = (receiver: string) => {
     sendMessage({
-      destination: `${SOCKET.ENDPOINT.QNA_GAME.LIKE}`,
+      destination: `${SOCKET.QNA_GAME.LIKE}`,
       body: {
         round,
         receiver,
@@ -29,7 +29,7 @@ const QnaPartialResult = ({ data, sendMessage }: QnaPartialResultProps) => {
 
   const handleClickUnlike = (receiver: string) => {
     sendMessage({
-      destination: `${SOCKET.ENDPOINT.QNA_GAME.UNLIKE}`,
+      destination: `${SOCKET.QNA_GAME.UNLIKE}`,
       body: {
         round,
         receiver,

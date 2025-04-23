@@ -62,7 +62,7 @@ const PrevGame = ({
         .replace('COMPREHENSIVE', 'ALL');
 
       sendMessage({
-        destination: `${SOCKET.ENDPOINT.BALANCE_GAME.START}`,
+        destination: `${SOCKET.BALANCE_GAME.START}`,
         body: {
           theme: balanceGameTheme,
           totalRounds: round.totalRounds,

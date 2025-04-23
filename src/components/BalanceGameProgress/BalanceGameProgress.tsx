@@ -2,7 +2,7 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
 import Timer from '@/components/Timer';
@@ -30,8 +30,8 @@ const BalanceGameProgress = ({
     sendMessage({
       destination:
         option === round.a
-          ? SOCKET.ENDPOINT.BALANCE_GAME.SELECT_A
-          : SOCKET.ENDPOINT.BALANCE_GAME.SELECT_B,
+          ? SOCKET.BALANCE_GAME.SELECT_A
+          : SOCKET.BALANCE_GAME.SELECT_B,
       body: {
         currentRound: round.currentRound,
       },

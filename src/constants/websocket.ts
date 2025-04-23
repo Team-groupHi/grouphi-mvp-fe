@@ -1,36 +1,42 @@
+const PREFIX = {
+  ROOMS: '/rooms',
+  GAMES: {
+    BALANCE: '/games/balance-game',
+    QNA: '/games/qna-game',
+  },
+};
+
 export const SOCKET = {
-  ENDPOINT: {
-    SUBSCRIBE: '/topic',
-    PUBLICATION: '/app',
-    USER: {
-      QUEUE_ERRORS: '/user/queue/errors',
-    },
-    ROOM: {
-      ROOMS: '/rooms',
-      ENTER: '/rooms/enter',
-      EXIT: '/rooms/exit',
-      CHAT: '/rooms/chat',
-      READY: '/rooms/ready',
-      UNREADY: '/rooms/unready',
-      CHANGE_GAME: '/rooms/change-game',
-      CHANGE_PLAYER_NAME: '/rooms/change-player-name',
-    },
-    BALANCE_GAME: {
-      START: '/games/balance-game/start',
-      SELECT_A: '/games/balance-game/select-a',
-      SELECT_B: '/games/balance-game/select-b',
-      UNSELECT: '/games/balance-game/unselect',
-      NEXT: '/games/balance-game/next',
-      END: '/games/balance-game/end',
-    },
-    QNA_GAME: {
-      START: '/games/qna-game/start',
-      SUBMIT: '/games/qna-game/submit',
-      LIKE: '/games/qna-game/like',
-      UNLIKE: '/games/qna-game/unlike',
-      NEXT: '/games/qna-game/next',
-      END: '/games/qna-game/end',
-    },
+  SUBSCRIBE: '/topic',
+  PUBLICATION: '/app',
+  USER: {
+    QUEUE_ERRORS: '/user/queue/errors',
+  },
+  ROOM: {
+    ROOMS: `${PREFIX.ROOMS}`,
+    ENTER: `${PREFIX.ROOMS}/enter`,
+    EXIT: `${PREFIX.ROOMS}/exit`,
+    CHAT: `${PREFIX.ROOMS}/chat`,
+    READY: `${PREFIX.ROOMS}/ready`,
+    UNREADY: `${PREFIX.ROOMS}/unready`,
+    CHANGE_GAME: `${PREFIX.ROOMS}/change-game`,
+    CHANGE_PLAYER_NAME: `${PREFIX.ROOMS}/change-player-name`,
+  },
+  BALANCE_GAME: {
+    START: `${PREFIX.GAMES.BALANCE}/start`,
+    SELECT_A: `${PREFIX.GAMES.BALANCE}/select-a`,
+    SELECT_B: `${PREFIX.GAMES.BALANCE}/select-b`,
+    UNSELECT: `${PREFIX.GAMES.BALANCE}/unselect`,
+    NEXT: `${PREFIX.GAMES.BALANCE}/next`,
+    END: `${PREFIX.GAMES.BALANCE}/end`,
+  },
+  QNA_GAME: {
+    START: `${PREFIX.GAMES.QNA}/start`,
+    SUBMIT: `${PREFIX.GAMES.QNA}/submit`,
+    LIKE: `${PREFIX.GAMES.QNA}/like`,
+    UNLIKE: `${PREFIX.GAMES.QNA}/unlike`,
+    NEXT: `${PREFIX.GAMES.QNA}/next`,
+    END: `${PREFIX.GAMES.QNA}/end`,
   },
   TYPE: {
     ROOM: {
