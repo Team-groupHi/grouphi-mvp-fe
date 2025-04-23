@@ -1,8 +1,6 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-
-// API 응답 타입 정의
 export interface QnaGameResultItem {
   name: string;
   answer: string;
@@ -41,21 +39,18 @@ const QnaGameResultPanel = ({
           key={`round-${roundResult.round}-${index}`}
           className="rounded-xl overflow-hidden"
         >
-          {/* 질문 */}
           <div className="bg-container-700/80 p-4 rounded-t-xl">
             <p className="text-lg font-medium">Q. {roundResult.question}</p>
           </div>
 
-          {/* 답변 목록 */}
           <div className="space-y-2 mt-2">
             {roundResult.result
-              .sort((a, b) => b.likes - a.likes) // 좋아요 많은 순으로 정렬
+              .sort((current, next) => next.likes - current.likes)
               .map((item, itemIndex) => (
                 <div
                   key={`answer-${item.name}-${itemIndex}`}
                   className="flex items-center p-3 bg-container-700/50 rounded-xl"
                 >
-                  {/* 좋아요 표시 */}
                   <div className="flex flex-col items-center justify-center min-w-14 mr-3">
                     <div className="text-secondary-500">
                       <svg
@@ -70,14 +65,12 @@ const QnaGameResultPanel = ({
                     <span className="text-sm font-semibold">{item.likes}</span>
                   </div>
 
-                  {/* 이름 */}
                   <div className="mr-3 min-w-20">
                     <span className="text-sm font-medium opacity-80">
                       {item.name}
                     </span>
                   </div>
 
-                  {/* 답변 내용 */}
                   <div className="flex-1">
                     <p className="text-base break-words whitespace-pre-wrap">
                       {item.answer}
