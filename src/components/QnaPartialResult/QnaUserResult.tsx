@@ -2,7 +2,6 @@
 import { HeartIcon } from 'lucide-react';
 import { useState } from 'react';
 
-import { Input } from '@/components';
 import { cn } from '@/lib/utils';
 import { theme } from '@/styles/theme';
 import { QnaGameResult } from '@/types/api';
@@ -29,14 +28,12 @@ const QnaUserResult = ({ result, onLike, onUnlike }: QnaUserResultProps) => {
 
   return (
     <section className="flex gap-400">
-      <section className="nickame-card flex justify-center items-center text-title2 nickname-card w-xl bg-gradient-purple rounded-lg">
+      <section className="nickame-card flex justify-center items-center text-title3 nickname-card min-w-[14rem] p-2 bg-gradient-purple rounded-lg">
         {name}
       </section>
-      <Input
-        className="text-base bg-white text-dark border-2 border-gray-400"
-        value={answer}
-        readOnly
-      />
+      <section className="flex items-center w-full max-w-[42rem] line-clamp-2 flex px-3 py-1 rounded-md border border-gray-400 border-input bg-white text-dark text-base shadow-sm">
+        {answer}
+      </section>
       <section
         className="heart-icon flex items-center cursor-pointer"
         onClick={handleClickHeart}
