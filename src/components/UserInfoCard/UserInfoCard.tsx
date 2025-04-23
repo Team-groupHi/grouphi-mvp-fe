@@ -1,6 +1,7 @@
 import { Edit } from 'lucide-react';
 import Image from 'next/image';
 
+import { MODAL_TYPE } from '@/constants/modal';
 import { cn } from '@/lib/utils';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
@@ -24,7 +25,7 @@ const UserInfoCard = ({
   const { openModal } = useModalStore();
 
   const handleEditUserName = () => {
-    openModal('CreateUserNameModal');
+    openModal(MODAL_TYPE.CREATE_USERNAME);
   };
 
   return (
@@ -39,7 +40,9 @@ const UserInfoCard = ({
           <Image
             src={`/images/crown.png`}
             alt="crown"
-            fill={true}
+            width={29}
+            height={29}
+            priority
           />
         </section>
       )}
@@ -47,7 +50,9 @@ const UserInfoCard = ({
         <Image
           src={`/images/characters/${fileName}.webp`}
           alt="profile"
-          fill={true}
+          width={64}
+          height={64}
+          priority
         />
       </figure>
       <div className="w-[calc(100%-4rem)] pl-4 pr-1 flex items-center font-bold justify-between gap-1">
