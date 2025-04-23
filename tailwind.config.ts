@@ -107,6 +107,7 @@ const config: Config = {
       borderWidth: {
         DEFAULT: '1px',
         1: '1px',
+        3: '3px',
       },
       boxShadow: {
         DEFAULT: '0 4px 4px rgba(0, 0, 0, 0.25)',
