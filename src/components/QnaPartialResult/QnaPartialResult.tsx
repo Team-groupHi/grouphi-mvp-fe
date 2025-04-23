@@ -38,8 +38,8 @@ const QnaPartialResult = ({ data, sendMessage }: QnaPartialResultProps) => {
   };
 
   return (
-    <section className="bg-container-600 h-full w-full min-h-fit border-white/50 flex flex-col rounded-lg p-8">
-      <h1 className="pt-800 pb-600 text-h4 font-semibold text-center">
+    <section className="flex items-center bg-container-600 h-full w-full min-h-fit border-white/50 flex flex-col rounded-lg p-8">
+      <h1 className="pt-600 pb-500 text-h4 font-semibold text-center">
         {round} Round 결과
       </h1>
       <section className="qna-result px-700">
