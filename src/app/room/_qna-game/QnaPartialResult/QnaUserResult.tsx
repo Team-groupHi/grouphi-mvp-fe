@@ -21,11 +21,11 @@ const QnaUserResult = ({ result }: QnaUserResultProps) => {
 
   return (
     <section className="flex gap-400">
-      <section className="nickame-card flex justify-center items-center text-title2 nickname-card w-[15rem] bg-gradient-purple rounded-lg">
+      <section className="nickame-card flex justify-center items-center text-title2 nickname-card w-xl bg-gradient-purple rounded-lg">
         {name}
       </section>
       <Input
-        className="text-base"
+        className="text-base bg-white text-dark border-2 border-gray-400"
         value={answer}
         readOnly
       />
