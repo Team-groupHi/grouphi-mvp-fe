@@ -28,7 +28,7 @@ const QnaGameResultPanel = ({
   if (!results || results.length === 0) {
     return (
       <div className="w-full text-center p-8">
-        <p className="text-lg">결과가 없습니다.</p>
+        <p className="text-lg">엇, 무언가 잘못됐어요. 결과가 없어요..T_T</p>
       </div>
     );
   }
@@ -47,33 +47,47 @@ const QnaGameResultPanel = ({
           </div>
 
           <div className="space-y-2 mt-2">
-            {roundResult.result
-              .sort((current, next) => next.likes - current.likes)
-              .map((item, itemIndex) => (
-                <div
-                  key={`answer-${item.name}-${itemIndex}`}
-                  className="flex items-center p-3 bg-container-700/50 rounded-xl"
-                >
-                  <div className="flex flex-col items-center justify-center min-w-14 mr-3">
-                    <div className="text-secondary-500">
-                      <Heart className="w-6 h-6 fill-current" />
+            {roundResult.result.length > 0 ? (
+              roundResult.result
+                .sort((current, next) => next.likes - current.likes)
+                .map((item, itemIndex) => (
+                  <div
+                    key={`answer-${item.name}-${itemIndex}`}
+                    className="flex items-center p-3 bg-container-700/50 rounded-xl min-h-[3.5rem]"
+                  >
+                    <div className="flex flex-col items-center justify-center min-w-14 mr-3">
+                      <div className="text-secondary-500">
+                        <Heart className="w-6 h-6 fill-current" />
+                      </div>
+                      <span className="text-sm font-semibold">
+                        {item.likes}
+                      </span>
                     </div>
-                    <span className="text-sm font-semibold">{item.likes}</span>
-                  </div>
 
-                  <div className="mr-3 min-w-20">
-                    <span className="text-sm font-medium opacity-80">
-                      {item.name}
-                    </span>
-                  </div>
+                    <div className="mr-3 w-36">
+                      <span className="text-sm font-medium opacity-80 block">
+                        {item.name}
+                      </span>
+                    </div>
 
-                  <div className="flex-1">
-                    <p className="text-base break-words whitespace-pre-wrap">
-                      {item.answer}
-                    </p>
+                    <div className="text-secondary-500/70 mr-3 flex items-center self-stretch">
+                      <div className="h-full w-px bg-gray-400/50" />
+                    </div>
+
+                    <div className="flex-1">
+                      <p className="text-base break-words whitespace-pre-wrap">
+                        {item.answer}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+            ) : (
+              <div className="p-3 bg-container-700/50 rounded-xl text-center">
+                <p className="text-base">
+                  엇, 무언가 잘못됐어요. 결과가 없어요..T_T
+                </p>
+              </div>
+            )}
           </div>
         </div>
       ))}
