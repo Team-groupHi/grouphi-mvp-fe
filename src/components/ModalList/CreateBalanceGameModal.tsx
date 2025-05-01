@@ -18,7 +18,6 @@ import {
 } from '@/components';
 import { PATH } from '@/constants/router';
 import { createRoom } from '@/services/rooms';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 
 interface BalanceGameModalProps {
@@ -26,6 +25,7 @@ interface BalanceGameModalProps {
   optionPropsNumber: number | string;
 }
 
+// @TODO: 현재 balancegame, qna 게임에서 사용되기 때문에 이름 변경 필요
 const CreateBalanceGameModal = ({
   closeModal,
   optionPropsNumber,
@@ -42,14 +42,14 @@ const CreateBalanceGameModal = ({
 
   const router = useRouter();
   const { setRoomId } = useRoomStore();
-  const { setTotalRounds } = useBalanceGameStore();
+  const { setTotalRounds } = useRoomStore();
 
   const createRoomMutation = useMutation({
     mutationFn: () => createRoom(optionPropsNumber.toString()),
     onSuccess: (roomId) => {
       if (roomId) {
         setRoomId(roomId);
-        router.push(`${PATH.BALANCE_GAME}/${roomId}`);
+        router.push(`${PATH.ROOM}/${roomId}`);
       }
     },
   });
@@ -63,7 +63,6 @@ const CreateBalanceGameModal = ({
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setTotalRounds(values.totalRounds);
-
     createRoomMutation.mutate();
     closeModal();
   };

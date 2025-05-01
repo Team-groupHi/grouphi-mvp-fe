@@ -9,3 +9,9 @@ export interface BalanceGameRoundResponse {
   a: string;
   b: string;
 }
+
+export interface QnaGameRoundResponse {
+  totalRounds: number;
+  currentRound: number;
+  question: string;
+}

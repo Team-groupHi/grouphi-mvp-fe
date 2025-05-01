@@ -10,11 +10,11 @@ import {
 } from 'lucide-react';
 
 import { Button, GameListCard } from '@/components';
+import { GAME } from '@/constants/game';
 import { SOCKET } from '@/constants/websocket';
 import useThrottleReadyHandlers from '@/hooks/useThrottleHandlers';
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
@@ -34,8 +34,7 @@ const PrevGame = ({
   sendMessage,
   isRoomManager,
 }: PrevGameProps) => {
-  const { setRoomStatus, round } = useBalanceGameStore();
-  const { myName } = useRoomStore();
+  const { myName, totalRounds } = useRoomStore();
 
   const { toast } = useToast();
 
@@ -55,21 +54,36 @@ const PrevGame = ({
         description:
           '왼쪽 위 친구 초대 버튼을 눌러 같이 할 친구를 초대해보세요.',
       });
-    } else {
-      const balanceGameTheme = roomDetail.game.nameEn
-        .split(' ')[0]
-        .toUpperCase()
-        .replace('COMPREHENSIVE', 'ALL');
+      return;
+    }
 
-      sendMessage({
-        destination: `${SOCKET.BALANCE_GAME.START}`,
-        body: {
-          theme: balanceGameTheme,
-          totalRounds: round.totalRounds,
-        },
-      });
+    switch (roomDetail.game.nameEn) {
+      case GAME.GAMES.COMPREHENSIVE_BALANCE_GAME:
+      case GAME.GAMES.CLASSIC_BALANCE_GAME:
+      case GAME.GAMES.FOOD_BALANCE_GAME:
+      case GAME.GAMES.DATING_BALANCE_GAME:
+        sendMessage({
+          destination: `${SOCKET.BALANCE_GAME.START}`,
+          body: {
+            theme: roomDetail.game.nameEn
+              .split(' ')[0]
+              .toUpperCase()
+              .replace('COMPREHENSIVE', 'ALL'),
+            totalRounds,
+          },
+        });
 
-      setRoomStatus('progress');
+        break;
+      case GAME.GAMES.QNA_GAME:
+        sendMessage({
+          destination: `${SOCKET.QNA_GAME.START}`,
+          body: {
+            totalRounds,
+          },
+        });
+        break;
+      default:
+        break;
     }
   };
 

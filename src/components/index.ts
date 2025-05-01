@@ -31,11 +31,13 @@ export { ModalRenderer, ModalShell } from './Modal';
 export { Navigation } from './Navigation';
 export { PartialResultChart, UserList } from './PartialResultChart';
 export { PieChart } from './PieChart';
-export { QnaPartialResult, QnaUserResult } from './QnaPartialResult';
 export {
   QnaGameAvatarStatus,
+  QnaGameControl,
   QnaGameResultPanel,
+  QnaPartialResult,
   QnaQuestionPanel,
+  QnaUserResult,
 } from './QnaGameProgress';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';

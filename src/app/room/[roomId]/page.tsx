@@ -12,7 +12,7 @@ import { useWebSocket } from '@/hooks/useWebSocket';
 
 import WaitingRoom from './_component/WaitingRoom';
 
-const BalanceGame = () => {
+const RoomPage = () => {
   const webSocket = useWebSocket();
   const queryClient = useQueryClient();
 
@@ -35,4 +35,4 @@ const BalanceGame = () => {
   );
 };
 
-export default BalanceGame;
+export default RoomPage;

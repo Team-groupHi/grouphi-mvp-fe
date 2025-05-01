@@ -3,21 +3,9 @@
 import { Heart } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
-
-export interface QnaGameResultItem {
-  name: string;
-  answer: string;
-  likes: number;
-}
-
-export interface QnaGameRoundResult {
-  round: number;
-  question: string;
-  result: QnaGameResultItem[];
-}
-
+import { QnaGameResultGetResponse } from '@/types/api';
 interface QnaGameResultPanelProps {
-  results: QnaGameRoundResult[];
+  results: QnaGameResultGetResponse[];
   className?: string;
 }
 

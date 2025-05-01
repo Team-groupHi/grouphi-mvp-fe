@@ -7,13 +7,14 @@ import { useEffect, useState } from 'react';
 import { FinalResultChart, PartialResultChart } from '@/components';
 import BalanceGameProgress from '@/components/BalanceGameProgress';
 import { BarProps } from '@/components/FinalResultChart/Bar';
-import { useFetchBalanceGameResults } from '@/hooks/useFetchRoomDetail';
+import { useFetchBalanceGameResults } from '@/hooks/fetch';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 
 import PrevGame from './PrevGame';
 
-interface GamePanelProps {
+interface BalanceGameProps {
   roomId: string;
   roomDetail: RoomResponse;
   players: Player[];
@@ -23,14 +24,15 @@ interface GamePanelProps {
   ) => void;
 }
 
-const GamePanel = ({
+const BalanceGame = ({
   roomId,
   roomDetail,
   players,
   isRoomManager,
   sendMessage,
-}: GamePanelProps) => {
-  const { round, roomStatus, setRoomStatus } = useBalanceGameStore();
+}: BalanceGameProps) => {
+  const { round } = useBalanceGameStore();
+  const { roomStatus, setRoomStatus } = useRoomStore();
 
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
 
@@ -100,4 +102,4 @@ const GamePanel = ({
   );
 };
 
-export default GamePanel;
+export default BalanceGame;

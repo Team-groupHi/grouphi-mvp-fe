@@ -4,7 +4,7 @@ import { Link } from 'lucide-react';
 
 import { Button, UserInfoCard } from '@/components';
 import { useToast } from '@/hooks/useToast';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useRoomStore from '@/store/useRoomStore';
 import { Player } from '@/types/api';
 
 interface UserListProps {
@@ -13,7 +13,7 @@ interface UserListProps {
 
 const UserList = ({ players }: UserListProps) => {
   const { toast } = useToast();
-  const { roomStatus } = useBalanceGameStore();
+  const { roomStatus } = useRoomStore();
 
   const handleLinkCopy = () => {
     const currentUrl = window.document.location.href;
