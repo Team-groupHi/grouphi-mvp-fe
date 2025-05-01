@@ -29,7 +29,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
       inputRef.current.value.trim().length !== 0
     ) {
       sendMessage({
-        destination: `${SOCKET.ENDPOINT.ROOM.CHAT}`,
+        destination: `${SOCKET.ROOM.CHAT}`,
         body: {
           message: inputRef.current.value,
         },

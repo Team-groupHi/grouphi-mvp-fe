@@ -13,12 +13,12 @@ export interface BalanceGameResultRequest {
 /* Response */
 
 export interface GameResponse {
-  id: 'string';
-  nameKr: 'string';
-  nameEn: 'string';
-  descriptionKr: 'string';
-  descriptionEn: 'string';
-  thumbnailUrl: 'string' | null;
+  id: string;
+  nameKr: string;
+  nameEn: string;
+  descriptionKr: string;
+  descriptionEn: string;
+  thumbnailUrl: string | null;
 }
 
 export interface RoomResponse {
@@ -47,4 +47,16 @@ export interface BalanceGameSelectionsResponse {
   a: string[];
   b: string[];
   c: string[];
+}
+
+export interface QnaGameResult {
+  name: string;
+  answer: string;
+  likes: number;
+}
+
+export interface QnaGameResultGetResponse {
+  round: number;
+  question: string;
+  result: QnaGameResult[];
 }

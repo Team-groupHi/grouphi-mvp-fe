@@ -54,7 +54,7 @@ export function useWebSocket() {
       console.log('[WebSocket] 1. Connected', frame);
 
       const subscribeRoomId = client.current?.subscribe(
-        `${SOCKET.ENDPOINT.SUBSCRIBE}${SOCKET.ENDPOINT.ROOM.ROOMS}/${roomId}`,
+        `${SOCKET.SUBSCRIBE}${SOCKET.ROOM.ROOMS}/${roomId}`,
         (message) => {
           console.log(
             '[WebSocket] 2. Subscribe1 - Receive Message',
@@ -66,7 +66,7 @@ export function useWebSocket() {
       );
 
       const subscribeErrorId = client.current?.subscribe(
-        `${SOCKET.ENDPOINT.USER.QUEUE_ERRORS}`,
+        `${SOCKET.USER.QUEUE_ERRORS}`,
         (message) => {
           console.log(
             '[WebSocket] 2. Subscribe2 - Receive Message',
@@ -81,7 +81,7 @@ export function useWebSocket() {
         setSubscription([subscribeRoomId, subscribeErrorId]);
 
         sendMessage({
-          destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
+          destination: `${SOCKET.ROOM.ENTER}`,
           body: {
             roomId,
             name,
@@ -100,7 +100,7 @@ export function useWebSocket() {
   const disconnect = () => {
     if (!client.current) return;
     sendMessage({
-      destination: `${SOCKET.ENDPOINT.ROOM.EXIT}`,
+      destination: `${SOCKET.ROOM.EXIT}`,
     });
 
     subscriptions?.forEach((subscription) => subscription.unsubscribe());
@@ -120,7 +120,7 @@ export function useWebSocket() {
 
     client.current?.publish({
       ...params,
-      destination: `${SOCKET.ENDPOINT.PUBLICATION}${destination}`,
+      destination: `${SOCKET.PUBLICATION}${destination}`,
       body: text,
     });
   };
@@ -130,13 +130,13 @@ export function useWebSocket() {
     const { type, sender, content } = JSON.parse(message);
 
     switch (type) {
-      case SOCKET.TYPE.CHAT:
+      case SOCKET.TYPE.ROOM.CHAT:
         addChatMessage({
           sender,
           content,
         });
         break;
-      case SOCKET.TYPE.ENTER:
+      case SOCKET.TYPE.ROOM.ENTER:
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 입장했어요.`,
@@ -145,7 +145,7 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.EXIT:
+      case SOCKET.TYPE.ROOM.EXIT:
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 퇴장했어요.`,
@@ -155,17 +155,17 @@ export function useWebSocket() {
         });
         break;
       //@TODO: players 데이터 내부 store로 관리하도록 변경하면서 refetch 로직 제거하기
-      case SOCKET.TYPE.READY:
+      case SOCKET.TYPE.ROOM.READY:
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.UNREADY:
+      case SOCKET.TYPE.ROOM.UNREADY:
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.CHANGE_PLAYER_NAME:
+      case SOCKET.TYPE.ROOM.CHANGE_PLAYER_NAME:
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 ${content}님으로 닉네임을 변경했어요.`,
@@ -174,27 +174,27 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.BG_SELECT:
+      case SOCKET.TYPE.BALANCE_GAME.SELECT:
         addSelectedPlayers(sender);
         break;
-      case SOCKET.TYPE.BG_START:
+      case SOCKET.TYPE.BALANCE_GAME.START:
         setRoomStatus('progress');
         setRound(content);
         break;
-      case SOCKET.TYPE.BG_NEXT:
+      case SOCKET.TYPE.BALANCE_GAME.NEXT:
         setRoomStatus('progress');
         setRound(content);
         queryClient.removeQueries({
           queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
         });
         break;
-      case SOCKET.TYPE.BG_ALL_RESULTS:
+      case SOCKET.TYPE.BALANCE_GAME.ALL_RESULTS:
         setRoomStatus('finalResult');
         queryClient.removeQueries({
           queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
         });
         break;
-      case SOCKET.TYPE.BG_END:
+      case SOCKET.TYPE.BALANCE_GAME.END:
         setChatMessages(() => [
           {
             sender: SOCKET.SYSTEM,
@@ -206,7 +206,7 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.ERROR:
+      case SOCKET.TYPE.ROOM.ERROR:
         toast({
           variant: 'destructive',
           title: '문제가 생겼습니다. 다시 시도해주세요.',

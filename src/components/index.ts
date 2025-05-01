@@ -31,6 +31,7 @@ export { ModalRenderer, ModalShell } from './Modal';
 export { Navigation } from './Navigation';
 export { PartialResultChart, UserList } from './PartialResultChart';
 export { PieChart } from './PieChart';
+export { QnaPartialResult, QnaUserResult } from './QnaPartialResult';
 export {
   QnaGameAvatarStatus,
   QnaGameResultPanel,

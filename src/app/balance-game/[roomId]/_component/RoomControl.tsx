@@ -18,13 +18,13 @@ const RoomControl = ({ isRoomManager, sendMessage }: ManagerControlProps) => {
 
   const handleEnterNextRound = () => {
     sendMessage({
-      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.NEXT}`,
+      destination: `${SOCKET.BALANCE_GAME.NEXT}`,
     });
   };
 
   const handleMoveToWaitingRoom = () => {
     sendMessage({
-      destination: `${SOCKET.ENDPOINT.BALANCE_GAME.END}`,
+      destination: `${SOCKET.BALANCE_GAME.END}`,
     });
   };
 

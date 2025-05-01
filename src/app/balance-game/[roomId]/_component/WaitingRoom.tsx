@@ -2,8 +2,7 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { Chatting, Spinner } from '@/components';
@@ -58,7 +57,7 @@ const WaitingRoom = ({
       roomDetail.status === 'PLAYING'
     ) {
       sendMessage({
-        destination: `${SOCKET.ENDPOINT.BALANCE_GAME.END}`,
+        destination: `${SOCKET.BALANCE_GAME.END}`,
       });
       toast({
         title: '최소 인원 수가 부족해 게임을 종료하고 대기실로 이동합니다.',
@@ -87,7 +86,7 @@ const WaitingRoom = ({
   useEffect(() => {
     //@TODO: 방장이 준비 상태에서 변경 시 receive 값이 없는 현상 확인 필요
     sendMessage({
-      destination: `${SOCKET.ENDPOINT.ROOM.CHANGE_PLAYER_NAME}`,
+      destination: `${SOCKET.ROOM.CHANGE_PLAYER_NAME}`,
       body: {
         name: myName,
       },
