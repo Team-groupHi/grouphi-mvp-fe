@@ -28,7 +28,7 @@ const QnaUserResult = ({ result, onLike, onUnlike }: QnaUserResultProps) => {
 
   return (
     <section className="flex gap-400">
-      <section className="nickame-card flex justify-center items-center text-title3 nickname-card min-w-[14rem] p-2 bg-gradient-purple rounded-lg">
+      <section className="nickame-card flex justify-center items-center text-title3 nickname-card min-w-[14rem] p-2 bg-container-400 rounded-lg">
         {name}
       </section>
       <section className="flex items-center w-full max-w-[42rem] line-clamp-2 flex px-3 py-1 rounded-md border border-gray-400 border-input bg-white text-dark text-base shadow-sm">
