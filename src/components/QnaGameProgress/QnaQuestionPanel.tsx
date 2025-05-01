@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { Button } from '@/components/Button/Button';
 import { cn } from '@/lib/utils';
@@ -19,8 +19,6 @@ const QnaQuestionPanel = ({
   isSubmitting = false,
 }: QnaQuestionPanelProps) => {
   const [answer, setAnswer] = useState('');
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const questionRef = useRef<HTMLDivElement>(null);
 
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -35,20 +33,9 @@ const QnaQuestionPanel = ({
     }
   };
 
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }, [answer]);
-
   return (
     <div className="w-full max-w-3xl mx-auto p-6 rounded-2xl bg-container/50 flex flex-col gap-6">
-      <div
-        className="text-center p-4 rounded-xl overflow-y-auto backdrop-blur-sm"
-        style={{ maxHeight: '30vh' }}
-        ref={questionRef}
-      >
+      <div className="text-center p-4 rounded-xl overflow-y-auto backdrop-blur-sm max-h-[20rem]">
         <h2 className="text-xl font-semibold break-words whitespace-pre-wrap">
           {question}
         </h2>
@@ -56,19 +43,18 @@ const QnaQuestionPanel = ({
 
       <div className="relative">
         <textarea
-          ref={textareaRef}
           value={answer}
           onChange={handleTextChange}
           placeholder="답변을 입력해주세요..."
           className={cn(
-            'w-full min-h-[120px] p-4 bg-container-700 rounded-xl resize-none',
+            'w-full min-h-[7.5rem] p-4 bg-container-700 rounded-xl resize-none',
             'text-base border border-transparent focus:outline-none focus:border-primary',
             'placeholder:text-muted-foreground'
           )}
           maxLength={MAX_CHARS}
         />
 
-        <div className="absolute bottom-3 right-4 text-sm text-muted-foreground">
+        <div className="absolute bottom-3 right-4 text-sm">
           {answer.length}/{MAX_CHARS}
         </div>
       </div>
