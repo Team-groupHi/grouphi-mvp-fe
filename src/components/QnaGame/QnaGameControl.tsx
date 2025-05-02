@@ -5,6 +5,7 @@ import * as StompJS from '@stomp/stompjs';
 import { Button } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import useQnaGameStore from '@/store/useQnaGameStore';
+import useRoomStore from '@/store/useRoomStore';
 
 interface ManagerControlProps {
   isRoomManager: boolean;
@@ -17,7 +18,8 @@ const QnaGameControl = ({
   isRoomManager,
   sendMessage,
 }: ManagerControlProps) => {
-  const { roomStatus, round } = useQnaGameStore();
+  const { round } = useQnaGameStore();
+  const { roomStatus } = useRoomStore();
 
   const handleEnterNextRound = () => {
     sendMessage({

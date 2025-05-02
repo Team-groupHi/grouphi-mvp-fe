@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useState } from 'react';
 
-import { Button } from '@/components/Button/Button';
+import { Button } from '@/components';
 import { cn } from '@/lib/utils';
 
 interface QnaQuestionPanelProps {
