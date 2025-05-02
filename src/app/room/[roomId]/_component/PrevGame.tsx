@@ -72,7 +72,6 @@ const PrevGame = ({
             totalRounds,
           },
         });
-
         break;
       case GAME.GAMES.QNA_GAME:
         sendMessage({
@@ -81,8 +80,6 @@ const PrevGame = ({
             totalRounds,
           },
         });
-        break;
-      default:
         break;
     }
   };
