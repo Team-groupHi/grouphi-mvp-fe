@@ -3,8 +3,9 @@
 import { AxiosError, isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 
+import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
 import { PATH } from '@/constants/router';
-import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE, ErrorCode } from '@/types/error';
+import { ErrorCode } from '@/types/error';
 
 import { Button } from '../Button';
 import Label from '../Label';

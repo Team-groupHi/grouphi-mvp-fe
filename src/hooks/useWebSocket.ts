@@ -6,13 +6,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
+import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
 import { QUERYKEY } from '@/constants/querykey';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
-import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE, ErrorCode } from '@/types/error';
+import { ErrorCode } from '@/types/error';
 
 import { useToast } from './useToast';
 
