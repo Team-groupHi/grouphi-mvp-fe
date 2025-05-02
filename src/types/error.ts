@@ -27,3 +27,5 @@ export const ERROR_MESSAGE: Record<ErrorCode, string> = {
   B002: '아직 준비되지 않은 플레이어가 있어요.',
   B003: '라운드는 10~20개 사이로 설정 가능해요.',
 };
+
+export const DEFAULT_ERROR_MESSAGE = '문제가 발생했어요.';
