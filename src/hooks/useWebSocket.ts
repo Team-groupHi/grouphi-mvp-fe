@@ -7,12 +7,12 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
 import { QUERYKEY } from '@/constants/querykey';
-import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
+import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE, ErrorCode } from '@/types/error';
 
 import { useToast } from './useToast';
 
@@ -250,11 +250,13 @@ export function useWebSocket() {
         });
         break;
       case SOCKET.TYPE.ROOM.ERROR:
+        const { code }: { code: ErrorCode } = content;
+        const message = ERROR_MESSAGE[code] || DEFAULT_ERROR_MESSAGE;
+
         toast({
           variant: 'destructive',
-          title: '문제가 생겼습니다. 다시 시도해주세요.',
+          title: message,
         });
-        router.push(PATH.HOME);
         break;
       default:
         break;
