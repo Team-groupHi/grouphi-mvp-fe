@@ -3,7 +3,6 @@
 
 import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
 import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
@@ -40,7 +39,6 @@ export function useWebSocket() {
 
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const router = useRouter();
 
   const connect = ({ roomId, name }: EnterRoomProps) => {
     if (client.current) return;
