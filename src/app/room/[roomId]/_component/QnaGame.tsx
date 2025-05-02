@@ -3,8 +3,11 @@
 import * as StompJS from '@stomp/stompjs';
 import { useEffect } from 'react';
 
-import { QnaGameResultPanel, QnaPartialResult } from '@/components';
-import QnaGameProgress from '@/components/QnaGameProgress/QnaGameProgress';
+import {
+  QnaGameProgress,
+  QnaGameResultPanel,
+  QnaPartialResult,
+} from '@/components';
 import { useFetchQnaGameResults } from '@/hooks/fetch';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';

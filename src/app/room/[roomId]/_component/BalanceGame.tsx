@@ -4,8 +4,11 @@
 import * as StompJS from '@stomp/stompjs';
 import { useEffect, useState } from 'react';
 
-import { FinalResultChart, PartialResultChart } from '@/components';
-import BalanceGameProgress from '@/components/BalanceGameProgress';
+import {
+  BalanceGameProgress,
+  FinalResultChart,
+  PartialResultChart,
+} from '@/components';
 import { BarProps } from '@/components/FinalResultChart/Bar';
 import { useFetchBalanceGameResults } from '@/hooks/fetch';
 import useBalanceGameStore from '@/store/useBalanceGameStore';

@@ -3,7 +3,7 @@
 import * as StompJS from '@stomp/stompjs';
 
 import { QnaGameControl } from '@/components';
-import BalanceGameControl from '@/components/BalanceGameProgress/BalanceGameControl';
+import BalanceGameControl from '@/components/BalanceGame/BalanceGameControl';
 import { GAME } from '@/constants/game';
 
 interface ManagerControlProps {
