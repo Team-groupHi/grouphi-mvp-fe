@@ -1,11 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import Image from 'next/image';
 import { describe, expect, test, vi } from 'vitest';
 
 import { GameListCard } from './';
 
 describe('GameListCard', () => {
-  test('1) title, description이 잘 렌더링된다.', () => {
+  test('1) title, description를 전달하면 렌더링된다.', () => {
     render(
       <GameListCard
         title="game"
@@ -16,11 +15,11 @@ describe('GameListCard', () => {
     expect(screen.getByText('game')).toBeInTheDocument();
     expect(screen.getByText("game's description")).toBeInTheDocument();
   });
-  test('2) src를 전달하면 Image가 렌더링된다.', () => {
+  test('2) src를 전달하면 img가 렌더링된다.', () => {
     vi.mock('next/image', () => ({
       __esModule: true,
       default: ({ src, alt }: { src: string; alt: string }) => (
-        <Image
+        <img
           src={src}
           alt={alt}
         />
@@ -38,7 +37,7 @@ describe('GameListCard', () => {
     const image = screen.getByAltText('game');
     expect(image).toHaveAttribute('alt', 'game');
   });
-  test('3) className를 전달하면 잘 렌더링된다.', () => {
+  test('3) className를 전달하면 스타일이 렌더링된다.', () => {
     render(
       <GameListCard
         title="game"
