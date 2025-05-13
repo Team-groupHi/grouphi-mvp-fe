@@ -21,6 +21,10 @@ export interface EnterRoomProps {
   name: string;
 }
 
+const MAX_RECONNECT_ATTEMPTS = 5;
+// eslint-disable-next-line prefer-const
+let reconnectAttempts = 0;
+
 export function useWebSocket() {
   const BASE_WEBSOCKET_URL = process.env.NEXT_PUBLIC_BASE_WEBSOCKET_URL;
   const client = useRef<StompJS.Client | null>(null);
@@ -100,6 +104,19 @@ export function useWebSocket() {
 
     client.current.onWebSocketClose = (e: CloseEvent) => {
       console.log(e);
+      if (!e.wasClean) {
+        if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+          const retryDelay = 3000;
+          reconnectAttempts++;
+          setTimeout(() => connect({ roomId, name }), retryDelay);
+        } else {
+          toast({
+            title: '웹소켓 연결 실패',
+            description: '서버에 연결할 수 없습니다. 새로고침 해주세요.',
+            variant: 'destructive',
+          });
+        }
+      }
     };
 
     client.current.activate();
