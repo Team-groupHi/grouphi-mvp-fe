@@ -31,19 +31,19 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
     });
   };
 
-  const colors = submittedPlayers.map((submittedPlayerName) => {
-    const matchedPlayer = players.find(
-      (player) => player.name === submittedPlayerName
+  const isSubmitted = (player: string) => {
+    return submittedPlayers.some(
+      (submittedPlayer) => submittedPlayer === player
     );
-    return matchedPlayer ? matchedPlayer.avatar : 'red';
-  });
+  };
 
   return (
     <main className="flex flex-col items-center justify-center p-8 h-full">
-      {colors.map((color, idx) => (
+      {players.map((player, idx) => (
         <QnaGameAvatarStatus
-          color={color}
           key={`${idx}color`}
+          color={player.avatar}
+          isSelected={isSubmitted(player.name)}
         />
       ))}
 
