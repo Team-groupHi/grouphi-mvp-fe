@@ -41,6 +41,7 @@ const QnaQuestionPanel = ({ question, onSubmit }: QnaQuestionPanelProps) => {
       <div className="relative">
         <textarea
           value={answer}
+          disabled={isSubmitted}
           onChange={handleTextChange}
           placeholder="답변을 입력해주세요..."
           className={cn(
