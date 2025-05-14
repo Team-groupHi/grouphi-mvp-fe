@@ -42,7 +42,7 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
       {players.map((player, idx) => (
         <QnaGameAvatarStatus
           key={`${idx}color`}
-          color={player.avatar}
+          avatar={player.avatar}
           isSelected={isSubmitted(player.name)}
         />
       ))}
