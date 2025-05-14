@@ -8,17 +8,13 @@ import { cn } from '@/lib/utils';
 interface QnaQuestionPanelProps {
   question: string;
   onSubmit: (answer: string) => void;
-  isSubmitting?: boolean;
 }
 
 const MAX_CHARS = 100;
 
-const QnaQuestionPanel = ({
-  question,
-  onSubmit,
-  isSubmitting = false,
-}: QnaQuestionPanelProps) => {
+const QnaQuestionPanel = ({ question, onSubmit }: QnaQuestionPanelProps) => {
   const [answer, setAnswer] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -28,8 +24,9 @@ const QnaQuestionPanel = ({
   };
 
   const handleSubmit = () => {
-    if (answer.trim().length > 0 && !isSubmitting) {
+    if (answer.trim().length > 0) {
       onSubmit(answer);
+      setIsSubmitted(true);
     }
   };
 
@@ -61,11 +58,11 @@ const QnaQuestionPanel = ({
 
       <Button
         onClick={handleSubmit}
-        disabled={answer.trim().length === 0 || isSubmitting}
+        disabled={answer.trim().length === 0 || isSubmitted}
         className="w-full"
         size="lg"
       >
-        {isSubmitting ? '제출 중...' : '제출하기'}
+        {isSubmitted ? '제출 완료' : '제출 하기'}
       </Button>
     </div>
   );
