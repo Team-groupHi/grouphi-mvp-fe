@@ -42,7 +42,7 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
     <main className="flex flex-col items-center justify-center p-8 h-full">
       {colors.map((color, idx) => (
         <QnaGameAvatarStatus
-          src={color}
+          color={color}
           key={`${idx}color`}
         />
       ))}

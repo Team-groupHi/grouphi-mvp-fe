@@ -3,13 +3,13 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface QnaGameAvatarStatusProps {
-  src: string;
+  color: string;
   alt?: string;
   isSelected?: boolean;
 }
 
 const QnaGameAvatarStatus = ({
-  src,
+  color,
   alt = 'avatar',
   isSelected = false,
 }: QnaGameAvatarStatusProps) => {
@@ -21,7 +21,7 @@ const QnaGameAvatarStatus = ({
       )}
     >
       <Image
-        src={src}
+        src={`/images/characters/${color}.webp`}
         alt={alt}
         width={60}
         height={60}
