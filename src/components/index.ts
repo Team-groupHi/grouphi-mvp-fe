@@ -40,6 +40,7 @@ export {
   QnaGameControl,
   QnaGameProgress,
   QnaGameResultPanel,
+  QnaGameResultsFetcher,
   QnaPartialResult,
   QnaQuestionPanel,
   QnaUserResult,
