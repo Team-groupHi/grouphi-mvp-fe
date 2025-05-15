@@ -2,10 +2,13 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
 
+import { QUERYKEY } from '@/constants/querykey';
 import { SOCKET } from '@/constants/websocket';
 import useQnaGameStore from '@/store/useQnaGameStore';
+import useRoomStore from '@/store/useRoomStore';
 import { Player } from '@/types/api';
 
 import QnaGameAvatarStatus from './QnaGameAvatarStatus';
@@ -20,6 +23,16 @@ interface QnaGameProgressProps {
 
 const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
   const { round, submittedPlayers } = useQnaGameStore();
+  const { setRoomStatus } = useRoomStore();
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (submittedPlayers.length === players.length) {
+      setRoomStatus('result');
+      queryClient.invalidateQueries({ queryKey: [QUERYKEY.QNA_GAME_RESULTS] });
+    }
+  }, [submittedPlayers, players, setRoomStatus, queryClient]);
 
   const handleSubmit = (answer: string) => {
     sendMessage({

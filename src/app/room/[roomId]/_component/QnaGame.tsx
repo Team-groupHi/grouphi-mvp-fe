@@ -46,7 +46,6 @@ const QnaGame = ({
       {(roomStatus === 'result' || roomStatus === 'finalResult') && (
         <QnaGameResultsFetcher
           roomId={roomId}
-          players={players}
           sendMessage={sendMessage}
         />
       )}
