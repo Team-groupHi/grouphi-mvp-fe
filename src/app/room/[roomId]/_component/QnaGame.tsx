@@ -1,15 +1,8 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import { useEffect } from 'react';
 
-import {
-  QnaGameProgress,
-  QnaGameResultPanel,
-  QnaPartialResult,
-} from '@/components';
-import { useFetchQnaGameResults } from '@/hooks/fetch';
-import useQnaGameStore from '@/store/useQnaGameStore';
+import { QnaGameProgress, QnaGameResultsFetcher } from '@/components';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 
@@ -32,32 +25,7 @@ const QnaGame = ({
   isRoomManager,
   sendMessage,
 }: QnaGameProps) => {
-  const { roomStatus, setRoomStatus } = useRoomStore();
-  const { round, submittedPlayers } = useQnaGameStore();
-
-  const {
-    data: gameResults,
-    refetch,
-    isError,
-    error,
-  } = useFetchQnaGameResults({
-    roomId,
-    round: roomStatus === 'finalResult' ? undefined : round.currentRound,
-  });
-
-  useEffect(() => {
-    if (submittedPlayers.length === players.length) {
-      setRoomStatus('result');
-      refetch();
-    }
-  }, [submittedPlayers, players, setRoomStatus, refetch]);
-
-  // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
-  useEffect(() => {
-    if (isError) {
-      throw error;
-    }
-  }, [error, isError]);
+  const { roomStatus } = useRoomStore();
 
   return (
     <>
@@ -75,17 +43,13 @@ const QnaGame = ({
           players={players}
         />
       )}
-      {roomStatus === 'result' && gameResults && gameResults.length !== 0 && (
-        <QnaPartialResult
-          data={gameResults}
+      {(roomStatus === 'result' || roomStatus === 'finalResult') && (
+        <QnaGameResultsFetcher
+          roomId={roomId}
+          players={players}
           sendMessage={sendMessage}
         />
       )}
-      {roomStatus === 'finalResult' &&
-        gameResults &&
-        gameResults.length !== 0 && (
-          <QnaGameResultPanel results={gameResults} />
-        )}
     </>
   );
 };
