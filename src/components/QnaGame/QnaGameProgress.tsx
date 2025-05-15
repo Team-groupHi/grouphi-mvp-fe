@@ -51,8 +51,8 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center p-8 h-full ">
-      <section className="h-full flex flex-col gap-5">
+    <main className="flex flex-col items-center justify-center p-8 h-full w-full">
+      <section className="h-full w-full flex flex-col items-center justify-center gap-5">
         <section className="flex w-full items-center justify-center gap-2">
           {players.map((player, idx) => (
             <QnaGameAvatarStatus

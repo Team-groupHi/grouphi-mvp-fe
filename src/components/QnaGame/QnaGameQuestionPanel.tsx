@@ -34,7 +34,7 @@ const QnaGameQuestionPanel = ({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-6 rounded-2xl bg-container/50 flex flex-col gap-6">
+    <div className="w-full max-w-3xl mx-auto flex flex-col gap-6">
       <div className="text-center p-4 rounded-xl overflow-y-auto backdrop-blur-sm max-h-[20rem]">
         <h2 className="text-xl font-semibold break-words whitespace-pre-wrap">
           {question}
