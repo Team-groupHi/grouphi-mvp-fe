@@ -66,6 +66,10 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
         question={round.question}
         onSubmit={handleSubmit}
       />
+
+      <section className="mt-6 text-sm text-light font-semibold">
+        {round.currentRound}/{round.totalRounds}
+      </section>
     </main>
   );
 };

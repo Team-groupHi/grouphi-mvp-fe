@@ -3,6 +3,7 @@
 import * as StompJS from '@stomp/stompjs';
 
 import { SOCKET } from '@/constants/websocket';
+import useQnaGameStore from '@/store/useQnaGameStore';
 import { QnaGameResultGetResponse } from '@/types/api';
 
 import QnaUserResult from './QnaGameUserResult';
@@ -19,6 +20,7 @@ const QnaGamePartialResult = ({
   sendMessage,
 }: QnaGamePartialResultProps) => {
   const { round, question, result } = data[0];
+  const { round: storeRound } = useQnaGameStore();
 
   const handleClickLike = (receiver: string) => {
     sendMessage({
@@ -57,6 +59,9 @@ const QnaGamePartialResult = ({
             />
           ))}
         </section>
+      </section>
+      <section className="self-end">
+        {round} / {storeRound.totalRounds}
       </section>
     </section>
   );
