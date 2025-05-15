@@ -4,15 +4,15 @@ import { Heart } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { QnaGameResultGetResponse } from '@/types/api';
-interface QnaGameResultPanelProps {
+interface QnaGameFinalResultProps {
   results: QnaGameResultGetResponse[];
   className?: string;
 }
 
-const QnaGameResultPanel = ({
+const QnaGameFinalResult = ({
   results,
   className,
-}: QnaGameResultPanelProps) => {
+}: QnaGameFinalResultProps) => {
   if (!results || results.length === 0) {
     return (
       <div className="w-full text-center p-8">
@@ -83,4 +83,4 @@ const QnaGameResultPanel = ({
   );
 };
 
-export default QnaGameResultPanel;
+export default QnaGameFinalResult;

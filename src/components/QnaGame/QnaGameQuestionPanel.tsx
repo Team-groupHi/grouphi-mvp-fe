@@ -5,14 +5,17 @@ import { ChangeEvent, useState } from 'react';
 import { Button } from '@/components';
 import { cn } from '@/lib/utils';
 
-interface QnaQuestionPanelProps {
+interface QnaGameQuestionPanelProps {
   question: string;
   onSubmit: (answer: string) => void;
 }
 
 const MAX_CHARS = 100;
 
-const QnaQuestionPanel = ({ question, onSubmit }: QnaQuestionPanelProps) => {
+const QnaGameQuestionPanel = ({
+  question,
+  onSubmit,
+}: QnaGameQuestionPanelProps) => {
   const [answer, setAnswer] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -69,4 +72,4 @@ const QnaQuestionPanel = ({ question, onSubmit }: QnaQuestionPanelProps) => {
   );
 };
 
-export default QnaQuestionPanel;
+export default QnaGameQuestionPanel;

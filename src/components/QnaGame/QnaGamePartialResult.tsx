@@ -5,16 +5,19 @@ import * as StompJS from '@stomp/stompjs';
 import { SOCKET } from '@/constants/websocket';
 import { QnaGameResultGetResponse } from '@/types/api';
 
-import QnaUserResult from './QnaUserResult';
+import QnaUserResult from './QnaGameUserResult';
 
-interface QnaPartialResultProps {
+interface QnaGamePartialResultProps {
   data: QnaGameResultGetResponse[];
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
 }
 
-const QnaPartialResult = ({ data, sendMessage }: QnaPartialResultProps) => {
+const QnaGamePartialResult = ({
+  data,
+  sendMessage,
+}: QnaGamePartialResultProps) => {
   const { round, question, result } = data[0];
 
   const handleClickLike = (receiver: string) => {
@@ -59,4 +62,4 @@ const QnaPartialResult = ({ data, sendMessage }: QnaPartialResultProps) => {
   );
 };
 
-export default QnaPartialResult;
+export default QnaGamePartialResult;

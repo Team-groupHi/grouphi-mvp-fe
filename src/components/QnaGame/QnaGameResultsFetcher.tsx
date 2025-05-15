@@ -10,8 +10,8 @@ import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player } from '@/types/api';
 
-import QnaGameResultPanel from './QnaGameResultPanel';
-import QnaPartialResult from './QnaPartialResult';
+import QnaGameFinalResult from './QnaGameFinalResult';
+import QnaGamePartialResult from './QnaGamePartialResult';
 
 interface QnaGameResultsFetcherProps {
   roomId: string;
@@ -56,7 +56,7 @@ const QnaGameResultsFetcher = ({
   return (
     <>
       {roomStatus === 'result' && gameResults && gameResults.length !== 0 && (
-        <QnaPartialResult
+        <QnaGamePartialResult
           data={gameResults}
           sendMessage={sendMessage}
         />
@@ -64,7 +64,7 @@ const QnaGameResultsFetcher = ({
       {roomStatus === 'finalResult' &&
         gameResults &&
         gameResults.length !== 0 && (
-          <QnaGameResultPanel results={gameResults} />
+          <QnaGameFinalResult results={gameResults} />
         )}
     </>
   );

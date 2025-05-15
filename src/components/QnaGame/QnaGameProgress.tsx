@@ -9,7 +9,7 @@ import useQnaGameStore from '@/store/useQnaGameStore';
 import { Player } from '@/types/api';
 
 import QnaGameAvatarStatus from './QnaGameAvatarStatus';
-import QnaQuestionPanel from './QnaQuestionPanel';
+import QnaGameQuestionPanel from './QnaGameQuestionPanel';
 
 interface QnaGameProgressProps {
   sendMessage: <T>(
@@ -49,7 +49,7 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
         ))}
       </section>
 
-      <QnaQuestionPanel
+      <QnaGameQuestionPanel
         question={round.question}
         onSubmit={handleSubmit}
       />
