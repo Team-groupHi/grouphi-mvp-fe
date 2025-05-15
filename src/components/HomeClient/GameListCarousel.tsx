@@ -6,6 +6,7 @@ import {
   CarouselPrevious,
   GameListCard,
 } from '@/components';
+import { GAME } from '@/constants/game';
 import { MODAL_TYPE } from '@/constants/modal';
 import useModalStore from '@/store/useModalStore';
 import { GameResponse } from '@/types/api';
@@ -35,7 +36,16 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
               description={game.descriptionKr}
               src={game.thumbnailUrl}
               onClick={() => {
-                return openModal(MODAL_TYPE.CREATE_BALANCE_GAME, game.id);
+                switch (game.nameEn) {
+                  case GAME.GAMES.COMPREHENSIVE_BALANCE_GAME:
+                  case GAME.GAMES.CLASSIC_BALANCE_GAME:
+                  case GAME.GAMES.FOOD_BALANCE_GAME:
+                  case GAME.GAMES.DATING_BALANCE_GAME:
+                    openModal(MODAL_TYPE.CREATE_BALANCE_GAME, game.id);
+                    break;
+                  case GAME.GAMES.QNA_GAME:
+                    openModal(MODAL_TYPE.CREATE_QNA_GAME, game.id);
+                }
               }}
             />
           </CarouselItem>
