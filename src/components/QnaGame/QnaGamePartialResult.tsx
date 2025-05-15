@@ -43,7 +43,7 @@ const QnaGamePartialResult = ({
   };
 
   return (
-    <section className="flex items-center bg-container-600 h-full w-full min-h-fit border-white/50 flex-col rounded-lg p-8">
+    <section className="flex items-center bg-container-600 h-full w-full min-h-fit border-white/50 flex-col rounded-lg p-8 relative">
       <h1 className="pt-600 pb-500 text-h4 font-semibold text-center">
         {round} Round 결과
       </h1>
@@ -60,7 +60,7 @@ const QnaGamePartialResult = ({
           ))}
         </section>
       </section>
-      <section className="self-end">
+      <section className="absolute bottom-5">
         {round} / {storeRound.totalRounds}
       </section>
     </section>
