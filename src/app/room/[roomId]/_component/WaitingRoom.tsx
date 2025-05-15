@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { Chatting, Spinner } from '@/components';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
 import ErrorHandlingWrapper from '@/components/ErrorBoundary/ErrorHandlingWrapper';
+import { GAME } from '@/constants/game';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import { useFetchRoomDetail } from '@/hooks/fetch';
@@ -57,9 +58,21 @@ const WaitingRoom = ({
       roomDetail.players.length == 1 &&
       roomDetail.status === 'PLAYING'
     ) {
-      sendMessage({
-        destination: `${SOCKET.BALANCE_GAME.END}`,
-      });
+      switch (roomDetail.game.nameEn) {
+        case GAME.GAMES.COMPREHENSIVE_BALANCE_GAME:
+        case GAME.GAMES.CLASSIC_BALANCE_GAME:
+        case GAME.GAMES.FOOD_BALANCE_GAME:
+        case GAME.GAMES.DATING_BALANCE_GAME:
+          sendMessage({
+            destination: `${SOCKET.BALANCE_GAME.END}`,
+          });
+          break;
+        case GAME.GAMES.QNA_GAME:
+          sendMessage({
+            destination: `${SOCKET.QNA_GAME.END}`,
+          });
+          break;
+      }
       toast({
         title: '최소 인원 수가 부족해 게임을 종료하고 대기실로 이동합니다.',
       });
