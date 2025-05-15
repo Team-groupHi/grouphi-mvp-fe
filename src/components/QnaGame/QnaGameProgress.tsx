@@ -51,24 +51,26 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center p-8 h-full gap-5">
-      <section className="flex w-full items-center justify-center gap-2">
-        {players.map((player, idx) => (
-          <QnaGameAvatarStatus
-            key={`${idx}color`}
-            avatar={player.avatar}
-            isSelected={isSubmitted(player.name)}
-          />
-        ))}
+    <main className="flex flex-col items-center justify-center p-8 h-full ">
+      <section className="h-full flex flex-col gap-5">
+        <section className="flex w-full items-center justify-center gap-2">
+          {players.map((player, idx) => (
+            <QnaGameAvatarStatus
+              key={`${idx}color`}
+              avatar={player.avatar}
+              isSelected={isSubmitted(player.name)}
+            />
+          ))}
+        </section>
+
+        <QnaGameQuestionPanel
+          question={round.question}
+          onSubmit={handleSubmit}
+        />
       </section>
 
-      <QnaGameQuestionPanel
-        question={round.question}
-        onSubmit={handleSubmit}
-      />
-
-      <section className="mt-6 text-sm text-light font-semibold">
-        {round.currentRound}/{round.totalRounds}
+      <section className="text-sm text-light font-semibold">
+        {round.currentRound} / {round.totalRounds}
       </section>
     </main>
   );
