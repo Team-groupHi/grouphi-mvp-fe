@@ -16,6 +16,7 @@ import {
   ModalShell,
   Slider,
 } from '@/components';
+import { totalRoundsSchema } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { createRoom } from '@/services/rooms';
 import useRoomStore from '@/store/useRoomStore';
@@ -35,8 +36,9 @@ const CreateQnaGameModal = ({
     STEP: 1,
   };
 
-  const formSchema = z.object({
-    totalRounds: z.number().min(QUESTIONS_COUNT.MIN).max(QUESTIONS_COUNT.MAX),
+  const formSchema = totalRoundsSchema({
+    min: QUESTIONS_COUNT.MIN,
+    max: QUESTIONS_COUNT.MAX,
   });
 
   const router = useRouter();
