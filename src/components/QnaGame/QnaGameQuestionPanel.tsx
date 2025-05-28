@@ -2,23 +2,22 @@
 
 import { ChangeEvent, useState } from 'react';
 
-import { Button } from '@/components/Button/Button';
+import { Button } from '@/components';
 import { cn } from '@/lib/utils';
 
-interface QnaQuestionPanelProps {
+interface QnaGameQuestionPanelProps {
   question: string;
   onSubmit: (answer: string) => void;
-  isSubmitting?: boolean;
 }
 
 const MAX_CHARS = 100;
 
-const QnaQuestionPanel = ({
+const QnaGameQuestionPanel = ({
   question,
   onSubmit,
-  isSubmitting = false,
-}: QnaQuestionPanelProps) => {
+}: QnaGameQuestionPanelProps) => {
   const [answer, setAnswer] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -28,13 +27,14 @@ const QnaQuestionPanel = ({
   };
 
   const handleSubmit = () => {
-    if (answer.trim().length > 0 && !isSubmitting) {
+    if (answer.trim().length > 0) {
       onSubmit(answer);
+      setIsSubmitted(true);
     }
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-6 rounded-2xl bg-container/50 flex flex-col gap-6">
+    <div className="w-full max-w-3xl mx-auto flex flex-col gap-6">
       <div className="text-center p-4 rounded-xl overflow-y-auto backdrop-blur-sm max-h-[20rem]">
         <h2 className="text-xl font-semibold break-words whitespace-pre-wrap">
           {question}
@@ -44,6 +44,7 @@ const QnaQuestionPanel = ({
       <div className="relative">
         <textarea
           value={answer}
+          disabled={isSubmitted}
           onChange={handleTextChange}
           placeholder="답변을 입력해주세요..."
           className={cn(
@@ -61,14 +62,14 @@ const QnaQuestionPanel = ({
 
       <Button
         onClick={handleSubmit}
-        disabled={answer.trim().length === 0 || isSubmitting}
+        disabled={answer.trim().length === 0 || isSubmitted}
         className="w-full"
         size="lg"
       >
-        {isSubmitting ? '제출 중...' : '제출하기'}
+        {isSubmitted ? '제출 완료' : '제출 하기'}
       </Button>
     </div>
   );
 };
 
-export default QnaQuestionPanel;
+export default QnaGameQuestionPanel;

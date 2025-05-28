@@ -4,7 +4,7 @@
 import * as StompJS from '@stomp/stompjs';
 import { useState } from 'react';
 
-import BalanceGameQuestionCard from '@/components/BalanceGameQuestionCard';
+import { BalanceGameQuestionCard } from '@/components';
 import Timer from '@/components/Timer';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';

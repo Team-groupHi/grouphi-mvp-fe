@@ -1,4 +1,8 @@
-export { default as BalanceGameQuestionCard } from './BalanceGameQuestionCard';
+export {
+  BalanceGameControl,
+  BalanceGameProgress,
+  BalanceGameQuestionCard,
+} from './BalanceGame';
 export { Button, buttonVariants } from './Button';
 export {
   Carousel,
@@ -31,12 +35,16 @@ export { ModalRenderer, ModalShell } from './Modal';
 export { Navigation } from './Navigation';
 export { PartialResultChart, UserList } from './PartialResultChart';
 export { PieChart } from './PieChart';
-export { QnaPartialResult, QnaUserResult } from './QnaPartialResult';
 export {
   QnaGameAvatarStatus,
-  QnaGameResultPanel,
-  QnaQuestionPanel,
-} from './QnaGameProgress';
+  QnaGameControl,
+  QnaGameFinalResult,
+  QnaGamePartialResult,
+  QnaGameProgress,
+  QnaGameQuestionPanel,
+  QnaGameResultsFetcher,
+  QnaGameUserResult,
+} from './QnaGame';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';
 export { Spinner } from './Spinner';

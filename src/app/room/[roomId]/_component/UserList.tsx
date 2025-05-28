@@ -3,8 +3,9 @@
 import { Link } from 'lucide-react';
 
 import { Button, UserInfoCard } from '@/components';
+import { ROOM_STATUS } from '@/constants/room';
 import { useToast } from '@/hooks/useToast';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useRoomStore from '@/store/useRoomStore';
 import { Player } from '@/types/api';
 
 interface UserListProps {
@@ -13,7 +14,7 @@ interface UserListProps {
 
 const UserList = ({ players }: UserListProps) => {
   const { toast } = useToast();
-  const { roomStatus } = useBalanceGameStore();
+  const { roomStatus } = useRoomStore();
 
   const handleLinkCopy = () => {
     const currentUrl = window.document.location.href;
@@ -26,7 +27,7 @@ const UserList = ({ players }: UserListProps) => {
 
   return (
     <section className="flex flex-col gap-3 h-4/5 w-1/6 min-w-[15rem] max-w-[20rem] relative ml-10">
-      {roomStatus === 'idle' && (
+      {roomStatus === ROOM_STATUS.IDLE && (
         <Button
           className="absolute -top-12 left-0"
           size={'sm'}
@@ -41,7 +42,7 @@ const UserList = ({ players }: UserListProps) => {
         <UserInfoCard
           key={player.name}
           name={player.name}
-          isReady={roomStatus === 'idle' ? player.isReady : false}
+          isReady={roomStatus === ROOM_STATUS.IDLE ? player.isReady : false}
           fileName={player.avatar}
           isHost={player.isHost}
         />
