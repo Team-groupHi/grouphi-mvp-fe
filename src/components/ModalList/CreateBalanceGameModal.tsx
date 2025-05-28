@@ -19,6 +19,7 @@ import {
 import { totalRoundsSchema } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { createRoom } from '@/services/rooms';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 
 interface BalanceGameModalProps {
@@ -42,7 +43,8 @@ const CreateBalanceGameModal = ({
   });
 
   const router = useRouter();
-  const { setRoomId, setTotalRounds } = useRoomStore();
+  const { setRoomId } = useRoomStore();
+  const { setTotalRounds } = useBalanceGameStore();
 
   const createRoomMutation = useMutation({
     mutationFn: () => createRoom(optionPropsNumber.toString()),

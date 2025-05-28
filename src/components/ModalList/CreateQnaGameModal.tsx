@@ -19,6 +19,7 @@ import {
 import { totalRoundsSchema } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { createRoom } from '@/services/rooms';
+import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 
 interface CreateQnaGameModalProps {
@@ -42,7 +43,8 @@ const CreateQnaGameModal = ({
   });
 
   const router = useRouter();
-  const { setRoomId, setTotalRounds } = useRoomStore();
+  const { setRoomId } = useRoomStore();
+  const { setTotalRounds } = useQnaGameStore();
 
   const createRoomMutation = useMutation({
     mutationFn: () => createRoom(optionPropsNumber.toString()),
