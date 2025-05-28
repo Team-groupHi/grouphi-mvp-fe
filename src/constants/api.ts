@@ -9,4 +9,5 @@ export const DOMAIN = {
   GET_BALANCEGAME_RESULT: '/games/balance-game/results',
   GET_NICKNAME_VALIDATION: (roomId: string) =>
     `/rooms/${roomId}/players/is-valid-name`,
+  GET_QNAGAME_RESULT: '/games/qna-game/results',
 };

@@ -2,15 +2,17 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { Chatting, Spinner } from '@/components';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
 import ErrorHandlingWrapper from '@/components/ErrorBoundary/ErrorHandlingWrapper';
+import { GAME } from '@/constants/game';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
-import { useFetchRoomDetail } from '@/hooks/useFetchRoomDetail';
+import { useFetchRoomDetail } from '@/hooks/fetch';
 import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
@@ -56,9 +58,21 @@ const WaitingRoom = ({
       roomDetail.players.length == 1 &&
       roomDetail.status === 'PLAYING'
     ) {
-      sendMessage({
-        destination: `${SOCKET.BALANCE_GAME.END}`,
-      });
+      switch (roomDetail.game.nameEn) {
+        case GAME.GAMES.COMPREHENSIVE_BALANCE_GAME:
+        case GAME.GAMES.CLASSIC_BALANCE_GAME:
+        case GAME.GAMES.FOOD_BALANCE_GAME:
+        case GAME.GAMES.DATING_BALANCE_GAME:
+          sendMessage({
+            destination: `${SOCKET.BALANCE_GAME.END}`,
+          });
+          break;
+        case GAME.GAMES.QNA_GAME:
+          sendMessage({
+            destination: `${SOCKET.QNA_GAME.END}`,
+          });
+          break;
+      }
       toast({
         title: '최소 인원 수가 부족해 게임을 종료하고 대기실로 이동합니다.',
       });
@@ -115,6 +129,7 @@ const WaitingRoom = ({
           suspenseFallback={<Spinner />}
         >
           <GamePanel
+            game={roomDetail.game.nameEn}
             roomId={roomId}
             roomDetail={roomDetail}
             players={players}
@@ -131,6 +146,7 @@ const WaitingRoom = ({
           sendMessage={sendMessage}
         />
         <RoomControl
+          game={roomDetail.game.nameEn}
           isRoomManager={isRoomManager}
           sendMessage={sendMessage}
         />

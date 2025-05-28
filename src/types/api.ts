@@ -10,6 +10,11 @@ export interface BalanceGameResultRequest {
   round?: number;
 }
 
+export interface QnaGameResultRequest {
+  roomId: string;
+  round?: number;
+}
+
 /* Response */
 
 export interface GameResponse {
@@ -49,7 +54,7 @@ export interface BalanceGameSelectionsResponse {
   c: string[];
 }
 
-export interface QnaGameResult {
+export interface QnaGameAnswerResponse {
   name: string;
   answer: string;
   likes: number;
@@ -58,5 +63,5 @@ export interface QnaGameResult {
 export interface QnaGameResultGetResponse {
   round: number;
   question: string;
-  result: QnaGameResult[];
+  result: QnaGameAnswerResponse[];
 }

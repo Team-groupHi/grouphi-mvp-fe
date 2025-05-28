@@ -7,9 +7,12 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
 import { QUERYKEY } from '@/constants/querykey';
+import { ROOM_STATUS } from '@/constants/room';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useQnaGameStore from '@/store/useQnaGameStore';
+import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
 
 import { useToast } from './useToast';
@@ -26,7 +29,14 @@ export function useWebSocket() {
     StompJS.StompSubscription[] | null
   >(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const { setRoomStatus, setRound, addSelectedPlayers } = useBalanceGameStore();
+  const { setRound: setBalanceRound, addSelectedPlayers } =
+    useBalanceGameStore();
+  const {
+    setRound: setQnaRound,
+    addSubmittedPlayer,
+    clearSubmittedPlayers,
+  } = useQnaGameStore();
+  const { setRoomStatus } = useRoomStore();
 
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -178,18 +188,18 @@ export function useWebSocket() {
         addSelectedPlayers(sender);
         break;
       case SOCKET.TYPE.BALANCE_GAME.START:
-        setRoomStatus('progress');
-        setRound(content);
+        setRoomStatus(ROOM_STATUS.PROGRESS);
+        setBalanceRound(content);
         break;
       case SOCKET.TYPE.BALANCE_GAME.NEXT:
-        setRoomStatus('progress');
-        setRound(content);
+        setRoomStatus(ROOM_STATUS.PROGRESS);
+        setBalanceRound(content);
         queryClient.removeQueries({
           queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
         });
         break;
       case SOCKET.TYPE.BALANCE_GAME.ALL_RESULTS:
-        setRoomStatus('finalResult');
+        setRoomStatus(ROOM_STATUS.FINAL_RESULT);
         queryClient.removeQueries({
           queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
         });
@@ -201,7 +211,41 @@ export function useWebSocket() {
             content: '게임이 종료되었습니다.',
           },
         ]);
-        setRoomStatus('idle');
+        setRoomStatus(ROOM_STATUS.IDLE);
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
+      case SOCKET.TYPE.QNA_GAME.START:
+        setRoomStatus(ROOM_STATUS.PROGRESS);
+        setQnaRound(content);
+        clearSubmittedPlayers();
+        break;
+      case SOCKET.TYPE.QNA_GAME.SUBMIT:
+        addSubmittedPlayer(sender);
+        break;
+      case SOCKET.TYPE.QNA_GAME.NEXT:
+        setRoomStatus(ROOM_STATUS.PROGRESS);
+        setQnaRound(content);
+        clearSubmittedPlayers();
+        queryClient.removeQueries({
+          queryKey: [QUERYKEY.QNA_GAME_RESULTS],
+        });
+        break;
+      case SOCKET.TYPE.QNA_GAME.ALL_RESULTS:
+        setRoomStatus(ROOM_STATUS.FINAL_RESULT);
+        queryClient.removeQueries({
+          queryKey: [QUERYKEY.QNA_GAME_RESULTS],
+        });
+        break;
+      case SOCKET.TYPE.QNA_GAME.END:
+        setChatMessages(() => [
+          {
+            sender: SOCKET.SYSTEM,
+            content: 'QnA 게임이 종료되었습니다.',
+          },
+        ]);
+        setRoomStatus(ROOM_STATUS.IDLE);
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });

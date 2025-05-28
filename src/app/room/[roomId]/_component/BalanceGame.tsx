@@ -4,16 +4,21 @@
 import * as StompJS from '@stomp/stompjs';
 import { useEffect, useState } from 'react';
 
-import { FinalResultChart, PartialResultChart } from '@/components';
-import BalanceGameProgress from '@/components/BalanceGameProgress';
+import {
+  BalanceGameProgress,
+  FinalResultChart,
+  PartialResultChart,
+} from '@/components';
 import { BarProps } from '@/components/FinalResultChart/Bar';
-import { useFetchBalanceGameResults } from '@/hooks/useFetchRoomDetail';
+import { ROOM_STATUS } from '@/constants/room';
+import { useFetchBalanceGameResults } from '@/hooks/fetch';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 
 import PrevGame from './PrevGame';
 
-interface GamePanelProps {
+interface BalanceGameProps {
   roomId: string;
   roomDetail: RoomResponse;
   players: Player[];
@@ -23,14 +28,15 @@ interface GamePanelProps {
   ) => void;
 }
 
-const GamePanel = ({
+const BalanceGame = ({
   roomId,
   roomDetail,
   players,
   isRoomManager,
   sendMessage,
-}: GamePanelProps) => {
-  const { round, roomStatus, setRoomStatus } = useBalanceGameStore();
+}: BalanceGameProps) => {
+  const { round } = useBalanceGameStore();
+  const { roomStatus, setRoomStatus } = useRoomStore();
 
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
 
@@ -41,7 +47,8 @@ const GamePanel = ({
     error,
   } = useFetchBalanceGameResults({
     roomId,
-    round: roomStatus === 'finalResult' ? undefined : round.currentRound,
+    round:
+      roomStatus === ROOM_STATUS.FINAL_RESULT ? undefined : round.currentRound,
   });
 
   const finalResult: BarProps[] =
@@ -54,7 +61,7 @@ const GamePanel = ({
 
   useEffect(() => {
     if (isTimeout) {
-      setRoomStatus('result');
+      setRoomStatus(ROOM_STATUS.RESULT);
       refetch();
       setIsTimeout(false);
     }
@@ -69,7 +76,7 @@ const GamePanel = ({
 
   return (
     <>
-      {roomStatus === 'idle' && (
+      {roomStatus === ROOM_STATUS.IDLE && (
         <PrevGame
           roomDetail={roomDetail}
           players={players}
@@ -77,7 +84,7 @@ const GamePanel = ({
           sendMessage={sendMessage}
         />
       )}
-      {roomStatus === 'progress' && (
+      {roomStatus === ROOM_STATUS.PROGRESS && (
         <BalanceGameProgress
           sendMessage={sendMessage}
           setIsTimeout={setIsTimeout}
@@ -90,14 +97,14 @@ const GamePanel = ({
               */
         />
       )}
-      {roomStatus === 'result' && gameResults && gameResults.length !== 0 && (
-        <PartialResultChart data={gameResults} />
-      )}
-      {roomStatus === 'finalResult' && finalResult.length !== 0 && (
+      {roomStatus === ROOM_STATUS.RESULT &&
+        gameResults &&
+        gameResults.length !== 0 && <PartialResultChart data={gameResults} />}
+      {roomStatus === ROOM_STATUS.FINAL_RESULT && finalResult.length !== 0 && (
         <FinalResultChart data={finalResult} />
       )}
     </>
   );
 };
 
-export default GamePanel;
+export default BalanceGame;

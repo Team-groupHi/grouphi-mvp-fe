@@ -3,8 +3,10 @@
 import * as StompJS from '@stomp/stompjs';
 
 import { Button } from '@/components';
+import { ROOM_STATUS } from '@/constants/room';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useRoomStore from '@/store/useRoomStore';
 
 interface ManagerControlProps {
   isRoomManager: boolean;
@@ -13,8 +15,12 @@ interface ManagerControlProps {
   ) => void;
 }
 
-const RoomControl = ({ isRoomManager, sendMessage }: ManagerControlProps) => {
-  const { roomStatus, round } = useBalanceGameStore();
+const BalanceGameControl = ({
+  isRoomManager,
+  sendMessage,
+}: ManagerControlProps) => {
+  const { round } = useBalanceGameStore();
+  const { roomStatus } = useRoomStore();
 
   const handleEnterNextRound = () => {
     sendMessage({
@@ -30,7 +36,7 @@ const RoomControl = ({ isRoomManager, sendMessage }: ManagerControlProps) => {
 
   return (
     <>
-      {roomStatus === 'result' && isRoomManager && (
+      {roomStatus === ROOM_STATUS.RESULT && isRoomManager && (
         <Button
           className="w-full"
           onClick={handleEnterNextRound}
@@ -40,7 +46,7 @@ const RoomControl = ({ isRoomManager, sendMessage }: ManagerControlProps) => {
             : '다음 라운드로 이동'}
         </Button>
       )}
-      {roomStatus === 'finalResult' && isRoomManager && (
+      {roomStatus === ROOM_STATUS.FINAL_RESULT && isRoomManager && (
         <Button
           className="w-full"
           onClick={handleMoveToWaitingRoom}
@@ -52,4 +58,4 @@ const RoomControl = ({ isRoomManager, sendMessage }: ManagerControlProps) => {
   );
 };
 
-export default RoomControl;
+export default BalanceGameControl;

@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 
 import { Footer, MainHeader } from '@/components';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { GameResponse } from '@/types/api';
 
@@ -15,11 +14,9 @@ interface HomeClientProps {
 
 const HomeClient = ({ games }: HomeClientProps) => {
   const { reset: roomReset } = useRoomStore();
-  const { reset: balanceGameReset } = useBalanceGameStore();
 
   useEffect(() => {
     roomReset();
-    balanceGameReset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
