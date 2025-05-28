@@ -10,6 +10,7 @@ import {
   PartialResultChart,
 } from '@/components';
 import { BarProps } from '@/components/FinalResultChart/Bar';
+import { ROOM_STATUS } from '@/constants/room';
 import { useFetchBalanceGameResults } from '@/hooks/fetch';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
@@ -46,7 +47,8 @@ const BalanceGame = ({
     error,
   } = useFetchBalanceGameResults({
     roomId,
-    round: roomStatus === 'finalResult' ? undefined : round.currentRound,
+    round:
+      roomStatus === ROOM_STATUS.FINAL_RESULT ? undefined : round.currentRound,
   });
 
   const finalResult: BarProps[] =
@@ -59,7 +61,7 @@ const BalanceGame = ({
 
   useEffect(() => {
     if (isTimeout) {
-      setRoomStatus('result');
+      setRoomStatus(ROOM_STATUS.RESULT);
       refetch();
       setIsTimeout(false);
     }
@@ -74,7 +76,7 @@ const BalanceGame = ({
 
   return (
     <>
-      {roomStatus === 'idle' && (
+      {roomStatus === ROOM_STATUS.IDLE && (
         <PrevGame
           roomDetail={roomDetail}
           players={players}
@@ -82,7 +84,7 @@ const BalanceGame = ({
           sendMessage={sendMessage}
         />
       )}
-      {roomStatus === 'progress' && (
+      {roomStatus === ROOM_STATUS.PROGRESS && (
         <BalanceGameProgress
           sendMessage={sendMessage}
           setIsTimeout={setIsTimeout}
@@ -95,10 +97,10 @@ const BalanceGame = ({
               */
         />
       )}
-      {roomStatus === 'result' && gameResults && gameResults.length !== 0 && (
-        <PartialResultChart data={gameResults} />
-      )}
-      {roomStatus === 'finalResult' && finalResult.length !== 0 && (
+      {roomStatus === ROOM_STATUS.RESULT &&
+        gameResults &&
+        gameResults.length !== 0 && <PartialResultChart data={gameResults} />}
+      {roomStatus === ROOM_STATUS.FINAL_RESULT && finalResult.length !== 0 && (
         <FinalResultChart data={finalResult} />
       )}
     </>

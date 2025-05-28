@@ -3,6 +3,7 @@
 import * as StompJS from '@stomp/stompjs';
 
 import { QnaGameProgress, QnaGameResultsFetcher } from '@/components';
+import { ROOM_STATUS } from '@/constants/room';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 
@@ -29,7 +30,7 @@ const QnaGame = ({
 
   return (
     <>
-      {roomStatus === 'idle' && (
+      {roomStatus === ROOM_STATUS.IDLE && (
         <PrevGame
           roomDetail={roomDetail}
           players={players}
@@ -37,13 +38,14 @@ const QnaGame = ({
           sendMessage={sendMessage}
         />
       )}
-      {roomStatus === 'progress' && (
+      {roomStatus === ROOM_STATUS.PROGRESS && (
         <QnaGameProgress
           sendMessage={sendMessage}
           players={players}
         />
       )}
-      {(roomStatus === 'result' || roomStatus === 'finalResult') && (
+      {(roomStatus === ROOM_STATUS.RESULT ||
+        roomStatus === ROOM_STATUS.FINAL_RESULT) && (
         <QnaGameResultsFetcher
           roomId={roomId}
           sendMessage={sendMessage}

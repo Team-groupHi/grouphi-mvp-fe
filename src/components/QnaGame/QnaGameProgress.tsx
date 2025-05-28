@@ -6,6 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 
 import { QUERYKEY } from '@/constants/querykey';
+import { ROOM_STATUS } from '@/constants/room';
 import { SOCKET } from '@/constants/websocket';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
@@ -29,7 +30,7 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
 
   useEffect(() => {
     if (submittedPlayers.length === players.length) {
-      setRoomStatus('result');
+      setRoomStatus(ROOM_STATUS.RESULT);
       queryClient.invalidateQueries({ queryKey: [QUERYKEY.QNA_GAME_RESULTS] });
     }
   }, [submittedPlayers, players, setRoomStatus, queryClient]);

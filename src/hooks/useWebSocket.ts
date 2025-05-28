@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
 import { QUERYKEY } from '@/constants/querykey';
+import { ROOM_STATUS } from '@/constants/room';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
@@ -187,18 +188,18 @@ export function useWebSocket() {
         addSelectedPlayers(sender);
         break;
       case SOCKET.TYPE.BALANCE_GAME.START:
-        setRoomStatus('progress');
+        setRoomStatus(ROOM_STATUS.PROGRESS);
         setBalanceRound(content);
         break;
       case SOCKET.TYPE.BALANCE_GAME.NEXT:
-        setRoomStatus('progress');
+        setRoomStatus(ROOM_STATUS.PROGRESS);
         setBalanceRound(content);
         queryClient.removeQueries({
           queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
         });
         break;
       case SOCKET.TYPE.BALANCE_GAME.ALL_RESULTS:
-        setRoomStatus('finalResult');
+        setRoomStatus(ROOM_STATUS.FINAL_RESULT);
         queryClient.removeQueries({
           queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
         });
@@ -210,13 +211,13 @@ export function useWebSocket() {
             content: '게임이 종료되었습니다.',
           },
         ]);
-        setRoomStatus('idle');
+        setRoomStatus(ROOM_STATUS.IDLE);
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
       case SOCKET.TYPE.QNA_GAME.START:
-        setRoomStatus('progress');
+        setRoomStatus(ROOM_STATUS.PROGRESS);
         setQnaRound(content);
         clearSubmittedPlayers();
         break;
@@ -224,7 +225,7 @@ export function useWebSocket() {
         addSubmittedPlayer(sender);
         break;
       case SOCKET.TYPE.QNA_GAME.NEXT:
-        setRoomStatus('progress');
+        setRoomStatus(ROOM_STATUS.PROGRESS);
         setQnaRound(content);
         clearSubmittedPlayers();
         queryClient.removeQueries({
@@ -232,7 +233,7 @@ export function useWebSocket() {
         });
         break;
       case SOCKET.TYPE.QNA_GAME.ALL_RESULTS:
-        setRoomStatus('finalResult');
+        setRoomStatus(ROOM_STATUS.FINAL_RESULT);
         queryClient.removeQueries({
           queryKey: [QUERYKEY.QNA_GAME_RESULTS],
         });
@@ -244,7 +245,7 @@ export function useWebSocket() {
             content: 'QnA 게임이 종료되었습니다.',
           },
         ]);
-        setRoomStatus('idle');
+        setRoomStatus(ROOM_STATUS.IDLE);
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });

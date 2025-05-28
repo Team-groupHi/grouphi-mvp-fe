@@ -5,6 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 import { QUERYKEY } from '@/constants/querykey';
+import { ROOM_STATUS } from '@/constants/room';
 import { useFetchQnaGameResults } from '@/hooks/fetch';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
@@ -32,12 +33,13 @@ const QnaGameResultsFetcher = ({
     error,
   } = useFetchQnaGameResults({
     roomId,
-    round: roomStatus === 'finalResult' ? undefined : round.currentRound,
+    round:
+      roomStatus === ROOM_STATUS.FINAL_RESULT ? undefined : round.currentRound,
   });
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (roomStatus === 'finalResult') {
+    if (roomStatus === ROOM_STATUS.FINAL_RESULT) {
       queryClient.invalidateQueries({
         queryKey: [QUERYKEY.QNA_GAME_RESULTS],
       });
@@ -53,13 +55,15 @@ const QnaGameResultsFetcher = ({
 
   return (
     <>
-      {roomStatus === 'result' && gameResults && gameResults.length !== 0 && (
-        <QnaGamePartialResult
-          data={gameResults}
-          sendMessage={sendMessage}
-        />
-      )}
-      {roomStatus === 'finalResult' &&
+      {roomStatus === ROOM_STATUS.RESULT &&
+        gameResults &&
+        gameResults.length !== 0 && (
+          <QnaGamePartialResult
+            data={gameResults}
+            sendMessage={sendMessage}
+          />
+        )}
+      {roomStatus === ROOM_STATUS.FINAL_RESULT &&
         gameResults &&
         gameResults.length !== 0 && (
           <QnaGameFinalResult results={gameResults} />

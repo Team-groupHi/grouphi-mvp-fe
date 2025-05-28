@@ -19,7 +19,7 @@ interface RoomStoreProps {
 }
 
 const useRoomStore = create<RoomStoreProps>((set) => ({
-  roomStatus: 'idle',
+  roomStatus: ROOM_STATUS.IDLE,
   totalRounds: 0,
   roomId: null,
   hostName: null,
@@ -31,7 +31,7 @@ const useRoomStore = create<RoomStoreProps>((set) => ({
   setMyName: (name) => set({ myName: name }),
   reset: () =>
     set({
-      roomStatus: 'idle',
+      roomStatus: ROOM_STATUS.IDLE,
       roomId: null,
       hostName: null,
     }),
