@@ -2,14 +2,18 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
 
+import { QUERYKEY } from '@/constants/querykey';
+import { ROOM_STATUS } from '@/constants/room';
 import { SOCKET } from '@/constants/websocket';
 import useQnaGameStore from '@/store/useQnaGameStore';
+import useRoomStore from '@/store/useRoomStore';
 import { Player } from '@/types/api';
 
 import QnaGameAvatarStatus from './QnaGameAvatarStatus';
-import QnaQuestionPanel from './QnaQuestionPanel';
+import QnaGameQuestionPanel from './QnaGameQuestionPanel';
 
 interface QnaGameProgressProps {
   sendMessage: <T>(
@@ -20,6 +24,16 @@ interface QnaGameProgressProps {
 
 const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
   const { round, submittedPlayers } = useQnaGameStore();
+  const { setRoomStatus } = useRoomStore();
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (submittedPlayers.length === players.length) {
+      setRoomStatus(ROOM_STATUS.RESULT);
+      queryClient.invalidateQueries({ queryKey: [QUERYKEY.QNA_GAME_RESULTS] });
+    }
+  }, [submittedPlayers, players, setRoomStatus, queryClient]);
 
   const handleSubmit = (answer: string) => {
     sendMessage({
@@ -31,26 +45,34 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
     });
   };
 
-  const colors = submittedPlayers.map((submittedPlayerName) => {
-    const matchedPlayer = players.find(
-      (player) => player.name === submittedPlayerName
+  const isSubmitted = (player: string) => {
+    return submittedPlayers.some(
+      (submittedPlayer) => submittedPlayer === player
     );
-    return matchedPlayer ? matchedPlayer.avatar : 'red';
-  });
+  };
 
   return (
-    <main className="flex flex-col items-center justify-center p-8 h-full">
-      {colors.map((color, idx) => (
-        <QnaGameAvatarStatus
-          src={color}
-          key={`${idx}color`}
-        />
-      ))}
+    <main className="flex flex-col items-center justify-center p-8 h-full w-full">
+      <section className="h-full w-full flex flex-col items-center justify-center gap-5">
+        <section className="flex w-full items-center justify-center gap-2">
+          {players.map((player, idx) => (
+            <QnaGameAvatarStatus
+              key={`${idx}color`}
+              avatar={player.avatar}
+              isSelected={isSubmitted(player.name)}
+            />
+          ))}
+        </section>
 
-      <QnaQuestionPanel
-        question={round.question}
-        onSubmit={handleSubmit}
-      />
+        <QnaGameQuestionPanel
+          question={round.question}
+          onSubmit={handleSubmit}
+        />
+      </section>
+
+      <section className="text-sm text-light font-semibold">
+        {round.currentRound} / {round.totalRounds}
+      </section>
     </main>
   );
 };

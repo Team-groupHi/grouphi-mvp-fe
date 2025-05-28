@@ -38,11 +38,12 @@ export { PieChart } from './PieChart';
 export {
   QnaGameAvatarStatus,
   QnaGameControl,
+  QnaGameFinalResult,
+  QnaGamePartialResult,
   QnaGameProgress,
-  QnaGameResultPanel,
-  QnaPartialResult,
-  QnaQuestionPanel,
-  QnaUserResult,
+  QnaGameQuestionPanel,
+  QnaGameResultsFetcher,
+  QnaGameUserResult,
 } from './QnaGame';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';

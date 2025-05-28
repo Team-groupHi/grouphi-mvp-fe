@@ -15,6 +15,8 @@ import { SOCKET } from '@/constants/websocket';
 import useThrottleReadyHandlers from '@/hooks/useThrottleHandlers';
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
+import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
@@ -34,7 +36,9 @@ const PrevGame = ({
   sendMessage,
   isRoomManager,
 }: PrevGameProps) => {
-  const { myName, totalRounds } = useRoomStore();
+  const { myName } = useRoomStore();
+  const { round: BalanceGameRound } = useBalanceGameStore();
+  const { round: QnaGameRound } = useQnaGameStore();
 
   const { toast } = useToast();
 
@@ -69,7 +73,7 @@ const PrevGame = ({
               .split(' ')[0]
               .toUpperCase()
               .replace('COMPREHENSIVE', 'ALL'),
-            totalRounds,
+            totalRounds: BalanceGameRound.totalRounds,
           },
         });
         break;
@@ -77,7 +81,7 @@ const PrevGame = ({
         sendMessage({
           destination: `${SOCKET.QNA_GAME.START}`,
           body: {
-            totalRounds,
+            totalRounds: QnaGameRound.totalRounds,
           },
         });
         break;

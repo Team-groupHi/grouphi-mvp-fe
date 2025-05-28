@@ -1,4 +1,4 @@
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { QUERYKEY } from '@/constants/querykey';
 import { getBalanceGameResults } from '@/services/balanceGames';
@@ -32,9 +32,8 @@ export const useFetchQnaGameResults = ({
   roomId: string;
   round: number | undefined;
 }) => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: [QUERYKEY.QNA_GAME_RESULTS],
     queryFn: () => getQnaGameResults({ roomId, round }),
-    enabled: !!round,
   });
 };

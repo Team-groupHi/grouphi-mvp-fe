@@ -3,6 +3,7 @@
 import * as StompJS from '@stomp/stompjs';
 
 import { Button } from '@/components';
+import { ROOM_STATUS } from '@/constants/room';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
@@ -35,7 +36,7 @@ const BalanceGameControl = ({
 
   return (
     <>
-      {roomStatus === 'result' && isRoomManager && (
+      {roomStatus === ROOM_STATUS.RESULT && isRoomManager && (
         <Button
           className="w-full"
           onClick={handleEnterNextRound}
@@ -45,7 +46,7 @@ const BalanceGameControl = ({
             : '다음 라운드로 이동'}
         </Button>
       )}
-      {roomStatus === 'finalResult' && isRoomManager && (
+      {roomStatus === ROOM_STATUS.FINAL_RESULT && isRoomManager && (
         <Button
           className="w-full"
           onClick={handleMoveToWaitingRoom}

@@ -19,22 +19,22 @@ import {
 import { totalRoundsSchema } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { createRoom } from '@/services/rooms';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 
-interface BalanceGameModalProps {
+interface CreateQnaGameModalProps {
   closeModal: () => void;
   optionPropsNumber: number | string;
 }
 
-const CreateBalanceGameModal = ({
+const CreateQnaGameModal = ({
   closeModal,
   optionPropsNumber,
-}: BalanceGameModalProps) => {
+}: CreateQnaGameModalProps) => {
   const QUESTIONS_COUNT = {
-    MIN: 10,
-    MAX: 20,
-    STEP: 2,
+    MIN: 5,
+    MAX: 10,
+    STEP: 1,
   };
 
   const formSchema = totalRoundsSchema({
@@ -44,7 +44,7 @@ const CreateBalanceGameModal = ({
 
   const router = useRouter();
   const { setRoomId } = useRoomStore();
-  const { setTotalRounds } = useBalanceGameStore();
+  const { setTotalRounds } = useQnaGameStore();
 
   const createRoomMutation = useMutation({
     mutationFn: () => createRoom(optionPropsNumber.toString()),
@@ -122,4 +122,4 @@ const CreateBalanceGameModal = ({
   );
 };
 
-export default CreateBalanceGameModal;
+export default CreateQnaGameModal;
