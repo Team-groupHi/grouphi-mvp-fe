@@ -42,7 +42,8 @@ const UserList = ({ players }: UserListProps) => {
         <UserInfoCard
           key={player.name}
           name={player.name}
-          isReady={roomStatus === ROOM_STATUS.IDLE ? player.isReady : false}
+          isReady={player.isReady}
+          isStart={roomStatus !== ROOM_STATUS.IDLE}
           fileName={player.avatar}
           isHost={player.isHost}
         />

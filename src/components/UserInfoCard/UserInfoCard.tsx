@@ -11,6 +11,7 @@ import { Button } from '../Button';
 interface UserInfoCardProps {
   name: string;
   isReady: boolean;
+  isStart: boolean;
   isHost: boolean;
   fileName: string;
 }
@@ -18,6 +19,7 @@ interface UserInfoCardProps {
 const UserInfoCard = ({
   name,
   isReady,
+  isStart,
   isHost,
   fileName,
 }: UserInfoCardProps) => {
@@ -32,6 +34,7 @@ const UserInfoCard = ({
     <section
       className={cn(
         isReady ? 'bg-primary/50' : 'bg-container',
+        isStart && 'bg-container',
         'w-full h-[4rem] flex rounded-lg relative'
       )}
     >
@@ -59,7 +62,7 @@ const UserInfoCard = ({
         <span className={cn(myName === name && 'text-primary-400')}>
           {name}
         </span>
-        {name === myName && (
+        {name === myName && !isReady && (
           <Button
             variant="ghost"
             size="icon"
