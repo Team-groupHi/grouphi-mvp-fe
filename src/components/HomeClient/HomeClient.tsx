@@ -22,8 +22,8 @@ const HomeClient = ({ games }: HomeClientProps) => {
 
   return (
     <>
-      <main className="flex flex-col h-screen p-800">
-        <MainHeader />
+      <MainHeader />
+      <main className="flex flex-col h-[calc(100%-8.8rem)] px-800">
         {games.length > 0 ? (
           <>
             <section

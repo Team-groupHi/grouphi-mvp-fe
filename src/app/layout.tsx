@@ -38,7 +38,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${pretendard.variable} ${notoSans.variable} font-sans antialiased text min-h-screen bg-gradient-purple`}
+        className={`${pretendard.variable} ${notoSans.variable} font-sans antialiased text h-screen min-h-screen bg-gradient-purple`}
       >
         {GA4_ID && process.env.NODE_ENV === 'production' && (
           <>
