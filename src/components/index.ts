@@ -52,7 +52,8 @@ export {
   QnaGameProgress,
   QnaGameQuestionPanel,
   QnaGameResultsFetcher,
-  QnaGameUserResult,
+  QnaGameUserFinalResult,
+  QnaGameUserPartialResult,
 } from './QnaGame';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';
