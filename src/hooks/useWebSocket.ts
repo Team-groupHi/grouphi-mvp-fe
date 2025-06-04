@@ -50,25 +50,12 @@ export function useWebSocket() {
     client.current = new StompJS.Client({
       brokerURL: BASE_WEBSOCKET_URL,
       reconnectDelay: 5000,
-      onWebSocketError: (error) => {
-        console.error('[WebSocket] Network Error', error);
-      },
-      onStompError: (frame) => {
-        console.error('[WebSocket] STOMP.js Error: ', frame.headers['message']);
-        console.error('[WebSocket] Details: ', frame.body);
-      },
     });
 
-    client.current.onConnect = (frame) => {
-      console.log('[WebSocket] 1. Connected', frame);
-
+    client.current.onConnect = (_frame) => {
       const subscribeRoomId = client.current?.subscribe(
         `${SOCKET.SUBSCRIBE}${SOCKET.ROOM.ROOMS}/${roomId}`,
         (message) => {
-          console.log(
-            '[WebSocket] 2. Subscribe1 - Receive Message',
-            message.body
-          );
           receiveMessage(message.body);
         },
         { id: `sub-room-${roomId}` }
@@ -77,10 +64,6 @@ export function useWebSocket() {
       const subscribeErrorId = client.current?.subscribe(
         `${SOCKET.USER.QUEUE_ERRORS}`,
         (message) => {
-          console.log(
-            '[WebSocket] 2. Subscribe2 - Receive Message',
-            message.body
-          );
           receiveMessage(message.body);
         },
         { id: `sub-error-${roomId}` }
@@ -124,7 +107,6 @@ export function useWebSocket() {
     setSubscription(null);
     setChatMessages([]);
     client.current = null;
-    console.log('[WebSocket] Disconnected');
   };
 
   const sendMessage = <T>(
@@ -141,7 +123,6 @@ export function useWebSocket() {
   };
 
   const receiveMessage = (message: string) => {
-    console.log('[WebSocket] 2-1. receiveMessage', message);
     const { type, sender, content } = JSON.parse(message);
 
     switch (type) {
@@ -169,7 +150,6 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      //@TODO: players 데이터 내부 store로 관리하도록 변경하면서 refetch 로직 제거하기
       case SOCKET.TYPE.ROOM.READY:
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
