@@ -3,8 +3,9 @@
 import { AxiosError, isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 
+import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
 import { PATH } from '@/constants/router';
-import { ERROR_MESSAGE, ErrorCode } from '@/types';
+import { ErrorCode } from '@/types/error';
 
 import { Button } from '../Button';
 import Label from '../Label';
@@ -21,7 +22,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: ErrorProps) => {
     (isAxiosError(error) &&
       error.response &&
       ERROR_MESSAGE[error.response.data.code as ErrorCode]) ||
-    '문제가 발생했습니다.';
+    DEFAULT_ERROR_MESSAGE;
 
   const gotoHome = () => {
     router.push(PATH.HOME);
