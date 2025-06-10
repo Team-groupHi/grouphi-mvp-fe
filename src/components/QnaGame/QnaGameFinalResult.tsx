@@ -23,8 +23,8 @@ const QnaGameFinalResult = ({
   results,
   className,
 }: QnaGameFinalResultProps) => {
-  const [page, setPage] = useState(1);
-  const roundResult = results[page - 1];
+  const [round, setRound] = useState(1);
+  const roundResult = results[round - 1];
 
   if (!results || results.length === 0) {
     return (
@@ -41,38 +41,35 @@ const QnaGameFinalResult = ({
         className
       )}
     >
-      <section className="h-full overflow-y-auto p-8 pr-6 rounded-lg space-y-6">
-        <h4 className="text-center text-h4 mb-6">최종 결과</h4>
+      <section className="flex flex-col h-full p-6 rounded-lg gap-3">
+        <h4 className="text-center text-h4">최종 결과 - {round} 라운드</h4>
 
-        <section>
-          <span className="text-title1">Q. {roundResult.question}</span>
+        <span className="text-title1">Q. {roundResult.question}</span>
 
-          <section className="space-y-2 mt-2">
-            {roundResult.result.length > 0 ? (
-              roundResult.result
-                .sort((current, next) => next.likes - current.likes)
-                .map((item, itemIndex) => (
-                  <QnaGameUserFinalResult
-                    key={`answer-${item.name}-${itemIndex}`}
-                    user={item}
-                  />
-                ))
-            ) : (
-              <div className="p-3 bg-container-700/50 rounded-xl text-center">
-                <span className="text-base">
-                  엇, 무언가 잘못됐어요. 결과가 없어요..T_T
-                </span>
-              </div>
-            )}
-          </section>
+        <section className="h-full space-y-2 overflow-y-auto">
+          {roundResult.result.length > 0 ? (
+            roundResult.result
+              .sort((current, next) => next.likes - current.likes)
+              .map((item, itemIndex) => (
+                <QnaGameUserFinalResult
+                  key={`answer-${item.name}-${itemIndex}`}
+                  user={item}
+                />
+              ))
+          ) : (
+            <div className="p-3 bg-container-700/50 rounded-xl text-center">
+              <span className="text-base">
+                엇, 무언가 잘못됐어요. 결과가 없어요..T_T
+              </span>
+            </div>
+          )}
         </section>
-
         <Pagination>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
                 href="#"
-                onClick={() => setPage(Math.max(1, page - 1))}
+                onClick={() => setRound(Math.max(1, round - 1))}
               />
             </PaginationItem>
 
@@ -80,8 +77,8 @@ const QnaGameFinalResult = ({
               <PaginationItem key={result.round}>
                 <PaginationLink
                   href="#"
-                  onClick={() => setPage(result.round)}
-                  isActive={page == result.round}
+                  onClick={() => setRound(result.round)}
+                  isActive={round == result.round}
                 >
                   {index + 1}
                 </PaginationLink>
@@ -91,7 +88,7 @@ const QnaGameFinalResult = ({
             <PaginationItem>
               <PaginationNext
                 href="#"
-                onClick={() => setPage(Math.min(results.length, page + 1))}
+                onClick={() => setRound(Math.min(results.length, round + 1))}
               />
             </PaginationItem>
           </PaginationContent>
