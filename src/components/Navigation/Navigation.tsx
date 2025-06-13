@@ -30,7 +30,7 @@ const Navigation = ({ items, disabled }: NavigationProps) => {
     }
   });
 
-  return Items;
+  return <nav>{Items}</nav>;
 };
 
 export default Navigation;
