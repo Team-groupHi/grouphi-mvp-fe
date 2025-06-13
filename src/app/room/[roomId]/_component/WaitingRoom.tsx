@@ -2,8 +2,7 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { Chatting, Spinner } from '@/components';
@@ -43,7 +42,7 @@ const WaitingRoom = ({
 
   const { data: roomDetail, error, isError } = useFetchRoomDetail(roomId);
 
-  const { myName } = useRoomStore();
+  const { myName, setHostName } = useRoomStore();
 
   const players: Player[] = roomDetail?.players || [];
   const isRoomManager = players.some(
@@ -53,9 +52,16 @@ const WaitingRoom = ({
     players.findIndex((user) => user.name === myName) !== -1;
 
   useEffect(() => {
+    if (roomDetail.players.length > 0) {
+      const host = roomDetail.players.filter((player) => player.isHost)[0];
+      setHostName(host.name);
+    }
+  }, [roomDetail.players]);
+
+  useEffect(() => {
     if (
       isRoomManager &&
-      roomDetail.players.length == 1 &&
+      roomDetail.players.length === 1 &&
       roomDetail.status === 'PLAYING'
     ) {
       switch (roomDetail.game.nameEn) {
