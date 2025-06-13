@@ -21,7 +21,7 @@ const HomeClient = ({ games }: HomeClientProps) => {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen justify-between">
+    <div className="flex flex-col min-h-screen justify-between">
       <MainHeader />
       <main className="px-800 mb-800">
         {games.length > 0 ? (
