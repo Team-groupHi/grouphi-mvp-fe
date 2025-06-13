@@ -2,12 +2,12 @@
 
 import { AxiosError, isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
 import { PATH } from '@/constants/router';
 import { ErrorCode } from '@/types/error';
 
-import { Button } from '../Button';
 import Label from '../Label';
 
 interface ErrorProps {
@@ -17,6 +17,7 @@ interface ErrorProps {
 
 const ErrorFallback = ({ error, resetErrorBoundary }: ErrorProps) => {
   const router = useRouter();
+  const [count, setCount] = useState(3);
 
   const message =
     (isAxiosError(error) &&
@@ -29,11 +30,26 @@ const ErrorFallback = ({ error, resetErrorBoundary }: ErrorProps) => {
     resetErrorBoundary();
   };
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount((prev) => prev - 1);
+    }, 1000);
+
+    return () => {
+      clearTimeout(intervalId);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (count === 0) {
+      gotoHome();
+    }
+  }, [count]);
+
   return (
     <section className="w-screen h-screen flex flex-col justify-center items-center gap-3">
       <Label>{message}</Label>
-      <Button onClick={gotoHome}>메인으로 이동</Button>
-      <Button onClick={() => resetErrorBoundary()}>다시 불러오기</Button>
+      <p>{`${count}초 후 메인으로 이동합니다`}</p>
     </section>
   );
 };
