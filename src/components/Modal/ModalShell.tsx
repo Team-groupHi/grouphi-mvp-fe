@@ -12,8 +12,8 @@ interface ModalShellProps {
 const ModalShell = ({
   children,
   closeModal,
-  width,
-  height,
+  width = '28rem',
+  height = 'auto',
 }: ModalShellProps) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -28,18 +28,11 @@ const ModalShell = ({
     }
   };
 
-  // Tailwind arbitrary values로 클래스 생성
-  const getWidthClass = () => {
-    if (!width) return 'w-[28rem]'; // 기본값
-    return `w-[${width}]`;
+  const modalStyle = {
+    width,
+    height,
+    minWidth: '20rem', // min-w-80
   };
-
-  const getHeightClass = () => {
-    if (!height) return 'h-auto'; // 기본값
-    return `h-[${height}]`;
-  };
-
-  const modalClasses = `${getWidthClass()} ${getHeightClass()} min-w-80 max-w-screen-lg p-6 bg-container rounded-lg shadow-lg`;
 
   return (
     <div
@@ -50,7 +43,8 @@ const ModalShell = ({
       aria-modal="true"
     >
       <div
-        className={modalClasses}
+        className="p-6 bg-container rounded-lg shadow-lg"
+        style={modalStyle}
         tabIndex={0}
       >
         {children}
