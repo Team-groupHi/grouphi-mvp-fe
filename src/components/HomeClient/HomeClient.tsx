@@ -2,23 +2,30 @@
 
 import { useEffect } from 'react';
 
-import { Footer, MainHeader } from '@/components';
+import GameListCarousel, { Footer, MainHeader } from '@/components';
+import useGameStore from '@/store/useGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { GameResponse } from '@/types/api';
-
-import GameListCarousel from './GameListCarousel';
 
 interface HomeClientProps {
   games: GameResponse[];
 }
 
 const HomeClient = ({ games }: HomeClientProps) => {
+  const { setGames } = useGameStore();
+
   const { reset: roomReset } = useRoomStore();
 
   useEffect(() => {
     roomReset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (games) {
+      setGames(games);
+    }
+  }, [setGames, games]);
 
   return (
     <>
