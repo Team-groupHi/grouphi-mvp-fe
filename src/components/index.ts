@@ -25,6 +25,7 @@ export {
   useFormField,
 } from './Form';
 export { GameListCard } from './GameListCard';
+export { default } from './GameListCarousel';
 export { HomeClient } from './HomeClient';
 export { InitialNickname } from './InitialNickname';
 export { default as Input } from './Input';
