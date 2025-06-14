@@ -40,3 +40,5 @@ next-env.d.ts
 
 # Production env File
 .env.production
+
+.cursor
