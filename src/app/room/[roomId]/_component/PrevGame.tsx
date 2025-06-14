@@ -11,11 +11,13 @@ import {
 
 import { Button, GameListCard } from '@/components';
 import { GAME } from '@/constants/game';
+import { MODAL_TYPE } from '@/constants/modal';
 import { SOCKET } from '@/constants/websocket';
 import useThrottleReadyHandlers from '@/hooks/useThrottleHandlers';
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useModalStore from '@/store/useModalStore';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
@@ -39,6 +41,7 @@ const PrevGame = ({
   const { myName } = useRoomStore();
   const { round: BalanceGameRound } = useBalanceGameStore();
   const { round: QnaGameRound } = useQnaGameStore();
+  const { openModal } = useModalStore();
 
   const { toast } = useToast();
 
@@ -89,7 +92,7 @@ const PrevGame = ({
   };
 
   const handleGameChange = () => {
-    //@TODO: 게임 변경 모달 띄워주기
+    openModal(MODAL_TYPE.CHANGE_GAME, roomDetail.game.id);
   };
 
   return (
