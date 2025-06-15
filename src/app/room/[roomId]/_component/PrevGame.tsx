@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import * as StompJS from '@stomp/stompjs';
 import {
   CheckCheck,
@@ -8,21 +9,136 @@ import {
   MousePointer2,
   SlidersHorizontal,
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Button, GameListCard } from '@/components';
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+  GameListCard,
+  Label,
+  Slider,
+} from '@/components';
+import { totalRoundsSchema } from '@/constants/form';
 import { GAME } from '@/constants/game';
 import { MODAL_TYPE } from '@/constants/modal';
 import { SOCKET } from '@/constants/websocket';
 import useThrottleReadyHandlers from '@/hooks/useThrottleHandlers';
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useModalStore from '@/store/useModalStore';
-import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
 
+interface RoundFormProps {
+  gameEn: string;
+  setTotalRounds: (totalRounds: number) => void;
+}
+
+const RoundForm = ({ gameEn, setTotalRounds }: RoundFormProps) => {
+  const GAME_QUESTIONS_COUNT = {
+    qna: {
+      MIN: 5,
+      MAX: 10,
+      STEP: 1,
+    },
+    balance: {
+      MIN: 10,
+      MAX: 20,
+      STEP: 2,
+    },
+    other: {
+      MIN: 10,
+      MAX: 20,
+      STEP: 2,
+    },
+  } as const;
+
+  const gameToType = (game: string) => {
+    switch (game) {
+      case GAME.GAMES.COMPREHENSIVE_BALANCE_GAME:
+      case GAME.GAMES.CLASSIC_BALANCE_GAME:
+      case GAME.GAMES.FOOD_BALANCE_GAME:
+      case GAME.GAMES.DATING_BALANCE_GAME:
+        return 'balance';
+      case GAME.GAMES.QNA_GAME:
+        return 'qna';
+      default:
+        return 'other';
+    }
+  };
+
+  const game = gameToType(gameEn);
+
+  const QUESTIONS_COUNT = GAME_QUESTIONS_COUNT[game];
+
+  const formSchema = totalRoundsSchema({
+    min: QUESTIONS_COUNT.MIN,
+    max: QUESTIONS_COUNT.MAX,
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      totalRounds: QUESTIONS_COUNT.MIN,
+    },
+  });
+
+  const totalRounds = form.watch('totalRounds');
+
+  const onChange = (values: z.infer<typeof formSchema>) => {
+    setTotalRounds(values.totalRounds);
+  };
+
+  useEffect(() => {
+    onChange({ totalRounds });
+  }, [totalRounds]);
+
+  return (
+    <>
+      <Form {...form}>
+        <form
+          id="create-room-form"
+          className="flex flex-col pb-300 gap-600 w-full"
+        >
+          <FormField
+            control={form.control}
+            name="totalRounds"
+            render={({ field: { value, onChange } }) => (
+              <FormItem>
+                <FormControl>
+                  <section className="flex gap-500 items-center min-h-9">
+                    <Label
+                      className="w-24"
+                      htmlFor="total-rounds"
+                    >
+                      질문의 개수
+                    </Label>
+                    <Slider
+                      defaultValue={[value]}
+                      onValueChange={(v) => onChange(v[0])}
+                      min={QUESTIONS_COUNT.MIN}
+                      max={QUESTIONS_COUNT.MAX}
+                      step={QUESTIONS_COUNT.STEP}
+                    />
+                    <span className="w-4 text-subtitle">{value}</span>
+                  </section>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </form>
+      </Form>
+    </>
+  );
+};
 interface PrevGameProps {
   roomDetail: RoomResponse;
   players: Player[];
@@ -38,9 +154,10 @@ const PrevGame = ({
   sendMessage,
   isRoomManager,
 }: PrevGameProps) => {
+  const [totalRounds, setTotalRounds] = useState<number>();
   const { myName } = useRoomStore();
-  const { round: BalanceGameRound } = useBalanceGameStore();
-  const { round: QnaGameRound } = useQnaGameStore();
+  // const { round: BalanceGameRound, setTotalRounds } = useBalanceGameStore();
+  // const { round: QnaGameRound } = useQnaGameStore();
   const { openModal } = useModalStore();
 
   const { toast } = useToast();
@@ -76,7 +193,7 @@ const PrevGame = ({
               .split(' ')[0]
               .toUpperCase()
               .replace('COMPREHENSIVE', 'ALL'),
-            totalRounds: BalanceGameRound.totalRounds,
+            totalRounds,
           },
         });
         break;
@@ -84,7 +201,7 @@ const PrevGame = ({
         sendMessage({
           destination: `${SOCKET.QNA_GAME.START}`,
           body: {
-            totalRounds: QnaGameRound.totalRounds,
+            totalRounds,
           },
         });
         break;
@@ -105,9 +222,13 @@ const PrevGame = ({
         className="h-16 pointer-events-none"
       />
 
-      <section className="flex flex-col gap-2">
+      <section className="flex flex-col gap-2 w-full items-center">
         {isRoomManager && (
           <>
+            <RoundForm
+              setTotalRounds={setTotalRounds}
+              gameEn={roomDetail.game.nameEn}
+            />
             <Button
               className={cn(
                 'text-base font-semibold w-[12rem]',
@@ -149,6 +270,25 @@ const PrevGame = ({
               >
                 <SlidersHorizontal />
                 <span>게임 변경</span>
+              </Button>
+            )}
+
+            {isDevelopment && (
+              <Button
+                variant={'secondary'}
+                className="text-base font-semibold w-[12rem] flex items-center justify-center gap-2"
+                size="xl"
+                onClick={() => {
+                  sendMessage({
+                    destination: `${SOCKET.ROOM.CHANGE_GAME}`,
+                    body: {
+                      gameId: '67ac5da22037c2ec91dec688',
+                    },
+                  });
+                }}
+              >
+                <SlidersHorizontal />
+                <span>게임 임의 변경</span>
               </Button>
             )}
           </>
