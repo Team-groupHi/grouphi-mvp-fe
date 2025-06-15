@@ -19,7 +19,7 @@ const ChangeGameModal = ({
   return (
     <ModalShell
       closeModal={closeModal}
-      width="75rem"
+      width="auto"
     >
       <GameListCarousel games={filteredGames} />
     </ModalShell>
