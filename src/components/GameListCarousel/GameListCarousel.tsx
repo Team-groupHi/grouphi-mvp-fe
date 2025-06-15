@@ -1,3 +1,8 @@
+'use client';
+
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+
 import {
   Carousel,
   CarouselContent,
@@ -6,9 +11,9 @@ import {
   CarouselPrevious,
   GameListCard,
 } from '@/components';
-import { GAME } from '@/constants/game';
-import { MODAL_TYPE } from '@/constants/modal';
-import useModalStore from '@/store/useModalStore';
+import { PATH } from '@/constants/router';
+import { createRoom } from '@/services/rooms';
+import useRoomStore from '@/store/useRoomStore';
 import { GameResponse } from '@/types/api';
 
 interface GameListCarouselProps {
@@ -16,10 +21,26 @@ interface GameListCarouselProps {
 }
 
 const GameListCarousel = ({ games }: GameListCarouselProps) => {
-  const { openModal } = useModalStore();
+  const router = useRouter();
+  const { setRoomId } = useRoomStore();
 
   const MAX_CAROUSEL_ITEMS = 6;
   const isMultiplePages = games.length > MAX_CAROUSEL_ITEMS;
+
+  const createRoomMutation = useMutation({
+    mutationFn: (gameId: string) => createRoom(gameId),
+    onSuccess: (roomId) => {
+      if (roomId) {
+        setRoomId(roomId);
+        router.push(`${PATH.ROOM}/${roomId}`);
+      }
+    },
+    //@TODO: onError toast 생성
+  });
+
+  const handleCreateRoom = (gameId: string) => {
+    createRoomMutation.mutate(gameId);
+  };
 
   return (
     <Carousel
@@ -35,18 +56,7 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
               title={game.nameKr}
               description={game.descriptionKr}
               src={game.thumbnailUrl}
-              onClick={() => {
-                switch (game.nameEn) {
-                  case GAME.GAMES.COMPREHENSIVE_BALANCE_GAME:
-                  case GAME.GAMES.CLASSIC_BALANCE_GAME:
-                  case GAME.GAMES.FOOD_BALANCE_GAME:
-                  case GAME.GAMES.DATING_BALANCE_GAME:
-                    openModal(MODAL_TYPE.CREATE_BALANCE_GAME, game.id);
-                    break;
-                  case GAME.GAMES.QNA_GAME:
-                    openModal(MODAL_TYPE.CREATE_QNA_GAME, game.id);
-                }
-              }}
+              onClick={() => handleCreateRoom(game.id)}
             />
           </CarouselItem>
         ))}
