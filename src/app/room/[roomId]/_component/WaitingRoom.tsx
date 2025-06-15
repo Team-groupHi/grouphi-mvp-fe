@@ -12,7 +12,7 @@ import ErrorHandlingWrapper from '@/components/ErrorBoundary/ErrorHandlingWrappe
 import { GAME_TYPES } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
-import { useFetchRoomDetail } from '@/hooks/fetch';
+import { useFetchRoomDetail } from '@/hooks/queries';
 import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
