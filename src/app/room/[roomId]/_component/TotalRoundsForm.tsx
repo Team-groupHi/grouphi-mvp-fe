@@ -49,7 +49,7 @@ const TotalRoundsForm = ({
   }, [totalRounds, totalRoundsRef]);
 
   return (
-    <>
+    <section className="w-full max-w-md">
       <Form {...form}>
         <form
           id="create-room-form"
@@ -84,7 +84,7 @@ const TotalRoundsForm = ({
           />
         </form>
       </Form>
-    </>
+    </section>
   );
 };
 
