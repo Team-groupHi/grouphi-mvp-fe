@@ -6,7 +6,7 @@ interface BalanceGameStoreProps {
   round: QnaGameRoundResponse;
   submittedPlayers: string[];
   setRound: (round: QnaGameRoundResponse) => void;
-  setTotalRounds: (count: number) => void;
+  setTotalRounds: (count: number) => void; // @TODO: 추후에 완전 삭제 필요
   addSubmittedPlayer: (playerId: string) => void;
   clearSubmittedPlayers: () => void;
   reset: () => void;
