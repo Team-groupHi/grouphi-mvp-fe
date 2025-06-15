@@ -12,6 +12,7 @@ import {
   GameListCard,
 } from '@/components';
 import { PATH } from '@/constants/router';
+import { useToast } from '@/hooks/useToast';
 import { createRoom } from '@/services/rooms';
 import useRoomStore from '@/store/useRoomStore';
 import { GameResponse } from '@/types/api';
@@ -22,6 +23,8 @@ interface GameListCarouselProps {
 
 const GameListCarousel = ({ games }: GameListCarouselProps) => {
   const router = useRouter();
+  const { toast } = useToast();
+
   const { setRoomId } = useRoomStore();
 
   const MAX_CAROUSEL_ITEMS = 6;
@@ -35,7 +38,12 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
         router.push(`${PATH.ROOM}/${roomId}`);
       }
     },
-    //@TODO: onError toast 생성
+    onError: () => {
+      toast({
+        variant: 'destructive',
+        title: '방 생성에 실패했어요! 다시 시도해주세요.',
+      });
+    },
   });
 
   const handleCreateRoom = (gameId: string) => {
