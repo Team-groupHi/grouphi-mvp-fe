@@ -156,8 +156,7 @@ const PrevGame = ({
 }: PrevGameProps) => {
   const [totalRounds, setTotalRounds] = useState<number>();
   const { myName } = useRoomStore();
-  // const { round: BalanceGameRound, setTotalRounds } = useBalanceGameStore();
-  // const { round: QnaGameRound } = useQnaGameStore();
+
   const { openModal } = useModalStore();
 
   const { toast } = useToast();
@@ -270,25 +269,6 @@ const PrevGame = ({
               >
                 <SlidersHorizontal />
                 <span>게임 변경</span>
-              </Button>
-            )}
-
-            {isDevelopment && (
-              <Button
-                variant={'secondary'}
-                className="text-base font-semibold w-[12rem] flex items-center justify-center gap-2"
-                size="xl"
-                onClick={() => {
-                  sendMessage({
-                    destination: `${SOCKET.ROOM.CHANGE_GAME}`,
-                    body: {
-                      gameId: '67ac5da22037c2ec91dec688',
-                    },
-                  });
-                }}
-              >
-                <SlidersHorizontal />
-                <span>게임 임의 변경</span>
               </Button>
             )}
           </>
