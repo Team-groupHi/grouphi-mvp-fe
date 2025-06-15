@@ -17,7 +17,10 @@ const ChangeGameModal = ({
   const filteredGames = games.filter((game) => game.id !== optionPropsNumber);
 
   return (
-    <ModalShell closeModal={closeModal}>
+    <ModalShell
+      closeModal={closeModal}
+      width="75rem"
+    >
       <GameListCarousel games={filteredGames} />
     </ModalShell>
   );
