@@ -13,6 +13,7 @@ import {
 } from '@/components';
 import { PATH } from '@/constants/router';
 import { useToast } from '@/hooks/useToast';
+import { cn } from '@/lib/utils';
 import { createRoom } from '@/services/rooms';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
@@ -30,7 +31,7 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
   const { setRoomId, setGameId } = useRoomStore();
   const { closeModal } = useModalStore();
 
-  const MAX_CAROUSEL_ITEMS = 6;
+  const MAX_CAROUSEL_ITEMS = path === PATH.HOME ? 6 : 4;
   const isMultiplePages = games.length > MAX_CAROUSEL_ITEMS;
 
   const createRoomMutation = useMutation({
@@ -59,31 +60,38 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
   };
 
   return (
-    <Carousel
-      opts={{
-        active: isMultiplePages,
-      }}
-    >
-      <CarouselContent className="grid grid-rows-2 grid-cols-3 gap-y-4 mb-500 min-w-[55rem]">
-        {games.map((game) => (
-          <CarouselItem key={game.id}>
-            <GameListCard
-              id={game.id}
-              title={game.nameKr}
-              description={game.descriptionKr}
-              src={game.thumbnailUrl}
-              onClick={() => handleCreateRoom(game.id)}
-            />
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      {isMultiplePages && (
-        <>
-          <CarouselPrevious />
-          <CarouselNext />
-        </>
-      )}
-    </Carousel>
+    <section className="px-10">
+      <Carousel
+        opts={{
+          active: isMultiplePages,
+        }}
+      >
+        <CarouselContent
+          className={cn(
+            'grid grid-rows-2 grid-cols-3 gap-y-4 mb-500 min-w-[55rem]',
+            path !== PATH.HOME && 'grid-cols-2'
+          )}
+        >
+          {games.map((game) => (
+            <CarouselItem key={game.id}>
+              <GameListCard
+                id={game.id}
+                title={game.nameKr}
+                description={game.descriptionKr}
+                src={game.thumbnailUrl}
+                onClick={() => handleCreateRoom(game.id)}
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        {isMultiplePages && (
+          <>
+            <CarouselPrevious />
+            <CarouselNext />
+          </>
+        )}
+      </Carousel>
+    </section>
   );
 };
 
