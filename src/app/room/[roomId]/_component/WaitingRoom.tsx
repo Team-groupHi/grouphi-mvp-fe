@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { Chatting, Spinner } from '@/components';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
 import ErrorHandlingWrapper from '@/components/ErrorBoundary/ErrorHandlingWrapper';
-import { GAME } from '@/constants/game';
+import { GAME_TYPES } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import { useFetchRoomDetail } from '@/hooks/fetch';
@@ -18,6 +18,7 @@ import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
 import { Player } from '@/types/api';
+import { gameToType } from '@/utils/form';
 
 import GamePanel from './GamePanel';
 import RoomControl from './RoomControl';
@@ -58,16 +59,14 @@ const WaitingRoom = ({
       roomDetail.players.length == 1 &&
       roomDetail.status === 'PLAYING'
     ) {
-      switch (roomDetail.game.nameEn) {
-        case GAME.GAMES.COMPREHENSIVE_BALANCE_GAME:
-        case GAME.GAMES.CLASSIC_BALANCE_GAME:
-        case GAME.GAMES.FOOD_BALANCE_GAME:
-        case GAME.GAMES.DATING_BALANCE_GAME:
+      const gameType = gameToType(roomDetail.game.nameEn);
+      switch (gameType) {
+        case GAME_TYPES.BALANCE:
           sendMessage({
             destination: `${SOCKET.BALANCE_GAME.END}`,
           });
           break;
-        case GAME.GAMES.QNA_GAME:
+        case GAME_TYPES.QNA:
           sendMessage({
             destination: `${SOCKET.QNA_GAME.END}`,
           });
