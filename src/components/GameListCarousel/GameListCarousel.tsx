@@ -51,12 +51,12 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
   });
 
   const handleCreateRoom = (gameId: string) => {
-    if (path === PATH.HOME) {
-      createRoomMutation.mutate(gameId);
-    } else {
-      setGameId(gameId);
-      closeModal();
-    }
+    createRoomMutation.mutate(gameId);
+  };
+
+  const handleChangeGame = (gameId: string) => {
+    setGameId(gameId);
+    closeModal();
   };
 
   return (
@@ -79,7 +79,11 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
                 title={game.nameKr}
                 description={game.descriptionKr}
                 src={game.thumbnailUrl}
-                onClick={() => handleCreateRoom(game.id)}
+                onClick={
+                  path === PATH.HOME
+                    ? () => handleCreateRoom(game.id)
+                    : () => handleChangeGame(game.id)
+                }
               />
             </CarouselItem>
           ))}
