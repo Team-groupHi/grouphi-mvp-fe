@@ -44,11 +44,9 @@ const PrevGame = ({
   const totalRoundsRef = useRef<number>(GAME_QUESTIONS_COUNT[gameType].MIN);
 
   const { myName } = useRoomStore();
-
   const { openModal } = useModalStore();
 
   const { toast } = useToast();
-
   const { handleReady, handleUnready } = useThrottleReadyHandlers(sendMessage);
 
   const isReady = players.find((player) => player.name === myName)?.isReady;
@@ -67,8 +65,6 @@ const PrevGame = ({
       });
       return;
     }
-
-    const gameType = gameToType(roomDetail.game.nameEn);
 
     switch (gameType) {
       case GAME_TYPES.BALANCE:
