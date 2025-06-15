@@ -44,7 +44,7 @@ const WaitingRoom = ({
 
   const { data: roomDetail, error, isError } = useFetchRoomDetail(roomId);
 
-  const { myName } = useRoomStore();
+  const { myName, gameId } = useRoomStore();
 
   const players: Player[] = roomDetail?.players || [];
   const isRoomManager = players.some(
@@ -105,6 +105,15 @@ const WaitingRoom = ({
       },
     });
   }, [myName]);
+
+  useEffect(() => {
+    sendMessage({
+      destination: `${SOCKET.ROOM.CHANGE_GAME}`,
+      body: {
+        gameId,
+      },
+    });
+  }, [gameId]);
 
   // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
   useEffect(() => {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import {
   Carousel,
@@ -14,6 +14,7 @@ import {
 import { PATH } from '@/constants/router';
 import { useToast } from '@/hooks/useToast';
 import { createRoom } from '@/services/rooms';
+import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
 import { GameResponse } from '@/types/api';
 
@@ -22,10 +23,12 @@ interface GameListCarouselProps {
 }
 
 const GameListCarousel = ({ games }: GameListCarouselProps) => {
+  const path = usePathname();
   const router = useRouter();
   const { toast } = useToast();
 
-  const { setRoomId } = useRoomStore();
+  const { setRoomId, setGameId } = useRoomStore();
+  const { closeModal } = useModalStore();
 
   const MAX_CAROUSEL_ITEMS = 6;
   const isMultiplePages = games.length > MAX_CAROUSEL_ITEMS;
@@ -47,7 +50,12 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
   });
 
   const handleCreateRoom = (gameId: string) => {
-    createRoomMutation.mutate(gameId);
+    if (path === PATH.HOME) {
+      createRoomMutation.mutate(gameId);
+    } else {
+      setGameId(gameId);
+      closeModal();
+    }
   };
 
   return (
