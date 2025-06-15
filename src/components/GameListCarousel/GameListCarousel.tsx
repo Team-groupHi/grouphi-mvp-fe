@@ -2,6 +2,7 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import {
   Carousel,
@@ -31,6 +32,8 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
   const { setRoomId, setGameId } = useRoomStore();
   const { closeModal } = useModalStore();
 
+  const [isClicked, setIsClicked] = useState(false);
+
   const MAX_CAROUSEL_ITEMS = path === PATH.HOME ? 6 : 4;
   const isMultiplePages = games.length > MAX_CAROUSEL_ITEMS;
 
@@ -47,16 +50,21 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
         variant: 'destructive',
         title: '방 생성에 실패했어요! 다시 시도해주세요.',
       });
+      setIsClicked(false);
     },
   });
 
   const handleCreateRoom = (gameId: string) => {
+    if (isClicked) return;
     createRoomMutation.mutate(gameId);
+    setIsClicked(true);
   };
 
   const handleChangeGame = (gameId: string) => {
+    if (isClicked) return;
     setGameId(gameId);
     closeModal();
+    setIsClicked(true);
   };
 
   return (
