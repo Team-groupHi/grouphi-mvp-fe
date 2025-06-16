@@ -28,9 +28,9 @@ const MainHeader = () => {
   ];
 
   return (
-    <header className="flex justify-between items-center h-[5.5rem] px-800">
+    <header className="flex justify-between p-800 pb-0 mb-800">
       <Logo onClick={() => router.push(PATH.HOME)} />
-      <section className="flex">
+      <div className="flex">
         <NicknameBar
           nickname={myName}
           isEdit={true}
@@ -39,7 +39,7 @@ const MainHeader = () => {
           items={navigationItems}
           disabled={currentPath}
         />
-      </section>
+      </div>
     </header>
   );
 };
