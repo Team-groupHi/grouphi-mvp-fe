@@ -3,17 +3,17 @@
 
 import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
+import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
 import { QUERYKEY } from '@/constants/querykey';
 import { ROOM_STATUS } from '@/constants/room';
-import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
+import { ErrorCode } from '@/types/error';
 
 import { useToast } from './useToast';
 
@@ -40,7 +40,6 @@ export function useWebSocket() {
 
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const router = useRouter();
 
   const connect = ({ roomId, name }: EnterRoomProps) => {
     if (client.current) return;
@@ -51,25 +50,12 @@ export function useWebSocket() {
     client.current = new StompJS.Client({
       brokerURL: BASE_WEBSOCKET_URL,
       reconnectDelay: 5000,
-      onWebSocketError: (error) => {
-        console.error('[WebSocket] Network Error', error);
-      },
-      onStompError: (frame) => {
-        console.error('[WebSocket] STOMP.js Error: ', frame.headers['message']);
-        console.error('[WebSocket] Details: ', frame.body);
-      },
     });
 
-    client.current.onConnect = (frame) => {
-      console.log('[WebSocket] 1. Connected', frame);
-
+    client.current.onConnect = (_frame) => {
       const subscribeRoomId = client.current?.subscribe(
         `${SOCKET.SUBSCRIBE}${SOCKET.ROOM.ROOMS}/${roomId}`,
         (message) => {
-          console.log(
-            '[WebSocket] 2. Subscribe1 - Receive Message',
-            message.body
-          );
           receiveMessage(message.body);
         },
         { id: `sub-room-${roomId}` }
@@ -78,10 +64,6 @@ export function useWebSocket() {
       const subscribeErrorId = client.current?.subscribe(
         `${SOCKET.USER.QUEUE_ERRORS}`,
         (message) => {
-          console.log(
-            '[WebSocket] 2. Subscribe2 - Receive Message',
-            message.body
-          );
           receiveMessage(message.body);
         },
         { id: `sub-error-${roomId}` }
@@ -101,7 +83,13 @@ export function useWebSocket() {
     };
 
     client.current.onWebSocketClose = (e: CloseEvent) => {
-      console.log(e);
+      if (!e.wasClean) {
+        toast({
+          title: '웹소켓 연결 실패',
+          description: '서버에 연결할 수 없습니다. 새로고침 해주세요.',
+          variant: 'destructive',
+        });
+      }
     };
 
     client.current.activate();
@@ -119,7 +107,6 @@ export function useWebSocket() {
     setSubscription(null);
     setChatMessages([]);
     client.current = null;
-    console.log('[WebSocket] Disconnected');
   };
 
   const sendMessage = <T>(
@@ -136,7 +123,6 @@ export function useWebSocket() {
   };
 
   const receiveMessage = (message: string) => {
-    console.log('[WebSocket] 2-1. receiveMessage', message);
     const { type, sender, content } = JSON.parse(message);
 
     switch (type) {
@@ -164,7 +150,6 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      //@TODO: players 데이터 내부 store로 관리하도록 변경하면서 refetch 로직 제거하기
       case SOCKET.TYPE.ROOM.READY:
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
@@ -251,11 +236,13 @@ export function useWebSocket() {
         });
         break;
       case SOCKET.TYPE.ROOM.ERROR:
+        const { code }: { code: ErrorCode } = content;
+        const message = ERROR_MESSAGE[code] || DEFAULT_ERROR_MESSAGE;
+
         toast({
           variant: 'destructive',
-          title: '문제가 생겼습니다. 다시 시도해주세요.',
+          title: message,
         });
-        router.push(PATH.HOME);
         break;
       default:
         break;
