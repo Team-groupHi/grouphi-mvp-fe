@@ -1,4 +1,4 @@
-import { ModalShell } from '@/components';
+import { Label, ModalShell } from '@/components';
 import useGameStore from '@/store/useGameStore';
 
 import GameListCarousel from '../GameListCarousel';
@@ -21,7 +21,11 @@ const ChangeGameModal = ({
       closeModal={closeModal}
       width="auto"
     >
-      <GameListCarousel games={filteredGames} />
+      <section className="flex flex-col items-center gap-4 pt-2">
+        <Label className="text-title2">변경하고 싶은 게임을 선택하세요!</Label>
+        <Label className="text-title2">▽</Label>
+        <GameListCarousel games={filteredGames} />
+      </section>
     </ModalShell>
   );
 };
