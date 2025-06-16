@@ -24,7 +24,7 @@ const QnaGameFinalResult = ({
   return (
     <main
       className={cn(
-        'bg-container-500 rounded-lg w-full h-full max-w-4xl overflow-hidden',
+        'bg-container-500 rounded-lg w-full h-full overflow-hidden',
         className
       )}
     >

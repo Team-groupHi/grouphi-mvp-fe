@@ -139,7 +139,7 @@ const WaitingRoom = ({
         </ErrorHandlingWrapper>
       </section>
 
-      <section className="flex flex-col h-[80vh] min-h-[30rem] w-1/4 min-w-[18rem] max-w-[23rem] pr-10 gap-2">
+      <section className="flex flex-col h-[80vh] min-h-[30rem] w-[25vw] min-w-[18rem] max-w-[23rem] pr-10 gap-2">
         <Chatting
           myName={myName}
           chatMessages={chatMessages}
