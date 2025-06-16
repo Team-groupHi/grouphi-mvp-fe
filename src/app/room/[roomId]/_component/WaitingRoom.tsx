@@ -126,7 +126,7 @@ const WaitingRoom = ({
   }
 
   return (
-    <section className="w-screen min-h-screen flex items-center gap-10 shrink-0">
+    <section className="w-screen min-h-screen flex items-center gap-10 shrink-0 py-500">
       <UserList players={players} />
 
       <section className="h-[80vh] min-h-[30rem] min-w-max max-w-[70rem] w-full bg-container/50 rounded-lg">
