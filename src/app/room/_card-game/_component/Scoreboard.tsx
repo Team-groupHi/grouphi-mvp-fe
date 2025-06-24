@@ -16,30 +16,44 @@ interface ScoreboardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Scoreboard = ({ data, ...props }: ScoreboardProps) => {
   return (
-    <div
-      className="scoreboard"
+    <section
+      aria-label="점수판"
       {...props}
     >
-      {data.map((team, index) => {
-        const teamColor = index === 0 ? 'cardgame-a' : 'cardgame-b';
+      <ul>
+        {data.map((team, index) => {
+          const teamColor = index === 0 ? 'cardgame-a' : 'cardgame-b';
 
-        return (
-          <div
-            key={team.name + index}
-            className={cn(
-              'flex items-center justify-evenly w-52 h-20 py-2 italic rounded-r-full mb-2',
-              `bg-gradient-to-r from-white/0 to-${teamColor}`
-            )}
-          >
-            <div>
-              <span className="w-6 text-h1">{`${team.name}`}</span>
-              <span className="w-4 text-h2">{`${team.winningCount}`}</span>
-            </div>
-            <span className="w-10 text-h1">{` ${team.score}`}</span>
-          </div>
-        );
-      })}
-    </div>
+          return (
+            <li
+              key={team.name + index}
+              className={cn(
+                'flex items-center justify-evenly w-52 h-20 py-2 italic rounded-r-full mb-2',
+                `bg-gradient-to-r from-white/0 to-${teamColor}`
+              )}
+              role="group"
+              aria-label={`${team.name}팀 점수`}
+            >
+              <div>
+                <h2 className="w-6 text-h1">{team.name}</h2>
+                <span
+                  className="w-4 text-h2"
+                  aria-label={`승리 횟수 : ${team.winningCount}회`}
+                >
+                  {team.winningCount}
+                </span>
+              </div>
+              <span
+                className="w-10 text-h1"
+                aria-label={`현재 점수: ${team.score}점`}
+              >
+                {team.score}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 };
 
