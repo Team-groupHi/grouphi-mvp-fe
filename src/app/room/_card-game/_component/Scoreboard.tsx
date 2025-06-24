@@ -4,13 +4,14 @@ import React from 'react';
 
 import { cn } from '@/lib/utils';
 
-interface teamScore {
+interface TeamScore {
   name: string;
   winningCount: number;
   score: number;
 }
+
 interface ScoreboardProps extends React.HTMLAttributes<HTMLDivElement> {
-  data: teamScore[];
+  data: TeamScore[];
 }
 
 const Scoreboard = ({ data, ...props }: ScoreboardProps) => {
