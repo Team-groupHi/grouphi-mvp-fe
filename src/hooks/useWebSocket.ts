@@ -169,6 +169,15 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
+      case SOCKET.TYPE.ROOM.CHANGE_GAME:
+        addChatMessage({
+          sender: SOCKET.SYSTEM,
+          content: `[${content.nameKr}] 으로 게임이 변경되었어요.`,
+        });
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
       case SOCKET.TYPE.BALANCE_GAME.SELECT:
         addSelectedPlayers(sender);
         break;

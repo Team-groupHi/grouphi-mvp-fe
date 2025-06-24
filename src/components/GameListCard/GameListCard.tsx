@@ -1,5 +1,5 @@
 'use client';
-import { Plus } from 'lucide-react';
+import { Plus, Repeat } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
@@ -57,8 +57,15 @@ const GameListCard = ({
         <p className="text font-semibold truncate pb-400">{title}</p>
         {isHover ? (
           <Button className="mt-50 hover:bg-primary">
-            <Plus />
-            생성하기
+            {pathname === PATH.HOME ? (
+              <>
+                <Plus /> 생성하기
+              </>
+            ) : (
+              <>
+                <Repeat /> 변경하기
+              </>
+            )}
           </Button>
         ) : (
           description && (
