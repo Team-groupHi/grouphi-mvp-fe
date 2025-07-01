@@ -4,7 +4,8 @@ import * as StompJS from '@stomp/stompjs';
 
 import { QnaGameControl } from '@/components';
 import BalanceGameControl from '@/components/BalanceGame/BalanceGameControl';
-import { GAME } from '@/constants/game';
+import { GAME_TYPES } from '@/constants/form';
+import { gameToType } from '@/utils/form';
 
 interface ManagerControlProps {
   game: string;
@@ -19,18 +20,16 @@ const RoomControl = ({
   isRoomManager,
   sendMessage,
 }: ManagerControlProps) => {
-  switch (game) {
-    case GAME.GAMES.COMPREHENSIVE_BALANCE_GAME:
-    case GAME.GAMES.CLASSIC_BALANCE_GAME:
-    case GAME.GAMES.FOOD_BALANCE_GAME:
-    case GAME.GAMES.DATING_BALANCE_GAME:
+  const gameType = gameToType(game);
+  switch (gameType) {
+    case GAME_TYPES.BALANCE:
       return (
         <BalanceGameControl
           isRoomManager={isRoomManager}
           sendMessage={sendMessage}
         />
       );
-    case GAME.GAMES.QNA_GAME:
+    case GAME_TYPES.QNA:
       return (
         <QnaGameControl
           isRoomManager={isRoomManager}
