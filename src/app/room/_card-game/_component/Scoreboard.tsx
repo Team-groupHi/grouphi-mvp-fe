@@ -11,17 +11,17 @@ interface TeamScore {
 }
 
 interface ScoreboardProps extends React.HTMLAttributes<HTMLDivElement> {
-  data: TeamScore[];
+  scoreData: TeamScore[];
 }
 
-const Scoreboard = ({ data, ...props }: ScoreboardProps) => {
+const Scoreboard = ({ scoreData, ...props }: ScoreboardProps) => {
   return (
     <section
       aria-label="점수판"
       {...props}
     >
       <ul>
-        {data.map((team, index) => {
+        {scoreData.map((team, index) => {
           const teamColor = index === 0 ? 'cardgame-a' : 'cardgame-b';
 
           return (
