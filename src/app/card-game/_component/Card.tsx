@@ -27,7 +27,7 @@ const Card = ({
       <div
         className={cn(
           'relative rounded-xl w-full h-full transform transform-3d transition-transform hover:cursor-pointer',
-          !flipped ? 'rotate-y-180' : '',
+          flipped ? 'rotate-y-180' : '',
           props.className
         )}
         onClick={() => setFlipped(!flipped)}
@@ -38,17 +38,13 @@ const Card = ({
             defaultFaceClass,
             'card-front bg-cardgame-a hover:bg-cardgame-a/90'
           )}
-        >
-          A
-        </div>
+        />
         <div
           className={cn(
             defaultFaceClass,
             'card-back bg-cardgame-b rotate-y-180 hover:bg-cardgame-b/90'
           )}
-        >
-          B
-        </div>
+        />
       </div>
     </div>
   );
