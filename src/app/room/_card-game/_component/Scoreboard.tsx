@@ -22,22 +22,24 @@ const Scoreboard = ({ scoreData, ...props }: ScoreboardProps) => {
     >
       <ul>
         {scoreData.map((team, index) => {
-          const teamColor = index === 0 ? 'cardgame-a' : 'cardgame-b';
+          const teamColorClass =
+            index === 0 ? 'to-cardgame-a' : 'to-cardgame-b';
 
           return (
             <li
               key={team.name + index}
               className={cn(
                 'flex items-center justify-evenly w-52 h-20 py-2 italic rounded-r-full mb-2',
-                `bg-gradient-to-r from-white/0 to-${teamColor}`
+                `bg-gradient-to-r from-white/0`,
+                teamColorClass
               )}
               role="group"
               aria-label={`${team.name}팀 점수`}
             >
-              <div>
+              <div className="flex">
                 <h2 className="w-6 text-h1">{team.name}</h2>
                 <span
-                  className="w-4 text-h2"
+                  className="w-4 text-h2 self-end"
                   aria-label={`승리 횟수 : ${team.winningCount}회`}
                 >
                   {team.winningCount}
