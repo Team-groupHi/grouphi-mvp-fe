@@ -2,7 +2,7 @@
 
 import { AxiosError, isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Button, Label } from '@/components';
 import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
@@ -24,10 +24,10 @@ const ErrorFallback = ({ error, resetErrorBoundary }: ErrorProps) => {
       ERROR_MESSAGE[error.response.data.code as ErrorCode]) ||
     DEFAULT_ERROR_MESSAGE;
 
-  const gotoHome = () => {
+  const gotoHome = useCallback(() => {
     router.push(PATH.HOME);
     resetErrorBoundary();
-  };
+  }, [resetErrorBoundary, router]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -43,7 +43,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: ErrorProps) => {
     if (count === 0) {
       gotoHome();
     }
-  }, [count]);
+  }, [count, gotoHome]);
 
   return (
     <section className="w-screen h-screen flex flex-col justify-center items-center gap-3">
