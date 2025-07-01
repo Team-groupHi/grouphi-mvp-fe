@@ -11,7 +11,7 @@ import {
 } from '@/components';
 import { BarProps } from '@/components/FinalResultChart/Bar';
 import { ROOM_STATUS } from '@/constants/room';
-import { useFetchBalanceGameResults } from '@/hooks/fetch';
+import { useFetchBalanceGameResults } from '@/hooks/queries';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';

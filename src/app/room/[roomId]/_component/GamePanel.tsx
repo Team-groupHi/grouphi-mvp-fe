@@ -1,8 +1,9 @@
 'use client';
 import * as StompJS from '@stomp/stompjs';
 
-import { GAME } from '@/constants/game';
+import { GAME_TYPES } from '@/constants/form';
 import { Player, RoomResponse } from '@/types/api';
+import { gameToType } from '@/utils/form';
 
 import BalanceGame from './BalanceGame';
 import QnaGame from './QnaGame';
@@ -26,11 +27,9 @@ const GamePanel = ({
   isRoomManager,
   sendMessage,
 }: GamePanelProps) => {
-  switch (game) {
-    case GAME.GAMES.COMPREHENSIVE_BALANCE_GAME:
-    case GAME.GAMES.CLASSIC_BALANCE_GAME:
-    case GAME.GAMES.FOOD_BALANCE_GAME:
-    case GAME.GAMES.DATING_BALANCE_GAME:
+  const gameType = gameToType(roomDetail.game.nameEn);
+  switch (gameType) {
+    case GAME_TYPES.BALANCE:
       return (
         <BalanceGame
           roomId={roomId}
@@ -40,7 +39,7 @@ const GamePanel = ({
           sendMessage={sendMessage}
         />
       );
-    case GAME.GAMES.QNA_GAME:
+    case GAME_TYPES.QNA:
       return (
         <QnaGame
           roomId={roomId}

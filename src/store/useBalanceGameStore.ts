@@ -6,7 +6,7 @@ interface BalanceGameStoreProps {
   round: BalanceGameRoundResponse;
   selectedPlayers: string[];
   setRound: (round: BalanceGameRoundResponse) => void;
-  setTotalRounds: (count: number) => void;
+  setTotalRounds: (count: number) => void; // @TODO: 추후에 완전 삭제 필요
   addSelectedPlayers: (player: string) => void;
   resetSelectedPlayers: () => void;
 }

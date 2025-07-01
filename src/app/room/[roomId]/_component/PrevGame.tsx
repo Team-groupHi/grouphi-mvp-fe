@@ -8,18 +8,22 @@ import {
   MousePointer2,
   SlidersHorizontal,
 } from 'lucide-react';
+import { useRef } from 'react';
 
 import { Button, GameListCard } from '@/components';
-import { GAME } from '@/constants/game';
+import { GAME_QUESTIONS_COUNT, GAME_TYPES } from '@/constants/form';
+import { MODAL_TYPE } from '@/constants/modal';
 import { SOCKET } from '@/constants/websocket';
 import useThrottleReadyHandlers from '@/hooks/useThrottleHandlers';
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
-import useBalanceGameStore from '@/store/useBalanceGameStore';
-import useQnaGameStore from '@/store/useQnaGameStore';
+import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
+import { gameToType } from '@/utils/form';
+
+import TotalRoundsForm from './TotalRoundsForm';
 
 interface PrevGameProps {
   roomDetail: RoomResponse;
@@ -36,12 +40,13 @@ const PrevGame = ({
   sendMessage,
   isRoomManager,
 }: PrevGameProps) => {
+  const gameType = gameToType(roomDetail.game.nameEn);
+  const totalRoundsRef = useRef<number>(GAME_QUESTIONS_COUNT[gameType].MIN);
+
   const { myName } = useRoomStore();
-  const { round: BalanceGameRound } = useBalanceGameStore();
-  const { round: QnaGameRound } = useQnaGameStore();
+  const { openModal } = useModalStore();
 
   const { toast } = useToast();
-
   const { handleReady, handleUnready } = useThrottleReadyHandlers(sendMessage);
 
   const isReady = players.find((player) => player.name === myName)?.isReady;
@@ -61,11 +66,8 @@ const PrevGame = ({
       return;
     }
 
-    switch (roomDetail.game.nameEn) {
-      case GAME.GAMES.COMPREHENSIVE_BALANCE_GAME:
-      case GAME.GAMES.CLASSIC_BALANCE_GAME:
-      case GAME.GAMES.FOOD_BALANCE_GAME:
-      case GAME.GAMES.DATING_BALANCE_GAME:
+    switch (gameType) {
+      case GAME_TYPES.BALANCE:
         sendMessage({
           destination: `${SOCKET.BALANCE_GAME.START}`,
           body: {
@@ -73,15 +75,15 @@ const PrevGame = ({
               .split(' ')[0]
               .toUpperCase()
               .replace('COMPREHENSIVE', 'ALL'),
-            totalRounds: BalanceGameRound.totalRounds,
+            totalRounds: totalRoundsRef.current,
           },
         });
         break;
-      case GAME.GAMES.QNA_GAME:
+      case GAME_TYPES.QNA:
         sendMessage({
           destination: `${SOCKET.QNA_GAME.START}`,
           body: {
-            totalRounds: QnaGameRound.totalRounds,
+            totalRounds: totalRoundsRef.current,
           },
         });
         break;
@@ -89,7 +91,7 @@ const PrevGame = ({
   };
 
   const handleGameChange = () => {
-    //@TODO: 게임 변경 모달 띄워주기
+    openModal(MODAL_TYPE.CHANGE_GAME, roomDetail.game.id);
   };
 
   return (
@@ -102,9 +104,13 @@ const PrevGame = ({
         className="h-16 pointer-events-none"
       />
 
-      <section className="flex flex-col gap-2">
+      <section className="flex flex-col gap-2 w-full items-center">
         {isRoomManager && (
           <>
+            <TotalRoundsForm
+              totalRoundsRef={totalRoundsRef}
+              gameType={gameType}
+            />
             <Button
               className={cn(
                 'text-base font-semibold w-[12rem]',
