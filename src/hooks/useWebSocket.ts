@@ -97,9 +97,6 @@ export function useWebSocket() {
 
   const disconnect = () => {
     if (!client.current) return;
-    sendMessage({
-      destination: `${SOCKET.ROOM.EXIT}`,
-    });
 
     subscriptions?.forEach((subscription) => subscription.unsubscribe());
     client.current.deactivate();
