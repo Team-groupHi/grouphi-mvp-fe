@@ -10,6 +10,11 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    {
+      pattern: /grid-(cols|rows)-(1[0-2]?|[1-9])/,
+    },
+  ],
   theme: {
     extend: {
       colors: theme.colors,
