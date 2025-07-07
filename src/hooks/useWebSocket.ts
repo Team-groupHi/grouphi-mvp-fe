@@ -3,11 +3,13 @@
 
 import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
 import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
 import { QUERYKEY } from '@/constants/querykey';
 import { ROOM_STATUS } from '@/constants/room';
+import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useQnaGameStore from '@/store/useQnaGameStore';
@@ -36,8 +38,9 @@ export function useWebSocket() {
     addSubmittedPlayer,
     clearSubmittedPlayers,
   } = useQnaGameStore();
-  const { setRoomStatus } = useRoomStore();
+  const { setRoomStatus, getHostName } = useRoomStore();
 
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -139,6 +142,17 @@ export function useWebSocket() {
         });
         break;
       case SOCKET.TYPE.ROOM.EXIT:
+        if (sender === getHostName()) {
+          toast({
+            title: '방 삭제',
+            description:
+              '방장이 퇴장하여 방이 삭제되었습니다. 새로운 방을 이용해주세요.',
+            variant: 'destructive',
+          });
+          // 방 삭제로 소켓 통신이 불가능하기 때문에 바로 이동
+          router.replace(PATH.HOME);
+          break;
+        }
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 퇴장했어요.`,
