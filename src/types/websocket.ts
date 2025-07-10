@@ -3,8 +3,7 @@
 export interface BalanceGameRoundResponse {
   totalRounds: number;
   currentRound: number;
-  startTime: string;
-  endTime: string;
+  playSeconds: number;
   q: string;
   a: string;
   b: string;
