@@ -5,4 +5,5 @@ export { default as QnaGamePartialResult } from './QnaGamePartialResult';
 export { default as QnaGameProgress } from './QnaGameProgress';
 export { default as QnaGameQuestionPanel } from './QnaGameQuestionPanel';
 export { default as QnaGameResultsFetcher } from './QnaGameResultsFetcher';
-export { default as QnaGameUserResult } from './QnaGameUserResult';
+export { default as QnaGameUserFinalResult } from './QnaGameUserFinalResult';
+export { default as QnaGameUserPartialResult } from './QnaGameUserPartialResult';
