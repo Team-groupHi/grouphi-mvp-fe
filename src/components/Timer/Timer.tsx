@@ -43,7 +43,7 @@ const Timer = ({ playSeconds, setIsTimeout }: TimerProps) => {
     if (timeLeft <= 0) {
       setIsTimeout(true);
     }
-  }, [timeLeft]);
+  }, [timeLeft, setIsTimeout]);
 
   return (
     <section className="flex items-center justify-center gap-2 w-full text-title1 font-semibold">
