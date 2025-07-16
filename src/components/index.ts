@@ -34,6 +34,15 @@ export { default as Logo } from './Logo';
 export { MainHeader, Nicknamebar } from './MainHeader';
 export { ModalRenderer, ModalShell } from './Modal';
 export { Navigation } from './Navigation';
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from './Pagination';
 export { PartialResultChart, UserList } from './PartialResultChart';
 export { PieChart } from './PieChart';
 export {
@@ -44,7 +53,8 @@ export {
   QnaGameProgress,
   QnaGameQuestionPanel,
   QnaGameResultsFetcher,
-  QnaGameUserResult,
+  QnaGameUserFinalResult,
+  QnaGameUserPartialResult,
 } from './QnaGame';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';

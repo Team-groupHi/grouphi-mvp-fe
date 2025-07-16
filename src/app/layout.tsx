@@ -3,8 +3,12 @@ import './globals.css';
 import Script from 'next/script';
 import React from 'react';
 
-import { InitialNickname, Toaster } from '@/components';
-import { ShootingStars, StarsBackground } from '@/components';
+import {
+  InitialNickname,
+  ShootingStars,
+  StarsBackground,
+  Toaster,
+} from '@/components';
 import { ModalRenderer } from '@/components/Modal';
 import { METADATA } from '@/constants/metadata';
 import Providers from '@/utils/providers';
@@ -38,7 +42,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${pretendard.variable} ${notoSans.variable} font-sans antialiased text min-h-screen bg-gradient-purple`}
+        className={`${pretendard.variable} ${notoSans.variable} font-sans antialiased text relative min-h-screen bg-gradient-purple`}
       >
         {GA4_ID && process.env.NODE_ENV === 'production' && (
           <>
@@ -60,7 +64,7 @@ export default function RootLayout({
           </>
         )}
         <Providers>
-          <div className="fixed w-full h-screen -z-10">
+          <div className="absolute inset-0 w-full h-screen -z-10">
             <StarsBackground />
             <ShootingStars />
           </div>

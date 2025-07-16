@@ -12,7 +12,7 @@ interface QnaGameUserResultProps {
   onUnlike: (receiver: string) => void;
 }
 
-const QnaGameUserResult = ({
+const QnaGameUserPartialResult = ({
   result,
   onLike,
   onUnlike,
@@ -51,4 +51,4 @@ const QnaGameUserResult = ({
   );
 };
 
-export default QnaGameUserResult;
+export default QnaGameUserPartialResult;

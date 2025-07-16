@@ -1,12 +1,11 @@
-import React from 'react';
-
 import { MainHeader } from '@/components';
 
 const AboutPage = () => {
   return (
-    <main className="flex flex-col h-screen p-800">
+    <>
       <MainHeader />
-    </main>
+      <main className="flex flex-col min-h-screen p-800" />
+    </>
   );
 };
 

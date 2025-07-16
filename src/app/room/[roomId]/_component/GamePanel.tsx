@@ -27,7 +27,7 @@ const GamePanel = ({
   isRoomManager,
   sendMessage,
 }: GamePanelProps) => {
-  const gameType = gameToType(roomDetail.game.nameEn);
+  const gameType = gameToType(game);
   switch (gameType) {
     case GAME_TYPES.BALANCE:
       return (

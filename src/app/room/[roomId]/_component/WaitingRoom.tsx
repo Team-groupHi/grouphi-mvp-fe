@@ -2,8 +2,7 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { Chatting, Spinner } from '@/components';
@@ -44,7 +43,7 @@ const WaitingRoom = ({
 
   const { data: roomDetail, error, isError } = useFetchRoomDetail(roomId);
 
-  const { myName, gameId } = useRoomStore();
+  const { myName, setHostName, gameId } = useRoomStore();
 
   const players: Player[] = roomDetail?.players || [];
   const isRoomManager = players.some(
@@ -54,9 +53,16 @@ const WaitingRoom = ({
     players.findIndex((user) => user.name === myName) !== -1;
 
   useEffect(() => {
+    if (roomDetail.players.length > 0) {
+      const host = roomDetail.players.filter((player) => player.isHost)[0];
+      setHostName(host.name);
+    }
+  }, [roomDetail.players]);
+
+  useEffect(() => {
     if (
       isRoomManager &&
-      roomDetail.players.length == 1 &&
+      roomDetail.players.length === 1 &&
       roomDetail.status === 'PLAYING'
     ) {
       const gameType = gameToType(roomDetail.game.nameEn);
@@ -128,10 +134,10 @@ const WaitingRoom = ({
   }
 
   return (
-    <section className="w-screen h-screen flex items-center gap-10 shrink-0">
+    <section className="w-screen min-h-screen flex items-center gap-10 shrink-0 py-500">
       <UserList players={players} />
 
-      <section className="h-4/5 min-w-max max-w-[70rem] w-full bg-container/50 rounded-lg">
+      <section className="h-[80vh] min-h-[30rem] min-w-max max-w-[70rem] w-full bg-container/50 rounded-lg">
         <ErrorHandlingWrapper
           fallbackComponent={ErrorFallback}
           suspenseFallback={<Spinner />}
@@ -147,7 +153,7 @@ const WaitingRoom = ({
         </ErrorHandlingWrapper>
       </section>
 
-      <section className="flex flex-col h-4/5 w-1/4 min-w-[18rem] max-w-[23rem] pr-10 gap-2">
+      <section className="flex flex-col h-[80vh] min-h-[30rem] w-[25vw] min-w-[18rem] max-w-[23rem] pr-10 gap-2">
         <Chatting
           myName={myName}
           chatMessages={chatMessages}

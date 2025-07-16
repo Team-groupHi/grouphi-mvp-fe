@@ -6,7 +6,7 @@ import { SOCKET } from '@/constants/websocket';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import { QnaGameResultGetResponse } from '@/types/api';
 
-import QnaUserResult from './QnaGameUserResult';
+import QnaGameUserPartialResult from './QnaGameUserPartialResult';
 
 interface QnaGamePartialResultProps {
   data: QnaGameResultGetResponse[];
@@ -51,7 +51,7 @@ const QnaGamePartialResult = ({
         <h3 className="text-title1 mb-500">Q. {question}</h3>
         <section className="flex flex-col gap-400">
           {result.map((result, index) => (
-            <QnaUserResult
+            <QnaGameUserPartialResult
               key={result.name + index}
               result={result}
               onLike={handleClickLike}
