@@ -29,7 +29,7 @@ const CardGrid = ({ row, column, myTeam, cardSize, ...props }: CardProps) => {
 
   return (
     <div
-      className={cn(gridClass, 'gap-100', props.className)}
+      className={cn(gridClass, props.className)}
       {...props}
     >
       {cardStates.map((cardState, index) => (
