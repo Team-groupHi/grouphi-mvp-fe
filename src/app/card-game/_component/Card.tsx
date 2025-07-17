@@ -1,21 +1,20 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { cn } from '@/lib/utils';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  myTeam: 1 | 2;
+  cardState: number;
   width?: string | number;
   height?: string | number;
 }
 
 const Card = ({
-  myTeam,
+  cardState,
   width = '6rem',
   height = '7rem',
   ...props
 }: CardProps) => {
-  const [cardState, setCardState] = useState(0);
   const isFlipped = cardState !== 0;
 
   const defaultFaceClass =
@@ -41,9 +40,6 @@ const Card = ({
           isFlipped && 'rotate-y-180',
           props.className
         )}
-        onClick={() => {
-          setCardState(myTeam);
-        }}
         {...props}
       >
         <div

@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -8,26 +8,37 @@ import Card from './Card';
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   row: number;
   column: number;
+  // @TODO: myTeam 값 연결하기
+  myTeam: 1 | 2;
   cardSize?: { width: number | string; height: number | string };
 }
 
-const CardGrid = ({ row = 3, column = 3, cardSize, ...props }: CardProps) => {
-  const initialCards = Array.from({ length: row * column }, () => 0);
+const CardGrid = ({ row, column, myTeam, cardSize, ...props }: CardProps) => {
+  const [cardStates, setCardStates] = useState<number[]>(
+    Array(row * column).fill(0)
+  );
+  const gridClass = `grid grid-rows-${row} grid-cols-${column} gap-100`;
 
-  const gridClass = `grid grid-rows-${row} grid-cols-${column}`;
+  const handleCardClick = (index: number) => {
+    setCardStates((prev) => {
+      const newStates = [...prev];
+      newStates[index] = myTeam;
+      return newStates;
+    });
+  };
 
   return (
     <div
       className={cn(gridClass, 'gap-100', props.className)}
       {...props}
     >
-      {initialCards.map((_, index) => (
+      {cardStates.map((cardState, index) => (
         <Card
           key={index}
           width={cardSize?.width}
           height={cardSize?.height}
-          // todo: myTeam 값 연결하기
-          myTeam={1}
+          cardState={cardState}
+          onClick={() => handleCardClick(index)}
         />
       ))}
     </div>
