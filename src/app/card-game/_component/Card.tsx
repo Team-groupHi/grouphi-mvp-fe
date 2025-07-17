@@ -11,14 +11,14 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Card = ({
   cardState,
-  width = '6rem',
-  height = '7rem',
+  width = '3rem',
+  height = '4rem',
   ...props
 }: CardProps) => {
   const isFlipped = cardState !== 0;
 
   const defaultFaceClass =
-    'absolute w-full h-full backface-hidden rounded-lg flex justify-center items-center text-xl text-white font-bold';
+    'absolute w-full h-full backface-hidden rounded-sm flex justify-center items-center text-xl text-white font-bold';
   const backFaceStyle = cn(
     defaultFaceClass,
     'rotate-y-180',
@@ -31,7 +31,7 @@ const Card = ({
 
   return (
     <div
-      className="perspective-1000"
+      className="perspective-1000 min-w-12"
       style={{ width, height }}
     >
       <div
