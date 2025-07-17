@@ -21,7 +21,7 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
 
   return (
     <div className="w-full flex items-center justify-center gap-6">
-      <span className="w-[25%] text-right">{candidate1}</span>
+      <span className="w-[25%] text-right break-keep">{candidate1}</span>
 
       {totalVotes === 0 ? (
         <div className="w-[50%] h-5 bg-container-100 rounded-full flex items-center justify-center">
@@ -51,7 +51,7 @@ const Bar = ({ votes1, candidate1, votes2, candidate2 }: BarProps) => {
         </div>
       )}
 
-      <span className="w-[25%]">{candidate2}</span>
+      <span className="w-[25%] break-keep">{candidate2}</span>
     </div>
   );
 };
