@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/useToast';
 import useModalStore from '@/store/useModalStore';
 import { BalanceGameResultResponse } from '@/types/api';
 
-import Bar from './Bar';
+import ResultRow from './ResultRow';
 
 interface FinalResultChartProps {
   data: BalanceGameResultResponse[];
@@ -54,7 +54,7 @@ const FinalResultChart = ({ data }: FinalResultChartProps) => {
         ref={chartRef}
       >
         {data.map((barData, index) => (
-          <Bar
+          <ResultRow
             key={index}
             data={barData}
           />

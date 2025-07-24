@@ -7,11 +7,11 @@ import {
 import { cn } from '@/lib/utils';
 import { BalanceGameResultResponse } from '@/types/api';
 
-export interface BarProps {
+export interface ResultRowProps {
   data: BalanceGameResultResponse;
 }
 
-const Bar = ({ data }: BarProps) => {
+const ResultRow = ({ data }: ResultRowProps) => {
   const votesA = data.result.a.length;
   const votesB = data.result.b.length;
   const candidateA = data.a;
@@ -88,4 +88,4 @@ const BarItem = ({ className, isLeft, percentage, votes }: BarItemProps) => (
   </TooltipProvider>
 );
 
-export default Bar;
+export default ResultRow;
