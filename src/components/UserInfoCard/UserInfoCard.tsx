@@ -57,6 +57,7 @@ const UserInfoCard = ({
           height={64}
           priority
         />
+        <figcaption className="sr-only">{`${fileName} 캐릭터 이미지`}</figcaption>
       </figure>
       <div className="w-[calc(100%-4rem)] pl-4 pr-1 flex items-center font-bold justify-between gap-1">
         <span className={cn(myName === name && 'text-primary-400')}>
