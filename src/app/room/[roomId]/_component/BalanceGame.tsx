@@ -9,7 +9,6 @@ import {
   FinalResultChart,
   PartialResultChart,
 } from '@/components';
-import { BarProps } from '@/components/FinalResultChart/Bar';
 import { ROOM_STATUS } from '@/constants/room';
 import { useFetchBalanceGameResults } from '@/hooks/queries';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
@@ -50,14 +49,6 @@ const BalanceGame = ({
     round:
       roomStatus === ROOM_STATUS.FINAL_RESULT ? undefined : round.currentRound,
   });
-
-  const finalResult: BarProps[] =
-    gameResults?.map((data) => ({
-      candidate1: data.a,
-      candidate2: data.b,
-      votes1: data.result.a.length,
-      votes2: data.result.b.length,
-    })) || [];
 
   useEffect(() => {
     if (isTimeout) {
@@ -100,8 +91,8 @@ const BalanceGame = ({
       {roomStatus === ROOM_STATUS.RESULT &&
         gameResults &&
         gameResults.length !== 0 && <PartialResultChart data={gameResults} />}
-      {roomStatus === ROOM_STATUS.FINAL_RESULT && finalResult.length !== 0 && (
-        <FinalResultChart data={finalResult} />
+      {roomStatus === ROOM_STATUS.FINAL_RESULT && gameResults.length !== 0 && (
+        <FinalResultChart data={gameResults} />
       )}
     </>
   );
