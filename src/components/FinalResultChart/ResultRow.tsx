@@ -3,7 +3,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/Tooltip';
+} from '@/components';
 import { cn } from '@/lib/utils';
 import { BalanceGameResultResponse } from '@/types/api';
 
@@ -19,73 +19,66 @@ const ResultRow = ({ data }: ResultRowProps) => {
 
   const totalVotes = votesA + votesB;
 
-  const percentageCandidate1 = (votesA / totalVotes) * 100;
-  const percentageCandidate2 = (votesB / totalVotes) * 100;
+  const percentageCandidateA = (votesA / totalVotes) * 100;
+  const percentageCandidateB = (votesB / totalVotes) * 100;
 
   return (
-    <div className="w-full flex items-center justify-center gap-6">
-      <span className="w-[25%] text-right break-keep">{candidateA}</span>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="w-full flex items-center justify-center gap-6">
+            <span className="w-[25%] text-right break-keep">{candidateA}</span>
 
-      {totalVotes === 0 ? (
-        <div className="w-[50%] h-5 bg-container-100 rounded-full flex items-center justify-center">
-          <span className="font-bold text-sm text-purple text-center w-full">
-            0
-          </span>
-        </div>
-      ) : (
-        <div className="flex h-5 w-[50%]">
-          {votesA !== 0 && (
-            <BarItem
-              className={cn('bg-primary', votesB === 0 && 'rounded-r-full')}
-              isLeft={true}
-              percentage={percentageCandidate1}
-              votes={votesA}
-            />
-          )}
+            {totalVotes === 0 ? (
+              <div className="w-[50%] h-5 bg-container-100 rounded-full flex items-center justify-center">
+                <span className="font-bold text-sm text-purple text-center w-full">
+                  0
+                </span>
+              </div>
+            ) : (
+              <div className="flex h-5 w-[50%] overflow-hidden rounded-full">
+                {votesA > 0 && (
+                  <div
+                    className={cn(
+                      'bg-primary flex items-center justify-center',
+                      votesB === 0 && 'rounded-r-full',
+                      'rounded-l-full'
+                    )}
+                    style={{ width: `${percentageCandidateA}%` }}
+                  >
+                    <span className="font-bold text-sm text-purple text-center w-full">
+                      {votesA}
+                    </span>
+                  </div>
+                )}
 
-          {votesB !== 0 && (
-            <BarItem
-              className={cn('bg-secondary', votesA === 0 && 'rounded-l-full')}
-              isLeft={false}
-              percentage={percentageCandidate2}
-              votes={votesB}
-            />
-          )}
-        </div>
-      )}
+                {votesB > 0 && (
+                  <div
+                    className={cn(
+                      'bg-secondary flex items-center justify-center',
+                      votesA === 0 && 'rounded-l-full',
+                      'rounded-r-full'
+                    )}
+                    style={{ width: `${percentageCandidateB}%` }}
+                  >
+                    <span className="font-bold text-sm text-purple text-center w-full">
+                      {votesB}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
 
-      <span className="w-[25%] break-keep">{candidateB}</span>
-    </div>
+            <span className="w-[25%] break-keep">{candidateB}</span>
+          </div>
+        </TooltipTrigger>
+
+        <TooltipContent side="top">
+          <p className="max-w-[200px] text-center">{data.q}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
-
-interface BarItemProps {
-  className: string;
-  isLeft: boolean;
-  percentage: number;
-  votes: number;
-}
-
-const BarItem = ({ className, isLeft, percentage, votes }: BarItemProps) => (
-  <TooltipProvider>
-    <Tooltip>
-      <TooltipTrigger
-        className={cn(
-          className,
-          'flex items-center justify-center',
-          isLeft ? 'rounded-l-full' : 'rounded-r-full'
-        )}
-        style={{ width: `${percentage}%` }}
-      >
-        <span className="font-bold text-sm text-purple text-center w-full">
-          {votes}
-        </span>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>{`${percentage.toFixed(1)}%`}</p>
-      </TooltipContent>
-    </Tooltip>
-  </TooltipProvider>
-);
 
 export default ResultRow;
