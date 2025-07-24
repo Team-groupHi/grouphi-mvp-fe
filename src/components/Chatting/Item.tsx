@@ -22,12 +22,12 @@ const Item = ({ sender, content, index, type }: ItemProps) => {
       )}
     >
       {type == 'system' ? (
-        <span className="font-semibold">{content}</span>
+        <span className="font-semibold break-words">{content}</span>
       ) : (
         <div>
           <span className="font-semibold">{sender}</span>
           {`: `}
-          <span>{content}</span>
+          <span className="break-words hyphens-auto">{content}</span>
         </div>
       )}
     </div>
