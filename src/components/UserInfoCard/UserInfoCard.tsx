@@ -53,8 +53,8 @@ const UserInfoCard = ({
         <Image
           src={`/images/characters/${fileName}.webp`}
           alt="profile"
-          width={64}
-          height={64}
+          width={58}
+          height={58}
           priority
         />
         <figcaption className="sr-only">{`${fileName} 캐릭터 이미지`}</figcaption>
