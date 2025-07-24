@@ -49,7 +49,7 @@ const UserInfoCard = ({
           />
         </section>
       )}
-      <figure className="rounded-l-lg overflow-hidden w-[4rem] relative bg-white">
+      <figure className="flex justify-center items-center rounded-l-lg overflow-hidden w-[4rem] bg-white">
         <Image
           src={`/images/characters/${fileName}.webp`}
           alt="profile"
