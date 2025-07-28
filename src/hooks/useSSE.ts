@@ -18,7 +18,6 @@ export const useSSE = () => {
 
     eventSource.onerror = (event) => {
       setError(event);
-      eventSource.close();
     };
 
     return () => {
