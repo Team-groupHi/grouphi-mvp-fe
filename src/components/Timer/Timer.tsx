@@ -37,7 +37,7 @@ const Timer = ({ playSeconds, setIsTimeout }: TimerProps) => {
   useEffect(() => {
     rafId.current = requestAnimationFrame(updateTimer);
     return () => cancelAnimationFrame(rafId.current);
-  }, [updateTimer]);
+  }, []);
 
   useEffect(() => {
     if (timeLeft <= 0) {
