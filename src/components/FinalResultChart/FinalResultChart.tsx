@@ -53,9 +53,9 @@ const FinalResultChart = ({ data }: FinalResultChartProps) => {
         className="w-full gap-2 flex flex-col items-center bg-container-600 p-3"
         ref={chartRef}
       >
-        {data.map((barData, index) => (
+        {data.map((barData) => (
           <ResultRow
-            key={index}
+            key={barData.round}
             data={barData}
           />
         ))}
