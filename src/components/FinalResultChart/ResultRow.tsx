@@ -19,8 +19,8 @@ const ResultRow = ({ data }: ResultRowProps) => {
 
   const totalVotes = votesA + votesB;
 
-  const percentageCandidateA = (votesA / totalVotes) * 100;
-  const percentageCandidateB = (votesB / totalVotes) * 100;
+  const percentageCandidateA = totalVotes > 0 ? (votesA / totalVotes) * 100 : 0;
+  const percentageCandidateB = totalVotes > 0 ? (votesB / totalVotes) * 100 : 0;
 
   return (
     <TooltipProvider>
