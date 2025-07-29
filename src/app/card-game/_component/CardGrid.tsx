@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 import Card from './Card';
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
   row: number;
   column: number;
   // @TODO: myTeam 값 연결하기
@@ -13,7 +13,13 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   cardSize?: { width: number | string; height: number | string };
 }
 
-const CardGrid = ({ row, column, myTeam, cardSize, ...props }: CardProps) => {
+const CardGrid = ({
+  row,
+  column,
+  myTeam,
+  cardSize,
+  ...props
+}: CardGridProps) => {
   const [cardStates, setCardStates] = useState<number[]>(
     Array(row * column).fill(0)
   );
