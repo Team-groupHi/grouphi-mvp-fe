@@ -4,6 +4,7 @@ export {
   BalanceGameQuestionCard,
 } from './BalanceGame';
 export { Button, buttonVariants } from './Button';
+export { Card, CardGameScoreboard, CardGrid } from './CardGame';
 export {
   Carousel,
   CarouselContent,

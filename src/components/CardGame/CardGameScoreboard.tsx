@@ -10,11 +10,14 @@ interface TeamScore {
   score: number;
 }
 
-interface ScoreboardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CardGameScoreboardProps extends React.HTMLAttributes<HTMLDivElement> {
   scoreData: TeamScore[];
 }
 
-const Scoreboard = ({ scoreData, ...props }: ScoreboardProps) => {
+const CardGameScoreboard = ({
+  scoreData,
+  ...props
+}: CardGameScoreboardProps) => {
   return (
     <section
       aria-label="점수판"
@@ -59,4 +62,4 @@ const Scoreboard = ({ scoreData, ...props }: ScoreboardProps) => {
   );
 };
 
-export default Scoreboard;
+export default CardGameScoreboard;
