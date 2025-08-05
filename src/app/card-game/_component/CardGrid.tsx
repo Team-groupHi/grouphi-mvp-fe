@@ -27,9 +27,6 @@ const CardGrid = ({
 
   const handleCardClick = (index: number) => {
     setCardStates((prev) => {
-      if (prev[index] !== 0) {
-        return prev;
-      }
       const newStates = [...prev];
       newStates[index] = myTeam;
       return newStates;
