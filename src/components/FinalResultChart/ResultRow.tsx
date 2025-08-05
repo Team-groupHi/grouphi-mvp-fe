@@ -27,7 +27,14 @@ const ResultRow = ({ data }: ResultRowProps) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="w-full flex items-center justify-center gap-6">
-            <span className="w-[25%] text-right break-keep">{candidateA}</span>
+            <span
+              className={cn(
+                'w-[25%] text-right break-keep',
+                votesA > votesB && 'font-bold'
+              )}
+            >
+              {candidateA}
+            </span>
 
             {totalVotes === 0 ? (
               <div className="w-[50%] h-5 bg-container-100 rounded-full flex items-center justify-center">
@@ -69,7 +76,14 @@ const ResultRow = ({ data }: ResultRowProps) => {
               </div>
             )}
 
-            <span className="w-[25%] break-keep">{candidateB}</span>
+            <span
+              className={cn(
+                'w-[25%] break-keep',
+                votesB > votesA && 'font-bold'
+              )}
+            >
+              {candidateB}
+            </span>
           </div>
         </TooltipTrigger>
 
