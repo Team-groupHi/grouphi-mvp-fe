@@ -34,20 +34,24 @@ const CardGrid = ({
   };
 
   return (
-    <div
-      className={cn(gridClass, props.className)}
-      {...props}
-    >
-      {cardStates.map((cardState, index) => (
-        <Card
-          key={index}
-          width={cardSize?.width}
-          height={cardSize?.height}
-          cardState={cardState}
-          onClick={() => handleCardClick(index)}
-        />
-      ))}
-    </div>
+    <>
+      <div
+        className={cn(gridClass, props.className)}
+        {...props}
+      >
+        {cardStates.map((cardState, index) => (
+          <Card
+            key={index}
+            width={cardSize?.width}
+            height={cardSize?.height}
+            cardState={cardState}
+            myTeam={myTeam}
+            opposingTeam={myTeam === 1 ? 2 : 1}
+            onClick={() => handleCardClick(index)}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 
