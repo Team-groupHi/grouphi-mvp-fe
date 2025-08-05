@@ -37,10 +37,8 @@ const ResultRow = ({ data }: ResultRowProps) => {
             </span>
           </TooltipTrigger>
           <TooltipContent side="bottom">
-            <p className="text-left whitespace-pre-wrap">
-              {data.result.a.length > 0
-                ? data.result.a.join('\n')
-                : '투표자가 없어요!'}
+            <p className="text-right whitespace-pre-wrap">
+              {votesA > 0 ? data.result.a.join('\n') : '투표자가 없어요!'}
             </p>
           </TooltipContent>
         </Tooltip>
@@ -88,7 +86,7 @@ const ResultRow = ({ data }: ResultRowProps) => {
             )}
           </TooltipTrigger>
           <TooltipContent side="top">
-            <p className="max-w-[200px] text-center">{data.q}</p>
+            <p className="mtext-center">{data.q}</p>
           </TooltipContent>
         </Tooltip>
 
@@ -104,10 +102,8 @@ const ResultRow = ({ data }: ResultRowProps) => {
             </span>
           </TooltipTrigger>
           <TooltipContent side="bottom">
-            <p className="max-w-[200px] text-left whitespace-pre-wrap">
-              {data.result.b.length > 0
-                ? data.result.b.join('\n')
-                : '투표자가 없어요!'}
+            <p className="whitespace-pre-wrap">
+              {votesB > 0 ? data.result.b.join('\n') : '투표자가 없어요!'}
             </p>
           </TooltipContent>
         </Tooltip>
