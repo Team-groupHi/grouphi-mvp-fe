@@ -8,11 +8,12 @@ import { Button } from '@/components/Button';
 import { MODAL_TYPE } from '@/constants/modal';
 import { useToast } from '@/hooks/useToast';
 import useModalStore from '@/store/useModalStore';
+import { BalanceGameResultResponse } from '@/types/api';
 
-import Bar, { BarProps } from './Bar';
+import ResultRow from './ResultRow';
 
 interface FinalResultChartProps {
-  data: BarProps[];
+  data: BalanceGameResultResponse[];
 }
 
 const FinalResultChart = ({ data }: FinalResultChartProps) => {
@@ -52,10 +53,10 @@ const FinalResultChart = ({ data }: FinalResultChartProps) => {
         className="w-full gap-2 flex flex-col items-center bg-container-600 p-3"
         ref={chartRef}
       >
-        {data.map((result, index) => (
-          <Bar
-            key={index}
-            {...result}
+        {data.map((barData) => (
+          <ResultRow
+            key={barData.round}
+            data={barData}
           />
         ))}
       </section>

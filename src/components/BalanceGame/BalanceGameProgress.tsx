@@ -21,7 +21,6 @@ const BalanceGameProgress = ({
   setIsTimeout,
 }: BalanceGameProgressProps) => {
   const { round } = useBalanceGameStore();
-
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleSelect = (option: string) => {
@@ -42,8 +41,7 @@ const BalanceGameProgress = ({
     <main className="flex flex-col items-center justify-center p-8 h-full">
       <section className="w-full mb-4 flex flex-col items-center gap-4">
         <Timer
-          startTime={round.startTime}
-          endTime={round.endTime}
+          playSeconds={round.playSeconds}
           setIsTimeout={setIsTimeout}
         />
       </section>

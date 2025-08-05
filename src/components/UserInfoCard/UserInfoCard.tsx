@@ -49,14 +49,15 @@ const UserInfoCard = ({
           />
         </section>
       )}
-      <figure className="rounded-l-lg overflow-hidden w-[4rem] relative bg-white">
+      <figure className="flex justify-center items-center rounded-l-lg overflow-hidden w-[4rem] bg-white">
         <Image
           src={`/images/characters/${fileName}.webp`}
           alt="profile"
-          width={64}
-          height={64}
+          width={58}
+          height={58}
           priority
         />
+        <figcaption className="sr-only">{`${fileName} 캐릭터 이미지`}</figcaption>
       </figure>
       <div className="w-[calc(100%-4rem)] pl-4 pr-1 flex items-center font-bold justify-between gap-1">
         <span className={cn(myName === name && 'text-primary-400')}>
