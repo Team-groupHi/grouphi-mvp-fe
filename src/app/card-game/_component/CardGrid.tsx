@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
-import Card from './Card';
+import Card, { CardState } from './Card';
 
 interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
   row: number;
@@ -20,7 +20,7 @@ const CardGrid = ({
   cardSize,
   ...props
 }: CardGridProps) => {
-  const [cardStates, setCardStates] = useState<number[]>(
+  const [cardStates, setCardStates] = useState<CardState[]>(
     Array(row * column).fill(0)
   );
   const gridClass = `grid grid-rows-${row} grid-cols-${column} gap-100`;

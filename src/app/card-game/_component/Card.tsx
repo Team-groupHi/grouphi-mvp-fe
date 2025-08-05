@@ -3,7 +3,7 @@ import React from 'react';
 
 import { cn } from '@/lib/utils';
 
-type CardState = 0 | 1 | 2;
+export type CardState = 0 | 1 | 2;
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   cardState: CardState;
