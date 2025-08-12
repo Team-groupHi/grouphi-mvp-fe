@@ -38,6 +38,7 @@ const BalanceGameControl = ({
     <>
       {roomStatus === ROOM_STATUS.RESULT && isRoomManager && (
         <Button
+          size="md"
           className="w-full"
           onClick={handleEnterNextRound}
         >
@@ -48,6 +49,7 @@ const BalanceGameControl = ({
       )}
       {roomStatus === ROOM_STATUS.FINAL_RESULT && isRoomManager && (
         <Button
+          size="md"
           className="w-full"
           onClick={handleMoveToWaitingRoom}
         >

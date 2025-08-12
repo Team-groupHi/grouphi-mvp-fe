@@ -7,7 +7,7 @@ import {
   Legend,
   Tooltip,
 } from 'chart.js';
-import React, { HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
 import { cn } from '@/lib/utils';
@@ -29,7 +29,7 @@ const PieChart = ({
   className,
   ...props
 }: PieChartProps) => {
-  const defaultClassName = 'w-96';
+  const defaultClassName = 'w-72';
   const combinedClassName = className
     ? cn(defaultClassName, className)
     : defaultClassName;
@@ -73,7 +73,7 @@ const PieChart = ({
 
   if (data.length === 0) {
     return (
-      <section className="min-w-96 flex justify-center items-center rounded bg-black/50">
+      <section className="min-w-72 flex justify-center items-center rounded bg-black/50">
         데이터가 없습니다
       </section>
     );

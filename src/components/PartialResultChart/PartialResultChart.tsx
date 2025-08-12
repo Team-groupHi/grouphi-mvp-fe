@@ -23,7 +23,7 @@ const PartialResultChart = ({ data }: PartialResultChartProps) => {
   const { round } = useBalanceGameStore();
 
   return (
-    <section className="bg-container-600 h-full w-full min-h-fit border-white/50 flex flex-col justify-between items-center rounded-lg gap-8 p-8">
+    <section className="bg-container-600 h-full w-full min-h-fit border-white/50 flex flex-col justify-between items-center rounded-lg gap-8 p-5">
       <section>
         <h1 className="pt-600 text-title1 font-semibold">
           {partialData.round}라운드 결과
@@ -49,7 +49,7 @@ const PartialResultChart = ({ data }: PartialResultChartProps) => {
         <UserList
           title={UNSELECTED}
           data={partialData.result.c.join(', ')}
-          className="selected-c w-full bg-container-700/70"
+          className="selected-c w-[50%] bg-container-700/70"
         />
       )}
       <section className="self-end">
