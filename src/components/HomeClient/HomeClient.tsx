@@ -45,6 +45,12 @@ const HomeClient = ({ games }: HomeClientProps) => {
             <span>게임 준비중입니다</span>
           </section>
         )}
+        <aside
+          className="ad-slot text-center bg-gray-800 h-28 invisible"
+          aria-label="광고 영역"
+        >
+          {/* TODO: 광고 붙이기 */}
+        </aside>
       </main>
       <Footer />
     </div>
