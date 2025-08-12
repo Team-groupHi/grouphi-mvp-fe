@@ -135,7 +135,7 @@ const WaitingRoom = ({
   }
 
   return (
-    <section className="w-screen min-h-screen flex items-start gap-4 shrink-0 py-20">
+    <section className="w-screen min-h-screen flex items-start gap-4 shrink-0 py-20 2xl:justify-center">
       <UserList players={players} />
       <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] min-w-max max-w-[70rem] w-full rounded-lg">
         <ErrorHandlingWrapper
