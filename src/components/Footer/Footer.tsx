@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="text-gray-300 text-center text-body3 py-2 mb-400">
+    <footer className="flex justify-center items-center text-gray-300 text-center text-body3 h-20">
       <div className="space-y-1">
         <div>© 2024-2025 Team grouphi. All Rights Reserved.</div>
         <div>
