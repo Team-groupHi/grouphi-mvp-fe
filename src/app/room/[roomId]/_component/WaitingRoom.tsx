@@ -17,6 +17,7 @@ import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
 import { Player } from '@/types/api';
+import { isDevelopment } from '@/utils/env';
 import { gameToType } from '@/utils/form';
 
 import GamePanel from './GamePanel';
@@ -134,10 +135,9 @@ const WaitingRoom = ({
   }
 
   return (
-    <section className="w-screen min-h-screen flex items-center gap-10 shrink-0 py-500">
+    <section className="w-screen min-h-screen flex items-start gap-4 shrink-0 py-20">
       <UserList players={players} />
-
-      <section className="h-[80vh] min-h-[30rem] min-w-max max-w-[70rem] w-full bg-container/50 rounded-lg">
+      <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] min-w-max max-w-[70rem] w-full rounded-lg">
         <ErrorHandlingWrapper
           fallbackComponent={ErrorFallback}
           suspenseFallback={<Spinner />}
@@ -151,9 +151,18 @@ const WaitingRoom = ({
             sendMessage={sendMessage}
           />
         </ErrorHandlingWrapper>
+        {isDevelopment && (
+          <aside
+            className="ad-slot self-center text-center bg-black w-ads-leaderboard-wide h-ads-leaderboard rounded shrink-0"
+            aria-label="광고 영역"
+          >
+            {/* TODO: 광고 붙이기 */}
+            와이드 리더보드 광고 영역
+          </aside>
+        )}
       </section>
 
-      <section className="flex flex-col h-[80vh] min-h-[30rem] w-[25vw] min-w-[18rem] max-w-[23rem] pr-10 gap-2">
+      <section className="flex flex-col h-[calc(100vh-12rem)] min-h-[30rem] w-[25vw] min-w-[18rem] max-w-[23rem] pr-10 gap-2">
         <Chatting
           myName={myName}
           chatMessages={chatMessages}
