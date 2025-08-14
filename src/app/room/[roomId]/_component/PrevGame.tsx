@@ -95,7 +95,7 @@ const PrevGame = ({
   };
 
   return (
-    <section className="bg-container/60 h-full flex flex-col justify-center items-center gap-7 px-900 rounded-lg">
+    <section className="bg-container/60 h-full flex flex-col justify-center items-center gap-7 p-800 rounded-lg">
       <span className="font-semibold">잠시 후 게임이 시작됩니다.</span>
       <GameListCard
         title={roomDetail.game.nameKr}
