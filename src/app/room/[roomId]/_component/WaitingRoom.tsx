@@ -5,7 +5,7 @@ import * as StompJS from '@stomp/stompjs';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { Chatting, Spinner } from '@/components';
+import { AdBanner, Chatting, Spinner } from '@/components';
 import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
 import ErrorHandlingWrapper from '@/components/ErrorBoundary/ErrorHandlingWrapper';
 import { GAME_TYPES } from '@/constants/form';
@@ -152,13 +152,7 @@ const WaitingRoom = ({
           />
         </ErrorHandlingWrapper>
         {isDevelopment && (
-          <aside
-            className="ad-slot self-center text-center bg-black w-ads-leaderboard-wide h-ads-leaderboard rounded shrink-0"
-            aria-label="광고 영역"
-          >
-            {/* TODO: 광고 붙이기 */}
-            와이드 리더보드 광고 영역
-          </aside>
+          <AdBanner type="wideLeaderboard">와이드 리더보드 광고 영역</AdBanner>
         )}
       </section>
 

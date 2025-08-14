@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import GameListCarousel, { Footer, MainHeader } from '@/components';
+import GameListCarousel, { AdBanner, Footer, MainHeader } from '@/components';
 import useGameStore from '@/store/useGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { GameResponse } from '@/types/api';
@@ -47,13 +47,7 @@ const HomeClient = ({ games }: HomeClientProps) => {
           </section>
         )}
         {isDevelopment && (
-          <aside
-            className="ad-slot text-center bg-black w-ads-leaderboard-wide h-ads-leaderboard rounded shrink-0"
-            aria-label="광고 영역"
-          >
-            {/* TODO: 광고 붙이기 */}
-            와이드 리더보드 광고 영역
-          </aside>
+          <AdBanner type="wideLeaderboard">와이드 리더보드 광고 영역</AdBanner>
         )}
       </main>
       <Footer />
