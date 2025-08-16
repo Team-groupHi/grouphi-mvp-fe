@@ -37,7 +37,7 @@ const HomeClient = ({ games }: HomeClientProps) => {
             id="gamelist"
             className="my-600 flex flex-col grow items-center"
           >
-            <span className="text-lg">Game List</span>
+            <span className="text-md 2xl:text-lg">Game List</span>
             <span className="text-md pb-300">▽</span>
             <GameListCarousel games={games} />
           </section>
