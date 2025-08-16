@@ -51,7 +51,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`font-sans antialiased text-base text relative min-h-screen bg-gradient-purple`}
+        className={`font-sans antialiased text-sm 2xl:text-base text relative min-h-screen bg-gradient-purple`}
       >
         {GA4_ID && process.env.NODE_ENV === 'production' && (
           <>
