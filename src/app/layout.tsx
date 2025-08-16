@@ -1,5 +1,6 @@
 import './globals.css';
 
+import { Viewport } from 'next';
 import Script from 'next/script';
 import React from 'react';
 
@@ -16,6 +17,11 @@ import Providers from '@/utils/providers';
 import { notoSans, pretendard } from './fonts/fonts';
 
 export const metadata = METADATA;
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export default function RootLayout({
   children,
