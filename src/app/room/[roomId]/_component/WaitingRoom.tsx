@@ -153,7 +153,12 @@ const WaitingRoom = ({
           />
         </ErrorHandlingWrapper>
         {isDevelopment && (
-          <AdBanner type="wideLeaderboard">와이드 리더보드 광고 영역</AdBanner>
+          <AdBanner
+            type="leaderboard"
+            className="w-full"
+          >
+            리더보드 광고 영역
+          </AdBanner>
         )}
       </section>
 
