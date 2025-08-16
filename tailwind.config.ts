@@ -33,7 +33,18 @@ const config: Config = {
         '2xl': '1440px',
       },
       fontFamily: {
-        sans: ['var(--font-pretendard)', 'var(--font-noto-sans)', 'sans-serif'],
+        sans: [
+          'var(--font-pretendard)',
+          'var(--font-noto-sans)',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif',
+        ],
       },
       fontSize: {
         DEFAULT: '1rem',
