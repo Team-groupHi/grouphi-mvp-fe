@@ -138,7 +138,7 @@ const WaitingRoom = ({
   return (
     <section className="w-screen min-h-screen flex items-start justify-start 2xl:justify-center gap-4 shrink-0 py-20 overflow-y-hidden">
       <UserList players={players} />
-      <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] max-w-[60%] min-w-[22.5rem] w-full rounded-lg">
+      <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] max-w-[60%] min-w-max w-full rounded-lg shrink-0">
         <ErrorHandlingWrapper
           fallbackComponent={ErrorFallback}
           suspenseFallback={<Spinner />}
@@ -162,7 +162,7 @@ const WaitingRoom = ({
         )}
       </section>
 
-      <section className="flex flex-col h-[calc(100vh-12rem)] min-h-[30rem] w-[25vw] min-w-[17rem] max-w-[18rem] pr-9 gap-2">
+      <section className="flex flex-col h-[calc(100vh-12rem)] min-h-[30rem] w-[25vw] min-w-[16rem] max-w-[18rem] pr-9 gap-2">
         <Chatting
           myName={myName}
           chatMessages={chatMessages}
