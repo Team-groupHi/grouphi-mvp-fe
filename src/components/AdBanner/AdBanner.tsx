@@ -21,7 +21,7 @@ const AdBanner = ({
     wideLeaderboard: 'w-ads-leaderboard-wide h-ads-leaderboard',
   };
   return (
-    <aside
+    <div
       className={cn(
         'ad-slot text-center bg-black rounded shrink-0',
         adStyle[type]
@@ -30,7 +30,7 @@ const AdBanner = ({
       {...props}
     >
       {children}
-    </aside>
+    </div>
   );
 };
 
