@@ -23,6 +23,7 @@ import { gameToType } from '@/utils/form';
 import GamePanel from './GamePanel';
 import RoomControl from './RoomControl';
 import UserList from './UserList';
+
 interface WaitingRoomProps {
   connect: (params: EnterRoomProps) => void;
   chatMessages: ChatMessage[];
@@ -135,9 +136,9 @@ const WaitingRoom = ({
   }
 
   return (
-    <section className="w-screen min-h-screen flex items-start gap-4 shrink-0 py-20 2xl:justify-center">
+    <section className="w-screen min-h-screen flex items-start justify-start 2xl:justify-center gap-4 shrink-0 py-20 overflow-y-hidden">
       <UserList players={players} />
-      <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] min-w-max max-w-[70rem] w-full rounded-lg">
+      <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] max-w-[60%] min-w-[22.5rem] w-full rounded-lg">
         <ErrorHandlingWrapper
           fallbackComponent={ErrorFallback}
           suspenseFallback={<Spinner />}
