@@ -1,3 +1,4 @@
+export { AdBanner } from './AdBanner';
 export {
   BalanceGameControl,
   BalanceGameProgress,

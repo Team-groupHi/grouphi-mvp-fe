@@ -71,6 +71,8 @@ const config: Config = {
         'icon-sm': '1rem',
         'icon-md': '1.5rem',
         'icon-lg': '2.25rem',
+        'ads-leaderboard': '45.5rem', // 728px
+        'ads-leaderboard-wide': '60.625rem', // 970px
       },
       height: {
         sm: '2rem',
@@ -81,6 +83,7 @@ const config: Config = {
         'icon-sm': '1rem',
         'icon-md': '1.5rem',
         'icon-lg': '2.25rem',
+        'ads-leaderboard': '5.625rem', // 90px
       },
       spacing: {
         '50': '0.125rem', // 2px

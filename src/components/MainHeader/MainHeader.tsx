@@ -28,7 +28,7 @@ const MainHeader = () => {
   ];
 
   return (
-    <header className="flex justify-between p-800 pb-0 mb-800">
+    <header className="flex justify-between items-end h-20 px-800">
       <Logo onClick={() => router.push(PATH.HOME)} />
       <div className="flex">
         <NicknameBar

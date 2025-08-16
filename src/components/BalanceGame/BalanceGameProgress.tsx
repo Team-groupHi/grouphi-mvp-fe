@@ -38,7 +38,7 @@ const BalanceGameProgress = ({
   };
 
   return (
-    <main className="flex flex-col items-center justify-center p-8 h-full">
+    <main className="bg-container/60 flex flex-col items-center justify-center p-8 h-full rounded-lg">
       <section className="w-full mb-4 flex flex-col items-center gap-4">
         <Timer
           playSeconds={round.playSeconds}

@@ -95,7 +95,7 @@ const PrevGame = ({
   };
 
   return (
-    <section className="w-full h-full flex flex-col justify-center items-center gap-7 px-900">
+    <section className="bg-container/60 h-full flex flex-col justify-center items-center gap-7 p-800 rounded-lg">
       <span className="font-semibold">잠시 후 게임이 시작됩니다.</span>
       <GameListCard
         title={roomDetail.game.nameKr}
@@ -103,7 +103,6 @@ const PrevGame = ({
         src={roomDetail.game.thumbnailUrl}
         className="h-16 pointer-events-none"
       />
-
       <section className="flex flex-col gap-2 w-full items-center">
         {isRoomManager && (
           <>
