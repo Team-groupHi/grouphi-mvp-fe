@@ -26,18 +26,12 @@ const GameListCard = ({
   const pathname = usePathname();
 
   const containerDefaultClassName =
-    'basis-1/3 max-w-64 2xl:max-w-80 min-w-48 2xl:min-w-60 aspect-[3/2] relative bg-primary-container shadow rounded-md overflow-hidden';
-  const containerClassName =
-    pathname === PATH.HOME
-      ? containerDefaultClassName
-      : cn(containerDefaultClassName, 'max-w-md min-w-80');
+    'basis-1/3 min-w-48 max-w-64 2xl:min-w-72 2xl:max-w-80 min-h-fit aspect-[3/2] relative bg-primary-container shadow rounded-md overflow-hidden';
 
   return (
     <article
       data-testid="gamelistcard-container"
-      className={
-        className ? cn(containerClassName, className) : containerClassName
-      }
+      className={cn(containerDefaultClassName, className)}
       {...props}
     >
       {src && (
