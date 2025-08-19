@@ -23,12 +23,28 @@ const ResultRow = ({ data }: ResultRowProps) => {
   const percentageCandidateB = totalVotes > 0 ? (votesB / totalVotes) * 100 : 0;
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="w-full flex items-center justify-center gap-6">
-            <span className="w-[25%] text-right break-keep">{candidateA}</span>
+    <TooltipProvider delayDuration={0}>
+      <div className="w-full flex items-center justify-center gap-6">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span
+              className={cn(
+                'w-[25%] text-right break-keep',
+                votesA > votesB && 'font-bold'
+              )}
+            >
+              {candidateA}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <p className="text-right whitespace-pre-wrap">
+              {votesA > 0 ? data.result.a.join('\n') : '투표자가 없어요!'}
+            </p>
+          </TooltipContent>
+        </Tooltip>
 
+        <Tooltip>
+          <TooltipTrigger asChild>
             {totalVotes === 0 ? (
               <div className="w-[50%] h-5 bg-container-100 rounded-full flex items-center justify-center">
                 <span className="font-bold text-sm text-purple text-center w-full">
@@ -68,15 +84,30 @@ const ResultRow = ({ data }: ResultRowProps) => {
                 )}
               </div>
             )}
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            <p className="mtext-center">{data.q}</p>
+          </TooltipContent>
+        </Tooltip>
 
-            <span className="w-[25%] break-keep">{candidateB}</span>
-          </div>
-        </TooltipTrigger>
-
-        <TooltipContent side="top">
-          <p className="max-w-[200px] text-center">{data.q}</p>
-        </TooltipContent>
-      </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span
+              className={cn(
+                'w-[25%] break-keep',
+                votesB > votesA && 'font-bold'
+              )}
+            >
+              {candidateB}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <p className="whitespace-pre-wrap">
+              {votesB > 0 ? data.result.b.join('\n') : '투표자가 없어요!'}
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
     </TooltipProvider>
   );
 };
