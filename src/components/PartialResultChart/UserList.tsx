@@ -12,12 +12,12 @@ const UserList = ({ title, data, className, ...props }: UserListProps) => {
   return (
     <section
       className={cn(
-        'min-w-[13rem] max-w-[54rem] py-500 px-400 rounded-sm flex flex-col gap-300 items-center',
+        'text-sm min-w-[12rem] max-w-[54rem] py-500 px-400 rounded-sm flex flex-col gap-300 items-center',
         className
       )}
       {...props}
     >
-      <h1 className="text-title2">{title}</h1>
+      <h1 className="text-title3">{title}</h1>
       <hr className="w-full border-white/50" />
       <section className="flex flex-col gap-300 items-center">
         {typeof data === 'string'
@@ -25,7 +25,7 @@ const UserList = ({ title, data, className, ...props }: UserListProps) => {
           : data.map((user, index) => (
               <span
                 key={user + index}
-                className="text-body1"
+                className="text-body2"
               >
                 {user}
               </span>

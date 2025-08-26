@@ -11,7 +11,7 @@ const Item = ({ sender, content, index, type }: ItemProps) => {
   return (
     <div
       className={cn(
-        'p-3 ',
+        'p-3',
         index === 0 && 'rounded-t-lg',
         type === 'system'
           ? 'bg-primary/20'
@@ -22,12 +22,12 @@ const Item = ({ sender, content, index, type }: ItemProps) => {
       )}
     >
       {type == 'system' ? (
-        <span className="font-semibold">{content}</span>
+        <span className="font-semibold break-words">{content}</span>
       ) : (
         <div>
           <span className="font-semibold">{sender}</span>
-          {`: `}
-          <span>{content}</span>
+          {` : `}
+          <span className="break-words hyphens-auto">{content}</span>
         </div>
       )}
     </div>

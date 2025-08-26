@@ -1,27 +1,46 @@
-export interface GamesResponse {
-  id: 'string';
-  nameKr: 'string';
-  nameEn: 'string';
-  descriptionKr: 'string';
-  descriptionEn: 'string';
-  thumbnailUrl: 'string' | null;
+/* Request */
+
+export interface RoomPlayerNameValidationRequest {
+  roomId: string;
+  name: string;
 }
 
-export interface RoomGetResponse {
+export interface BalanceGameResultRequest {
+  roomId: string;
+  round?: number;
+}
+
+export interface QnaGameResultRequest {
+  roomId: string;
+  round?: number;
+}
+
+/* Response */
+
+export interface GameResponse {
+  id: string;
+  nameKr: string;
+  nameEn: string;
+  descriptionKr: string;
+  descriptionEn: string;
+  thumbnailUrl: string | null;
+}
+
+export interface RoomResponse {
   id: string;
   status: 'WAITING' | 'PLAYING';
-  game: GamesResponse;
-  hostName: string;
+  game: GameResponse;
   players: Player[];
 }
 
 export interface Player {
   name: string;
   isReady: boolean;
+  isHost: boolean;
   avatar: string;
 }
 
-export interface BalanceGameResultGetResponse {
+export interface BalanceGameResultResponse {
   round: number;
   q: string;
   a: string;
@@ -35,12 +54,14 @@ export interface BalanceGameSelectionsResponse {
   c: string[];
 }
 
-export interface BalanceGameRoundResponse {
-  totalRounds: number;
-  currentRound: number;
-  startTime: string;
-  endTime: string;
-  q: string;
-  a: string;
-  b: string;
+export interface QnaGameAnswerResponse {
+  name: string;
+  answer: string;
+  likes: number;
+}
+
+export interface QnaGameResultGetResponse {
+  round: number;
+  question: string;
+  result: QnaGameAnswerResponse[];
 }

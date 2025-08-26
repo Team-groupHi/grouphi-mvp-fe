@@ -2,11 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-size: 16px;
+}
+
 body {
   --color-scroll-track: #352778;
   --color-scroll-thumb: #cab8de;
-
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 ::-webkit-scrollbar {

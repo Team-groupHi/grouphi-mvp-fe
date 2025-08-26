@@ -1,3 +1,7 @@
+/**
+ * @TODO 현재 사용되지 않는 컴포넌트로 추후 삭제 가능
+ */
+
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -16,6 +20,7 @@ import {
   ModalShell,
   Slider,
 } from '@/components';
+import { totalRoundsSchema } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { createRoom } from '@/services/rooms';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
@@ -36,8 +41,9 @@ const CreateBalanceGameModal = ({
     STEP: 2,
   };
 
-  const formSchema = z.object({
-    totalRounds: z.number().min(QUESTIONS_COUNT.MIN).max(QUESTIONS_COUNT.MAX),
+  const formSchema = totalRoundsSchema({
+    min: QUESTIONS_COUNT.MIN,
+    max: QUESTIONS_COUNT.MAX,
   });
 
   const router = useRouter();
@@ -49,7 +55,7 @@ const CreateBalanceGameModal = ({
     onSuccess: (roomId) => {
       if (roomId) {
         setRoomId(roomId);
-        router.push(`${PATH.BALANCE_GAME}/${roomId}`);
+        router.push(`${PATH.ROOM}/${roomId}`);
       }
     },
   });
@@ -63,7 +69,6 @@ const CreateBalanceGameModal = ({
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setTotalRounds(values.totalRounds);
-
     createRoomMutation.mutate();
     closeModal();
   };

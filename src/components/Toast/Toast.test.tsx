@@ -1,5 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
 import { ToastAction, ToastActionElement, Toaster } from '@/components';
@@ -87,7 +86,9 @@ describe('Toast 컴포넌트', () => {
       const toast = screen.getAllByText('Test Toast')[0];
       expect(toast).toBeInTheDocument();
 
-      await new Promise((resolve) => setTimeout(resolve, TOAST_TIMEOUT));
+      await act(
+        () => new Promise((resolve) => setTimeout(resolve, TOAST_TIMEOUT))
+      );
       expect(toast).not.toBeInTheDocument();
     },
     TEST_TIMEOUT

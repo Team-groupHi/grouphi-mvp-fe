@@ -1,19 +1,26 @@
 import './globals.css';
 
-import type { Metadata } from 'next';
+import { Viewport } from 'next';
 import Script from 'next/script';
 import React from 'react';
 
-import { InitialNickname, Toaster } from '@/components';
-import { ShootingStars, StarsBackground } from '@/components';
+import {
+  InitialNickname,
+  ShootingStars,
+  StarsBackground,
+  Toaster,
+} from '@/components';
 import { ModalRenderer } from '@/components/Modal';
+import { METADATA } from '@/constants/metadata';
 import Providers from '@/utils/providers';
 
 import { notoSans, pretendard } from './fonts/fonts';
 
-export const metadata: Metadata = {
-  title: 'groupHi',
-  description: '그루파이에서 아이스브레이킹 게임을 즐기고 추억을 남겨보세요!',
+export const metadata = METADATA;
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -23,16 +30,28 @@ export default function RootLayout({
 }>) {
   const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID;
   return (
-    <html lang="ko">
+    <html
+      lang="ko"
+      className={`${pretendard.variable} ${notoSans.variable}`}
+    >
       <head>
         <link
-          rel="icon"
+          rel="shortcut icon"
           href="/favicon.ico"
           sizes="32x32"
         />
+        <link
+          rel="icon"
+          href="/icons/icon.svg"
+          sizes="any"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="/icons/apple-icon.png"
+        />
       </head>
       <body
-        className={`${pretendard.variable} ${notoSans.variable} font-sans antialiased text min-h-screen bg-gradient-purple`}
+        className={`font-sans antialiased text-sm 2xl:text-base text relative min-h-screen bg-gradient-purple`}
       >
         {GA4_ID && process.env.NODE_ENV === 'production' && (
           <>
@@ -54,7 +73,7 @@ export default function RootLayout({
           </>
         )}
         <Providers>
-          <div className="fixed w-full h-screen -z-10">
+          <div className="absolute inset-0 w-full h-screen -z-10">
             <StarsBackground />
             <ShootingStars />
           </div>

@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
+import { theme } from '@/styles/theme';
 
 interface ShootingStar {
   id: number;
@@ -48,8 +49,8 @@ const ShootingStars: React.FC<ShootingStarsProps> = ({
   maxSpeed = 30,
   minDelay = 1200,
   maxDelay = 4200,
-  starColor = '#cb78ea',
-  trailColor = '#32e4d0',
+  starColor = theme.colors.secondary[500],
+  trailColor = theme.colors.primary[500],
   starWidth = 10,
   starHeight = 1,
   className,

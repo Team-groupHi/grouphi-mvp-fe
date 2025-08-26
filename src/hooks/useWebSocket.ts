@@ -6,15 +6,20 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
+import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
 import { QUERYKEY } from '@/constants/querykey';
+import { ROOM_STATUS } from '@/constants/room';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
+import useQnaGameStore from '@/store/useQnaGameStore';
+import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
+import { ErrorCode } from '@/types/error';
 
 import { useToast } from './useToast';
 
-interface EnterRoomProps {
+export interface EnterRoomProps {
   roomId: string;
   name: string;
 }
@@ -26,11 +31,18 @@ export function useWebSocket() {
     StompJS.StompSubscription[] | null
   >(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const { setRoomStatus, setRound, addSelectedPlayers } = useBalanceGameStore();
+  const { setRound: setBalanceRound, addSelectedPlayers } =
+    useBalanceGameStore();
+  const {
+    setRound: setQnaRound,
+    addSubmittedPlayer,
+    clearSubmittedPlayers,
+  } = useQnaGameStore();
+  const { setRoomStatus, getHostName } = useRoomStore();
 
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const router = useRouter();
 
   const connect = ({ roomId, name }: EnterRoomProps) => {
     if (client.current) return;
@@ -41,37 +53,20 @@ export function useWebSocket() {
     client.current = new StompJS.Client({
       brokerURL: BASE_WEBSOCKET_URL,
       reconnectDelay: 5000,
-      onWebSocketError: (error) => {
-        console.error('[WebSocket] Network Error', error);
-      },
-      onStompError: (frame) => {
-        console.error('[WebSocket] STOMP.js Error: ', frame.headers['message']);
-        console.error('[WebSocket] Details: ', frame.body);
-      },
     });
 
-    client.current.onConnect = (frame) => {
-      console.log('[WebSocket] 1. Connected', frame);
-
+    client.current.onConnect = (_frame) => {
       const subscribeRoomId = client.current?.subscribe(
-        `${SOCKET.ENDPOINT.SUBSCRIBE}${SOCKET.ENDPOINT.ROOM.ROOMS}/${roomId}`,
+        `${SOCKET.SUBSCRIBE}${SOCKET.ROOM.ROOMS}/${roomId}`,
         (message) => {
-          console.log(
-            '[WebSocket] 2. Subscribe1 - Receive Message',
-            message.body
-          );
           receiveMessage(message.body);
         },
         { id: `sub-room-${roomId}` }
       );
 
       const subscribeErrorId = client.current?.subscribe(
-        `${SOCKET.ENDPOINT.USER.QUEUE_ERRORS}`,
+        `${SOCKET.USER.QUEUE_ERRORS}`,
         (message) => {
-          console.log(
-            '[WebSocket] 2. Subscribe2 - Receive Message',
-            message.body
-          );
           receiveMessage(message.body);
         },
         { id: `sub-error-${roomId}` }
@@ -81,7 +76,7 @@ export function useWebSocket() {
         setSubscription([subscribeRoomId, subscribeErrorId]);
 
         sendMessage({
-          destination: `${SOCKET.ENDPOINT.ROOM.ENTER}`,
+          destination: `${SOCKET.ROOM.ENTER}`,
           body: {
             roomId,
             name,
@@ -91,7 +86,13 @@ export function useWebSocket() {
     };
 
     client.current.onWebSocketClose = (e: CloseEvent) => {
-      console.log(e);
+      if (!e.wasClean) {
+        toast({
+          title: '웹소켓 연결 실패',
+          description: '서버에 연결할 수 없습니다. 새로고침 해주세요.',
+          variant: 'destructive',
+        });
+      }
     };
 
     client.current.activate();
@@ -99,9 +100,6 @@ export function useWebSocket() {
 
   const disconnect = () => {
     if (!client.current) return;
-    sendMessage({
-      destination: `${SOCKET.ENDPOINT.ROOM.EXIT}`,
-    });
 
     subscriptions?.forEach((subscription) => subscription.unsubscribe());
     client.current.deactivate();
@@ -109,34 +107,36 @@ export function useWebSocket() {
     setSubscription(null);
     setChatMessages([]);
     client.current = null;
-    console.log('[WebSocket] Disconnected');
   };
 
   const sendMessage = <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => {
+    if (!client.current || !client.current.connected) {
+      return;
+    }
+
     const { destination, body } = params;
     const text = JSON.stringify(body);
 
     client.current?.publish({
       ...params,
-      destination: `${SOCKET.ENDPOINT.PUBLICATION}${destination}`,
+      destination: `${SOCKET.PUBLICATION}${destination}`,
       body: text,
     });
   };
 
   const receiveMessage = (message: string) => {
-    console.log('[WebSocket] 2-1. receiveMessage', message);
     const { type, sender, content } = JSON.parse(message);
 
     switch (type) {
-      case SOCKET.TYPE.CHAT:
+      case SOCKET.TYPE.ROOM.CHAT:
         addChatMessage({
           sender,
           content,
         });
         break;
-      case SOCKET.TYPE.ENTER:
+      case SOCKET.TYPE.ROOM.ENTER:
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 입장했어요.`,
@@ -145,7 +145,18 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.EXIT:
+      case SOCKET.TYPE.ROOM.EXIT:
+        if (sender === getHostName()) {
+          toast({
+            title: '방 삭제',
+            description:
+              '방장이 퇴장하여 방이 삭제되었습니다. 새로운 방을 이용해주세요.',
+            variant: 'destructive',
+          });
+          // 방 삭제로 소켓 통신이 불가능하기 때문에 바로 이동
+          router.replace(PATH.HOME);
+          break;
+        }
         addChatMessage({
           sender: SOCKET.SYSTEM,
           content: `${sender}님이 퇴장했어요.`,
@@ -154,54 +165,108 @@ export function useWebSocket() {
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      //@TODO: players 데이터 내부 store로 관리하도록 변경하면서 refetch 로직 제거하기
-      case SOCKET.TYPE.READY:
+      case SOCKET.TYPE.ROOM.READY:
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.UNREADY:
+      case SOCKET.TYPE.ROOM.UNREADY:
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.CHANGE_PLAYER_NAME:
+      case SOCKET.TYPE.ROOM.CHANGE_PLAYER_NAME:
+        addChatMessage({
+          sender: SOCKET.SYSTEM,
+          content: `${sender}님이 ${content}님으로 닉네임을 변경했어요.`,
+        });
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.BG_SELECT:
+      case SOCKET.TYPE.ROOM.CHANGE_GAME:
+        addChatMessage({
+          sender: SOCKET.SYSTEM,
+          content: `[${content.nameKr}] 으로 게임이 변경되었어요.`,
+        });
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
+      case SOCKET.TYPE.BALANCE_GAME.SELECT:
         addSelectedPlayers(sender);
         break;
-      case SOCKET.TYPE.BG_START:
-        setRoomStatus('progress');
-        setRound(content);
+      case SOCKET.TYPE.BALANCE_GAME.START:
+        setRoomStatus(ROOM_STATUS.PROGRESS);
+        setBalanceRound(content);
         break;
-      case SOCKET.TYPE.BG_NEXT:
-        setRoomStatus('progress');
-        setRound(content);
+      case SOCKET.TYPE.BALANCE_GAME.NEXT:
+        setRoomStatus(ROOM_STATUS.PROGRESS);
+        setBalanceRound(content);
+        queryClient.removeQueries({
+          queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
+        });
         break;
-      case SOCKET.TYPE.BG_ALL_RESULTS:
-        setRoomStatus('finalResult');
+      case SOCKET.TYPE.BALANCE_GAME.ALL_RESULTS:
+        setRoomStatus(ROOM_STATUS.FINAL_RESULT);
+        queryClient.removeQueries({
+          queryKey: [QUERYKEY.BALANCE_GAME_RESULTS],
+        });
         break;
-      case SOCKET.TYPE.BG_END:
+      case SOCKET.TYPE.BALANCE_GAME.END:
         setChatMessages(() => [
           {
             sender: SOCKET.SYSTEM,
             content: '게임이 종료되었습니다.',
           },
         ]);
-        setRoomStatus('idle');
+        setRoomStatus(ROOM_STATUS.IDLE);
         queryClient.invalidateQueries({
           queryKey: [QUERYKEY.ROOM_DETAIL],
         });
         break;
-      case SOCKET.TYPE.ERROR:
+      case SOCKET.TYPE.QNA_GAME.START:
+        setRoomStatus(ROOM_STATUS.PROGRESS);
+        setQnaRound(content);
+        clearSubmittedPlayers();
+        break;
+      case SOCKET.TYPE.QNA_GAME.SUBMIT:
+        addSubmittedPlayer(sender);
+        break;
+      case SOCKET.TYPE.QNA_GAME.NEXT:
+        setRoomStatus(ROOM_STATUS.PROGRESS);
+        setQnaRound(content);
+        clearSubmittedPlayers();
+        queryClient.removeQueries({
+          queryKey: [QUERYKEY.QNA_GAME_RESULTS],
+        });
+        break;
+      case SOCKET.TYPE.QNA_GAME.ALL_RESULTS:
+        setRoomStatus(ROOM_STATUS.FINAL_RESULT);
+        queryClient.removeQueries({
+          queryKey: [QUERYKEY.QNA_GAME_RESULTS],
+        });
+        break;
+      case SOCKET.TYPE.QNA_GAME.END:
+        setChatMessages(() => [
+          {
+            sender: SOCKET.SYSTEM,
+            content: 'QnA 게임이 종료되었습니다.',
+          },
+        ]);
+        setRoomStatus(ROOM_STATUS.IDLE);
+        queryClient.invalidateQueries({
+          queryKey: [QUERYKEY.ROOM_DETAIL],
+        });
+        break;
+      case SOCKET.TYPE.ROOM.ERROR:
+        const { code }: { code: ErrorCode } = content;
+        const message = ERROR_MESSAGE[code] || DEFAULT_ERROR_MESSAGE;
+
         toast({
           variant: 'destructive',
-          title: '문제가 생겼습니다. 다시 시도해주세요.',
+          title: message,
         });
-        router.push(PATH.HOME);
         break;
       default:
         break;

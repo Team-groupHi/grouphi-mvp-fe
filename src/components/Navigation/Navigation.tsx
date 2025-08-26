@@ -30,7 +30,7 @@ const Navigation = ({ items, disabled }: NavigationProps) => {
     }
   });
 
-  return Items;
+  return <nav className="min-w-fit shrink-0">{Items}</nav>;
 };
 
 export default Navigation;

@@ -1,4 +1,9 @@
-export { default as BalanceGameQuestionCard } from './BalanceGameQuestionCard';
+export { AdBanner } from './AdBanner';
+export {
+  BalanceGameControl,
+  BalanceGameProgress,
+  BalanceGameQuestionCard,
+} from './BalanceGame';
 export { Button, buttonVariants } from './Button';
 export {
   Carousel,
@@ -21,6 +26,7 @@ export {
   useFormField,
 } from './Form';
 export { GameListCard } from './GameListCard';
+export { default } from './GameListCarousel';
 export { HomeClient } from './HomeClient';
 export { InitialNickname } from './InitialNickname';
 export { default as Input } from './Input';
@@ -29,8 +35,28 @@ export { default as Logo } from './Logo';
 export { MainHeader, Nicknamebar } from './MainHeader';
 export { ModalRenderer, ModalShell } from './Modal';
 export { Navigation } from './Navigation';
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from './Pagination';
 export { PartialResultChart, UserList } from './PartialResultChart';
 export { PieChart } from './PieChart';
+export {
+  QnaGameAvatarStatus,
+  QnaGameControl,
+  QnaGameFinalResult,
+  QnaGamePartialResult,
+  QnaGameProgress,
+  QnaGameQuestionPanel,
+  QnaGameResultsFetcher,
+  QnaGameUserFinalResult,
+  QnaGameUserPartialResult,
+} from './QnaGame';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';
 export { Spinner } from './Spinner';

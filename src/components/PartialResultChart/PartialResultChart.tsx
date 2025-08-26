@@ -2,12 +2,12 @@
 
 import { PieChart } from '@/components';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
-import { BalanceGameResultGetResponse } from '@/types/api';
+import { BalanceGameResultResponse } from '@/types/api';
 
 import { UserList } from '.';
 
 interface PartialResultChartProps {
-  data: BalanceGameResultGetResponse[];
+  data: BalanceGameResultResponse[];
 }
 
 const PartialResultChart = ({ data }: PartialResultChartProps) => {
@@ -23,13 +23,13 @@ const PartialResultChart = ({ data }: PartialResultChartProps) => {
   const { round } = useBalanceGameStore();
 
   return (
-    <section className="bg-container-600 h-full w-full min-h-fit border-white/50 flex flex-col justify-between items-center rounded-lg gap-8 p-8">
+    <section className="bg-container-600 h-full w-full min-h-fit border-white/50 flex flex-col justify-between items-center rounded-lg gap-8 p-5">
       <section>
         <h1 className="pt-600 text-title1 font-semibold">
           {partialData.round}라운드 결과
         </h1>
       </section>
-      <section className="flex justify-between items-stretch gap-700">
+      <section className="flex justify-between items-stretch gap-300 grow-0">
         <UserList
           title={partialData.a}
           data={partialData.result.a}
@@ -49,7 +49,7 @@ const PartialResultChart = ({ data }: PartialResultChartProps) => {
         <UserList
           title={UNSELECTED}
           data={partialData.result.c.join(', ')}
-          className="selected-c w-full bg-container-700/70"
+          className="selected-c w-[50%] bg-container-700/70"
         />
       )}
       <section className="self-end">

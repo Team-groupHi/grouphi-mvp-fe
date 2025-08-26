@@ -5,9 +5,16 @@ import { MouseEvent, ReactNode, useEffect } from 'react';
 interface ModalShellProps {
   children: ReactNode;
   closeModal: () => void;
+  width?: string;
+  height?: string;
 }
 
-const ModalShell = ({ children, closeModal }: ModalShellProps) => {
+const ModalShell = ({
+  children,
+  closeModal,
+  width = '28rem',
+  height = 'auto',
+}: ModalShellProps) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -21,6 +28,12 @@ const ModalShell = ({ children, closeModal }: ModalShellProps) => {
     }
   };
 
+  const modalStyle = {
+    width,
+    height,
+    minWidth: '20rem', // min-w-80
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity"
@@ -30,7 +43,8 @@ const ModalShell = ({ children, closeModal }: ModalShellProps) => {
       aria-modal="true"
     >
       <div
-        className="w-full max-w-md p-6 bg-container rounded-lg shadow-lg"
+        className="p-6 bg-container rounded-lg shadow-lg"
+        style={modalStyle}
         tabIndex={0}
       >
         {children}
