@@ -112,6 +112,10 @@ export function useWebSocket() {
   const sendMessage = <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => {
+    if (!client.current || !client.current.connected) {
+      return;
+    }
+
     const { destination, body } = params;
     const text = JSON.stringify(body);
 

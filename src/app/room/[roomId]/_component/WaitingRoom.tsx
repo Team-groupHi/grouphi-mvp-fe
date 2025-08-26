@@ -94,10 +94,7 @@ const WaitingRoom = ({
         router.push(PATH.HOME);
       } else {
         if (!isError && myName !== '') {
-          // @TODO: 조금 더 근본적인 해결책 찾기
-          setTimeout(() => {
-            connect({ roomId, name: myName });
-          });
+          connect({ roomId, name: myName });
         }
       }
     }
