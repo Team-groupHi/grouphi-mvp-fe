@@ -18,8 +18,7 @@ const useBalanceGameStore = create<BalanceGameStoreProps>((set) => ({
     a: '',
     b: '',
     currentRound: 0,
-    startTime: '',
-    endTime: '',
+    playSeconds: 0,
   },
 
   selectedPlayers: [],

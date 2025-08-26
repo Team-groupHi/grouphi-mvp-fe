@@ -6,13 +6,10 @@ import Timer from './Timer';
 
 describe('Timer Component', () => {
   beforeEach(() => {
-    const startTime = Date.now();
-    const endTime = startTime + 3000; // 3초 후
-
     render(
       <Timer
-        startTime={startTime}
-        endTime={endTime}
+        playSeconds={3000}
+        setIsTimeout={() => {}}
       />
     );
   });
