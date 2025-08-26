@@ -82,21 +82,19 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
             path !== PATH.HOME && 'grid-cols-2'
           )}
         >
-          {games.map((game, index) => (
+          {games.slice(0, ACTIVE_GAME_COUNT).map((game) => (
             <CarouselItem key={game.id}>
-              {index < ACTIVE_GAME_COUNT && (
-                <GameListCard
-                  id={game.id}
-                  title={game.nameKr}
-                  description={game.descriptionKr}
-                  src={game.thumbnailUrl}
-                  onClick={
-                    path === PATH.HOME
-                      ? () => handleCreateRoom(game.id)
-                      : () => handleChangeGame(game.id)
-                  }
-                />
-              )}
+              <GameListCard
+                id={game.id}
+                title={game.nameKr}
+                description={game.descriptionKr}
+                src={game.thumbnailUrl}
+                onClick={
+                  path === PATH.HOME
+                    ? () => handleCreateRoom(game.id)
+                    : () => handleChangeGame(game.id)
+                }
+              />
             </CarouselItem>
           ))}
         </CarouselContent>
