@@ -29,15 +29,15 @@ const HomeClient = ({ games }: HomeClientProps) => {
   }, [setGames, games]);
 
   return (
-    <div className="flex flex-col min-h-screen justify-between">
+    <div className="flex flex-col min-h-screen justify-between overflow-y-hidden">
       <MainHeader />
-      <main className="flex flex-col items-center px-800">
+      <main className="flex flex-col items-center px-800 min-h-[calc(100%-10rem)]">
         {games.length > 0 ? (
           <section
             id="gamelist"
             className="my-600 flex flex-col grow items-center"
           >
-            <span className="text-lg">Game List</span>
+            <span className="text-md 2xl:text-lg">Game List</span>
             <span className="text-md pb-300">▽</span>
             <GameListCarousel games={games} />
           </section>

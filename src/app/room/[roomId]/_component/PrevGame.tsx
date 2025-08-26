@@ -101,7 +101,7 @@ const PrevGame = ({
         title={roomDetail.game.nameKr}
         description={roomDetail.game.descriptionKr}
         src={roomDetail.game.thumbnailUrl}
-        className="h-16 pointer-events-none"
+        className="min-w-80 max-w-80 2xl:max-w-96 pointer-events-none"
       />
       <section className="flex flex-col gap-2 w-full items-center">
         {isRoomManager && (

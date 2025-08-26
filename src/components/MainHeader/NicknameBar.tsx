@@ -18,11 +18,13 @@ const NicknameBar = ({ nickname, isEdit }: NicknameBarProps) => {
   };
 
   return (
-    <section className="nickname-bar bg-container-600 text-subtitle px-500 rounded-full flex justify-center items-center">
+    <section className="nickname-bar bg-container-600 text-subtitle px-500 rounded-full flex justify-center items-center min-w-fit">
       {nickname ? (
         <span className="pointer-events-none px-1">{`닉네임 : ${nickname}`}</span>
       ) : (
-        <Loader className="w-5 h-5 animate-spin text-light" />
+        <div className="py-1">
+          <Loader className="w-5 h-5 animate-spin text-light" />
+        </div>
       )}
       {isEdit && nickname !== '' && (
         <Button

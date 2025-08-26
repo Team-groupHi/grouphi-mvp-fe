@@ -23,6 +23,7 @@ import { gameToType } from '@/utils/form';
 import GamePanel from './GamePanel';
 import RoomControl from './RoomControl';
 import UserList from './UserList';
+
 interface WaitingRoomProps {
   connect: (params: EnterRoomProps) => void;
   chatMessages: ChatMessage[];
@@ -132,9 +133,9 @@ const WaitingRoom = ({
   }
 
   return (
-    <section className="w-screen min-h-screen flex items-start gap-4 shrink-0 py-20 2xl:justify-center">
+    <section className="w-screen min-h-screen flex items-start justify-start 2xl:justify-center gap-4 shrink-0 py-20 overflow-y-hidden">
       <UserList players={players} />
-      <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] min-w-max max-w-[70rem] w-full rounded-lg">
+      <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] max-w-[60%] min-w-max w-full rounded-lg shrink-0">
         <ErrorHandlingWrapper
           fallbackComponent={ErrorFallback}
           suspenseFallback={<Spinner />}
@@ -149,11 +150,16 @@ const WaitingRoom = ({
           />
         </ErrorHandlingWrapper>
         {isDevelopment && (
-          <AdBanner type="wideLeaderboard">와이드 리더보드 광고 영역</AdBanner>
+          <AdBanner
+            type="leaderboard"
+            className="w-full"
+          >
+            리더보드 광고 영역
+          </AdBanner>
         )}
       </section>
 
-      <section className="flex flex-col h-[calc(100vh-12rem)] min-h-[30rem] w-[25vw] min-w-[17rem] max-w-[18rem] pr-9 gap-2">
+      <section className="flex flex-col h-[calc(100vh-12rem)] min-h-[30rem] w-[25vw] min-w-[16rem] max-w-[18rem] pr-9 gap-2">
         <Chatting
           myName={myName}
           chatMessages={chatMessages}

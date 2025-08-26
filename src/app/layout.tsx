@@ -1,5 +1,6 @@
 import './globals.css';
 
+import { Viewport } from 'next';
 import Script from 'next/script';
 import React from 'react';
 
@@ -17,6 +18,11 @@ import { notoSans, pretendard } from './fonts/fonts';
 
 export const metadata = METADATA;
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,7 +30,10 @@ export default function RootLayout({
 }>) {
   const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID;
   return (
-    <html lang="ko">
+    <html
+      lang="ko"
+      className={`${pretendard.variable} ${notoSans.variable}`}
+    >
       <head>
         <link
           rel="shortcut icon"
@@ -42,7 +51,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${pretendard.variable} ${notoSans.variable} font-sans antialiased text relative min-h-screen bg-gradient-purple`}
+        className={`font-sans antialiased text-sm 2xl:text-base text relative min-h-screen bg-gradient-purple`}
       >
         {GA4_ID && process.env.NODE_ENV === 'production' && (
           <>

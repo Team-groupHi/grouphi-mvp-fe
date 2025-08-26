@@ -76,7 +76,7 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
       >
         <CarouselContent
           className={cn(
-            'grid grid-rows-2 grid-cols-3 gap-y-4 mb-500 min-w-[55rem]',
+            'grid grid-rows-2 grid-cols-3 gap-y-4 mb-400 min-w-max',
             path !== PATH.HOME && 'grid-cols-2'
           )}
         >

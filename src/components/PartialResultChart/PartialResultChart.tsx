@@ -29,7 +29,7 @@ const PartialResultChart = ({ data }: PartialResultChartProps) => {
           {partialData.round}라운드 결과
         </h1>
       </section>
-      <section className="flex justify-between items-stretch gap-700">
+      <section className="flex justify-between items-stretch gap-300 grow-0">
         <UserList
           title={partialData.a}
           data={partialData.result.a}

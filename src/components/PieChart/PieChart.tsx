@@ -29,7 +29,7 @@ const PieChart = ({
   className,
   ...props
 }: PieChartProps) => {
-  const defaultClassName = 'w-72';
+  const defaultClassName = 'w-64';
   const combinedClassName = className
     ? cn(defaultClassName, className)
     : defaultClassName;
@@ -63,7 +63,7 @@ const PieChart = ({
         labels: {
           color: '#F0F0F0',
           font: {
-            size: 14,
+            size: 12,
           },
         },
       },
@@ -73,7 +73,7 @@ const PieChart = ({
 
   if (data.length === 0) {
     return (
-      <section className="min-w-72 flex justify-center items-center rounded bg-black/50">
+      <section className="min-w-64 flex justify-center items-center rounded bg-black/50">
         데이터가 없습니다
       </section>
     );

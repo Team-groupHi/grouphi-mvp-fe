@@ -22,12 +22,13 @@ const AdBanner = ({
   };
   return (
     <div
+      {...props}
       className={cn(
         'ad-slot text-center bg-black rounded shrink-0',
-        adStyle[type]
+        adStyle[type],
+        props.className
       )}
       aria-label={ariaLabel}
-      {...props}
     >
       {children}
     </div>

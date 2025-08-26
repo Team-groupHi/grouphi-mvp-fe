@@ -63,7 +63,7 @@ const TotalRoundsForm = ({
                 <FormControl>
                   <section className="flex gap-500 items-center min-h-9">
                     <Label
-                      className="w-24"
+                      className="min-w-fit"
                       htmlFor="total-rounds"
                     >
                       질문의 개수

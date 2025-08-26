@@ -33,7 +33,18 @@ const config: Config = {
         '2xl': '1440px',
       },
       fontFamily: {
-        sans: ['var(--font-pretendard)', 'var(--font-noto-sans)', 'sans-serif'],
+        sans: [
+          'var(--font-pretendard)',
+          'var(--font-noto-sans)',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif',
+        ],
       },
       fontSize: {
         DEFAULT: '1rem',
@@ -83,6 +94,8 @@ const config: Config = {
         'icon-sm': '1rem',
         'icon-md': '1.5rem',
         'icon-lg': '2.25rem',
+        header: '5rem',
+        footer: '5rem',
         'ads-leaderboard': '5.625rem', // 90px
       },
       spacing: {

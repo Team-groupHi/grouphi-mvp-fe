@@ -47,7 +47,7 @@ const ResultRow = ({ data }: ResultRowProps) => {
           <TooltipTrigger asChild>
             {totalVotes === 0 ? (
               <div className="w-[50%] h-5 bg-container-100 rounded-full flex items-center justify-center">
-                <span className="font-bold text-sm text-purple text-center w-full">
+                <span className="font-bold text-sm text-purple text-center w-full min-w-28">
                   0
                 </span>
               </div>
@@ -62,7 +62,7 @@ const ResultRow = ({ data }: ResultRowProps) => {
                     )}
                     style={{ width: `${percentageCandidateA}%` }}
                   >
-                    <span className="font-bold text-sm text-purple text-center w-full">
+                    <span className="font-bold text-sm text-purple text-center w-full min-w-28">
                       {votesA}
                     </span>
                   </div>
@@ -77,7 +77,7 @@ const ResultRow = ({ data }: ResultRowProps) => {
                     )}
                     style={{ width: `${percentageCandidateB}%` }}
                   >
-                    <span className="font-bold text-sm text-purple text-center w-full">
+                    <span className="font-bold text-sm text-purple text-center w-full min-w-28">
                       {votesB}
                     </span>
                   </div>
