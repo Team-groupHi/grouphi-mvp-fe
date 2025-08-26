@@ -19,6 +19,7 @@ import { createRoom } from '@/services/rooms';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
 import { GameResponse } from '@/types/api';
+import { isDevelopment } from '@/utils/env';
 
 interface GameListCarouselProps {
   games: GameResponse[];
@@ -35,6 +36,7 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const MAX_CAROUSEL_ITEMS = path === PATH.HOME ? 6 : 4;
+  const ACTIVE_GAME_COUNT = isDevelopment ? 6 : 5;
   const isMultiplePages = games.length > MAX_CAROUSEL_ITEMS;
 
   const createRoomMutation = useMutation({
@@ -80,19 +82,21 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
             path !== PATH.HOME && 'grid-cols-2'
           )}
         >
-          {games.map((game) => (
+          {games.map((game, index) => (
             <CarouselItem key={game.id}>
-              <GameListCard
-                id={game.id}
-                title={game.nameKr}
-                description={game.descriptionKr}
-                src={game.thumbnailUrl}
-                onClick={
-                  path === PATH.HOME
-                    ? () => handleCreateRoom(game.id)
-                    : () => handleChangeGame(game.id)
-                }
-              />
+              {index < ACTIVE_GAME_COUNT && (
+                <GameListCard
+                  id={game.id}
+                  title={game.nameKr}
+                  description={game.descriptionKr}
+                  src={game.thumbnailUrl}
+                  onClick={
+                    path === PATH.HOME
+                      ? () => handleCreateRoom(game.id)
+                      : () => handleChangeGame(game.id)
+                  }
+                />
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>
