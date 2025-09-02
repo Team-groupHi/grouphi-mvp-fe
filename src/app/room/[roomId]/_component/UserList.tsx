@@ -26,10 +26,10 @@ const UserList = ({ players }: UserListProps) => {
   };
 
   return (
-    <section className="flex flex-col gap-3 h-[80vh] w-[13rem] 2xl:w-[14rem] max-w-[15rem] relative ml-10 shrink-0">
+    <section className="flex flex-col gap-3 h-[80vh] w-[13rem] 2xl:w-[14rem] max-w-[15rem] relative pl-10 shrink-0">
       {roomStatus === ROOM_STATUS.IDLE && (
         <Button
-          className="absolute -top-12 left-0"
+          className="absolute -top-12 left-10"
           size={'sm'}
           variant={'secondary'}
           onClick={handleLinkCopy}
