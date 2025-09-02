@@ -35,7 +35,7 @@ const UserInfoCard = ({
       className={cn(
         isReady ? 'bg-primary/50' : 'bg-container',
         isStart && 'bg-container',
-        'w-full h-[4rem] flex rounded-lg relative'
+        'w-full h-[3.5rem] 2xl:h-[4rem] flex rounded-lg relative'
       )}
     >
       {isHost && (
@@ -49,7 +49,7 @@ const UserInfoCard = ({
           />
         </section>
       )}
-      <figure className="flex justify-center items-center rounded-l-lg overflow-hidden w-[4rem] bg-white">
+      <figure className="flex justify-center items-center rounded-l-lg overflow-hidden w-[3rem] 2xl:w-[3.5rem] bg-white">
         <Image
           src={`/images/characters/${fileName}.webp`}
           alt="profile"
