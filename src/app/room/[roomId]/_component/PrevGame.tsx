@@ -42,6 +42,7 @@ const PrevGame = ({
 }: PrevGameProps) => {
   const gameType = gameToType(roomDetail.game.nameEn);
   const totalRoundsRef = useRef<number>(GAME_QUESTIONS_COUNT[gameType].MIN);
+  const buttonClassName = 'text-sm 2xl:text-base font-semibold w-[11rem]';
 
   const { myName } = useRoomStore();
   const { openModal } = useModalStore();
@@ -112,10 +113,10 @@ const PrevGame = ({
             />
             <Button
               className={cn(
-                'text-base font-semibold w-[12rem]',
+                buttonClassName,
                 !isAllReady && 'pointer-events-none'
               )}
-              size="xl"
+              size="lg"
               variant={
                 isAllReady && roomDetail.players.length !== 1
                   ? 'default'
@@ -145,8 +146,11 @@ const PrevGame = ({
             {isDevelopment && (
               <Button
                 variant={'secondary'}
-                className="text-base font-semibold w-[12rem] flex items-center justify-center gap-2"
-                size="xl"
+                className={cn(
+                  buttonClassName,
+                  'flex items-center justify-center gap-2'
+                )}
+                size="lg"
                 onClick={handleGameChange}
               >
                 <SlidersHorizontal />
@@ -159,8 +163,8 @@ const PrevGame = ({
 
       {!isRoomManager && (
         <Button
-          className="text-base font-semibold w-[12rem]"
-          size="xl"
+          className={buttonClassName}
+          size="lg"
           variant={isReady ? 'waiting' : 'default'}
           onClick={isReady ? handleUnready : handleReady}
         >

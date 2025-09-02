@@ -35,7 +35,7 @@ const UserInfoCard = ({
       className={cn(
         isReady ? 'bg-primary/50' : 'bg-container',
         isStart && 'bg-container',
-        'w-full h-[4rem] flex rounded-lg relative'
+        'w-full h-[3.5rem] 2xl:h-[4rem] flex rounded-lg relative'
       )}
     >
       {isHost && (
@@ -49,7 +49,7 @@ const UserInfoCard = ({
           />
         </section>
       )}
-      <figure className="flex justify-center items-center rounded-l-lg overflow-hidden w-[4rem] bg-white">
+      <figure className="flex justify-center items-center rounded-l-lg overflow-hidden w-[3rem] 2xl:w-[3.5rem] bg-white">
         <Image
           src={`/images/characters/${fileName}.webp`}
           alt="profile"
@@ -59,7 +59,7 @@ const UserInfoCard = ({
         />
         <figcaption className="sr-only">{`${fileName} 캐릭터 이미지`}</figcaption>
       </figure>
-      <div className="w-[calc(100%-4rem)] pl-3 pr-2 flex items-center font-medium justify-between gap-1">
+      <div className="w-[calc(100%-4rem)] flex items-center font-medium justify-between pl-2">
         <span className={cn(myName === name && 'text-primary-400 font-bold')}>
           {name}
         </span>
