@@ -2,11 +2,11 @@ import { saveAs } from 'file-saver';
 import { Save } from 'lucide-react';
 import Image from 'next/image';
 
-import { Button } from '@/components/Button';
+import { Button } from '@/components/Common/Button';
 import { useToast } from '@/hooks/useToast';
 
-import Label from '../Label';
-import ModalShell from '../Modal/ModalShell';
+import Label from '../Common/Label';
+import ModalShell from '../Common/Modal/ModalShell';
 
 interface SaveImageModalProps {
   closeModal: () => void;

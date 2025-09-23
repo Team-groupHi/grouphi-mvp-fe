@@ -1,7 +1,7 @@
 import { Label, ModalShell } from '@/components';
 import useGameStore from '@/store/useGameStore';
 
-import GameListCarousel from '../GameListCarousel';
+import GameListCarousel from '../Common/GameListCarousel';
 
 interface ChangeGameModalProps {
   closeModal: () => void;

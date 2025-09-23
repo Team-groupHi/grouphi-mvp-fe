@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 
-import { GameListCard } from './';
+import { GameListCard } from '.';
 
 describe('GameListCard', () => {
   test('1) title, description를 전달하면 렌더링된다.', () => {

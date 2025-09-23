@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import useModalStore from '../../store/useModalStore';
+import useModalStore from '../../../store/useModalStore';
 import ModalRenderer from './ModalRenderer';
 import ModalShell from './ModalShell';
 

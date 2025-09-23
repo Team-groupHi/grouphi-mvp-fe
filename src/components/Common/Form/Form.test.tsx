@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 
-import { Button } from '@/components/Button';
+import { Button } from '@/components/Common/Button';
+import Input from '@/components/Common/Input';
 import {
   Form,
   FormControl,
@@ -14,7 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/Form';
-import Input from '@/components/Input';
 
 const MockForm = () => {
   const formSchema = z.object({

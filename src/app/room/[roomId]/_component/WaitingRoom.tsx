@@ -6,8 +6,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { AdBanner, Chatting, Spinner } from '@/components';
-import ErrorFallback from '@/components/ErrorBoundary/ErrorFallback';
-import ErrorHandlingWrapper from '@/components/ErrorBoundary/ErrorHandlingWrapper';
+import ErrorFallback from '@/components/Common/ErrorBoundary/ErrorFallback';
+import ErrorHandlingWrapper from '@/components/Common/ErrorBoundary/ErrorHandlingWrapper';
 import { GAME_TYPES } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';

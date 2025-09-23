@@ -10,7 +10,7 @@ import {
   StarsBackground,
   Toaster,
 } from '@/components';
-import { ModalRenderer } from '@/components/Modal';
+import { ModalRenderer } from '@/components/Common/Modal';
 import { METADATA } from '@/constants/metadata';
 import Providers from '@/utils/providers';
 

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
 
-import { Button } from '../Button';
+import { Button } from '../Common/Button';
 
 interface UserInfoCardProps {
   name: string;
