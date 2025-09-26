@@ -15,9 +15,9 @@ import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 
-import PrevGame from './PrevGame';
+import PrevGame from '../../Common/PreGame/PreGame';
 
-interface BalanceGameProps {
+interface BalanceGameContainerProps {
   roomId: string;
   roomDetail: RoomResponse;
   players: Player[];
@@ -27,13 +27,13 @@ interface BalanceGameProps {
   ) => void;
 }
 
-const BalanceGame = ({
+const BalanceGameContainer = ({
   roomId,
   roomDetail,
   players,
   isRoomManager,
   sendMessage,
-}: BalanceGameProps) => {
+}: BalanceGameContainerProps) => {
   const { round } = useBalanceGameStore();
   const { roomStatus, setRoomStatus } = useRoomStore();
 
@@ -98,4 +98,4 @@ const BalanceGame = ({
   );
 };
 
-export default BalanceGame;
+export default BalanceGameContainer;

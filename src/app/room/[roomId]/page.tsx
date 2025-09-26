@@ -4,13 +4,11 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-import { Spinner } from '@/components';
-import ErrorFallback from '@/components/Common/ErrorBoundary/ErrorFallback';
-import ErrorHandlingWrapper from '@/components/Common/ErrorBoundary/ErrorHandlingWrapper';
+import { ErrorFallback, ErrorHandlingWrapper, Spinner } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { useWebSocket } from '@/hooks/useWebSocket';
 
-import WaitingRoom from './_component/WaitingRoom';
+import GameRoom from './_component/GameRoom';
 
 const RoomPage = () => {
   const webSocket = useWebSocket();
@@ -30,7 +28,7 @@ const RoomPage = () => {
       fallbackComponent={ErrorFallback}
       suspenseFallback={<Spinner />}
     >
-      <WaitingRoom {...webSocket} />
+      <GameRoom {...webSocket} />
     </ErrorHandlingWrapper>
   );
 };

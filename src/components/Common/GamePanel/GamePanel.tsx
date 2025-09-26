@@ -1,12 +1,10 @@
 'use client';
 import * as StompJS from '@stomp/stompjs';
 
+import { BalanceGameContainer, QnaGameContainer } from '@/components';
 import { GAME_TYPES } from '@/constants/form';
 import { Player, RoomResponse } from '@/types/api';
 import { gameToType } from '@/utils/form';
-
-import BalanceGame from './BalanceGame';
-import QnaGame from './QnaGame';
 
 interface GamePanelProps {
   game: string;
@@ -31,7 +29,7 @@ const GamePanel = ({
   switch (gameType) {
     case GAME_TYPES.BALANCE:
       return (
-        <BalanceGame
+        <BalanceGameContainer
           roomId={roomId}
           roomDetail={roomDetail}
           players={players}
@@ -41,7 +39,7 @@ const GamePanel = ({
       );
     case GAME_TYPES.QNA:
       return (
-        <QnaGame
+        <QnaGameContainer
           roomId={roomId}
           roomDetail={roomDetail}
           players={players}

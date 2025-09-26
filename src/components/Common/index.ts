@@ -27,6 +27,7 @@ export {
 } from './Form';
 export { GameListCard } from './GameListCard';
 export { GameListCarousel } from './GameListCarousel';
+export { GamePanel } from './GamePanel';
 export { HomeClient } from './HomeClient';
 export { InitialNickname } from './InitialNickname';
 export { Input } from './Input';
@@ -44,6 +45,8 @@ export {
   PaginationNext,
   PaginationPrevious,
 } from './Pagination';
+export { PreGame } from './PreGame';
+export { RoomControl } from './RoomControl';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';
 export { Spinner } from './Spinner';
@@ -66,4 +69,6 @@ export {
   TooltipProvider,
   TooltipTrigger,
 } from './Tooltip';
+export { TotalRoundsForm } from './TotalRoundsForm';
 export { UserInfoCard } from './UserInfoCard';
+export { UserList } from './UserList';

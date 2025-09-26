@@ -5,9 +5,16 @@ import * as StompJS from '@stomp/stompjs';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { AdBanner, Chatting, Spinner } from '@/components';
-import ErrorFallback from '@/components/Common/ErrorBoundary/ErrorFallback';
-import ErrorHandlingWrapper from '@/components/Common/ErrorBoundary/ErrorHandlingWrapper';
+import {
+  AdBanner,
+  Chatting,
+  ErrorFallback,
+  ErrorHandlingWrapper,
+  GamePanel,
+  RoomControl,
+  Spinner,
+  UserList,
+} from '@/components';
 import { GAME_TYPES } from '@/constants/form';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
@@ -20,11 +27,7 @@ import { Player } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
 import { gameToType } from '@/utils/form';
 
-import GamePanel from './GamePanel';
-import RoomControl from './RoomControl';
-import UserList from './UserList';
-
-interface WaitingRoomProps {
+interface GameRoomProps {
   connect: (params: EnterRoomProps) => void;
   chatMessages: ChatMessage[];
   sendMessage: <T>(
@@ -32,11 +35,7 @@ interface WaitingRoomProps {
   ) => void;
 }
 
-const WaitingRoom = ({
-  connect,
-  chatMessages,
-  sendMessage,
-}: WaitingRoomProps) => {
+const GameRoom = ({ connect, chatMessages, sendMessage }: GameRoomProps) => {
   const path = usePathname();
   const router = useRouter();
   const roomId = path.split('/')[2];
@@ -175,4 +174,4 @@ const WaitingRoom = ({
   );
 };
 
-export default WaitingRoom;
+export default GameRoom;

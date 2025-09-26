@@ -23,9 +23,9 @@ import { Player, RoomResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
 import { gameToType } from '@/utils/form';
 
-import TotalRoundsForm from './TotalRoundsForm';
+import TotalRoundsForm from '../../../app/room/[roomId]/_component/TotalRoundsForm';
 
-interface PrevGameProps {
+interface PreGameProps {
   roomDetail: RoomResponse;
   players: Player[];
   isRoomManager: boolean;
@@ -34,12 +34,12 @@ interface PrevGameProps {
   ) => void;
 }
 
-const PrevGame = ({
+const PreGame = ({
   roomDetail,
   players,
   sendMessage,
   isRoomManager,
-}: PrevGameProps) => {
+}: PreGameProps) => {
   const gameType = gameToType(roomDetail.game.nameEn);
   const totalRoundsRef = useRef<number>(GAME_QUESTIONS_COUNT[gameType].MIN);
 
@@ -183,4 +183,4 @@ const PrevGame = ({
   );
 };
 
-export default PrevGame;
+export default PreGame;

@@ -7,7 +7,7 @@ import { ROOM_STATUS } from '@/constants/room';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 
-import PrevGame from './PrevGame';
+import PrevGame from '../../Common/PreGame/PreGame';
 
 interface QnaGameProps {
   roomId: string;

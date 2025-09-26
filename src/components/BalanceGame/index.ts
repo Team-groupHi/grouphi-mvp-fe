@@ -1,3 +1,4 @@
+export { BalanceGameContainer } from './BalanceGameContainer';
 export { BalanceGameControl } from './BalanceGameControl';
 export { BalanceGameProgress } from './BalanceGameProgress';
 export { BalanceGameQuestionCard } from './BalanceGameQuestionCard';
