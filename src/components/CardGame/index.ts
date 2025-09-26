@@ -1,1 +1,1 @@
-export { default as Scoreboard } from './Scordboard';
+export { Scoreboard } from './Scordboard';
