@@ -4,7 +4,7 @@ import { PieChart } from '@/components';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import { BalanceGameResultResponse } from '@/types/api';
 
-import { UserList } from '.';
+import UserList from './UserList';
 
 interface PartialResultChartProps {
   data: BalanceGameResultResponse[];

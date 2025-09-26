@@ -2,8 +2,7 @@
 
 import * as StompJS from '@stomp/stompjs';
 
-import { QnaGameControl } from '@/components';
-import BalanceGameControl from '@/components/BalanceGame/BalanceGameControl';
+import { BalanceGameControl, QnaGameControl } from '@/components';
 import { GAME_TYPES } from '@/constants/form';
 import { gameToType } from '@/utils/form';
 

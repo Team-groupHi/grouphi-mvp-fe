@@ -2,10 +2,10 @@ export {
   BalanceGameControl,
   BalanceGameProgress,
   BalanceGameQuestionCard,
+  FinalResultChart,
+  PartialResultChart,
+  PieChart,
 } from './BalanceGame';
-export { default as FinalResultChart } from './BalanceGame/FinalResultChart';
-export { PartialResultChart, UserList } from './BalanceGame/PartialResultChart';
-export { PieChart } from './BalanceGame/PieChart';
 export { AdBanner } from './Common/AdBanner';
 export { Button, buttonVariants } from './Common/Button';
 export {
