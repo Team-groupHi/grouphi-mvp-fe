@@ -12,8 +12,8 @@ import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player } from '@/types/api';
 
-import QnaGameAvatarStatus from './QnaGameAvatarStatus';
-import QnaGameQuestionPanel from './QnaGameQuestionPanel';
+import QnaGameAvatarStatus from '../QnaGameAvatarStatus/QnaGameAvatarStatus';
+import QnaGameQuestionPanel from '../QnaGameQuestionPanel/QnaGameQuestionPanel';
 
 interface QnaGameProgressProps {
   sendMessage: <T>(

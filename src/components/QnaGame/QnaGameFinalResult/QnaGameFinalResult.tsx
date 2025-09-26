@@ -13,7 +13,7 @@ import {
 import { cn } from '@/lib/utils';
 import { QnaGameResultGetResponse } from '@/types/api';
 
-import QnaGameUserFinalResult from './QnaGameUserFinalResult';
+import QnaGameUserFinalResult from '../QnaGameUserFinalResult/QnaGameUserFinalResult';
 interface QnaGameFinalResultProps {
   results: QnaGameResultGetResponse[];
   className?: string;

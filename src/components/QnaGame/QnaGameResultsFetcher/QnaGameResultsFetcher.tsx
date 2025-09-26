@@ -10,8 +10,8 @@ import { useFetchQnaGameResults } from '@/hooks/queries';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 
-import QnaGameFinalResult from './QnaGameFinalResult';
-import QnaGamePartialResult from './QnaGamePartialResult';
+import QnaGameFinalResult from '../QnaGameFinalResult/QnaGameFinalResult';
+import QnaGamePartialResult from '../QnaGamePartialResult/QnaGamePartialResult';
 
 interface QnaGameResultsFetcherProps {
   roomId: string;

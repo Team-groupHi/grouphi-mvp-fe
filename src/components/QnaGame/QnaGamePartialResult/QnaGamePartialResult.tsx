@@ -6,7 +6,7 @@ import { SOCKET } from '@/constants/websocket';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import { QnaGameResultGetResponse } from '@/types/api';
 
-import QnaGameUserPartialResult from './QnaGameUserPartialResult';
+import QnaGameUserPartialResult from '../QnaGameUserPartialResult/QnaGameUserPartialResult';
 
 interface QnaGamePartialResultProps {
   data: QnaGameResultGetResponse[];
