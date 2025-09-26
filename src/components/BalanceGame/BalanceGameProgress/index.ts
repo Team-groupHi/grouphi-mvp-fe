@@ -1,1 +1,1 @@
-export { default } from './BalanceGameProgress';
+export { default as BalanceGameProgress } from './BalanceGameProgress';

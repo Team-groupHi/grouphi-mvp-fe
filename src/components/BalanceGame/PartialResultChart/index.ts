@@ -1,1 +1,1 @@
-export { default } from './PartialResultChart';
+export { default as PartialResultChart } from './PartialResultChart';

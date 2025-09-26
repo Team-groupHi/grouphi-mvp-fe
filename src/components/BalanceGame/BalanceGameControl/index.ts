@@ -1,1 +1,1 @@
-export { default } from './BalanceGameControl';
+export { default as BalanceGameControl } from './BalanceGameControl';

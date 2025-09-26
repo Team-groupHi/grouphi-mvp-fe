@@ -1,1 +1,1 @@
-export { default } from './FinalResultChart';
+export { default as FinalResultChart } from './FinalResultChart';
