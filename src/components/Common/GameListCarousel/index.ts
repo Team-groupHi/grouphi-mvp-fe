@@ -1,1 +1,1 @@
-export { default } from './GameListCarousel';
+export { default as GameListCarousel } from './GameListCarousel';
