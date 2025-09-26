@@ -6,6 +6,7 @@ export {
   PartialResultChart,
   PieChart,
 } from './BalanceGame';
+export { Scoreboard } from './CardGame';
 export { AdBanner } from './Common/AdBanner';
 export { Button, buttonVariants } from './Common/Button';
 export {
