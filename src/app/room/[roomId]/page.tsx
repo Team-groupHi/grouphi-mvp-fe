@@ -8,7 +8,7 @@ import { ErrorFallback, ErrorHandlingWrapper, Spinner } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { useWebSocket } from '@/hooks/useWebSocket';
 
-import GameRoom from './_component/GameRoom';
+import GameRoomFetcher from './_component/GameRoomFetcher';
 
 const RoomPage = () => {
   const webSocket = useWebSocket();
@@ -28,7 +28,7 @@ const RoomPage = () => {
       fallbackComponent={ErrorFallback}
       suspenseFallback={<Spinner />}
     >
-      <GameRoom {...webSocket} />
+      <GameRoomFetcher {...webSocket} />
     </ErrorHandlingWrapper>
   );
 };
