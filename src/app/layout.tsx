@@ -6,11 +6,11 @@ import React from 'react';
 
 import {
   InitialNickname,
+  ModalRenderer,
   ShootingStars,
   StarsBackground,
   Toaster,
 } from '@/components';
-import { ModalRenderer } from '@/components/Common/Modal';
 import { METADATA } from '@/constants/metadata';
 import Providers from '@/utils/providers';
 
