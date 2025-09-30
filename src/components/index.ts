@@ -5,7 +5,6 @@ export {
   BalanceGameProgress,
   BalanceGameQuestionCard,
   PartialResultChart,
-  PieChart,
 } from './BalanceGame';
 export { Scoreboard } from './CardGame';
 export {
@@ -50,6 +49,7 @@ export {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PieChart,
   PreGame,
   RoomControl,
   ShootingStars,
