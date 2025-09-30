@@ -2,8 +2,8 @@
 
 import Lottie from 'react-lottie-player';
 
-import groupHi_Spinner_bg from '../../../public/loading/groupHi_Spinner_background.json';
-import groupHi_Spinner_item from '../../../public/loading/groupHi_Spinner_item.json';
+import groupHi_Spinner_bg from '../../../../public/loading/groupHi_Spinner_background.json';
+import groupHi_Spinner_item from '../../../../public/loading/groupHi_Spinner_item.json';
 
 const Spinner = () => {
   return (

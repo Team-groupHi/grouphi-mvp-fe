@@ -1,12 +1,11 @@
 import { Edit } from 'lucide-react';
 import Image from 'next/image';
 
+import { Button } from '@/components';
 import { MODAL_TYPE } from '@/constants/modal';
 import { cn } from '@/lib/utils';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
-
-import { Button } from '../Common/Button';
 
 interface UserInfoCardProps {
   name: string;

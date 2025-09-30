@@ -3,7 +3,7 @@
 import * as StompJS from '@stomp/stompjs';
 import React, { useEffect, useRef } from 'react';
 
-import Input from '@/components/Common/Input';
+import { Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
 

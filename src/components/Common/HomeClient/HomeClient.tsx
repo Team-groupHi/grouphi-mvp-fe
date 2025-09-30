@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import GameListCarousel, { AdBanner, Footer, MainHeader } from '@/components';
+import { AdBanner, Footer, GameListCarousel, MainHeader } from '@/components';
 import useGameStore from '@/store/useGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { GameResponse } from '@/types/api';

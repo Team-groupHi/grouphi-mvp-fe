@@ -2,12 +2,10 @@
 
 import * as StompJS from '@stomp/stompjs';
 
-import { QnaGameProgress, QnaGameResultsFetcher } from '@/components';
+import { PreGame, QnaGameProgress, QnaGameResultsFetcher } from '@/components';
 import { ROOM_STATUS } from '@/constants/room';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
-
-import PrevGame from '../../Common/PreGame/PreGame';
 
 interface QnaGameProps {
   roomId: string;
@@ -31,7 +29,7 @@ const QnaGame = ({
   return (
     <>
       {roomStatus === ROOM_STATUS.IDLE && (
-        <PrevGame
+        <PreGame
           roomDetail={roomDetail}
           players={players}
           isRoomManager={isRoomManager}

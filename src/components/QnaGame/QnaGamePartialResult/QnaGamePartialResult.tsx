@@ -2,11 +2,10 @@
 
 import * as StompJS from '@stomp/stompjs';
 
+import { QnaGameUserPartialResult } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import { QnaGameResultGetResponse } from '@/types/api';
-
-import QnaGameUserPartialResult from '../QnaGameUserPartialResult/QnaGameUserPartialResult';
 
 interface QnaGamePartialResultProps {
   data: QnaGameResultGetResponse[];

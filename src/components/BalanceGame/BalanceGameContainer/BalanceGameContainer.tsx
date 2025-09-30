@@ -8,14 +8,13 @@ import {
   BalanceGameProgress,
   FinalResultChart,
   PartialResultChart,
+  PreGame,
 } from '@/components';
 import { ROOM_STATUS } from '@/constants/room';
 import { useFetchBalanceGameResults } from '@/hooks/queries';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
-
-import PrevGame from '../../Common/PreGame/PreGame';
 
 interface BalanceGameContainerProps {
   roomId: string;
@@ -68,7 +67,7 @@ const BalanceGameContainer = ({
   return (
     <>
       {roomStatus === ROOM_STATUS.IDLE && (
-        <PrevGame
+        <PreGame
           roomDetail={roomDetail}
           players={players}
           isRoomManager={isRoomManager}
