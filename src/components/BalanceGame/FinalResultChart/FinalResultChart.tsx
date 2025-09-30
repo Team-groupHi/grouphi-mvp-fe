@@ -4,7 +4,7 @@ import html2canvas from 'html2canvas';
 import { Download } from 'lucide-react';
 import { useRef } from 'react';
 
-import { Button } from '@/components/Common/Button';
+import { Button } from '@/components';
 import { MODAL_TYPE } from '@/constants/modal';
 import { useToast } from '@/hooks/useToast';
 import useModalStore from '@/store/useModalStore';

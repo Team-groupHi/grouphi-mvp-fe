@@ -7,9 +7,8 @@ import {
 } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import useModalStore from '../../../store/useModalStore';
-import ModalRenderer from './ModalRenderer';
-import ModalShell from './ModalShell';
+import { ModalRenderer, ModalShell } from '@/components';
+import useModalStore from '@/store/useModalStore';
 
 vi.mock('@/components/ModalList/ModalTest', () => ({
   __esModule: true,

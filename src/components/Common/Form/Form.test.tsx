@@ -1,20 +1,19 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { useForm } from 'react-hook-form';
+import { Form, useForm } from 'react-hook-form';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 
-import { Button } from '@/components/Common/Button';
-import Input from '@/components/Common/Input';
 import {
-  Form,
+  Button,
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/Form';
+  Input,
+} from '@/components';
 
 const MockForm = () => {
   const formSchema = z.object({

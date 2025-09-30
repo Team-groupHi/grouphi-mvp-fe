@@ -9,11 +9,11 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  QnaGameUserFinalResult,
 } from '@/components';
 import { cn } from '@/lib/utils';
 import { QnaGameResultGetResponse } from '@/types/api';
 
-import QnaGameUserFinalResult from '../QnaGameUserFinalResult/QnaGameUserFinalResult';
 interface QnaGameFinalResultProps {
   results: QnaGameResultGetResponse[];
   className?: string;
