@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { useRef } from 'react';
 
-import { Button, GameListCard } from '@/components';
+import { Button, GameListCard, TotalRoundsForm } from '@/components';
 import { GAME_QUESTIONS_COUNT, GAME_TYPES } from '@/constants/form';
 import { MODAL_TYPE } from '@/constants/modal';
 import { SOCKET } from '@/constants/websocket';
@@ -22,8 +22,6 @@ import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
 import { gameToType } from '@/utils/form';
-
-import TotalRoundsForm from '../../../app/room/[roomId]/_component/TotalRoundsForm';
 
 interface PreGameProps {
   roomDetail: RoomResponse;
