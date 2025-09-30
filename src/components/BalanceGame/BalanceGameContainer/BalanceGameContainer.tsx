@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 
 import {
   BalanceGameFinalResult,
+  BalanceGamePartialResult,
   BalanceGameProgress,
-  PartialResultChart,
   PreGame,
 } from '@/components';
 import { ROOM_STATUS } from '@/constants/room';
@@ -89,7 +89,9 @@ const BalanceGameContainer = ({
       )}
       {roomStatus === ROOM_STATUS.RESULT &&
         gameResults &&
-        gameResults.length !== 0 && <PartialResultChart data={gameResults} />}
+        gameResults.length !== 0 && (
+          <BalanceGamePartialResult data={gameResults} />
+        )}
       {roomStatus === ROOM_STATUS.FINAL_RESULT && gameResults.length !== 0 && (
         <BalanceGameFinalResult data={gameResults} />
       )}

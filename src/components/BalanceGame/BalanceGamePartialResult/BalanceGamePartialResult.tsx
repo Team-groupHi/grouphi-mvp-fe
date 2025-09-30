@@ -6,11 +6,11 @@ import { BalanceGameResultResponse } from '@/types/api';
 
 import UserList from './UserList';
 
-interface PartialResultChartProps {
+interface BalanceGamePartialResultProps {
   data: BalanceGameResultResponse[];
 }
 
-const PartialResultChart = ({ data }: PartialResultChartProps) => {
+const BalanceGamePartialResult = ({ data }: BalanceGamePartialResultProps) => {
   const partialData = data[0];
   const UNSELECTED = '미선택';
   const chartData = [
@@ -59,4 +59,4 @@ const PartialResultChart = ({ data }: PartialResultChartProps) => {
   );
 };
 
-export default PartialResultChart;
+export default BalanceGamePartialResult;

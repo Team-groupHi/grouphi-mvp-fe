@@ -2,9 +2,9 @@ export {
   BalanceGameContainer,
   BalanceGameControl,
   BalanceGameFinalResult,
+  BalanceGamePartialResult,
   BalanceGameProgress,
   BalanceGameQuestionCard,
-  PartialResultChart,
 } from './BalanceGame';
 export { Scoreboard } from './CardGame';
 export {
