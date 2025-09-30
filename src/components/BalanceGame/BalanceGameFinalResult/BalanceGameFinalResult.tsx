@@ -12,11 +12,11 @@ import { BalanceGameResultResponse } from '@/types/api';
 
 import ResultRow from './ResultRow';
 
-interface FinalResultChartProps {
+interface BalanceGameFinalResultProps {
   data: BalanceGameResultResponse[];
 }
 
-const FinalResultChart = ({ data }: FinalResultChartProps) => {
+const BalanceGameFinalResult = ({ data }: BalanceGameFinalResultProps) => {
   const chartRef = useRef<HTMLDivElement>(null);
 
   const { openModal } = useModalStore();
@@ -72,4 +72,4 @@ const FinalResultChart = ({ data }: FinalResultChartProps) => {
   );
 };
 
-export default FinalResultChart;
+export default BalanceGameFinalResult;

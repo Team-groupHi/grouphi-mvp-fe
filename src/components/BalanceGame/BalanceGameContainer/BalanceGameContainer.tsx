@@ -5,8 +5,8 @@ import * as StompJS from '@stomp/stompjs';
 import { useEffect, useState } from 'react';
 
 import {
+  BalanceGameFinalResult,
   BalanceGameProgress,
-  FinalResultChart,
   PartialResultChart,
   PreGame,
 } from '@/components';
@@ -91,7 +91,7 @@ const BalanceGameContainer = ({
         gameResults &&
         gameResults.length !== 0 && <PartialResultChart data={gameResults} />}
       {roomStatus === ROOM_STATUS.FINAL_RESULT && gameResults.length !== 0 && (
-        <FinalResultChart data={gameResults} />
+        <BalanceGameFinalResult data={gameResults} />
       )}
     </>
   );

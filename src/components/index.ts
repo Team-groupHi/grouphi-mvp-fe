@@ -1,9 +1,9 @@
 export {
   BalanceGameContainer,
   BalanceGameControl,
+  BalanceGameFinalResult,
   BalanceGameProgress,
   BalanceGameQuestionCard,
-  FinalResultChart,
   PartialResultChart,
   PieChart,
 } from './BalanceGame';

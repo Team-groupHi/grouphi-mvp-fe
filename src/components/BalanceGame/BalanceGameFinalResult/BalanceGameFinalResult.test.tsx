@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import FinalResultChart from './FinalResultChart';
+import BalanceGameFinalResult from './BalanceGameFinalResult';
 
 describe('FinalResultChart 컴포넌트 테스트', () => {
   it('1) 투표 데이터의 각 후보의 이름이 출력 된다.', () => {
@@ -25,7 +25,7 @@ describe('FinalResultChart 컴포넌트 테스트', () => {
         votes2: 9,
       },
     ];
-    render(<FinalResultChart data={DUMMY} />);
+    render(<BalanceGameFinalResult data={DUMMY} />);
 
     const texts = ['강아지', '고양이', '강하띠', '코앵히', '사과', '바나나'];
     texts.forEach((text) => {
@@ -37,7 +37,7 @@ describe('FinalResultChart 컴포넌트 테스트', () => {
     const DUMMY = [
       { candidate1: '강아지', votes1: 2, candidate2: '고양이', votes2: 7 },
     ];
-    render(<FinalResultChart data={DUMMY} />);
+    render(<BalanceGameFinalResult data={DUMMY} />);
 
     expect(screen.getByText('2')).toBeInTheDocument();
     expect(screen.getByText('7')).toBeInTheDocument();
@@ -47,7 +47,7 @@ describe('FinalResultChart 컴포넌트 테스트', () => {
     const DUMMY = [
       { candidate1: '강아지', votes1: 0, candidate2: '고양이', votes2: 9 },
     ];
-    render(<FinalResultChart data={DUMMY} />);
+    render(<BalanceGameFinalResult data={DUMMY} />);
 
     const bar = screen.getByText('0').parentElement;
 
@@ -62,7 +62,7 @@ describe('FinalResultChart 컴포넌트 테스트', () => {
     const DUMMY = [
       { candidate1: '강아지', votes1: 0, candidate2: '고양이', votes2: 0 },
     ];
-    render(<FinalResultChart data={DUMMY} />);
+    render(<BalanceGameFinalResult data={DUMMY} />);
     expect(screen.getByText('0')).toBeInTheDocument();
   });
 });
