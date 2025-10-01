@@ -1,55 +1,21 @@
 'use client';
-import * as StompJS from '@stomp/stompjs';
 
-import { BalanceGameContainer, QnaGameContainer } from '@/components';
-import { GAME_TYPES } from '@/constants/form';
-import { Player, RoomResponse } from '@/types/api';
-import { gameToType } from '@/utils/form';
+import { gameComponentMap } from '@/constants/gameComponentMap';
+import { GamePanelProps } from '@/types/props';
+import { gameToType } from '@/utils/gameToType';
 
-interface GamePanelProps {
-  game: string;
-  roomId: string;
-  roomDetail: RoomResponse;
-  players: Player[];
-  isRoomManager: boolean;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
-}
+const GamePanel = (props: GamePanelProps) => {
+  const gameType = gameToType(props.game);
+  const Component = gameComponentMap[gameType];
 
-const GamePanel = ({
-  game,
-  roomId,
-  roomDetail,
-  players,
-  isRoomManager,
-  sendMessage,
-}: GamePanelProps) => {
-  const gameType = gameToType(game);
-  switch (gameType) {
-    case GAME_TYPES.BALANCE:
-      return (
-        <BalanceGameContainer
-          roomId={roomId}
-          roomDetail={roomDetail}
-          players={players}
-          isRoomManager={isRoomManager}
-          sendMessage={sendMessage}
-        />
-      );
-    case GAME_TYPES.QNA:
-      return (
-        <QnaGameContainer
-          roomId={roomId}
-          roomDetail={roomDetail}
-          players={players}
-          isRoomManager={isRoomManager}
-          sendMessage={sendMessage}
-        />
-      );
-    default:
-      return <div>게임을 선택해주세요</div>;
+  // @TODO: 추후에 Frontend Error Code로 관리
+  if (!Component) {
+    throw new Error(
+      `Invalid game type: No component found for game type "${gameType}" derived from game: "${props.game}"`
+    );
   }
+
+  return <Component {...props} />;
 };
 
 export default GamePanel;
