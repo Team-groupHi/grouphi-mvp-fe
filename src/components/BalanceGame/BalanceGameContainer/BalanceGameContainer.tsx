@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import { useEffect, useState } from 'react';
 
 import {
@@ -14,17 +13,7 @@ import { ROOM_STATUS } from '@/constants/room';
 import { useFetchBalanceGameResults } from '@/hooks/queries';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
-import { Player, RoomResponse } from '@/types/api';
-
-interface BalanceGameContainerProps {
-  roomId: string;
-  roomDetail: RoomResponse;
-  players: Player[];
-  isRoomManager: boolean;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
-}
+import { GameContainerProps } from '@/types/props';
 
 const BalanceGameContainer = ({
   roomId,
@@ -32,7 +21,7 @@ const BalanceGameContainer = ({
   players,
   isRoomManager,
   sendMessage,
-}: BalanceGameContainerProps) => {
+}: GameContainerProps) => {
   const { round } = useBalanceGameStore();
   const { roomStatus, setRoomStatus } = useRoomStore();
 

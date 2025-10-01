@@ -1,29 +1,17 @@
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
-
 import { PreGame, QnaGameProgress, QnaGameResultsFetcher } from '@/components';
 import { ROOM_STATUS } from '@/constants/room';
 import useRoomStore from '@/store/useRoomStore';
-import { Player, RoomResponse } from '@/types/api';
+import { GameContainerProps } from '@/types/props';
 
-interface QnaGameProps {
-  roomId: string;
-  roomDetail: RoomResponse;
-  players: Player[];
-  isRoomManager: boolean;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
-}
-
-const QnaGame = ({
+const QnaGameContainer = ({
   roomId,
   roomDetail,
   players,
   isRoomManager,
   sendMessage,
-}: QnaGameProps) => {
+}: GameContainerProps) => {
   const { roomStatus } = useRoomStore();
 
   return (
@@ -53,4 +41,4 @@ const QnaGame = ({
   );
 };
 
-export default QnaGame;
+export default QnaGameContainer;
