@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import { GameRoom, Spinner } from '@/components';
-import { GAME_TYPES } from '@/constants/game';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import { useFetchRoomDetail } from '@/hooks/queries';
@@ -15,7 +14,6 @@ import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
-import { gameToType } from '@/utils/gameToType';
 
 interface GameRoomFetcherProps {
   connect: (params: EnterRoomProps) => void;
@@ -52,31 +50,6 @@ const GameRoomFetcher = ({
       setHostName(host.name);
     }
   }, [roomDetail.players, setHostName]);
-
-  useEffect(() => {
-    if (
-      isRoomManager &&
-      roomDetail.players.length === 1 &&
-      roomDetail.status === 'PLAYING'
-    ) {
-      const gameType = gameToType(roomDetail.game.nameEn);
-      switch (gameType) {
-        case GAME_TYPES.BALANCE:
-          sendMessage({
-            destination: `${SOCKET.BALANCE_GAME.END}`,
-          });
-          break;
-        case GAME_TYPES.QNA:
-          sendMessage({
-            destination: `${SOCKET.QNA_GAME.END}`,
-          });
-          break;
-      }
-      toast({
-        title: '최소 인원 수가 부족해 게임을 종료하고 대기실로 이동합니다.',
-      });
-    }
-  }, [isRoomManager, roomDetail, sendMessage, toast]);
 
   useEffect(() => {
     if (roomDetail && !isSelfInPlayers) {
