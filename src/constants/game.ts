@@ -16,3 +16,8 @@ export const GAME = {
     },
   },
 };
+
+export const GAME_TYPES = {
+  QNA: 'QNA',
+  BALANCE: 'BALANCE',
+} as const;

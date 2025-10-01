@@ -24,8 +24,3 @@ export const GAME_QUESTIONS_COUNT = {
     STEP: 2,
   },
 } as const;
-
-export const GAME_TYPES = {
-  QNA: 'QNA',
-  BALANCE: 'BALANCE',
-} as const;
