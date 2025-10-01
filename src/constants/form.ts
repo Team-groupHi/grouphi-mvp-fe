@@ -23,15 +23,9 @@ export const GAME_QUESTIONS_COUNT = {
     MAX: 20,
     STEP: 2,
   },
-  DEFAULT: {
-    MIN: 10,
-    MAX: 20,
-    STEP: 2,
-  },
 } as const;
 
 export const GAME_TYPES = {
   QNA: 'QNA',
   BALANCE: 'BALANCE',
-  DEFAULT: 'DEFAULT',
 } as const;
