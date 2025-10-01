@@ -13,7 +13,7 @@ import {
   Slider,
 } from '@/components';
 import { GAME_QUESTIONS_COUNT, totalRoundsSchema } from '@/constants/form';
-import { GameType } from '@/types/form';
+import { GameType } from '@/types/game';
 
 interface TotalRoundsFormProps {
   gameType: GameType;

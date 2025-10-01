@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import { GameRoom, Spinner } from '@/components';
-import { GAME_TYPES } from '@/constants/form';
+import { GAME_TYPES } from '@/constants/game';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import { useFetchRoomDetail } from '@/hooks/queries';
@@ -15,7 +15,7 @@ import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
-import { gameToType } from '@/utils/form';
+import { gameToType } from '@/utils/gameToType';
 
 interface GameRoomFetcherProps {
   connect: (params: EnterRoomProps) => void;
