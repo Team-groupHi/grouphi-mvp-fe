@@ -32,7 +32,6 @@ export {
   GameListCard,
   GameListCarousel,
   GamePanel,
-  GameRoom,
   GameRoomFetcher,
   HomeClient,
   InitialNickname,
