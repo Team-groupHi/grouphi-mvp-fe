@@ -1,7 +1,7 @@
 export { QnaGameAvatarStatus } from './QnaGameAvatarStatus';
-export { QnaGameContainer } from './QnaGameContainer';
 export { QnaGameControl } from './QnaGameControl';
 export { QnaGameFinalResult } from './QnaGameFinalResult';
+export { QnaGameContainer } from './QnaGamePanel';
 export { QnaGamePartialResult } from './QnaGamePartialResult';
 export { QnaGameProgress } from './QnaGameProgress';
 export { QnaGameQuestionPanel } from './QnaGameQuestionPanel';
