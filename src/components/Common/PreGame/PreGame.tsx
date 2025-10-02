@@ -12,9 +12,7 @@ import { useRef } from 'react';
 
 import { Button, GameListCard, TotalRoundsForm } from '@/components';
 import { GAME_QUESTIONS_COUNT } from '@/constants/form';
-import { GAME_TYPES } from '@/constants/game';
 import { MODAL_TYPE } from '@/constants/modal';
-import { SOCKET } from '@/constants/websocket';
 import useThrottleReadyHandlers from '@/hooks/useThrottleHandlers';
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
@@ -22,6 +20,7 @@ import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player, RoomResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
+import { gameStartHandlers } from '@/utils/gameStartHandlers';
 import { gameToType } from '@/utils/gameToType';
 
 interface PreGameProps {
@@ -65,27 +64,14 @@ const PreGame = ({
       return;
     }
 
-    switch (gameType) {
-      case GAME_TYPES.BALANCE:
-        sendMessage({
-          destination: `${SOCKET.BALANCE_GAME.START}`,
-          body: {
-            theme: roomDetail.game.nameEn
-              .split(' ')[0]
-              .toUpperCase()
-              .replace('COMPREHENSIVE', 'ALL'),
-            totalRounds: totalRoundsRef.current,
-          },
-        });
-        break;
-      case GAME_TYPES.QNA:
-        sendMessage({
-          destination: `${SOCKET.QNA_GAME.START}`,
-          body: {
-            totalRounds: totalRoundsRef.current,
-          },
-        });
-        break;
+    const startGameHandler = gameStartHandlers[gameType];
+
+    if (startGameHandler) {
+      startGameHandler({
+        sendMessage,
+        roomDetail,
+        totalRounds: totalRoundsRef.current,
+      });
     }
   };
 
