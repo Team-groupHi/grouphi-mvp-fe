@@ -2,22 +2,17 @@
 
 import { useEffect } from 'react';
 
-import { PreGame, QnaGameProgress, QnaGameResultsFetcher } from '@/components';
-import { ROOM_STATUS } from '@/constants/room';
 import { SOCKET } from '@/constants/websocket';
 import { useToast } from '@/hooks/useToast';
 import useRoomStore from '@/store/useRoomStore';
-import { GameContainerProps } from '@/types/props';
+import { GameControllerProps } from '@/types/props';
 
-const QnaGameContainer = ({
-  roomId,
-  roomDetail,
-  players,
-  isRoomManager,
-  sendMessage,
-}: GameContainerProps) => {
+import QnaGameView from './QnaGameView';
+
+const QnaGameController = (props: GameControllerProps) => {
+  const { roomDetail, isRoomManager, sendMessage } = props;
+
   const { roomStatus } = useRoomStore();
-
   const { toast } = useToast();
 
   useEffect(() => {
@@ -35,31 +30,13 @@ const QnaGameContainer = ({
       });
     }
   }, [isRoomManager, roomDetail, sendMessage, toast]);
+
   return (
-    <>
-      {roomStatus === ROOM_STATUS.IDLE && (
-        <PreGame
-          roomDetail={roomDetail}
-          players={players}
-          isRoomManager={isRoomManager}
-          sendMessage={sendMessage}
-        />
-      )}
-      {roomStatus === ROOM_STATUS.PROGRESS && (
-        <QnaGameProgress
-          sendMessage={sendMessage}
-          players={players}
-        />
-      )}
-      {(roomStatus === ROOM_STATUS.RESULT ||
-        roomStatus === ROOM_STATUS.FINAL_RESULT) && (
-        <QnaGameResultsFetcher
-          roomId={roomId}
-          sendMessage={sendMessage}
-        />
-      )}
-    </>
+    <QnaGameView
+      {...props}
+      roomStatus={roomStatus}
+    />
   );
 };
 
-export default QnaGameContainer;
+export default QnaGameController;

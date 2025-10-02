@@ -13,4 +13,4 @@ export interface GamePanelProps {
   ) => void;
 }
 
-export type GameContainerProps = Omit<GamePanelProps, 'game'>;
+export type GameControllerProps = Omit<GamePanelProps, 'game'>;

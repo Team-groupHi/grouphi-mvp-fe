@@ -9,7 +9,7 @@ import { useFetchBalanceGameResults } from '@/hooks/queries';
 import { useToast } from '@/hooks/useToast';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
-import { GameContainerProps } from '@/types/props';
+import { GameControllerProps } from '@/types/props';
 
 import BalanceGameView from './BalanceGameView';
 
@@ -19,7 +19,7 @@ const BalanceGameController = ({
   players,
   isRoomManager,
   sendMessage,
-}: GameContainerProps) => {
+}: GameControllerProps) => {
   const { round } = useBalanceGameStore();
   const { roomStatus, setRoomStatus } = useRoomStore();
   const { toast } = useToast();
