@@ -3,12 +3,6 @@
 
 import { useEffect, useState } from 'react';
 
-import {
-  BalanceGameFinalResult,
-  BalanceGamePartialResult,
-  BalanceGameProgress,
-  PreGame,
-} from '@/components';
 import { ROOM_STATUS } from '@/constants/room';
 import { SOCKET } from '@/constants/websocket';
 import { useFetchBalanceGameResults } from '@/hooks/queries';
@@ -17,7 +11,9 @@ import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { GameContainerProps } from '@/types/props';
 
-const BalanceGameContainer = ({
+import BalanceGameView from './BalanceGameView';
+
+const BalanceGameController = ({
   roomId,
   roomDetail,
   players,
@@ -26,11 +22,9 @@ const BalanceGameContainer = ({
 }: GameContainerProps) => {
   const { round } = useBalanceGameStore();
   const { roomStatus, setRoomStatus } = useRoomStore();
-
   const { toast } = useToast();
 
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
-
   const {
     data: gameResults,
     refetch,
@@ -73,39 +67,17 @@ const BalanceGameContainer = ({
     }
   }, [isError]);
 
+  const preGameProps = { roomDetail, players, isRoomManager, sendMessage };
+  const progressProps = { sendMessage, setIsTimeout };
+
   return (
-    <>
-      {roomStatus === ROOM_STATUS.IDLE && (
-        <PreGame
-          roomDetail={roomDetail}
-          players={players}
-          isRoomManager={isRoomManager}
-          sendMessage={sendMessage}
-        />
-      )}
-      {roomStatus === ROOM_STATUS.PROGRESS && (
-        <BalanceGameProgress
-          sendMessage={sendMessage}
-          setIsTimeout={setIsTimeout}
-          /* 
-              // @brief: 전체 선택 시 넘어가는 기능 잠시 보류
-              isAllSelected={
-                players.length !== 0 &&
-                new Set(selectedPlayers).size === players.length
-              }
-              */
-        />
-      )}
-      {roomStatus === ROOM_STATUS.RESULT &&
-        gameResults &&
-        gameResults.length !== 0 && (
-          <BalanceGamePartialResult data={gameResults} />
-        )}
-      {roomStatus === ROOM_STATUS.FINAL_RESULT && gameResults.length !== 0 && (
-        <BalanceGameFinalResult data={gameResults} />
-      )}
-    </>
+    <BalanceGameView
+      roomStatus={roomStatus}
+      gameResults={gameResults}
+      preGameProps={preGameProps}
+      progressProps={progressProps}
+    />
   );
 };
 
-export default BalanceGameContainer;
+export default BalanceGameController;
