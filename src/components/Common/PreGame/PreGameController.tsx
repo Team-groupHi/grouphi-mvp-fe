@@ -2,30 +2,22 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import {
-  CheckCheck,
-  Loader,
-  MousePointer2,
-  SlidersHorizontal,
-} from 'lucide-react';
 import { useRef } from 'react';
 
-import { Button, GameListCard, TotalRoundsForm } from '@/components';
 import { GAME_QUESTIONS_COUNT } from '@/constants/form';
 import { MODAL_TYPE } from '@/constants/modal';
 import useThrottleReadyHandlers from '@/hooks/useThrottleHandlers';
 import { useToast } from '@/hooks/useToast';
-import { cn } from '@/lib/utils';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
-import { Player, RoomResponse } from '@/types/api';
-import { isDevelopment } from '@/utils/env';
+import { RoomResponse } from '@/types/api';
 import { gameStartHandlers } from '@/utils/gameStartHandlers';
 import { gameToType } from '@/utils/gameToType';
 
+import PreGameView from './PreGameView';
+
 interface PreGameControllerProps {
   roomDetail: RoomResponse;
-  players: Player[];
   isRoomManager: boolean;
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
@@ -34,7 +26,6 @@ interface PreGameControllerProps {
 
 const PreGameController = ({
   roomDetail,
-  players,
   sendMessage,
   isRoomManager,
 }: PreGameControllerProps) => {
@@ -47,12 +38,14 @@ const PreGameController = ({
   const { toast } = useToast();
   const { handleReady, handleUnready } = useThrottleReadyHandlers(sendMessage);
 
-  const isReady = players.find((player) => player.name === myName)?.isReady;
-  const readyCount = players.reduce(
+  const isReady =
+    roomDetail.players.find((player) => player.name === myName)?.isReady ||
+    false;
+  const readyCount = roomDetail.players.reduce(
     (count, { isReady }) => count + (isReady ? 1 : 0),
     0
   );
-  const isAllReady = readyCount === players.length;
+  const isAllReady = readyCount === roomDetail.players.length;
 
   const handleGameStart = () => {
     if (roomDetail.players.length === 1) {
@@ -80,91 +73,20 @@ const PreGameController = ({
   };
 
   return (
-    <section className="bg-container/60 h-full flex flex-col justify-center items-center gap-7 p-800 rounded-lg">
-      <span className="font-semibold">잠시 후 게임이 시작됩니다.</span>
-      <GameListCard
-        title={roomDetail.game.nameKr}
-        description={roomDetail.game.descriptionKr}
-        src={roomDetail.game.thumbnailUrl}
-        className="min-w-80 max-w-80 2xl:max-w-96 pointer-events-none"
-      />
-      <section className="flex flex-col gap-2 w-full items-center">
-        {isRoomManager && (
-          <>
-            <TotalRoundsForm
-              totalRoundsRef={totalRoundsRef}
-              gameType={gameType}
-            />
-            <Button
-              className={cn(
-                'text-base font-semibold w-[12rem]',
-                !isAllReady && 'pointer-events-none'
-              )}
-              size="xl"
-              variant={
-                isAllReady && roomDetail.players.length !== 1
-                  ? 'default'
-                  : 'waiting'
-              }
-              onClick={handleGameStart}
-            >
-              <div className="flex items-center justify-center gap-2">
-                {isAllReady ? (
-                  <>
-                    <CheckCheck />
-                    <span>
-                      게임 시작({readyCount}/{players.length})
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <Loader />
-                    <span>
-                      준비 대기중({readyCount}/{players.length})
-                    </span>
-                  </>
-                )}
-              </div>
-            </Button>
-
-            {isDevelopment && (
-              <Button
-                variant={'secondary'}
-                className="text-base font-semibold w-[12rem] flex items-center justify-center gap-2"
-                size="xl"
-                onClick={handleGameChange}
-              >
-                <SlidersHorizontal />
-                <span>게임 변경</span>
-              </Button>
-            )}
-          </>
-        )}
-      </section>
-
-      {!isRoomManager && (
-        <Button
-          className="text-base font-semibold w-[12rem]"
-          size="xl"
-          variant={isReady ? 'waiting' : 'default'}
-          onClick={isReady ? handleUnready : handleReady}
-        >
-          <div className="flex items-center justify-center gap-2">
-            {isReady ? (
-              <>
-                <CheckCheck />
-                <span>준비 완료</span>
-              </>
-            ) : (
-              <>
-                <MousePointer2 />
-                <span>준비 하기</span>
-              </>
-            )}
-          </div>
-        </Button>
-      )}
-    </section>
+    <PreGameView
+      roomDetail={roomDetail}
+      isRoomManager={isRoomManager}
+      gameType={gameType}
+      totalRoundsRef={totalRoundsRef}
+      myName={myName}
+      isReady={isReady}
+      readyCount={readyCount}
+      isAllReady={isAllReady}
+      handleGameStart={handleGameStart}
+      handleGameChange={handleGameChange}
+      handleReady={handleReady}
+      handleUnready={handleUnready}
+    />
   );
 };
 

@@ -4,17 +4,16 @@ import {
   BalanceGameFinalResult,
   BalanceGamePartialResult,
   BalanceGameProgress,
+  PreGameController,
 } from '@/components';
-import { PreGame } from '@/components/Common';
 import { ROOM_STATUS } from '@/constants/room';
-import { BalanceGameResultResponse, Player, RoomResponse } from '@/types/api';
+import { BalanceGameResultResponse, RoomResponse } from '@/types/api';
 import { roomStatusType } from '@/types/room';
 
 interface BalanceGameViewProps {
   roomStatus: roomStatusType;
   preGameProps: {
     roomDetail: RoomResponse;
-    players: Player[];
     isRoomManager: boolean;
     sendMessage: <T>(
       params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
@@ -37,7 +36,9 @@ const BalanceGameView = ({
 }: BalanceGameViewProps) => {
   return (
     <>
-      {roomStatus === ROOM_STATUS.IDLE && <PreGame {...preGameProps} />}
+      {roomStatus === ROOM_STATUS.IDLE && (
+        <PreGameController {...preGameProps} />
+      )}
       {roomStatus === ROOM_STATUS.PROGRESS && (
         <BalanceGameProgress {...progressProps} />
       )}
