@@ -1,1 +1,1 @@
-export { default as GameRoomFetcher } from './GameRoomFetcher';
+export { default as GameRoomController } from './GameRoomController';

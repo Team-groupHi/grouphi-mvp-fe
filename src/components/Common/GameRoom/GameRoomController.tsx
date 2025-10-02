@@ -17,7 +17,7 @@ import { ChatMessage } from '@/types';
 
 import GameRoomView from './GameRoomView';
 
-interface GameRoomFetcherProps {
+interface GameRoomControllerProps {
   connect: (params: EnterRoomProps) => void;
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
@@ -25,11 +25,11 @@ interface GameRoomFetcherProps {
   chatMessages: ChatMessage[];
 }
 
-const GameRoomFetcher = ({
+const GameRoomController = ({
   connect,
   sendMessage,
   chatMessages,
-}: GameRoomFetcherProps) => {
+}: GameRoomControllerProps) => {
   const path = usePathname();
   const router = useRouter();
   const roomId = path.split('/')[2];
@@ -111,4 +111,4 @@ const GameRoomFetcher = ({
   );
 };
 
-export default GameRoomFetcher;
+export default GameRoomController;
