@@ -17,7 +17,7 @@ import { ChatMessage } from '@/types';
 import { RoomResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
 
-interface GameRoomProps {
+interface GameRoomViewProps {
   roomDetail: RoomResponse;
   roomId: string;
   myName: string;
@@ -28,17 +28,18 @@ interface GameRoomProps {
   chatMessages: ChatMessage[];
 }
 
-const GameRoom = ({
+const GameRoomView = ({
   roomDetail,
   roomId,
   myName,
   isRoomManager,
   sendMessage,
   chatMessages,
-}: GameRoomProps) => {
+}: GameRoomViewProps) => {
   return (
     <section className="w-screen min-h-screen flex items-start justify-start 2xl:justify-center gap-4 shrink-0 py-20 overflow-y-hidden">
       <UserList players={roomDetail.players} />
+
       <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] max-w-[60%] min-w-max w-full rounded-lg shrink-0">
         <ErrorHandlingWrapper
           fallbackComponent={ErrorFallback}
@@ -79,4 +80,4 @@ const GameRoom = ({
   );
 };
 
-export default GameRoom;
+export default GameRoomView;

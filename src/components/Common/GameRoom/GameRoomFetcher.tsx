@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { GameRoom, Spinner } from '@/components';
+import { Spinner } from '@/components';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import { useFetchRoomDetail } from '@/hooks/queries';
@@ -14,6 +14,8 @@ import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
+
+import GameRoomView from './GameRoomView';
 
 interface GameRoomFetcherProps {
   connect: (params: EnterRoomProps) => void;
@@ -98,7 +100,7 @@ const GameRoomFetcher = ({
   }
 
   return (
-    <GameRoom
+    <GameRoomView
       roomDetail={roomDetail}
       roomId={roomId}
       myName={myName}
