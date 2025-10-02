@@ -1,1 +1,1 @@
-export { default as BalanceGameContainer } from './BalanceGameContainer';
+export { default as BalanceGameController } from './BalanceGameController';

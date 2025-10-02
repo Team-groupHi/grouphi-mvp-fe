@@ -1,6 +1,6 @@
 export {
-  BalanceGameContainer,
   BalanceGameControl,
+  BalanceGameController,
   BalanceGameFinalResult,
   BalanceGamePartialResult,
   BalanceGameProgress,
