@@ -23,7 +23,7 @@ import { isDevelopment } from '@/utils/env';
 import { gameStartHandlers } from '@/utils/gameStartHandlers';
 import { gameToType } from '@/utils/gameToType';
 
-interface PreGameProps {
+interface PreGameControllerProps {
   roomDetail: RoomResponse;
   players: Player[];
   isRoomManager: boolean;
@@ -32,12 +32,12 @@ interface PreGameProps {
   ) => void;
 }
 
-const PreGame = ({
+const PreGameController = ({
   roomDetail,
   players,
   sendMessage,
   isRoomManager,
-}: PreGameProps) => {
+}: PreGameControllerProps) => {
   const gameType = gameToType(roomDetail.game.nameEn);
   const totalRoundsRef = useRef<number>(GAME_QUESTIONS_COUNT[gameType].MIN);
 
@@ -168,4 +168,4 @@ const PreGame = ({
   );
 };
 
-export default PreGame;
+export default PreGameController;
