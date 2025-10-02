@@ -1,8 +1,7 @@
 import { create } from 'zustand';
 
 import { ROOM_STATUS } from '@/constants/room';
-
-type roomStatusType = (typeof ROOM_STATUS)[keyof typeof ROOM_STATUS];
+import { roomStatusType } from '@/types/room';
 
 interface RoomStoreProps {
   roomStatus: roomStatusType;
