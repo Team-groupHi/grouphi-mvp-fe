@@ -8,8 +8,8 @@ import {
   Chatting,
   ErrorFallback,
   ErrorHandlingWrapper,
+  GameActionButtons,
   GamePanel,
-  RoomControl,
   Spinner,
   UserList,
 } from '@/components';
@@ -70,7 +70,7 @@ const GameRoomView = ({
           chatMessages={chatMessages}
           sendMessage={sendMessage}
         />
-        <RoomControl
+        <GameActionButtons
           game={roomDetail.game.nameEn}
           isRoomManager={isRoomManager}
           sendMessage={sendMessage}

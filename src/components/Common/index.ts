@@ -25,6 +25,7 @@ export {
   FormMessage,
   useFormField,
 } from './Form';
+export { GameActionButtons } from './GameActionButtons';
 export { GameListCard } from './GameListCard';
 export { GameListCarousel } from './GameListCarousel';
 export { GamePanel } from './GamePanel';
@@ -48,7 +49,6 @@ export {
 } from './Pagination';
 export { PieChart } from './PieChart';
 export { PreGame } from './PreGame';
-export { RoomControl } from './RoomControl';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';
 export { Spinner } from './Spinner';
