@@ -1,5 +1,4 @@
 export { QnaGameAvatarStatus } from './QnaGameAvatarStatus';
-export { QnaGameControl } from './QnaGameControl';
 export { QnaGameFinalResult } from './QnaGameFinalResult';
 export { QnaGamePanel } from './QnaGamePanel';
 export { QnaGamePartialResult } from './QnaGamePartialResult';

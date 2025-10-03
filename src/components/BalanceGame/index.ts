@@ -1,4 +1,3 @@
-export { BalanceGameControl } from './BalanceGameControl';
 export { BalanceGameFinalResult } from './BalanceGameFinalResult';
 export { BalanceGamePanel } from './BalanceGamePanel';
 export { BalanceGamePartialResult } from './BalanceGamePartialResult';

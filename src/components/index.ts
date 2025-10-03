@@ -1,5 +1,4 @@
 export {
-  BalanceGameControl,
   BalanceGameFinalResult,
   BalanceGamePanel,
   BalanceGamePartialResult,
@@ -79,7 +78,6 @@ export {
 } from './Common';
 export {
   QnaGameAvatarStatus,
-  QnaGameControl,
   QnaGameFinalResult,
   QnaGamePanel,
   QnaGamePartialResult,
