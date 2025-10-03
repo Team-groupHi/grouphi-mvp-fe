@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { BalanceGamePanel, QnaGamePanel } from '@/components';
+import { BalanceGamePanel } from '@/components/BalanceGame/BalanceGamePanel';
+import { QnaGamePanel } from '@/components/QnaGame/QnaGamePanel';
 import { GAME_TYPES } from '@/constants/game';
 import { GamePanelProps } from '@/types/props';
 
