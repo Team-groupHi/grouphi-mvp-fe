@@ -3,8 +3,8 @@
 import * as StompJS from '@stomp/stompjs';
 
 import { BalanceGameControl, QnaGameControl } from '@/components';
-import { GAME_TYPES } from '@/constants/form';
-import { gameToType } from '@/utils/form';
+import { GAME_TYPES } from '@/constants/game';
+import { gameToType } from '@/utils/gameToType';
 
 interface ManagerControlProps {
   game: string;
