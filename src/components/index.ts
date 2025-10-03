@@ -1,7 +1,7 @@
 export {
   BalanceGameControl,
-  BalanceGameController,
   BalanceGameFinalResult,
+  BalanceGamePanel,
   BalanceGamePartialResult,
   BalanceGameProgress,
   BalanceGameQuestionCard,
@@ -32,7 +32,7 @@ export {
   GameListCard,
   GameListCarousel,
   GamePanel,
-  GameRoomController,
+  GameRoom,
   HomeClient,
   InitialNickname,
   Input,
@@ -79,9 +79,9 @@ export {
 } from './Common';
 export {
   QnaGameAvatarStatus,
-  QnaGameContainer,
   QnaGameControl,
   QnaGameFinalResult,
+  QnaGamePanel,
   QnaGamePartialResult,
   QnaGameProgress,
   QnaGameQuestionPanel,

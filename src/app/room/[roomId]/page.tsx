@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import {
   ErrorFallback,
   ErrorHandlingWrapper,
-  GameRoomController,
+  GameRoom,
   Spinner,
 } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
@@ -31,7 +31,7 @@ const RoomPage = () => {
       fallbackComponent={ErrorFallback}
       suspenseFallback={<Spinner />}
     >
-      <GameRoomController {...webSocket} />
+      <GameRoom {...webSocket} />
     </ErrorHandlingWrapper>
   );
 };

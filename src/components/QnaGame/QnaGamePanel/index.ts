@@ -1,1 +1,1 @@
-export { default as QnaGameContainer } from './QnaGameContainer';
+export { default as QnaGamePanel } from './QnaGameController';
