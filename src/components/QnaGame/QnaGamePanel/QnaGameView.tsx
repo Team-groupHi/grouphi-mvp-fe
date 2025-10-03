@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-  PreGameController,
-  QnaGameProgress,
-  QnaGameResultsFetcher,
-} from '@/components';
+import { PreGame, QnaGameProgress, QnaGameResultsFetcher } from '@/components';
 import { ROOM_STATUS } from '@/constants/room';
 import { GameControllerProps } from '@/types/props';
 import { roomStatusType } from '@/types/room';
@@ -24,7 +20,7 @@ const QnaGameView = ({
   return (
     <>
       {roomStatus === ROOM_STATUS.IDLE && (
-        <PreGameController
+        <PreGame
           roomDetail={roomDetail}
           isRoomManager={isRoomManager}
           sendMessage={sendMessage}

@@ -4,7 +4,7 @@ import {
   BalanceGameFinalResult,
   BalanceGamePartialResult,
   BalanceGameProgress,
-  PreGameController,
+  PreGame,
 } from '@/components';
 import { ROOM_STATUS } from '@/constants/room';
 import { BalanceGameResultResponse, RoomResponse } from '@/types/api';
@@ -36,9 +36,7 @@ const BalanceGameView = ({
 }: BalanceGameViewProps) => {
   return (
     <>
-      {roomStatus === ROOM_STATUS.IDLE && (
-        <PreGameController {...preGameProps} />
-      )}
+      {roomStatus === ROOM_STATUS.IDLE && <PreGame {...preGameProps} />}
       {roomStatus === ROOM_STATUS.PROGRESS && (
         <BalanceGameProgress {...progressProps} />
       )}

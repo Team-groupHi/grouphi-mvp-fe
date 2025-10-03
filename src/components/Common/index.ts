@@ -47,7 +47,7 @@ export {
   PaginationPrevious,
 } from './Pagination';
 export { PieChart } from './PieChart';
-export { PreGameController } from './PreGame';
+export { PreGame } from './PreGame';
 export { RoomControl } from './RoomControl';
 export { ShootingStars, StarsBackground } from './ShootingStars';
 export { Slider } from './Slider';

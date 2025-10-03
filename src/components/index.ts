@@ -51,7 +51,7 @@ export {
   PaginationNext,
   PaginationPrevious,
   PieChart,
-  PreGameController,
+  PreGame,
   RoomControl,
   ShootingStars,
   Slider,
