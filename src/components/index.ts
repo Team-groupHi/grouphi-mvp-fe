@@ -79,10 +79,10 @@ export {
 export {
   QnaGameAvatarStatus,
   QnaGameFinalResult,
+  QnaGameForm,
   QnaGamePanel,
   QnaGamePartialResult,
   QnaGameProgress,
-  QnaGameQuestionPanel,
   QnaGameResultsFetcher,
   QnaGameUserFinalResult,
   QnaGameUserPartialResult,
