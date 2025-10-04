@@ -24,11 +24,11 @@ const GameActionButtonsController = ({
   const gameType = gameToType(game);
   const { roomStatus } = useRoomStore();
 
-  const gameControl = GAME_CONTROL_MAP[gameType];
+  const gameControl = gameType ? GAME_CONTROL_MAP[gameType] : null;
 
-  const { round } = gameControl.useStore();
+  const { round } = gameControl?.useStore() || { round: null };
 
-  if (!round || !isRoomManager) return null;
+  if (!gameControl || !round || !isRoomManager) return null;
 
   const roundEndActionText =
     round.currentRound === round.totalRounds
@@ -37,7 +37,6 @@ const GameActionButtonsController = ({
   const nextDestination = gameControl.nextDestination;
   const endDestination = gameControl.endDestination;
 
-  // 5. 이벤트 핸들러 (로직 그대로 유지)
   const handleEnterNextRound = () => {
     sendMessage({ destination: nextDestination });
   };

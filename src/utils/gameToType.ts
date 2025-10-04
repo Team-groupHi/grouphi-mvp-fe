@@ -10,5 +10,7 @@ export const gameToType = (game: string) => {
       return GAME_TYPES.BALANCE;
     case GAME.GAMES.QNA_GAME:
       return GAME_TYPES.QNA;
+    default:
+      return null;
   }
 };
