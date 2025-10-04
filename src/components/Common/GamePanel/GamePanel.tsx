@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'; // 💡 useRouter 사용
 import { useEffect } from 'react';
 
-import { gameComponentMap } from '@/constants/gameComponentMap';
+import { GAME_COMPONENT_MAP } from '@/constants/gameComponentMap';
 import { PATH } from '@/constants/router';
 import { useToast } from '@/hooks/useToast';
 import { GamePanelProps } from '@/types/props';
@@ -14,7 +14,7 @@ const GamePanel = (props: GamePanelProps) => {
   const { toast } = useToast();
 
   const gameType = gameToType(props.game);
-  const Component = gameType ? gameComponentMap[gameType] : null;
+  const Component = gameType ? GAME_COMPONENT_MAP[gameType] : null;
 
   useEffect(() => {
     if (!Component) {
