@@ -30,7 +30,9 @@ const PreGameController = ({
   isRoomManager,
 }: PreGameControllerProps) => {
   const gameType = gameToType(roomDetail.game.nameEn);
-  const totalRoundsRef = useRef<number>(GAME_QUESTIONS_COUNT[gameType].MIN);
+  const totalRoundsRef = useRef<number>(
+    gameType ? GAME_QUESTIONS_COUNT[gameType].MIN : 10
+  );
 
   const { myName } = useRoomStore();
   const { openModal } = useModalStore();
@@ -57,7 +59,7 @@ const PreGameController = ({
       return;
     }
 
-    const startGameHandler = gameStartHandlers[gameType];
+    const startGameHandler = gameType ? gameStartHandlers[gameType] : null;
 
     if (startGameHandler) {
       startGameHandler({
@@ -71,6 +73,10 @@ const PreGameController = ({
   const handleGameChange = () => {
     openModal(MODAL_TYPE.CHANGE_GAME, roomDetail.game.id);
   };
+
+  if (!gameType) {
+    return null;
+  }
 
   return (
     <PreGameView
