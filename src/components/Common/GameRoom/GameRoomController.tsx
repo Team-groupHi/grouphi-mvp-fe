@@ -2,8 +2,7 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { Spinner } from '@/components';
