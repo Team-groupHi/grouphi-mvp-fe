@@ -10,8 +10,5 @@ export const gameToType = (game: string) => {
       return GAME_TYPES.BALANCE;
     case GAME.GAMES.QNA_GAME:
       return GAME_TYPES.QNA;
-    // @TODO: 추후에 Frontend Error Code로 관리
-    default:
-      throw new Error(`Unknown game type: ${game}`);
   }
 };
