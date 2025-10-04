@@ -22,7 +22,7 @@ const createGameMap = (
 };
 
 // 새로운 게임 타입이 추가될 때 여기에 추가합니다.
-export const gameTypeMap: GameMap = {
+export const GAME_TYPE_MAP: GameMap = {
   ...createGameMap(BALANCE_GAMES, GAME_TYPES.BALANCE),
   ...createGameMap(QNA_GAMES, GAME_TYPES.QNA),
 };
