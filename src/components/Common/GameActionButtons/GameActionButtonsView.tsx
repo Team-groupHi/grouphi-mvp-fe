@@ -1,5 +1,3 @@
-// GameActionButtonsView.tsx
-
 import { Button } from '@/components';
 import { ROOM_STATUS } from '@/constants/room';
 

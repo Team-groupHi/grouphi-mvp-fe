@@ -1,4 +1,3 @@
-// useModalStore.ts
 import { create } from 'zustand';
 
 type ModalType = string | null;

@@ -4,7 +4,7 @@ import { RoomResponse } from '@/types/api';
 
 export interface StartHandlerParams {
   sendMessage: <T>(params: { destination: string; body?: T }) => void;
-  roomDetail: RoomResponse; // RoomResponse 타입 가정
+  roomDetail: RoomResponse;
   totalRounds: number;
 }
 

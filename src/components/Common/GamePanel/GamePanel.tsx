@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation'; // 💡 useRouter 사용
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { GAME_COMPONENT_MAP } from '@/constants/gameComponentMap';
