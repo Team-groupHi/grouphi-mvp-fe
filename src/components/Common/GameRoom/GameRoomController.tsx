@@ -47,8 +47,10 @@ const GameRoomController = ({
 
   useEffect(() => {
     if (roomDetail.players.length > 0) {
-      const host = roomDetail.players.filter((player) => player.isHost)[0];
-      setHostName(host.name);
+      const host = roomDetail.players.find((player) => player.isHost);
+      if (host) {
+        setHostName(host.name);
+      }
     }
   }, [roomDetail.players, setHostName]);
 
