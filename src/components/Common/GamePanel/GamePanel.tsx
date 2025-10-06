@@ -17,14 +17,14 @@ const GamePanel = (props: GamePanelProps) => {
   const Component = gameType ? GAME_COMPONENT_MAP[gameType] : null;
 
   useEffect(() => {
-    if (!Component) {
+    if (!gameType) {
       toast({
         variant: 'destructive',
         title: `${props.game}은 지원하지 않는 게임 타입입니다.`,
       });
       router.push(PATH.HOME);
     }
-  }, [Component, props.game, router, toast]);
+  }, [gameType, props.game, router, toast]);
 
   if (!Component) {
     return null;
