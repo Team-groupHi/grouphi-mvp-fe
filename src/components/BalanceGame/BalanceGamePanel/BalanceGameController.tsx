@@ -5,7 +5,6 @@
 import { useEffect, useState } from 'react';
 
 import { ROOM_STATUS } from '@/constants/room';
-import { SOCKET } from '@/constants/websocket';
 import { useFetchBalanceGameResults } from '@/hooks/queries';
 import { useAutoEndGame } from '@/hooks/useAutoEndGame';
 import { useToast } from '@/hooks/useToast';
@@ -30,7 +29,6 @@ const BalanceGameController = ({
     roomDetail,
     sendMessage,
     toast,
-    endDestination: SOCKET.BALANCE_GAME.END,
   });
 
   const [isTimeout, setIsTimeout] = useState<boolean>(false);

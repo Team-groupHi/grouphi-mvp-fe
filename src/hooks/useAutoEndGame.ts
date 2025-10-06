@@ -4,7 +4,9 @@ import * as StompJS from '@stomp/stompjs';
 import { useEffect } from 'react';
 
 import { ToastProps } from '@/components';
+import { GAME_CONTROL_MAP } from '@/constants/gameControlMap';
 import { RoomResponse } from '@/types/api';
+import { gameToType } from '@/utils/gameToType';
 
 import { ToasterToast } from './useToast';
 
@@ -20,20 +22,23 @@ interface AutoEndGameProps {
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
   toast: ToastFunction;
-  endDestination: string;
 }
 
 export const useAutoEndGame = ({
   roomDetail,
   sendMessage,
   toast,
-  endDestination,
 }: AutoEndGameProps) => {
   useEffect(() => {
     const isMinPlayersViolated = roomDetail.players.length === 1;
     const isGamePlaying = roomDetail.status === 'PLAYING';
+    const gameType = gameToType(roomDetail.game.nameEn);
 
-    if (isMinPlayersViolated && isGamePlaying) {
+    const endDestination = gameType
+      ? GAME_CONTROL_MAP[gameType].endDestination
+      : null;
+
+    if (isMinPlayersViolated && isGamePlaying && endDestination) {
       sendMessage({
         destination: endDestination,
       });

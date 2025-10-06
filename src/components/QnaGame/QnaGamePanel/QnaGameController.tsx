@@ -1,6 +1,5 @@
 'use client';
 
-import { SOCKET } from '@/constants/websocket';
 import { useAutoEndGame } from '@/hooks/useAutoEndGame';
 import { useToast } from '@/hooks/useToast';
 import useRoomStore from '@/store/useRoomStore';
@@ -18,7 +17,6 @@ const QnaGameController = (props: GameControllerProps) => {
     roomDetail,
     sendMessage,
     toast,
-    endDestination: SOCKET.QNA_GAME.END,
   });
 
   return (
