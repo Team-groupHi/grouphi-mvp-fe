@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -6,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { ROOM_STATUS } from '@/constants/room';
 import { SOCKET } from '@/constants/websocket';
 import { useFetchBalanceGameResults } from '@/hooks/queries';
+import { useAutoEndGame } from '@/hooks/useAutoEndGame';
 import { useToast } from '@/hooks/useToast';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
 import useRoomStore from '@/store/useRoomStore';
@@ -24,6 +26,13 @@ const BalanceGameController = ({
   const { roomStatus, setRoomStatus } = useRoomStore();
   const { toast } = useToast();
 
+  useAutoEndGame({
+    roomDetail,
+    sendMessage,
+    toast,
+    endDestination: SOCKET.BALANCE_GAME.END,
+  });
+
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
   const {
     data: gameResults,
@@ -35,22 +44,6 @@ const BalanceGameController = ({
     round:
       roomStatus === ROOM_STATUS.FINAL_RESULT ? undefined : round.currentRound,
   });
-
-  useEffect(() => {
-    if (
-      isRoomManager &&
-      roomDetail.players.length === 1 &&
-      roomDetail.status === 'PLAYING'
-    ) {
-      sendMessage({
-        destination: `${SOCKET.BALANCE_GAME.END}`,
-      });
-
-      toast({
-        title: '최소 인원 수가 부족해 게임을 종료하고 대기실로 이동합니다.',
-      });
-    }
-  }, [isRoomManager, roomDetail, sendMessage, toast]);
 
   useEffect(() => {
     if (isTimeout) {
