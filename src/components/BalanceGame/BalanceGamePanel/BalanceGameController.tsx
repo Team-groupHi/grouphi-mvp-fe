@@ -58,7 +58,7 @@ const BalanceGameController = ({
     }
   }, [isError]);
 
-  const preGameProps = { roomDetail, players, isRoomManager, sendMessage };
+  const preGameProps = { roomDetail, isRoomManager, sendMessage };
   const progressProps = { sendMessage, setIsTimeout };
 
   return (
