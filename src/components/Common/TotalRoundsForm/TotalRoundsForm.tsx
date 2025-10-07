@@ -14,7 +14,7 @@ import {
   Label,
   Slider,
 } from '@/components';
-import { GAME_QUESTIONS_COUNT, totalRoundsSchema } from '@/constants/form';
+import { GAME_QUESTIONS_COUNT } from '@/constants/form';
 import { GameType } from '@/types/game';
 
 interface TotalRoundsFormProps {
@@ -28,9 +28,8 @@ const TotalRoundsForm = ({
 }: TotalRoundsFormProps) => {
   const QUESTIONS_COUNT = GAME_QUESTIONS_COUNT[gameType];
 
-  const formSchema = totalRoundsSchema({
-    min: QUESTIONS_COUNT.MIN,
-    max: QUESTIONS_COUNT.MAX,
+  const formSchema = z.object({
+    totalRounds: z.number().min(QUESTIONS_COUNT.MIN).max(QUESTIONS_COUNT.MAX),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
