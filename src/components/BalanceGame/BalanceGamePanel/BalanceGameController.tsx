@@ -17,7 +17,6 @@ import BalanceGameView from './BalanceGameView';
 const BalanceGameController = ({
   roomId,
   roomDetail,
-  players,
   isRoomManager,
   sendMessage,
 }: GameControllerProps) => {
