@@ -5,5 +5,3 @@ export { QnaGamePanel } from './QnaGamePanel';
 export { QnaGamePartialResult } from './QnaGamePartialResult';
 export { QnaGameProgress } from './QnaGameProgress';
 export { QnaGameResultsFetcher } from './QnaGameResultsFetcher';
-export { QnaGameUserFinalResult } from './QnaGameUserFinalResult';
-export { QnaGameUserPartialResult } from './QnaGameUserPartialResult';

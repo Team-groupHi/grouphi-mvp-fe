@@ -9,10 +9,11 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-  QnaGameUserFinalResult,
 } from '@/components';
 import { cn } from '@/lib/utils';
 import { QnaGameResultGetResponse } from '@/types/api';
+
+import UserAnswerRow from './UserAnswerRow';
 
 interface QnaGameFinalResultProps {
   results: QnaGameResultGetResponse[];
@@ -51,7 +52,7 @@ const QnaGameFinalResult = ({
             roundResult.result
               .sort((current, next) => next.likes - current.likes)
               .map((item, itemIndex) => (
-                <QnaGameUserFinalResult
+                <UserAnswerRow
                   key={`answer-${item.name}-${itemIndex}`}
                   user={item}
                 />

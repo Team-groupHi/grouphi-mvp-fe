@@ -84,6 +84,4 @@ export {
   QnaGamePartialResult,
   QnaGameProgress,
   QnaGameResultsFetcher,
-  QnaGameUserFinalResult,
-  QnaGameUserPartialResult,
 } from './QnaGame';
