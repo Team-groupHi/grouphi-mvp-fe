@@ -49,7 +49,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: ErrorProps) => {
     <section className="w-screen h-screen flex flex-col justify-center items-center gap-3">
       <Label>{message}</Label>
       {message === ERROR_MESSAGE.R002 ? (
-        <p>{`${count}초 후 메인으로 이동합니다`}</p>
+        <p>{`${count}초 후 메인으로 이동해요.`}</p>
       ) : (
         <>
           <Button onClick={gotoHome}>메인으로 이동</Button>

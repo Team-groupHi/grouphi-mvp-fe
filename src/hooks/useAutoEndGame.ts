@@ -44,7 +44,7 @@ export const useAutoEndGame = ({
       });
 
       toast({
-        title: '최소 인원 수가 부족해 게임을 종료하고 대기실로 이동합니다.',
+        title: '최소 인원 수가 부족해 게임을 종료하고 대기실로 이동해요.',
       });
     }
   }, [roomDetail.players.length]);

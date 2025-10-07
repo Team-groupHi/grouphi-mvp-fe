@@ -20,7 +20,7 @@ const GamePanel = (props: GamePanelProps) => {
     if (!gameType) {
       toast({
         variant: 'destructive',
-        title: `${props.game}은 지원하지 않는 게임 타입입니다.`,
+        title: `${props.game}은 지원하지 않는 게임 타입이에요.`,
       });
       router.push(PATH.HOME);
     }
