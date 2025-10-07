@@ -12,7 +12,6 @@ interface QnaGameViewProps extends GameControllerProps {
 const QnaGameView = ({
   roomId,
   roomDetail,
-  players,
   isRoomManager,
   sendMessage,
   roomStatus,
@@ -29,7 +28,7 @@ const QnaGameView = ({
       {roomStatus === ROOM_STATUS.PROGRESS && (
         <QnaGameProgress
           sendMessage={sendMessage}
-          players={players}
+          players={roomDetail.players}
         />
       )}
       {(roomStatus === ROOM_STATUS.RESULT ||
