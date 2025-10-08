@@ -53,16 +53,19 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
   };
 
   useEffect(() => {
+    if (chatMessages.length === 0) return;
+
     const lastMessage = chatMessages[chatMessages.length - 1];
     const isSentByMe = lastMessage.sender === myName;
     const container = messagesContainerRef.current;
 
     if (container && (isSentByMe || isAtBottom)) {
-      container.scrollTop = container.scrollHeight + 100;
+      container.scrollTop = container.scrollHeight;
     }
     handleScroll();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chatMessages]);
+  }, [chatMessages, myName]);
 
   useEffect(() => {
     const container = messagesContainerRef.current;
