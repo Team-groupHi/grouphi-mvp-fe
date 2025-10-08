@@ -18,42 +18,64 @@ const ErrorFallback = ({ error, resetErrorBoundary }: ErrorProps) => {
   const router = useRouter();
   const [count, setCount] = useState(3);
 
+  const isAxiosApiError = isAxiosError(error);
+
+  const errorCode =
+    isAxiosApiError && error.response?.data?.code
+      ? (error.response.data.code as ErrorCode)
+      : null;
+
+  const isRoomDeleteError = errorCode === 'R002';
+
   const message =
-    (isAxiosError(error) &&
-      error.response &&
-      ERROR_MESSAGE[error.response.data.code as ErrorCode]) ||
-    DEFAULT_ERROR_MESSAGE;
+    (errorCode && ERROR_MESSAGE[errorCode]) || DEFAULT_ERROR_MESSAGE;
 
   const gotoHome = useCallback(() => {
     router.push(PATH.HOME);
     resetErrorBoundary();
   }, [resetErrorBoundary, router]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCount((prev) => prev - 1);
-    }, 1000);
-
-    return () => {
-      clearTimeout(intervalId);
-    };
+  const hardReload = useCallback(() => {
+    window.location.reload();
   }, []);
 
   useEffect(() => {
-    if (count === 0) {
-      gotoHome();
+    if (!isRoomDeleteError) {
+      setCount(3);
+      return;
     }
-  }, [count, gotoHome]);
+
+    // eslint-disable-next-line prefer-const
+    let currentCount = 3;
+    setCount(currentCount);
+
+    const intervalId = setInterval(() => {
+      currentCount -= 1;
+      setCount(currentCount);
+      if (currentCount <= 0) {
+        clearInterval(intervalId);
+        gotoHome();
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [isRoomDeleteError, gotoHome]);
 
   return (
     <section className="w-screen h-screen flex flex-col justify-center items-center gap-3">
       <Label>{message}</Label>
-      {message === ERROR_MESSAGE.R002 ? (
+      {isRoomDeleteError ? (
         <p>{`${count}초 후 메인으로 이동해요.`}</p>
       ) : (
         <>
+          {isAxiosApiError ? (
+            <Button onClick={() => resetErrorBoundary()}>다시 불러오기</Button>
+          ) : (
+            <Button onClick={hardReload}>페이지 새로고침</Button>
+          )}
           <Button onClick={gotoHome}>메인으로 이동</Button>
-          <Button onClick={() => resetErrorBoundary()}>다시 불러오기</Button>
         </>
       )}
     </section>
