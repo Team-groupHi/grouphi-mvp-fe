@@ -1,7 +1,7 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
@@ -23,7 +23,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
 
   const [isAtBottom, setIsAtBottom] = useState(true);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const container = messagesContainerRef.current;
     if (!container) return;
 
@@ -33,7 +33,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
     const isBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
     setIsAtBottom(isBottom);
-  };
+  }, []);
 
   const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -63,9 +63,8 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
       container.scrollTop = container.scrollHeight;
     }
     handleScroll();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chatMessages, myName]);
+  }, [chatMessages, myName, handleScroll]);
 
   useEffect(() => {
     const container = messagesContainerRef.current;
@@ -75,7 +74,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
         container.removeEventListener('scroll', handleScroll);
       };
     }
-  }, []);
+  }, [handleScroll]);
 
   return (
     <section className="h-full">
