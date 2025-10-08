@@ -35,7 +35,7 @@ const GameRoomController = ({
 
   const { toast } = useToast();
 
-  const { data: roomDetail, error, isError } = useFetchRoomDetail(roomId);
+  const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
 
   const { myName, setHostName, gameId } = useRoomStore();
 
@@ -87,13 +87,6 @@ const GameRoomController = ({
       },
     });
   }, [gameId]);
-
-  // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
-  useEffect(() => {
-    if (isError) {
-      throw error;
-    }
-  }, [isError]);
 
   // @TODO: 현재 방장이 닉네임 변경 시 제대로 반영이 되지 않아 여기서 무한로딩 발생
   if (!isSelfInPlayers) {
