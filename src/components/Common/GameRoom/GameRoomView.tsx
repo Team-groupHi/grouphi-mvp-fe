@@ -49,7 +49,6 @@ const GameRoomView = ({
             game={roomDetail.game.nameEn}
             roomId={roomId}
             roomDetail={roomDetail}
-            players={roomDetail.players}
             isRoomManager={isRoomManager}
             sendMessage={sendMessage}
           />
