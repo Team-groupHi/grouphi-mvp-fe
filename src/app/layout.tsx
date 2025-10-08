@@ -50,9 +50,7 @@ export default function RootLayout({
           href="/icons/apple-icon.png"
         />
       </head>
-      <body
-        className={`font-sans antialiased text-sm 2xl:text-base text relative min-h-screen bg-gradient-purple`}
-      >
+      <body className="font-sans antialiased text-sm 2xl:text-base text relative w-screen h-screen bg-gradient-purple">
         {GA4_ID && process.env.NODE_ENV === 'production' && (
           <>
             <Script

@@ -64,7 +64,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: ErrorProps) => {
   }, [isRoomDeleteError, gotoHome]);
 
   return (
-    <section className="w-screen h-screen flex flex-col justify-center items-center gap-3">
+    <section className="w-full h-full flex flex-col justify-center items-center gap-3">
       <Label>{message}</Label>
       {isRoomDeleteError ? (
         <p>{`${count}초 후 메인으로 이동해요.`}</p>
