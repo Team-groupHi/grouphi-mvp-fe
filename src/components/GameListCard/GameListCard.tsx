@@ -12,6 +12,7 @@ interface gameListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   description?: string;
   src?: string | null;
+  isClicked: boolean;
   className?: string;
 }
 
@@ -19,6 +20,7 @@ const GameListCard = ({
   title,
   description,
   src,
+  isClicked,
   className,
   ...props
 }: gameListCardProps) => {
@@ -53,11 +55,11 @@ const GameListCard = ({
           <Button className="mt-50 hover:bg-primary">
             {pathname === PATH.HOME ? (
               <>
-                <Plus /> 생성하기
+                <Plus /> {isClicked ? '생성 중입니다...' : '생성하기'}
               </>
             ) : (
               <>
-                <Repeat /> 변경하기
+                <Repeat /> {isClicked ? '변경 중입니다...' : '변경하기'}
               </>
             )}
           </Button>
