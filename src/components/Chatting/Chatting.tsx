@@ -106,7 +106,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
             />
           ))}
         </section>
-        <section className="absolute bottom-0 w-full flex justify-center">
+        <section className="absolute bottom-0 w-full flex justify-center box-border p-2 pr-5">
           <NewMessage
             message={chatMessages[chatMessages.length - 1].content}
             onClick={handleNewMessageClick}
