@@ -24,6 +24,8 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
 
   const [isAtBottom, setIsAtBottom] = useState(true);
 
+  const [showNewMessage, setShowNewMessage] = useState(false);
+
   const handleScroll = useCallback(() => {
     const container = messagesContainerRef.current;
     if (!container) return;
@@ -34,6 +36,10 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
     const isBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
     setIsAtBottom(isBottom);
+
+    if (isBottom) {
+      setShowNewMessage(false);
+    }
   }, []);
 
   const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -66,6 +72,10 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
     const lastMessage = chatMessages[chatMessages.length - 1];
     const isSentByMe = lastMessage.sender === myName;
     const container = messagesContainerRef.current;
+
+    if (!isAtBottom) {
+      setShowNewMessage(true);
+    }
 
     if (container && (isSentByMe || isAtBottom)) {
       container.scrollTop = container.scrollHeight;
@@ -106,12 +116,15 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
             />
           ))}
         </section>
-        <section className="absolute bottom-0 w-full flex justify-center box-border p-2 pr-5">
-          <NewMessage
-            message={chatMessages[chatMessages.length - 1].content}
-            onClick={handleNewMessageClick}
-          />
-        </section>
+        {showNewMessage && (
+          <section className="absolute bottom-0 w-full flex justify-center box-border p-2 pr-5">
+            <NewMessage
+              message={chatMessages[chatMessages.length - 1].content}
+              sender={chatMessages[chatMessages.length - 1].sender}
+              onClick={handleNewMessageClick}
+            />
+          </section>
+        )}
       </section>
       <section className="h-[4rem] flex justify-center items-center bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
         <Input

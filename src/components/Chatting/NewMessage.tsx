@@ -1,21 +1,23 @@
-import { ArrowDownToDot } from 'lucide-react';
+import { Button } from '@/components';
 
 interface NewMessageProps {
   message: string;
+  sender: string;
   onClick: () => void;
 }
 
-const NewMessage = ({ message, onClick }: NewMessageProps) => {
+const NewMessage = ({ message, sender, onClick }: NewMessageProps) => {
   return (
-    <section
-      className="flex items-center box-border w-full h-7 py-1 px-2 gap-1 rounded bg-secondary-700"
+    <Button
+      className="justify-start w-full h-7 py-1 px-2 gap-1 rounded "
       onClick={onClick}
+      variant={'secondary'}
     >
-      <ArrowDownToDot size="0.75rem" />
+      {/* <ArrowDownToDot size="0.75rem" /> */}
       <p className="text-body3 overflow-hidden text-ellipsis whitespace-nowrap">
-        {message}
+        {`${sender}: ${message}`}
       </p>
-    </section>
+    </Button>
   );
 };
 
