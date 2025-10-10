@@ -32,7 +32,7 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
   const { setRoomId, setGameId } = useRoomStore();
   const { closeModal } = useModalStore();
 
-  const [isClicked, setIsClicked] = useState(false);
+  const [clickedGameId, setClickedGameId] = useState<string | null>(null);
 
   const MAX_CAROUSEL_ITEMS = path === PATH.HOME ? 6 : 4;
   const isMultiplePages = games.length > MAX_CAROUSEL_ITEMS;
@@ -50,21 +50,21 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
         variant: 'destructive',
         title: '방 생성에 실패했어요! 다시 시도해주세요.',
       });
-      setIsClicked(false);
+      setClickedGameId(null);
     },
   });
 
   const handleCreateRoom = (gameId: string) => {
-    if (isClicked) return;
+    if (clickedGameId) return;
+    setClickedGameId(gameId);
     createRoomMutation.mutate(gameId);
-    setIsClicked(true);
   };
 
   const handleChangeGame = (gameId: string) => {
-    if (isClicked) return;
+    if (clickedGameId) return;
+    setClickedGameId(gameId);
     setGameId(gameId);
     closeModal();
-    setIsClicked(true);
   };
 
   return (
@@ -87,7 +87,7 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
                 title={game.nameKr}
                 description={game.descriptionKr}
                 src={game.thumbnailUrl}
-                isClicked={isClicked}
+                isClicked={clickedGameId == game.id}
                 onClick={
                   path === PATH.HOME
                     ? () => handleCreateRoom(game.id)
