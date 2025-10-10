@@ -13,7 +13,6 @@ const NewMessage = ({ message, sender, onClick }: NewMessageProps) => {
       onClick={onClick}
       variant={'secondary'}
     >
-      {/* <ArrowDownToDot size="0.75rem" /> */}
       <p className="text-body3 overflow-hidden text-ellipsis whitespace-nowrap">
         {`${sender}: ${message}`}
       </p>
