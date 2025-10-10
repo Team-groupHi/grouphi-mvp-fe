@@ -10,8 +10,8 @@ import { cn } from '@/lib/utils';
 
 interface gameListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
-  description?: string;
-  src?: string | null;
+  description: string;
+  src: string | null;
   isClicked: boolean;
   className?: string;
 }
@@ -26,6 +26,12 @@ const GameListCard = ({
 }: gameListCardProps) => {
   const [isHover, setIsHover] = useState(false);
   const pathname = usePathname();
+
+  const isHomePage = pathname === PATH.HOME;
+  const action = isHomePage ? '생성' : '변경';
+  const buttonText = isClicked ? `${action} 중입니다...` : `${action}하기`;
+  const IconComponent = isHomePage ? Plus : Repeat;
+  const gameDescription = isHomePage ? description.split('\n')[0] : description;
 
   const containerDefaultClassName =
     'basis-1/3 min-w-48 max-w-64 2xl:min-w-72 2xl:max-w-80 min-h-fit aspect-[3/2] relative bg-primary-container shadow rounded-md overflow-hidden';
@@ -53,32 +59,19 @@ const GameListCard = ({
         <p className="text-light font-semibold truncate pb-400">{title}</p>
         {isHover ? (
           <Button className="mt-50 hover:bg-primary">
-            {pathname === PATH.HOME ? (
-              <>
-                <Plus /> {isClicked ? '생성 중입니다...' : '생성하기'}
-              </>
-            ) : (
-              <>
-                <Repeat /> {isClicked ? '변경 중입니다...' : '변경하기'}
-              </>
-            )}
+            <>
+              <IconComponent /> {buttonText}
+            </>
           </Button>
         ) : (
-          description && (
-            // todo: 메인, 대기실 css 구분하기
-            <p
-              className={cn(
-                'font-light text-sm text-gray-300 break-all',
-                pathname === PATH.HOME
-                  ? 'overflow-hidden text-ellipsis line-clamp-4'
-                  : ''
-              )}
-            >
-              {pathname === PATH.HOME
-                ? description.split('\n')[0]
-                : description}
-            </p>
-          )
+          <p
+            className={cn(
+              'font-light text-sm text-gray-300 break-all',
+              isHomePage && 'overflow-hidden text-ellipsis line-clamp-4'
+            )}
+          >
+            {gameDescription}
+          </p>
         )}
       </section>
     </article>
