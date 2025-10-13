@@ -6,7 +6,6 @@ interface BalanceGameStoreProps {
   round: BalanceGameRoundResponse;
   selectedPlayers: string[];
   setRound: (round: BalanceGameRoundResponse) => void;
-  setTotalRounds: (count: number) => void; // @TODO: 추후에 완전 삭제 필요
   addSelectedPlayers: (player: string) => void;
   resetSelectedPlayers: () => void;
 }
@@ -20,20 +19,11 @@ const useBalanceGameStore = create<BalanceGameStoreProps>((set) => ({
     currentRound: 0,
     playSeconds: 0,
   },
-
   selectedPlayers: [],
   setRound: (round: BalanceGameRoundResponse) =>
     set({
       round,
     }),
-
-  setTotalRounds: (count) =>
-    set((state) => ({
-      round: {
-        ...state.round,
-        totalRounds: count,
-      },
-    })),
   addSelectedPlayers: (player) =>
     set((state) => ({
       selectedPlayers: [...state.selectedPlayers, player],
