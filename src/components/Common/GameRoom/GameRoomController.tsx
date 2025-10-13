@@ -50,7 +50,7 @@ const GameRoomController = ({
     if (sendMessage) {
       setSendMessage(sendMessage);
     }
-  }, [sendMessage, setSendMessage]);
+  }, [sendMessage]);
 
   useEffect(() => {
     if (roomDetail.players.length > 0) {
