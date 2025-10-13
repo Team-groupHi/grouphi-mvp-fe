@@ -6,9 +6,11 @@ interface SocketStoreProps {
     | (<T>(params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }) => void)
     | null;
   setSendMessage: (
-    sendFn: <T>(
-      params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-    ) => void
+    sendFn:
+      | (<T>(
+          params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
+        ) => void)
+      | null
   ) => void;
 }
 
