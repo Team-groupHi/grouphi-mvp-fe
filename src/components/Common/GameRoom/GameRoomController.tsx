@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 
 import { Spinner } from '@/components';
 import { PATH } from '@/constants/router';
-import { SOCKET } from '@/constants/websocket';
 import { useFetchRoomDetail } from '@/hooks/queries';
 import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
@@ -38,7 +37,7 @@ const GameRoomController = ({
 
   const { data: roomDetail, error, isError } = useFetchRoomDetail(roomId);
 
-  const { myName, setHostName, gameId } = useRoomStore();
+  const { myName, setHostName } = useRoomStore();
   const { setSendMessage } = useSocketStore();
 
   const isRoomManager = roomDetail.players.some(
@@ -76,15 +75,6 @@ const GameRoomController = ({
       }
     }
   }, [myName, roomDetail]);
-
-  useEffect(() => {
-    sendMessage({
-      destination: `${SOCKET.ROOM.CHANGE_GAME}`,
-      body: {
-        gameId,
-      },
-    });
-  }, [gameId]);
 
   // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
   useEffect(() => {
