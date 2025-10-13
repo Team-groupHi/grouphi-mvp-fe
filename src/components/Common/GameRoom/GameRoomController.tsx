@@ -59,7 +59,7 @@ const GameRoomController = ({
         setHostName(host.name);
       }
     }
-  }, [roomDetail.players, setHostName]);
+  }, [roomDetail.players]);
 
   useEffect(() => {
     if (roomDetail && !isSelfInPlayers) {
