@@ -14,7 +14,7 @@ const NewMessage = ({ message, sender, onClick }: NewMessageProps) => {
       variant="secondary"
     >
       <p className="text-body3 overflow-hidden text-ellipsis whitespace-nowrap">
-        {sender != 'system' && `${sender}: `}
+        {sender !== 'system' && `${sender}: `}
         {message}
       </p>
     </Button>
