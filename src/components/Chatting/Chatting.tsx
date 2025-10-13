@@ -103,7 +103,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
         >
           {chatMessages.map((item, index) => (
             <Item
-              key={index}
+              key={`${item.sender}-${index}`}
               {...item}
               index={index}
               type={
