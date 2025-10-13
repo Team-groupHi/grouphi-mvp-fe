@@ -12,6 +12,7 @@ import { useFetchRoomDetail } from '@/hooks/queries';
 import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
+import useSocketStore from '@/store/useSocketStore';
 import { ChatMessage } from '@/types';
 
 import GameRoomView from './GameRoomView';
@@ -38,12 +39,19 @@ const GameRoomController = ({
   const { data: roomDetail, error, isError } = useFetchRoomDetail(roomId);
 
   const { myName, setHostName, gameId } = useRoomStore();
+  const { setSendMessage } = useSocketStore();
 
   const isRoomManager = roomDetail.players.some(
     (player) => player.name === myName && player.isHost
   );
   const isSelfInPlayers =
     roomDetail.players.findIndex((user) => user.name === myName) !== -1;
+
+  useEffect(() => {
+    if (sendMessage) {
+      setSendMessage(sendMessage);
+    }
+  }, [sendMessage, setSendMessage]);
 
   useEffect(() => {
     if (roomDetail.players.length > 0) {
@@ -68,15 +76,6 @@ const GameRoomController = ({
       }
     }
   }, [myName, roomDetail]);
-
-  useEffect(() => {
-    sendMessage({
-      destination: `${SOCKET.ROOM.CHANGE_PLAYER_NAME}`,
-      body: {
-        name: myName,
-      },
-    });
-  }, [myName]);
 
   useEffect(() => {
     sendMessage({
