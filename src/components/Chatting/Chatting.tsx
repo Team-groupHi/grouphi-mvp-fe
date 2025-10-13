@@ -73,7 +73,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
     const isSentByMe = lastMessage.sender === myName;
     const container = messagesContainerRef.current;
 
-    if (!isAtBottom) {
+    if (!isAtBottom && !isSentByMe) {
       setShowNewMessage(true);
     }
 
