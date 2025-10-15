@@ -45,6 +45,18 @@ const GameRoomController = ({
   const isSelfInPlayers =
     roomDetail.players.findIndex((user) => user.name === myName) !== -1;
 
+  const gameType = gameToType(roomDetail.game.nameEn || '');
+
+  useEffect(() => {
+    if (!gameType) {
+      toast({
+        variant: 'destructive',
+        title: `${roomDetail.game.nameKr}은 지원하지 않는 게임 타입이에요.`,
+      });
+      router.push(PATH.HOME);
+    }
+  }, [gameType, roomDetail.game.nameKr, router, toast]);
+
   useEffect(() => {
     if (roomDetail.players.length > 0) {
       const host = roomDetail.players.find((player) => player.isHost);
@@ -55,7 +67,7 @@ const GameRoomController = ({
   }, [roomDetail.players, setHostName]);
 
   useEffect(() => {
-    if (roomDetail && !isSelfInPlayers) {
+    if (!isSelfInPlayers) {
       if (roomDetail.status === 'PLAYING') {
         toast({
           title: '게임이 이미 시작되었어요! 게임이 끝나면 다시 들어와주세요.',
@@ -98,6 +110,9 @@ const GameRoomController = ({
     return <Spinner />;
   }
 
+  const GamePanel = GAME_COMPONENT_MAP[gameType];
+  const gameControl = GAME_CONTROL_MAP[gameType];
+
   return (
     <GameRoomView
       roomDetail={roomDetail}
@@ -106,6 +121,9 @@ const GameRoomController = ({
       isRoomManager={isRoomManager}
       sendMessage={sendMessage}
       chatMessages={chatMessages}
+      GamePanel={GamePanel}
+      gameControl={gameControl}
+      gameType={gameType}
     />
   );
 };
