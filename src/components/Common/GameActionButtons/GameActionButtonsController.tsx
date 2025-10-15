@@ -2,24 +2,33 @@
 
 import * as StompJS from '@stomp/stompjs';
 
-import { GameControlEntry } from '@/constants/gameControlMap';
+import { GAME_CONTROL_MAP } from '@/constants/gameControlMap';
 import useRoomStore from '@/store/useRoomStore';
+import { gameToType } from '@/utils/gameToType';
 
 import GameActionButtonsView from './GameActionButtonsView';
 
 interface GameActionButtonsControllerProps {
-  gameControl: GameControlEntry;
+  game: string;
+  isRoomManager: boolean;
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
 }
 
 const GameActionButtonsController = ({
-  gameControl,
+  game,
+  isRoomManager,
   sendMessage,
 }: GameActionButtonsControllerProps) => {
+  const gameType = gameToType(game);
   const { roomStatus } = useRoomStore();
-  const { round } = gameControl.useStore();
+
+  const gameControl = gameType ? GAME_CONTROL_MAP[gameType] : null;
+
+  const { round } = gameControl?.useStore() || { round: null };
+
+  if (!gameControl || !round || !isRoomManager) return null;
 
   const roundEndActionText =
     round.currentRound === round.totalRounds

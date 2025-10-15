@@ -1,10 +1,9 @@
 import * as StompJS from '@stomp/stompjs';
-import { ComponentType } from 'react';
 
 import { RoomResponse } from '@/types/api';
 
 export interface GamePanelProps {
-  GamePanel: ComponentType<GamePanelProps>;
+  game: string;
   roomId: string;
   roomDetail: RoomResponse;
   isRoomManager: boolean;
@@ -13,4 +12,4 @@ export interface GamePanelProps {
   ) => void;
 }
 
-export type GameControllerProps = Omit<GamePanelProps, 'GamePanel'>;
+export type GameControllerProps = Omit<GamePanelProps, 'game'>;

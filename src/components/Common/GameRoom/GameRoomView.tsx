@@ -2,7 +2,6 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import { ComponentType } from 'react';
 
 import {
   AdBanner,
@@ -10,13 +9,12 @@ import {
   ErrorFallback,
   ErrorHandlingWrapper,
   GameActionButtons,
+  GamePanel,
   Spinner,
   UserList,
 } from '@/components';
-import { GameControlEntry } from '@/constants/gameControlMap';
 import { ChatMessage } from '@/types';
 import { RoomResponse } from '@/types/api';
-import { GameControllerProps } from '@/types/props';
 import { isDevelopment } from '@/utils/env';
 
 interface GameRoomViewProps {
@@ -28,8 +26,6 @@ interface GameRoomViewProps {
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
   chatMessages: ChatMessage[];
-  GamePanel: ComponentType<GameControllerProps>;
-  gameControl: GameControlEntry;
 }
 
 const GameRoomView = ({
@@ -39,8 +35,6 @@ const GameRoomView = ({
   isRoomManager,
   sendMessage,
   chatMessages,
-  GamePanel,
-  gameControl,
 }: GameRoomViewProps) => {
   return (
     <section className="w-screen min-h-screen flex items-start justify-start 2xl:justify-center gap-4 shrink-0 py-20 overflow-y-hidden">
@@ -52,6 +46,7 @@ const GameRoomView = ({
           suspenseFallback={<Spinner />}
         >
           <GamePanel
+            game={roomDetail.game.nameEn}
             roomId={roomId}
             roomDetail={roomDetail}
             isRoomManager={isRoomManager}
@@ -74,12 +69,11 @@ const GameRoomView = ({
           chatMessages={chatMessages}
           sendMessage={sendMessage}
         />
-        {isRoomManager && (
-          <GameActionButtons
-            gameControl={gameControl}
-            sendMessage={sendMessage}
-          />
-        )}
+        <GameActionButtons
+          game={roomDetail.game.nameEn}
+          isRoomManager={isRoomManager}
+          sendMessage={sendMessage}
+        />
       </section>
     </section>
   );

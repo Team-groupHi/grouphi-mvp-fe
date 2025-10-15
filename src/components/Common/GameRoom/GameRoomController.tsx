@@ -6,8 +6,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { Spinner } from '@/components';
-import { GAME_COMPONENT_MAP } from '@/constants/gameComponentMap';
-import { GAME_CONTROL_MAP } from '@/constants/gameControlMap';
 import { PATH } from '@/constants/router';
 import { SOCKET } from '@/constants/websocket';
 import { useFetchRoomDetail } from '@/hooks/queries';
@@ -15,7 +13,6 @@ import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
 import { ChatMessage } from '@/types';
-import { gameToType } from '@/utils/gameToType';
 
 import GameRoomView from './GameRoomView';
 
@@ -47,19 +44,6 @@ const GameRoomController = ({
   );
   const isSelfInPlayers =
     roomDetail.players.findIndex((user) => user.name === myName) !== -1;
-
-  const gameType = gameToType(roomDetail.game.nameEn || '');
-
-  useEffect(() => {
-    console.log(gameType);
-    if (!gameType) {
-      toast({
-        variant: 'destructive',
-        title: `${roomDetail.game.nameKr}은 지원하지 않는 게임 타입이에요.`,
-      });
-      router.push(PATH.HOME);
-    }
-  }, [gameType, roomDetail.game.nameKr, router, toast]);
 
   useEffect(() => {
     if (roomDetail.players.length > 0) {
@@ -110,13 +94,9 @@ const GameRoomController = ({
     }
   }, [isError]);
 
-  if (!isSelfInPlayers || !gameType) {
+  if (!isSelfInPlayers) {
     return <Spinner />;
   }
-
-  const GamePanel = GAME_COMPONENT_MAP[gameType];
-  const gameControl = GAME_CONTROL_MAP[gameType];
-  const { round } = gameControl.useStore();
 
   return (
     <GameRoomView
@@ -126,8 +106,6 @@ const GameRoomController = ({
       isRoomManager={isRoomManager}
       sendMessage={sendMessage}
       chatMessages={chatMessages}
-      GamePanel={GamePanel}
-      gameControl={gameControl}
     />
   );
 };
