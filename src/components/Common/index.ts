@@ -28,7 +28,6 @@ export {
 export { GameActionButtons } from './GameActionButtons';
 export { GameListCard } from './GameListCard';
 export { GameListCarousel } from './GameListCarousel';
-export { GamePanel } from './GamePanel';
 export { GameRoom } from './GameRoom';
 export { HomeClient } from './HomeClient';
 export { InitialNickname } from './InitialNickname';
