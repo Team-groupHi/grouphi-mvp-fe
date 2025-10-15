@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import { useRef } from 'react';
 
 import { GAME_QUESTIONS_COUNT } from '@/constants/form';
@@ -10,29 +9,18 @@ import useThrottleReadyHandlers from '@/hooks/useThrottleHandlers';
 import { useToast } from '@/hooks/useToast';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
-import { RoomResponse } from '@/types/api';
+import { PreGameControllerProps } from '@/types/props';
 import { gameStartHandlers } from '@/utils/gameStartHandlers';
-import { gameToType } from '@/utils/gameToType';
 
 import PreGameView from './PreGameView';
-
-interface PreGameControllerProps {
-  roomDetail: RoomResponse;
-  isRoomManager: boolean;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
-}
 
 const PreGameController = ({
   roomDetail,
   sendMessage,
   isRoomManager,
+  gameType,
 }: PreGameControllerProps) => {
-  const gameType = gameToType(roomDetail.game.nameEn);
-  const totalRoundsRef = useRef<number>(
-    gameType ? GAME_QUESTIONS_COUNT[gameType].MIN : 10
-  );
+  const totalRoundsRef = useRef<number>(GAME_QUESTIONS_COUNT[gameType].MIN);
 
   const { myName } = useRoomStore();
   const { openModal } = useModalStore();
@@ -59,7 +47,7 @@ const PreGameController = ({
       return;
     }
 
-    const startGameHandler = gameType ? gameStartHandlers[gameType] : null;
+    const startGameHandler = gameStartHandlers[gameType];
 
     if (startGameHandler) {
       startGameHandler({
@@ -73,10 +61,6 @@ const PreGameController = ({
   const handleGameChange = () => {
     openModal(MODAL_TYPE.CHANGE_GAME, roomDetail.game.id);
   };
-
-  if (!gameType) {
-    return null;
-  }
 
   return (
     <PreGameView

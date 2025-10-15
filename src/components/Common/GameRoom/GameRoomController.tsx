@@ -51,7 +51,6 @@ const GameRoomController = ({
   const gameType = gameToType(roomDetail.game.nameEn || '');
 
   useEffect(() => {
-    console.log(gameType);
     if (!gameType) {
       toast({
         variant: 'destructive',
@@ -71,7 +70,7 @@ const GameRoomController = ({
   }, [roomDetail.players, setHostName]);
 
   useEffect(() => {
-    if (roomDetail && !isSelfInPlayers) {
+    if (!isSelfInPlayers) {
       if (roomDetail.status === 'PLAYING') {
         toast({
           title: '게임이 이미 시작되었어요! 게임이 끝나면 다시 들어와주세요.',
@@ -116,7 +115,6 @@ const GameRoomController = ({
 
   const GamePanel = GAME_COMPONENT_MAP[gameType];
   const gameControl = GAME_CONTROL_MAP[gameType];
-  const { round } = gameControl.useStore();
 
   return (
     <GameRoomView
@@ -128,6 +126,7 @@ const GameRoomController = ({
       chatMessages={chatMessages}
       GamePanel={GamePanel}
       gameControl={gameControl}
+      gameType={gameType}
     />
   );
 };
