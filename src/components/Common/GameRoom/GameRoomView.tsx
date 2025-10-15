@@ -16,6 +16,7 @@ import {
 import { GameControlEntry } from '@/constants/gameControlMap';
 import { ChatMessage } from '@/types';
 import { RoomResponse } from '@/types/api';
+import { GameType } from '@/types/game';
 import { GameControllerProps } from '@/types/props';
 import { isDevelopment } from '@/utils/env';
 
@@ -30,6 +31,7 @@ interface GameRoomViewProps {
   chatMessages: ChatMessage[];
   GamePanel: ComponentType<GameControllerProps>;
   gameControl: GameControlEntry;
+  gameType: GameType;
 }
 
 const GameRoomView = ({
@@ -41,6 +43,7 @@ const GameRoomView = ({
   chatMessages,
   GamePanel,
   gameControl,
+  gameType,
 }: GameRoomViewProps) => {
   return (
     <section className="w-screen min-h-screen flex items-start justify-start 2xl:justify-center gap-4 shrink-0 py-20 overflow-y-hidden">
@@ -56,6 +59,7 @@ const GameRoomView = ({
             roomDetail={roomDetail}
             isRoomManager={isRoomManager}
             sendMessage={sendMessage}
+            gameType={gameType}
           />
         </ErrorHandlingWrapper>
         {isDevelopment && (
