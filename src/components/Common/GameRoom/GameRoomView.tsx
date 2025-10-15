@@ -2,6 +2,7 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
+import { ComponentType } from 'react';
 
 import {
   AdBanner,
@@ -9,10 +10,10 @@ import {
   ErrorFallback,
   ErrorHandlingWrapper,
   GameActionButtons,
-  GamePanel,
   Spinner,
   UserList,
 } from '@/components';
+import { GameControlEntry } from '@/constants/gameControlMap';
 import { ChatMessage } from '@/types';
 import { RoomResponse } from '@/types/api';
 import { GameType } from '@/types/game';
@@ -54,7 +55,6 @@ const GameRoomView = ({
           suspenseFallback={<Spinner />}
         >
           <GamePanel
-            game={roomDetail.game.nameEn}
             roomId={roomId}
             roomDetail={roomDetail}
             isRoomManager={isRoomManager}
@@ -78,11 +78,12 @@ const GameRoomView = ({
           chatMessages={chatMessages}
           sendMessage={sendMessage}
         />
-        <GameActionButtons
-          game={roomDetail.game.nameEn}
-          isRoomManager={isRoomManager}
-          sendMessage={sendMessage}
-        />
+        {isRoomManager && (
+          <GameActionButtons
+            gameControl={gameControl}
+            sendMessage={sendMessage}
+          />
+        )}
       </section>
     </section>
   );
