@@ -70,7 +70,6 @@ const GameRoomController = ({
   }, [myName, roomDetail]);
 
   useEffect(() => {
-    //@TODO: 방장이 준비 상태에서 변경 시 receive 값이 없는 현상 확인 필요
     sendMessage({
       destination: `${SOCKET.ROOM.CHANGE_PLAYER_NAME}`,
       body: {
@@ -88,7 +87,6 @@ const GameRoomController = ({
     });
   }, [gameId]);
 
-  // @TODO: 현재 방장이 닉네임 변경 시 제대로 반영이 되지 않아 여기서 무한로딩 발생
   if (!isSelfInPlayers) {
     return <Spinner />;
   }
