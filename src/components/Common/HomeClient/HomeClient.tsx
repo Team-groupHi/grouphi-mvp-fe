@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { AdBanner, Footer, GameListCarousel, MainHeader } from '@/components';
 import useGameStore from '@/store/useGameStore';
 import useRoomStore from '@/store/useRoomStore';
+import useSocketStore from '@/store/useSocketStore';
 import { GameResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
 
@@ -16,9 +17,11 @@ const HomeClient = ({ games }: HomeClientProps) => {
   const { setGames } = useGameStore();
 
   const { reset: roomReset } = useRoomStore();
+  const { reset: socketReset } = useSocketStore();
 
   useEffect(() => {
     roomReset();
+    socketReset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
