@@ -17,7 +17,7 @@ const QnaGameController = (props: GameControllerProps) => {
     roomDetail,
     sendMessage,
     toast,
-    gameType: gameType,
+    gameType,
   });
 
   return (
