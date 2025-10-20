@@ -1,20 +1,18 @@
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import React, { useEffect, useRef } from 'react';
 
 import { Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
+import { SendMessage } from '@/types/websocket';
 
 import Item from './Item';
 
 interface ChattingProps {
   myName: string;
   chatMessages: ChatMessage[];
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
 }
 
 const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
