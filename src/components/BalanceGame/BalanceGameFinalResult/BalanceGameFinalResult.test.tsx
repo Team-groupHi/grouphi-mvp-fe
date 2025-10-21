@@ -3,26 +3,30 @@ import { describe, expect, it } from 'vitest';
 
 import BalanceGameFinalResult from './BalanceGameFinalResult';
 
-describe('FinalResultChart 컴포넌트 테스트', () => {
+describe('BalanceGameFinalResult 컴포넌트 테스트', () => {
   it('1) 투표 데이터의 각 후보의 이름이 출력 된다.', () => {
     const DUMMY = [
       {
-        candidate1: '강아지',
-        votes1: 2,
-        candidate2: '고양이',
-        votes2: 7,
+        round: 1,
+        q: '강아지 vs 고양이',
+        a: '강아지',
+        b: '고양이',
+        result: {
+          a: ['Alice', 'Bob'],
+          b: ['Charlie', 'David', 'Eve', 'Frank', 'Grace', 'Heidi', 'Ivan'],
+          c: [],
+        },
       },
       {
-        candidate1: '강하띠',
-        votes1: 6,
-        candidate2: '코앵히',
-        votes2: 4,
-      },
-      {
-        candidate1: '사과',
-        votes1: 0,
-        candidate2: '바나나',
-        votes2: 9,
+        round: 2,
+        q: '강아지 vs 고양이',
+        a: '강아지',
+        b: '고양이',
+        result: {
+          a: ['Alice', 'Bob'],
+          b: ['Charlie', 'David', 'Eve', 'Frank', 'Grace', 'Heidi', 'Ivan'],
+          c: [],
+        },
       },
     ];
     render(<BalanceGameFinalResult data={DUMMY} />);
@@ -35,8 +39,19 @@ describe('FinalResultChart 컴포넌트 테스트', () => {
 
   it('2) 투표 데이터를 넣으면 각 수치가 Bar에 적힌다.', () => {
     const DUMMY = [
-      { candidate1: '강아지', votes1: 2, candidate2: '고양이', votes2: 7 },
+      {
+        round: 1,
+        q: '강아지 vs 고양이',
+        a: '강아지',
+        b: '고양이',
+        result: {
+          a: ['Alice', 'Bob'],
+          b: ['Charlie', 'David', 'Eve', 'Frank', 'Grace', 'Heidi', 'Ivan'],
+          c: [],
+        },
+      },
     ];
+
     render(<BalanceGameFinalResult data={DUMMY} />);
 
     expect(screen.getByText('2')).toBeInTheDocument();
@@ -45,8 +60,19 @@ describe('FinalResultChart 컴포넌트 테스트', () => {
 
   it('3) 한 후보의 투표 수가 0이면 출력되지 않는다.', () => {
     const DUMMY = [
-      { candidate1: '강아지', votes1: 0, candidate2: '고양이', votes2: 9 },
+      {
+        round: 1,
+        q: '강아지 vs 고양이',
+        a: '강아지',
+        b: '고양이',
+        result: {
+          a: ['Alice', 'Bob'],
+          b: [],
+          c: [],
+        },
+      },
     ];
+
     render(<BalanceGameFinalResult data={DUMMY} />);
 
     const bar = screen.getByText('0').parentElement;
@@ -60,7 +86,17 @@ describe('FinalResultChart 컴포넌트 테스트', () => {
 
   it('4) 두 후보의 투표 수가 0이면 0을 출력한다.', () => {
     const DUMMY = [
-      { candidate1: '강아지', votes1: 0, candidate2: '고양이', votes2: 0 },
+      {
+        round: 1,
+        q: '강아지 vs 고양이',
+        a: '강아지',
+        b: '고양이',
+        result: {
+          a: [],
+          b: [],
+          c: [],
+        },
+      },
     ];
     render(<BalanceGameFinalResult data={DUMMY} />);
     expect(screen.getByText('0')).toBeInTheDocument();
