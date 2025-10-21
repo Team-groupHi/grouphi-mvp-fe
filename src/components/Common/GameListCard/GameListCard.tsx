@@ -12,7 +12,7 @@ interface gameListCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   description: string;
   src: string | null;
-  isClicked: boolean;
+  isClicked?: boolean;
   className?: string;
 }
 
@@ -20,7 +20,7 @@ const GameListCard = ({
   title,
   description,
   src,
-  isClicked,
+  isClicked = false,
   className,
   ...props
 }: gameListCardProps) => {
