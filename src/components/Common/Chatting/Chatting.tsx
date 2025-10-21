@@ -1,7 +1,7 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
@@ -19,7 +19,21 @@ interface ChattingProps {
 
 const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLElement>(null);
+
+  const [isAtBottom, setIsAtBottom] = useState(true);
+
+  const handleScroll = useCallback(() => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const scrollHeight = container.scrollHeight;
+    const scrollTop = container.scrollTop;
+    const clientHeight = container.clientHeight;
+    const isBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+    setIsAtBottom(isBottom);
+  }, []);
 
   const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -35,18 +49,39 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
         },
       });
       inputRef.current.value = '';
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   useEffect(() => {
-    //@TODO: 추후에 채팅을 실시간으로 보고 있을 때는 자동 스크롤, 위 채팅을 보고 있을 때는 자동 스크롤이 안되도록 기능 수정
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatMessages]);
+    if (chatMessages.length === 0) return;
+
+    const lastMessage = chatMessages[chatMessages.length - 1];
+    const isSentByMe = lastMessage.sender === myName;
+    const container = messagesContainerRef.current;
+
+    if (container && (isSentByMe || isAtBottom)) {
+      container.scrollTop = container.scrollHeight;
+    }
+    handleScroll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatMessages, myName, handleScroll]);
+
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => {
+        container.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [handleScroll]);
 
   return (
     <section className="h-full">
-      <section className="h-[calc(100%-4.5rem)] bg-container-600 rounded-t-lg overflow-auto">
+      <section
+        ref={messagesContainerRef}
+        className="h-[calc(100%-4rem)] bg-container-600 rounded-t-lg overflow-auto"
+      >
         {chatMessages.map((item, index) => (
           <Item
             key={index}
@@ -61,7 +96,6 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
             }
           />
         ))}
-        <div ref={messagesEndRef} />
       </section>
       <section className="h-[4rem] flex justify-center items-center bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
         <Input
