@@ -1,3 +1,6 @@
-export { default as BalanceGameControl } from './BalanceGameControl';
-export { default as BalanceGameProgress } from './BalanceGameProgress';
-export { default as BalanceGameQuestionCard } from './BalanceGameQuestionCard';
+export { BalanceGameContainer } from './BalanceGameContainer';
+export { BalanceGameControl } from './BalanceGameControl';
+export { BalanceGameFinalResult } from './BalanceGameFinalResult';
+export { BalanceGamePartialResult } from './BalanceGamePartialResult';
+export { BalanceGameProgress } from './BalanceGameProgress';
+export { BalanceGameQuestionCard } from './BalanceGameQuestionCard';
