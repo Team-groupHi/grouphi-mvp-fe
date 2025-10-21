@@ -87,7 +87,7 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
                 title={game.nameKr}
                 description={game.descriptionKr}
                 src={game.thumbnailUrl}
-                isClicked={clickedGameId == game.id}
+                isClicked={clickedGameId === game.id}
                 onClick={
                   path === PATH.HOME
                     ? () => handleCreateRoom(game.id)
