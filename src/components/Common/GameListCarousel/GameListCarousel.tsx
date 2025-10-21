@@ -65,7 +65,6 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
     setClickedGameId(gameId);
     setGameId(gameId);
     closeModal();
-    setClickedGameId(null);
   };
 
   return (
