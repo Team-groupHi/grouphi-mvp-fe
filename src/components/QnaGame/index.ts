@@ -1,9 +1,7 @@
-export { default as QnaGameAvatarStatus } from './QnaGameAvatarStatus';
-export { default as QnaGameControl } from './QnaGameControl';
-export { default as QnaGameFinalResult } from './QnaGameFinalResult';
-export { default as QnaGamePartialResult } from './QnaGamePartialResult';
-export { default as QnaGameProgress } from './QnaGameProgress';
-export { default as QnaGameQuestionPanel } from './QnaGameQuestionPanel';
-export { default as QnaGameResultsFetcher } from './QnaGameResultsFetcher';
-export { default as QnaGameUserFinalResult } from './QnaGameUserFinalResult';
-export { default as QnaGameUserPartialResult } from './QnaGameUserPartialResult';
+export { QnaGameAvatarStatus } from './QnaGameAvatarStatus';
+export { QnaGameFinalResult } from './QnaGameFinalResult';
+export { QnaGameForm } from './QnaGameForm';
+export { QnaGamePanel } from './QnaGamePanel';
+export { QnaGamePartialResult } from './QnaGamePartialResult';
+export { QnaGameProgress } from './QnaGameProgress';
+export { QnaGameResultsFetcher } from './QnaGameResultsFetcher';
