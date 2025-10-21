@@ -1,1 +1,1 @@
-export { default as PreGame } from './PreGame';
+export { default as PreGame } from './PreGameController';

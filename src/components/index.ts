@@ -1,7 +1,6 @@
 export {
-  BalanceGameContainer,
-  BalanceGameControl,
   BalanceGameFinalResult,
+  BalanceGamePanel,
   BalanceGamePartialResult,
   BalanceGameProgress,
   BalanceGameQuestionCard,
@@ -29,6 +28,7 @@ export {
   FormItem,
   FormLabel,
   FormMessage,
+  GameActionButtons,
   GameListCard,
   GameListCarousel,
   GamePanel,
@@ -51,7 +51,6 @@ export {
   PaginationPrevious,
   PieChart,
   PreGame,
-  RoomControl,
   ShootingStars,
   Slider,
   Spinner,
@@ -78,13 +77,10 @@ export {
 } from './Common';
 export {
   QnaGameAvatarStatus,
-  QnaGameContainer,
-  QnaGameControl,
   QnaGameFinalResult,
+  QnaGameForm,
+  QnaGamePanel,
   QnaGamePartialResult,
   QnaGameProgress,
-  QnaGameQuestionPanel,
   QnaGameResultsFetcher,
-  QnaGameUserFinalResult,
-  QnaGameUserPartialResult,
 } from './QnaGame';

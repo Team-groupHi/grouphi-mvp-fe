@@ -1,1 +1,1 @@
-export { default as GameRoom } from './GameRoom';
+export { default as GameRoom } from './GameRoomController';

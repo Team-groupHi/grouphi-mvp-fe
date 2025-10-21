@@ -6,17 +6,13 @@ import { cn } from '@/lib/utils';
 import { theme } from '@/styles/theme';
 import { QnaGameAnswerResponse } from '@/types/api';
 
-interface QnaGameUserResultProps {
+interface UserAnswerRowProps {
   result: QnaGameAnswerResponse;
   onLike: (receiver: string) => void;
   onUnlike: (receiver: string) => void;
 }
 
-const QnaGameUserPartialResult = ({
-  result,
-  onLike,
-  onUnlike,
-}: QnaGameUserResultProps) => {
+const UserAnswerRow = ({ result, onLike, onUnlike }: UserAnswerRowProps) => {
   const { name, answer } = result;
   const [isLike, setIsLike] = useState(false);
 
@@ -51,4 +47,4 @@ const QnaGameUserPartialResult = ({
   );
 };
 
-export default QnaGameUserPartialResult;
+export default UserAnswerRow;

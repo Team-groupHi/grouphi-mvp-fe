@@ -15,7 +15,7 @@ const Temploading = () => (
 
 const ErrorModal = ({ closeModal }: ModalProps) => (
   <div className="absolute bottom-0 left-0 bg-red-500 text-white p-4">
-    잘못된 모달입니다. <button onClick={closeModal}>닫기</button>
+    잘못된 모달이에요. <button onClick={closeModal}>닫기</button>
   </div>
 );
 

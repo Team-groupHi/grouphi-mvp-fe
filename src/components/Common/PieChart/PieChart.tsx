@@ -74,7 +74,7 @@ const PieChart = ({
   if (data.length === 0) {
     return (
       <section className="min-w-64 flex justify-center items-center rounded bg-black/50">
-        데이터가 없습니다
+        데이터가 없어요.
       </section>
     );
   }

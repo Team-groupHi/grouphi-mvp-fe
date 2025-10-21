@@ -5,7 +5,7 @@ import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 
-import { QnaGameAvatarStatus, QnaGameQuestionPanel } from '@/components';
+import { QnaGameAvatarStatus, QnaGameForm } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { ROOM_STATUS } from '@/constants/room';
 import { SOCKET } from '@/constants/websocket';
@@ -62,7 +62,7 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
           ))}
         </section>
 
-        <QnaGameQuestionPanel
+        <QnaGameForm
           question={round.question}
           onSubmit={handleSubmit}
         />

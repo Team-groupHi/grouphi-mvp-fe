@@ -2,11 +2,11 @@ import { Heart } from 'lucide-react';
 
 import { QnaGameAnswerResponse } from '@/types/api';
 
-interface QnaGameUserFinalResultProps {
+interface UserAnswerRowProps {
   user: QnaGameAnswerResponse;
 }
 
-const QnaGameUserFinalResult = ({ user }: QnaGameUserFinalResultProps) => {
+const UserAnswerRow = ({ user }: UserAnswerRowProps) => {
   return (
     <section className="flex items-center p-3 bg-primary/10 rounded-xl min-h-3">
       <div className="flex flex-col items-center justify-center min-w-14">
@@ -33,4 +33,4 @@ const QnaGameUserFinalResult = ({ user }: QnaGameUserFinalResultProps) => {
   );
 };
 
-export default QnaGameUserFinalResult;
+export default UserAnswerRow;

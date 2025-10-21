@@ -1,10 +1,7 @@
 export { QnaGameAvatarStatus } from './QnaGameAvatarStatus';
-export { QnaGameContainer } from './QnaGameContainer';
-export { QnaGameControl } from './QnaGameControl';
 export { QnaGameFinalResult } from './QnaGameFinalResult';
+export { QnaGameForm } from './QnaGameForm';
+export { QnaGamePanel } from './QnaGamePanel';
 export { QnaGamePartialResult } from './QnaGamePartialResult';
 export { QnaGameProgress } from './QnaGameProgress';
-export { QnaGameQuestionPanel } from './QnaGameQuestionPanel';
 export { QnaGameResultsFetcher } from './QnaGameResultsFetcher';
-export { QnaGameUserFinalResult } from './QnaGameUserFinalResult';
-export { QnaGameUserPartialResult } from './QnaGameUserPartialResult';

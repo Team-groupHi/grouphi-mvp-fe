@@ -43,7 +43,7 @@ const HomeClient = ({ games }: HomeClientProps) => {
           </section>
         ) : (
           <section className="flex h-full justify-center items-center">
-            <span>게임 준비중입니다</span>
+            <span>게임을 준비 중이에요.</span>
           </section>
         )}
         {isDevelopment && (

@@ -1,55 +1,36 @@
 'use client';
-import * as StompJS from '@stomp/stompjs';
 
-import { BalanceGameContainer, QnaGameContainer } from '@/components';
-import { GAME_TYPES } from '@/constants/form';
-import { Player, RoomResponse } from '@/types/api';
-import { gameToType } from '@/utils/form';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-interface GamePanelProps {
-  game: string;
-  roomId: string;
-  roomDetail: RoomResponse;
-  players: Player[];
-  isRoomManager: boolean;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
-}
+import { GAME_COMPONENT_MAP } from '@/constants/gameComponentMap';
+import { PATH } from '@/constants/router';
+import { useToast } from '@/hooks/useToast';
+import { GamePanelProps } from '@/types/props';
+import { gameToType } from '@/utils/gameToType';
 
-const GamePanel = ({
-  game,
-  roomId,
-  roomDetail,
-  players,
-  isRoomManager,
-  sendMessage,
-}: GamePanelProps) => {
-  const gameType = gameToType(game);
-  switch (gameType) {
-    case GAME_TYPES.BALANCE:
-      return (
-        <BalanceGameContainer
-          roomId={roomId}
-          roomDetail={roomDetail}
-          players={players}
-          isRoomManager={isRoomManager}
-          sendMessage={sendMessage}
-        />
-      );
-    case GAME_TYPES.QNA:
-      return (
-        <QnaGameContainer
-          roomId={roomId}
-          roomDetail={roomDetail}
-          players={players}
-          isRoomManager={isRoomManager}
-          sendMessage={sendMessage}
-        />
-      );
-    default:
-      return <div>게임을 선택해주세요</div>;
+const GamePanel = (props: GamePanelProps) => {
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const gameType = gameToType(props.game);
+  const Component = gameType ? GAME_COMPONENT_MAP[gameType] : null;
+
+  useEffect(() => {
+    if (!gameType) {
+      toast({
+        variant: 'destructive',
+        title: `${props.game}은 지원하지 않는 게임 타입이에요.`,
+      });
+      router.push(PATH.HOME);
+    }
+  }, [gameType, props.game, router, toast]);
+
+  if (!Component) {
+    return null;
   }
+
+  return <Component {...props} />;
 };
 
 export default GamePanel;
