@@ -12,7 +12,7 @@ const Item = ({ sender, content, index, type }: ItemProps) => {
     <div
       className={cn(
         'p-3',
-        index === 0 && 'rounded-t-lg',
+        index === 0 && 'rounded-tl-lg',
         type === 'system'
           ? 'bg-primary/20'
           : index % 2 === 0
