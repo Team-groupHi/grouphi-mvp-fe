@@ -36,7 +36,7 @@ const GameRoomController = ({
 
   const { toast } = useToast();
 
-  const { data: roomDetail, error, isError } = useFetchRoomDetail(roomId);
+  const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
 
   const { myName, setHostName } = useRoomStore();
   const { setSendMessage } = useSocketStore();
@@ -88,13 +88,6 @@ const GameRoomController = ({
       }
     }
   }, [myName, roomDetail]);
-
-  // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
-  useEffect(() => {
-    if (isError) {
-      throw error;
-    }
-  }, [isError]);
 
   if (!isSelfInPlayers || !gameType) {
     return <Spinner />;

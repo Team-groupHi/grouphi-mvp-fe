@@ -4,7 +4,7 @@
 import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
 import { QUERYKEY } from '@/constants/querykey';
@@ -109,22 +109,23 @@ export function useWebSocket() {
     client.current = null;
   };
 
-  const sendMessage = <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => {
-    if (!client.current || !client.current.connected) {
-      return;
-    }
+  const sendMessage = useCallback(
+    <T>(params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }) => {
+      if (!client.current || !client.current.connected) {
+        return;
+      }
 
-    const { destination, body } = params;
-    const text = JSON.stringify(body);
+      const { destination, body } = params;
+      const text = JSON.stringify(body);
 
-    client.current?.publish({
-      ...params,
-      destination: `${SOCKET.PUBLICATION}${destination}`,
-      body: text,
-    });
-  };
+      client.current?.publish({
+        ...params,
+        destination: `${SOCKET.PUBLICATION}${destination}`,
+        body: text,
+      });
+    },
+    []
+  );
 
   const receiveMessage = (message: string) => {
     const { type, sender, content } = JSON.parse(message);
@@ -153,7 +154,6 @@ export function useWebSocket() {
               '방장이 퇴장하여 방이 삭제되었어요. 새로운 방을 이용해주세요.',
             variant: 'destructive',
           });
-          // 방 삭제로 소켓 통신이 불가능하기 때문에 바로 이동
           router.replace(PATH.HOME);
           break;
         }

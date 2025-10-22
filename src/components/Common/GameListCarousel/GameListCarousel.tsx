@@ -66,6 +66,7 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
   const handleChangeGame = (gameId: string) => {
     if (clickedGameId) return;
     setClickedGameId(gameId);
+
     if (sendMessage) {
       sendMessage({
         destination: `${SOCKET.ROOM.CHANGE_GAME}`,
