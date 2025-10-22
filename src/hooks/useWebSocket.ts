@@ -154,7 +154,6 @@ export function useWebSocket() {
               '방장이 퇴장하여 방이 삭제되었어요. 새로운 방을 이용해주세요.',
             variant: 'destructive',
           });
-          // 방 삭제로 소켓 통신이 불가능하기 때문에 바로 이동
           router.replace(PATH.HOME);
           break;
         }

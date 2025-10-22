@@ -29,12 +29,7 @@ const BalanceGameController = ({
   });
 
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
-  const {
-    data: gameResults,
-    refetch,
-    isError,
-    error,
-  } = useFetchBalanceGameResults({
+  const { data: gameResults, refetch } = useFetchBalanceGameResults({
     roomId,
     round:
       roomStatus === ROOM_STATUS.FINAL_RESULT ? undefined : round.currentRound,
@@ -47,13 +42,6 @@ const BalanceGameController = ({
       setIsTimeout(false);
     }
   }, [isTimeout, refetch, setRoomStatus]);
-
-  // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
-  useEffect(() => {
-    if (isError) {
-      throw error;
-    }
-  }, [isError]);
 
   const preGameProps = { roomDetail, isRoomManager, sendMessage };
   const progressProps = { sendMessage, setIsTimeout };
