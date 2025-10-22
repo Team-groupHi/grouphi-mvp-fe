@@ -10,6 +10,18 @@ export {
 } from './Carousel';
 export { Chatting } from './Chatting';
 export {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerPortal,
+  DrawerTitle,
+  DrawerTrigger,
+} from './Drawer';
+export {
   ErrorBoundary,
   ErrorFallback,
   ErrorHandlingWrapper,
