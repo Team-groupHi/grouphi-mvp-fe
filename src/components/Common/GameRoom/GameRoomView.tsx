@@ -70,6 +70,7 @@ const GameRoomView = ({
           myName={myName}
           chatMessages={chatMessages}
           sendMessage={sendMessage}
+          players={roomDetail.players}
         />
         <GameActionButtons
           game={roomDetail.game.nameEn}

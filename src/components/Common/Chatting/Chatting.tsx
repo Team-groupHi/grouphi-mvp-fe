@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
+import { Player } from '@/types/api';
 
 import Item from './Item';
 import NewMessage from './NewMessage';
@@ -16,9 +17,15 @@ interface ChattingProps {
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
+  players: Player[];
 }
 
-const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
+const Chatting = ({
+  myName,
+  chatMessages,
+  sendMessage,
+  players,
+}: ChattingProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesContainerRef = useRef<HTMLElement>(null);
 
@@ -112,6 +119,9 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
                   : item.sender === myName
                     ? 'me'
                     : 'others'
+              }
+              avatar={
+                players.find((player) => player.name === item.sender)?.avatar
               }
             />
           ))}
