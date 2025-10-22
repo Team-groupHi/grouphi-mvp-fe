@@ -37,6 +37,7 @@ const BottomSheet = ({
             myName={myName}
             chatMessages={chatMessages}
             sendMessage={sendMessage}
+            isMobile={true}
           />
         </div>
       </DrawerContent>

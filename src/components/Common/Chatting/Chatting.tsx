@@ -1,9 +1,10 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
+import { Send } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Input } from '@/components';
+import { Button, Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
 
@@ -16,9 +17,15 @@ interface ChattingProps {
   sendMessage: <T>(
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
+  isMobile?: boolean;
 }
 
-const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
+const Chatting = ({
+  myName,
+  chatMessages,
+  sendMessage,
+  isMobile = false,
+}: ChattingProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesContainerRef = useRef<HTMLElement>(null);
 
@@ -42,11 +49,11 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
     }
   }, []);
 
-  const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleSubmit = (e?: React.KeyboardEvent<HTMLInputElement>) => {
+    e?.preventDefault();
     if (
       inputRef.current &&
-      !e.nativeEvent.isComposing &&
+      !e?.nativeEvent.isComposing &&
       inputRef.current.value.trim().length !== 0
     ) {
       sendMessage({
@@ -126,13 +133,21 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
           </section>
         )}
       </section>
-      <section className="h-[4rem] flex justify-center items-center bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
+      <section className="h-[4rem] flex justify-center items-center bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400 gap-2">
         <Input
           ref={inputRef}
           className="bg-container-700 border-transparent"
           placeholder="엔터 키를 눌러 채팅 전송"
           onKeyDown={(e) => e.key === 'Enter' && handleSubmit(e)}
         />
+        {isMobile && (
+          <Button
+            shape="square"
+            onClick={() => handleSubmit()}
+          >
+            <Send />
+          </Button>
+        )}
       </section>
     </section>
   );
