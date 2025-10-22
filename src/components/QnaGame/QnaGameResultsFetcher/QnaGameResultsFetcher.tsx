@@ -3,13 +3,15 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-import { QnaGameFinalResult, QnaGamePartialResult } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { ROOM_STATUS } from '@/constants/room';
 import { useFetchQnaGameResults } from '@/hooks/queries';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { SendMessage } from '@/types/websocket';
+
+import { QnaGameFinalResult } from '../QnaGameFinalResult';
+import { QnaGamePartialResult } from '../QnaGamePartialResult';
 
 interface QnaGameResultsFetcherProps {
   roomId: string;

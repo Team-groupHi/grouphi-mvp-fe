@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -50,7 +48,7 @@ const BalanceGameController = ({
       refetch();
       setIsTimeout(false);
     }
-  }, [isTimeout]);
+  }, [isTimeout, refetch, setRoomStatus]);
 
   // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
   useEffect(() => {
