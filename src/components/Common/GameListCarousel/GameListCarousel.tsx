@@ -13,11 +13,13 @@ import {
   GameListCard,
 } from '@/components';
 import { PATH } from '@/constants/router';
+import { SOCKET } from '@/constants/websocket';
 import { useToast } from '@/hooks/useToast';
 import { cn } from '@/lib/utils';
 import { createRoom } from '@/services/rooms';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
+import useSocketStore from '@/store/useSocketStore';
 import { GameResponse } from '@/types/api';
 
 interface GameListCarouselProps {
@@ -29,8 +31,9 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
   const router = useRouter();
   const { toast } = useToast();
 
-  const { setRoomId, setGameId } = useRoomStore();
+  const { setRoomId } = useRoomStore();
   const { closeModal } = useModalStore();
+  const { sendMessage } = useSocketStore();
 
   const [clickedGameId, setClickedGameId] = useState<string | null>(null);
 
@@ -63,7 +66,16 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
   const handleChangeGame = (gameId: string) => {
     if (clickedGameId) return;
     setClickedGameId(gameId);
-    setGameId(gameId);
+
+    if (sendMessage) {
+      sendMessage({
+        destination: `${SOCKET.ROOM.CHANGE_GAME}`,
+        body: {
+          gameId,
+        },
+      });
+    }
+
     closeModal();
   };
 

@@ -27,11 +27,7 @@ const QnaGameResultsFetcher = ({
   const { roomStatus } = useRoomStore();
   const { round } = useQnaGameStore();
 
-  const {
-    data: gameResults,
-    isError,
-    error,
-  } = useFetchQnaGameResults({
+  const { data: gameResults } = useFetchQnaGameResults({
     roomId,
     round:
       roomStatus === ROOM_STATUS.FINAL_RESULT ? undefined : round.currentRound,
@@ -45,13 +41,6 @@ const QnaGameResultsFetcher = ({
       });
     }
   }, [roomStatus, queryClient]);
-
-  // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
-  useEffect(() => {
-    if (isError) {
-      throw error;
-    }
-  }, [error, isError]);
 
   return (
     <>
