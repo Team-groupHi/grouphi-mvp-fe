@@ -41,18 +41,20 @@ const GameRoomView = ({
       <UserList players={roomDetail.players} />
 
       <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] max-w-[60%] min-w-max w-full rounded-lg shrink-0">
-        <ErrorHandlingWrapper
-          fallbackComponent={ErrorFallback}
-          suspenseFallback={<Spinner />}
-        >
-          <GamePanel
-            game={roomDetail.game.nameEn}
-            roomId={roomId}
-            roomDetail={roomDetail}
-            isRoomManager={isRoomManager}
-            sendMessage={sendMessage}
-          />
-        </ErrorHandlingWrapper>
+        <section className="bg-container/60 h-full rounded-lg">
+          <ErrorHandlingWrapper
+            fallbackComponent={ErrorFallback}
+            suspenseFallback={<Spinner />}
+          >
+            <GamePanel
+              game={roomDetail.game.nameEn}
+              roomId={roomId}
+              roomDetail={roomDetail}
+              isRoomManager={isRoomManager}
+              sendMessage={sendMessage}
+            />
+          </ErrorHandlingWrapper>
+        </section>
         {isDevelopment && (
           <AdBanner
             type="leaderboard"

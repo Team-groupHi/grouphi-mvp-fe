@@ -27,12 +27,14 @@ const RoomPage = () => {
   }, []);
 
   return (
-    <ErrorHandlingWrapper
-      fallbackComponent={ErrorFallback}
-      suspenseFallback={<Spinner />}
-    >
-      <GameRoom {...webSocket} />
-    </ErrorHandlingWrapper>
+    <section className="w-screen h-screen">
+      <ErrorHandlingWrapper
+        fallbackComponent={ErrorFallback}
+        suspenseFallback={<Spinner />}
+      >
+        <GameRoom {...webSocket} />
+      </ErrorHandlingWrapper>
+    </section>
   );
 };
 
