@@ -7,11 +7,11 @@ import { useEffect } from 'react';
 
 import { Spinner } from '@/components';
 import { PATH } from '@/constants/router';
-import { SOCKET } from '@/constants/websocket';
 import { useFetchRoomDetail } from '@/hooks/queries';
 import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
+import useSocketStore from '@/store/useSocketStore';
 import { ChatMessage } from '@/types';
 
 import GameRoomView from './GameRoomView';
@@ -37,7 +37,8 @@ const GameRoomController = ({
 
   const { data: roomDetail, isError } = useFetchRoomDetail(roomId);
 
-  const { myName, setHostName, gameId } = useRoomStore();
+  const { myName, setHostName } = useRoomStore();
+  const { setSendMessage } = useSocketStore();
 
   const isRoomManager = roomDetail.players.some(
     (player) => player.name === myName && player.isHost
@@ -46,13 +47,19 @@ const GameRoomController = ({
     roomDetail.players.findIndex((user) => user.name === myName) !== -1;
 
   useEffect(() => {
+    if (sendMessage) {
+      setSendMessage(sendMessage);
+    }
+  }, [sendMessage]);
+
+  useEffect(() => {
     if (roomDetail.players.length > 0) {
       const host = roomDetail.players.find((player) => player.isHost);
       if (host) {
         setHostName(host.name);
       }
     }
-  }, [roomDetail.players, setHostName]);
+  }, [roomDetail.players]);
 
   useEffect(() => {
     if (roomDetail && !isSelfInPlayers) {
@@ -68,24 +75,6 @@ const GameRoomController = ({
       }
     }
   }, [myName, roomDetail]);
-
-  useEffect(() => {
-    sendMessage({
-      destination: `${SOCKET.ROOM.CHANGE_PLAYER_NAME}`,
-      body: {
-        name: myName,
-      },
-    });
-  }, [myName]);
-
-  useEffect(() => {
-    sendMessage({
-      destination: `${SOCKET.ROOM.CHANGE_GAME}`,
-      body: {
-        gameId,
-      },
-    });
-  }, [gameId]);
 
   if (!isSelfInPlayers) {
     return <Spinner />;

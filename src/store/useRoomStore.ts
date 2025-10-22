@@ -11,7 +11,6 @@ interface RoomStoreProps {
   myName: string;
   setRoomStatus: (status: roomStatusType) => void;
   setRoomId: (id: string) => void;
-  setGameId: (id: string) => void;
   setHostName: (name: string) => void;
   setMyName: (name: string) => void;
   getHostName: () => string | null;
@@ -26,7 +25,6 @@ const useRoomStore = create<RoomStoreProps>((set, get) => ({
   myName: '',
   setRoomStatus: (status) => set({ roomStatus: status }),
   setRoomId: (id) => set({ roomId: id }),
-  setGameId: (id) => set({ gameId: id }),
   setHostName: (name) => set({ hostName: name }),
   setMyName: (name) => set({ myName: name }),
   getHostName: () => get().hostName,
