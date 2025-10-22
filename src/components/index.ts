@@ -42,7 +42,6 @@ export {
   ModalRenderer,
   ModalShell,
   Navigation,
-  Nicknamebar,
   Pagination,
   PaginationContent,
   PaginationEllipsis,
