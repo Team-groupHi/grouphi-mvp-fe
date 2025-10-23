@@ -30,7 +30,7 @@ const Item = ({ avatar, sender, content, index, type }: ItemProps) => {
           {avatar && (
             <Image
               src={`/images/characters/${avatar}.webp`}
-              alt={`${sender}의 프로필 사진`}
+              alt={`${sender}의 아바타`}
               width={20}
               height={20}
               className="object-contain select-none flex-shrink-0"
