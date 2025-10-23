@@ -35,7 +35,6 @@ const Item = ({ avatar, sender, content, index, type }: ItemProps) => {
               height={20}
               className="object-contain select-none flex-shrink-0"
               draggable={false}
-              priority
             />
           )}
 
