@@ -22,8 +22,7 @@ const HomeClientController = ({ games }: HomeClientControllerProps) => {
   useEffect(() => {
     roomReset();
     socketReset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [roomReset, socketReset]);
 
   useEffect(() => {
     if (games) {
