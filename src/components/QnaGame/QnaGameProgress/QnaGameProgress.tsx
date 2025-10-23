@@ -3,7 +3,7 @@
 
 import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { QnaGameAvatarStatus, QnaGameForm } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
@@ -26,6 +26,10 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
 
   const queryClient = useQueryClient();
 
+  const submittedPlayersSet = useMemo(() => {
+    return new Set(submittedPlayers);
+  }, [submittedPlayers]);
+
   useEffect(() => {
     if (submittedPlayers.length === players.length) {
       setRoomStatus(ROOM_STATUS.RESULT);
@@ -43,12 +47,6 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
     });
   };
 
-  const isSubmitted = (player: string) => {
-    return submittedPlayers.some(
-      (submittedPlayer) => submittedPlayer === player
-    );
-  };
-
   return (
     <main className="flex flex-col items-center justify-center p-8 h-full w-full">
       <section className="h-full w-full flex flex-col items-center justify-center gap-5">
@@ -57,7 +55,7 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
             <QnaGameAvatarStatus
               key={`${idx}color`}
               avatar={player.avatar}
-              isSubmitted={isSubmitted(player.name)}
+              isSubmitted={submittedPlayersSet.has(player.name)}
             />
           ))}
         </section>
