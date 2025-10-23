@@ -55,6 +55,7 @@ const QnaGameProgress = ({ sendMessage, players }: QnaGameProgressProps) => {
             <QnaGameAvatarStatus
               key={`${idx}color`}
               avatar={player.avatar}
+              alt={`${player.name}의 아바타`}
               isSubmitted={submittedPlayersSet.has(player.name)}
             />
           ))}
