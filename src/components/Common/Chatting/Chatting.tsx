@@ -1,7 +1,13 @@
 'use client';
 
 import * as StompJS from '@stomp/stompjs';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
@@ -32,6 +38,11 @@ const Chatting = ({
   const [isAtBottom, setIsAtBottom] = useState(true);
 
   const [showNewMessage, setShowNewMessage] = useState(false);
+
+  const playerAvatarMap = useMemo(
+    () => new Map(players.map((player) => [player.name, player.avatar])),
+    [players]
+  );
 
   const handleScroll = useCallback(() => {
     const container = messagesContainerRef.current;
@@ -120,9 +131,7 @@ const Chatting = ({
                     ? 'me'
                     : 'others'
               }
-              avatar={
-                players.find((player) => player.name === item.sender)?.avatar
-              }
+              avatar={playerAvatarMap.get(item.sender)}
             />
           ))}
         </section>
