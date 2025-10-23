@@ -27,15 +27,17 @@ const Item = ({ avatar, sender, content, index, type }: ItemProps) => {
         <span className="font-semibold break-words">{content}</span>
       ) : (
         <div className="flex flex-wrap items-center gap-1">
-          <Image
-            src={`/images/characters/${avatar}.webp`}
-            alt="avatar"
-            width={20}
-            height={20}
-            className="object-contain select-none flex-shrink-0"
-            draggable={false}
-            priority
-          />
+          {avatar && (
+            <Image
+              src={`/images/characters/${avatar}.webp`}
+              alt="avatar"
+              width={20}
+              height={20}
+              className="object-contain select-none flex-shrink-0"
+              draggable={false}
+              priority
+            />
+          )}
 
           <span className="font-semibold flex-shrink-0">{sender}</span>
           <span className="flex-shrink-0">{`:`}</span>
