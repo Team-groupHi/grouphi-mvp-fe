@@ -25,12 +25,14 @@ interface GameRoomControllerProps {
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
   chatMessages: ChatMessage[];
+  isMobile: boolean;
 }
 
 const GameRoomController = ({
   connect,
   sendMessage,
   chatMessages,
+  isMobile,
 }: GameRoomControllerProps) => {
   const path = usePathname();
   const router = useRouter();
@@ -98,19 +100,23 @@ const GameRoomController = ({
   const GamePanel = GAME_COMPONENT_MAP[gameType];
   const gameControl = GAME_CONTROL_MAP[gameType];
 
-  return (
-    <GameRoomView
-      roomDetail={roomDetail}
-      roomId={roomId}
-      myName={myName}
-      isRoomManager={isRoomManager}
-      sendMessage={sendMessage}
-      chatMessages={chatMessages}
-      GamePanel={GamePanel}
-      gameControl={gameControl}
-      gameType={gameType}
-    />
-  );
+  if (isMobile) {
+    return <div>MobileGameRoomView</div>;
+  } else {
+    return (
+      <GameRoomView
+        roomDetail={roomDetail}
+        roomId={roomId}
+        myName={myName}
+        isRoomManager={isRoomManager}
+        sendMessage={sendMessage}
+        chatMessages={chatMessages}
+        GamePanel={GamePanel}
+        gameControl={gameControl}
+        gameType={gameType}
+      />
+    );
+  }
 };
 
 export default GameRoomController;
