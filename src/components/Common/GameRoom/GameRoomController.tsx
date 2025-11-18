@@ -12,6 +12,7 @@ import { PATH } from '@/constants/router';
 import { useFetchRoomDetail } from '@/hooks/queries';
 import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
+import { useDevice } from '@/store/useDevice';
 import useRoomStore from '@/store/useRoomStore';
 import useSocketStore from '@/store/useSocketStore';
 import { ChatMessage } from '@/types';
@@ -25,14 +26,12 @@ interface GameRoomControllerProps {
     params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
   ) => void;
   chatMessages: ChatMessage[];
-  isMobile: boolean;
 }
 
 const GameRoomController = ({
   connect,
   sendMessage,
   chatMessages,
-  isMobile,
 }: GameRoomControllerProps) => {
   const path = usePathname();
   const router = useRouter();
@@ -44,6 +43,7 @@ const GameRoomController = ({
 
   const { myName, setHostName } = useRoomStore();
   const { setSendMessage } = useSocketStore();
+  const { isMobile } = useDevice();
 
   const isRoomManager = roomDetail.players.some(
     (player) => player.name === myName && player.isHost
