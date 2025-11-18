@@ -102,21 +102,21 @@ const GameRoomController = ({
 
   if (isMobile) {
     return <div>MobileGameRoomView</div>;
-  } else {
-    return (
-      <GameRoomView
-        roomDetail={roomDetail}
-        roomId={roomId}
-        myName={myName}
-        isRoomManager={isRoomManager}
-        sendMessage={sendMessage}
-        chatMessages={chatMessages}
-        GamePanel={GamePanel}
-        gameControl={gameControl}
-        gameType={gameType}
-      />
-    );
   }
+
+  return (
+    <GameRoomView
+      roomDetail={roomDetail}
+      roomId={roomId}
+      myName={myName}
+      isRoomManager={isRoomManager}
+      sendMessage={sendMessage}
+      chatMessages={chatMessages}
+      GamePanel={GamePanel}
+      gameControl={gameControl}
+      gameType={gameType}
+    />
+  );
 };
 
 export default GameRoomController;
