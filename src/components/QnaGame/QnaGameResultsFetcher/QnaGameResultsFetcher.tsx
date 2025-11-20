@@ -1,6 +1,5 @@
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
@@ -9,15 +8,14 @@ import { ROOM_STATUS } from '@/constants/room';
 import { useFetchQnaGameResults } from '@/hooks/queries';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
+import { SendMessage } from '@/types/websocket';
 
 import { QnaGameFinalResult } from '../QnaGameFinalResult';
 import { QnaGamePartialResult } from '../QnaGamePartialResult';
 
 interface QnaGameResultsFetcherProps {
   roomId: string;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
 }
 
 const QnaGameResultsFetcher = ({

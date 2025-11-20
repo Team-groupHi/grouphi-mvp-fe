@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -15,15 +14,14 @@ import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
 import useSocketStore from '@/store/useSocketStore';
 import { ChatMessage } from '@/types';
+import { SendMessage } from '@/types/websocket';
 import { gameToType } from '@/utils/gameToType';
 
 import GameRoomView from './GameRoomView';
 
 interface GameRoomControllerProps {
   connect: (params: EnterRoomProps) => void;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
   chatMessages: ChatMessage[];
 }
 

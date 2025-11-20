@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import { ComponentType } from 'react';
 
 import {
@@ -18,6 +17,7 @@ import { ChatMessage } from '@/types';
 import { RoomResponse } from '@/types/api';
 import { GameType } from '@/types/game';
 import { GameControllerProps } from '@/types/props';
+import { SendMessage } from '@/types/websocket';
 import { isDevelopment } from '@/utils/env';
 
 interface GameRoomViewProps {
@@ -25,9 +25,7 @@ interface GameRoomViewProps {
   roomId: string;
   myName: string;
   isRoomManager: boolean;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
   chatMessages: ChatMessage[];
   GamePanel: ComponentType<GameControllerProps>;
   gameControl: GameControlEntry;

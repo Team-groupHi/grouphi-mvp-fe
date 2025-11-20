@@ -1,17 +1,14 @@
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
-
 import { GameControlEntry } from '@/constants/gameControlMap';
 import useRoomStore from '@/store/useRoomStore';
+import { SendMessage } from '@/types/websocket';
 
 import GameActionButtonsView from './GameActionButtonsView';
 
 interface GameActionButtonsControllerProps {
   gameControl: GameControlEntry;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
 }
 
 const GameActionButtonsController = ({

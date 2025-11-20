@@ -1,10 +1,10 @@
-import * as StompJS from '@stomp/stompjs';
 import { useEffect } from 'react';
 
 import { ToastProps } from '@/components';
 import { GAME_CONTROL_MAP } from '@/constants/gameControlMap';
 import { RoomResponse } from '@/types/api';
 import { GameType } from '@/types/game';
+import { SendMessage } from '@/types/websocket';
 
 import { ToasterToast } from './useToast';
 
@@ -16,9 +16,7 @@ type ToastFunction = (props: ToastProps) => {
 
 interface AutoEndGameProps {
   roomDetail: RoomResponse;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
   toast: ToastFunction;
   gameType: GameType;
 }
