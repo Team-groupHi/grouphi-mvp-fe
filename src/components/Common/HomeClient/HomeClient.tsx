@@ -17,6 +17,8 @@ const HomeClient = ({ games }: HomeClientProps) => {
 
   const { reset: roomReset } = useRoomStore();
 
+  const GAMELIST_ITEM_COUNT = isDevelopment ? 6 : 5;
+
   useEffect(() => {
     roomReset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,7 +41,10 @@ const HomeClient = ({ games }: HomeClientProps) => {
           >
             <span className="text-md 2xl:text-lg">Game List</span>
             <span className="text-md pb-300">▽</span>
-            <GameListCarousel games={games} />
+            <GameListCarousel
+              games={games}
+              count={GAMELIST_ITEM_COUNT}
+            />
           </section>
         ) : (
           <section className="flex h-full justify-center items-center">
