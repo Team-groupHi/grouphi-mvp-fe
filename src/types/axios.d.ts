@@ -1,4 +1,3 @@
-// axios.d.ts
 import 'axios';
 
 declare module 'axios' {

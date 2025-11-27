@@ -6,11 +6,11 @@ import React from 'react';
 
 import {
   InitialNickname,
+  ModalRenderer,
   ShootingStars,
   StarsBackground,
   Toaster,
 } from '@/components';
-import { ModalRenderer } from '@/components/Modal';
 import { METADATA } from '@/constants/metadata';
 import Providers from '@/utils/providers';
 
@@ -50,9 +50,7 @@ export default function RootLayout({
           href="/icons/apple-icon.png"
         />
       </head>
-      <body
-        className={`font-sans antialiased text-sm 2xl:text-base text relative min-h-screen bg-gradient-purple`}
-      >
+      <body className="font-sans antialiased text-sm 2xl:text-base text relative min-h-screen bg-gradient-purple">
         {GA4_ID && process.env.NODE_ENV === 'production' && (
           <>
             <Script

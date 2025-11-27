@@ -4,7 +4,7 @@
 import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import { DEFAULT_ERROR_MESSAGE, ERROR_MESSAGE } from '@/constants/error';
 import { QUERYKEY } from '@/constants/querykey';
@@ -89,7 +89,7 @@ export function useWebSocket() {
       if (!e.wasClean) {
         toast({
           title: '웹소켓 연결 실패',
-          description: '서버에 연결할 수 없습니다. 새로고침 해주세요.',
+          description: '서버에 연결할 수 없어요. 새로고침 해주세요.',
           variant: 'destructive',
         });
       }
@@ -109,22 +109,23 @@ export function useWebSocket() {
     client.current = null;
   };
 
-  const sendMessage = <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => {
-    if (!client.current || !client.current.connected) {
-      return;
-    }
+  const sendMessage = useCallback(
+    <T>(params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }) => {
+      if (!client.current || !client.current.connected) {
+        return;
+      }
 
-    const { destination, body } = params;
-    const text = JSON.stringify(body);
+      const { destination, body } = params;
+      const text = JSON.stringify(body);
 
-    client.current?.publish({
-      ...params,
-      destination: `${SOCKET.PUBLICATION}${destination}`,
-      body: text,
-    });
-  };
+      client.current?.publish({
+        ...params,
+        destination: `${SOCKET.PUBLICATION}${destination}`,
+        body: text,
+      });
+    },
+    []
+  );
 
   const receiveMessage = (message: string) => {
     const { type, sender, content } = JSON.parse(message);
@@ -150,10 +151,9 @@ export function useWebSocket() {
           toast({
             title: '방 삭제',
             description:
-              '방장이 퇴장하여 방이 삭제되었습니다. 새로운 방을 이용해주세요.',
+              '방장이 퇴장하여 방이 삭제되었어요. 새로운 방을 이용해주세요.',
             variant: 'destructive',
           });
-          // 방 삭제로 소켓 통신이 불가능하기 때문에 바로 이동
           router.replace(PATH.HOME);
           break;
         }
@@ -217,7 +217,7 @@ export function useWebSocket() {
         setChatMessages(() => [
           {
             sender: SOCKET.SYSTEM,
-            content: '게임이 종료되었습니다.',
+            content: 'Balance Game이 종료되었어요.',
           },
         ]);
         setRoomStatus(ROOM_STATUS.IDLE);
@@ -251,7 +251,7 @@ export function useWebSocket() {
         setChatMessages(() => [
           {
             sender: SOCKET.SYSTEM,
-            content: 'QnA 게임이 종료되었습니다.',
+            content: 'QnA Game이 종료되었어요.',
           },
         ]);
         setRoomStatus(ROOM_STATUS.IDLE);

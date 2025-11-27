@@ -2,11 +2,8 @@ import { saveAs } from 'file-saver';
 import { Save } from 'lucide-react';
 import Image from 'next/image';
 
-import { Button } from '@/components/Button';
+import { Button, Label, ModalShell } from '@/components';
 import { useToast } from '@/hooks/useToast';
-
-import Label from '../Label';
-import ModalShell from '../Modal/ModalShell';
 
 interface SaveImageModalProps {
   closeModal: () => void;
@@ -46,7 +43,7 @@ const SaveImageModal = ({
           width={0}
           height={0}
           sizes="100vw"
-          style={{ width: '100%', height: 'auto' }} // optional
+          style={{ width: '100%', height: 'auto' }}
         />
         <Button onClick={handleSaveImage}>
           <Save />

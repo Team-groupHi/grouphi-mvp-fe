@@ -15,15 +15,18 @@ import {
   ModalShell,
 } from '@/components';
 import { STORAGE_KEY } from '@/constants/storage';
+import { SOCKET } from '@/constants/websocket';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useToast } from '@/hooks/useToast';
 import useModalStore from '@/store/useModalStore';
 import useRoomStore from '@/store/useRoomStore';
+import useSocketStore from '@/store/useSocketStore';
 
 const CreateUserNameModal = () => {
   const { closeModal } = useModalStore();
   const { setItem } = useLocalStorage();
   const { myName, setMyName } = useRoomStore();
+  const { sendMessage } = useSocketStore();
   const { toast } = useToast();
 
   const formSchema = z.object({
@@ -52,13 +55,24 @@ const CreateUserNameModal = () => {
         description: '기존 닉네임과 다른 닉네임을 입력해주세요.',
       });
     } else {
+      setMyName(values.username);
+      setItem(STORAGE_KEY.NICKNAME, values.username);
+
+      if (sendMessage) {
+        sendMessage({
+          destination: `${SOCKET.ROOM.CHANGE_PLAYER_NAME}`,
+          body: {
+            name: values.username,
+          },
+        });
+      }
+
       toast({
         variant: 'success',
         title: '닉네임 변경 성공',
         description: `${values.username}님, 그루파이별에 오신 것을 환영해요!`,
       });
-      setMyName(values.username);
-      setItem(STORAGE_KEY.NICKNAME, values.username);
+
       closeModal();
     }
   };

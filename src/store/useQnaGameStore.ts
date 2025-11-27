@@ -6,7 +6,6 @@ interface BalanceGameStoreProps {
   round: QnaGameRoundResponse;
   submittedPlayers: string[];
   setRound: (round: QnaGameRoundResponse) => void;
-  setTotalRounds: (count: number) => void; // @TODO: 추후에 완전 삭제 필요
   addSubmittedPlayer: (playerId: string) => void;
   clearSubmittedPlayers: () => void;
   reset: () => void;
@@ -23,13 +22,6 @@ const useQnaGameStore = create<BalanceGameStoreProps>((set) => ({
     set({
       round,
     }),
-  setTotalRounds: (count) =>
-    set((state) => ({
-      round: {
-        ...state.round,
-        totalRounds: count,
-      },
-    })),
   addSubmittedPlayer: (playerId) =>
     set((state) => ({
       submittedPlayers: [...state.submittedPlayers, playerId],

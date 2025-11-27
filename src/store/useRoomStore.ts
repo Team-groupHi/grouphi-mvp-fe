@@ -1,8 +1,7 @@
 import { create } from 'zustand';
 
 import { ROOM_STATUS } from '@/constants/room';
-
-type roomStatusType = (typeof ROOM_STATUS)[keyof typeof ROOM_STATUS];
+import { roomStatusType } from '@/types/room';
 
 interface RoomStoreProps {
   roomStatus: roomStatusType;
@@ -12,7 +11,6 @@ interface RoomStoreProps {
   myName: string;
   setRoomStatus: (status: roomStatusType) => void;
   setRoomId: (id: string) => void;
-  setGameId: (id: string) => void;
   setHostName: (name: string) => void;
   setMyName: (name: string) => void;
   getHostName: () => string | null;
@@ -27,7 +25,6 @@ const useRoomStore = create<RoomStoreProps>((set, get) => ({
   myName: '',
   setRoomStatus: (status) => set({ roomStatus: status }),
   setRoomId: (id) => set({ roomId: id }),
-  setGameId: (id) => set({ gameId: id }),
   setHostName: (name) => set({ hostName: name }),
   setMyName: (name) => set({ myName: name }),
   getHostName: () => get().hostName,
