@@ -1,3 +1,9 @@
+import * as StompJS from '@stomp/stompjs';
+
+export type SendMessage = <T>(
+  params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
+) => void;
+
 /* Response */
 
 export interface BalanceGameRoundResponse {
