@@ -1,5 +1,6 @@
 'use client';
 
+import { Send } from 'lucide-react';
 import React, {
   useCallback,
   useEffect,
@@ -8,7 +9,7 @@ import React, {
   useState,
 } from 'react';
 
-import { Input } from '@/components';
+import { Button, Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
 import { Player } from '@/types/api';
@@ -22,6 +23,7 @@ interface ChattingProps {
   chatMessages: ChatMessage[];
   sendMessage: SendMessage;
   players: Player[];
+  isMobile?: boolean;
 }
 
 const Chatting = ({
@@ -29,6 +31,7 @@ const Chatting = ({
   chatMessages,
   sendMessage,
   players,
+  isMobile = false,
 }: ChattingProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesContainerRef = useRef<HTMLElement>(null);
@@ -58,11 +61,11 @@ const Chatting = ({
     }
   }, []);
 
-  const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleSubmit = (e?: React.KeyboardEvent<HTMLInputElement>) => {
+    e?.preventDefault();
     if (
       inputRef.current &&
-      !e.nativeEvent.isComposing &&
+      !e?.nativeEvent.isComposing &&
       inputRef.current.value.trim().length !== 0
     ) {
       sendMessage({
@@ -143,13 +146,21 @@ const Chatting = ({
           </section>
         )}
       </section>
-      <section className="h-[4rem] flex justify-center items-center bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
+      <section className="h-[4rem] flex justify-center items-center bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400 gap-2">
         <Input
           ref={inputRef}
           className="bg-container-700 border-transparent"
           placeholder="엔터 키를 눌러 채팅 전송"
           onKeyDown={(e) => e.key === 'Enter' && handleSubmit(e)}
         />
+        {isMobile && (
+          <Button
+            shape="square"
+            onClick={() => handleSubmit()}
+          >
+            <Send />
+          </Button>
+        )}
       </section>
     </section>
   );
