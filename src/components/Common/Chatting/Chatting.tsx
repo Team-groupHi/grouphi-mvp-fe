@@ -11,6 +11,7 @@ import React, {
 import { Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
+import { Player } from '@/types/api';
 import { SendMessage } from '@/types/websocket';
 
 import Item from './Item';
@@ -20,6 +21,7 @@ interface ChattingProps {
   myName: string;
   chatMessages: ChatMessage[];
   sendMessage: SendMessage;
+  players: Player[];
 }
 
 const Chatting = ({
