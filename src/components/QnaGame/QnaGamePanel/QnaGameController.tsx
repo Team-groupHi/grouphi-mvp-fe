@@ -8,7 +8,7 @@ import { GameControllerProps } from '@/types/props';
 import QnaGameView from './QnaGameView';
 
 const QnaGameController = (props: GameControllerProps) => {
-  const { roomDetail, sendMessage } = props;
+  const { roomDetail, sendMessage, gameType } = props;
 
   const { roomStatus } = useRoomStore();
   const { toast } = useToast();
@@ -17,6 +17,7 @@ const QnaGameController = (props: GameControllerProps) => {
     roomDetail,
     sendMessage,
     toast,
+    gameType,
   });
 
   return (

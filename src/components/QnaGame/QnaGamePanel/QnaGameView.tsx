@@ -15,6 +15,7 @@ const QnaGameView = ({
   isRoomManager,
   sendMessage,
   roomStatus,
+  gameType,
 }: QnaGameViewProps) => {
   return (
     <>
@@ -23,6 +24,7 @@ const QnaGameView = ({
           roomDetail={roomDetail}
           isRoomManager={isRoomManager}
           sendMessage={sendMessage}
+          gameType={gameType}
         />
       )}
       {roomStatus === ROOM_STATUS.PROGRESS && (

@@ -1,14 +1,10 @@
-import * as StompJS from '@stomp/stompjs';
 import { useMemo } from 'react';
 
 import { SOCKET } from '@/constants/websocket';
+import { SendMessage } from '@/types/websocket';
 import { throttle } from '@/utils/throttle';
 
-const useThrottleReadyHandlers = (
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void
-) => {
+const useThrottleReadyHandlers = (sendMessage: SendMessage) => {
   const handleReady = useMemo(() => {
     const throttledFn = throttle(() => {
       sendMessage({

@@ -41,7 +41,6 @@ export {
   GameActionButtons,
   GameListCard,
   GameListCarousel,
-  GamePanel,
   GameRoom,
   HomeClient,
   InitialNickname,

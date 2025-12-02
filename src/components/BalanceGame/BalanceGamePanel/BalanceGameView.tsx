@@ -1,5 +1,3 @@
-import * as StompJS from '@stomp/stompjs';
-
 import {
   BalanceGameFinalResult,
   BalanceGamePartialResult,
@@ -7,24 +5,17 @@ import {
   PreGame,
 } from '@/components';
 import { ROOM_STATUS } from '@/constants/room';
-import { BalanceGameResultResponse, RoomResponse } from '@/types/api';
+import { BalanceGameResultResponse } from '@/types/api';
+import {
+  BalanceGameProgressProps,
+  PreGameControllerProps,
+} from '@/types/props';
 import { roomStatusType } from '@/types/room';
 
 interface BalanceGameViewProps {
   roomStatus: roomStatusType;
-  preGameProps: {
-    roomDetail: RoomResponse;
-    isRoomManager: boolean;
-    sendMessage: <T>(
-      params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-    ) => void;
-  };
-  progressProps: {
-    sendMessage: <T>(
-      params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-    ) => void;
-    setIsTimeout: (state: boolean) => void;
-  };
+  preGameProps: PreGameControllerProps;
+  progressProps: BalanceGameProgressProps;
   gameResults: BalanceGameResultResponse[];
 }
 

@@ -1,12 +1,19 @@
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import { Send } from 'lucide-react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { Button, Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
+import { Player } from '@/types/api';
+import { SendMessage } from '@/types/websocket';
 
 import Item from './Item';
 import NewMessage from './NewMessage';
@@ -14,9 +21,8 @@ import NewMessage from './NewMessage';
 interface ChattingProps {
   myName: string;
   chatMessages: ChatMessage[];
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
+  players: Player[];
   isMobile?: boolean;
 }
 
@@ -24,6 +30,7 @@ const Chatting = ({
   myName,
   chatMessages,
   sendMessage,
+  players,
   isMobile = false,
 }: ChattingProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -32,6 +39,11 @@ const Chatting = ({
   const [isAtBottom, setIsAtBottom] = useState(true);
 
   const [showNewMessage, setShowNewMessage] = useState(false);
+
+  const playerAvatarMap = useMemo(
+    () => new Map(players.map((player) => [player.name, player.avatar])),
+    [players]
+  );
 
   const handleScroll = useCallback(() => {
     const container = messagesContainerRef.current;
@@ -120,6 +132,7 @@ const Chatting = ({
                     ? 'me'
                     : 'others'
               }
+              avatar={playerAvatarMap.get(item.sender)}
             />
           ))}
         </section>

@@ -1,18 +1,15 @@
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
-
 import { SOCKET } from '@/constants/websocket';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import { QnaGameResultGetResponse } from '@/types/api';
+import { SendMessage } from '@/types/websocket';
 
 import UserAnswerRow from './UserAnswerRow';
 
 interface QnaGamePartialResultProps {
   data: QnaGameResultGetResponse[];
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
 }
 
 const QnaGamePartialResult = ({
