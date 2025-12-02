@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -19,6 +17,7 @@ const BalanceGameController = ({
   roomDetail,
   isRoomManager,
   sendMessage,
+  gameType,
 }: GameControllerProps) => {
   const { round } = useBalanceGameStore();
   const { roomStatus, setRoomStatus } = useRoomStore();
@@ -28,15 +27,11 @@ const BalanceGameController = ({
     roomDetail,
     sendMessage,
     toast,
+    gameType,
   });
 
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
-  const {
-    data: gameResults,
-    refetch,
-    isError,
-    error,
-  } = useFetchBalanceGameResults({
+  const { data: gameResults, refetch } = useFetchBalanceGameResults({
     roomId,
     round:
       roomStatus === ROOM_STATUS.FINAL_RESULT ? undefined : round.currentRound,
@@ -48,16 +43,9 @@ const BalanceGameController = ({
       refetch();
       setIsTimeout(false);
     }
-  }, [isTimeout]);
+  }, [isTimeout, refetch, setRoomStatus]);
 
-  // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
-  useEffect(() => {
-    if (isError) {
-      throw error;
-    }
-  }, [isError]);
-
-  const preGameProps = { roomDetail, isRoomManager, sendMessage };
+  const preGameProps = { roomDetail, isRoomManager, sendMessage, gameType };
   const progressProps = { sendMessage, setIsTimeout };
 
   return (

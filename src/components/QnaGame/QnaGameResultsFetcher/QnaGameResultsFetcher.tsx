@@ -1,21 +1,21 @@
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-import { QnaGameFinalResult, QnaGamePartialResult } from '@/components';
 import { QUERYKEY } from '@/constants/querykey';
 import { ROOM_STATUS } from '@/constants/room';
 import { useFetchQnaGameResults } from '@/hooks/queries';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
+import { SendMessage } from '@/types/websocket';
+
+import { QnaGameFinalResult } from '../QnaGameFinalResult';
+import { QnaGamePartialResult } from '../QnaGamePartialResult';
 
 interface QnaGameResultsFetcherProps {
   roomId: string;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
 }
 
 const QnaGameResultsFetcher = ({
@@ -25,11 +25,7 @@ const QnaGameResultsFetcher = ({
   const { roomStatus } = useRoomStore();
   const { round } = useQnaGameStore();
 
-  const {
-    data: gameResults,
-    isError,
-    error,
-  } = useFetchQnaGameResults({
+  const { data: gameResults } = useFetchQnaGameResults({
     roomId,
     round:
       roomStatus === ROOM_STATUS.FINAL_RESULT ? undefined : round.currentRound,
@@ -43,13 +39,6 @@ const QnaGameResultsFetcher = ({
       });
     }
   }, [roomStatus, queryClient]);
-
-  // @TODO: 더 선언적으로 error를 처리할 수 있는 방법 찾기
-  useEffect(() => {
-    if (isError) {
-      throw error;
-    }
-  }, [error, isError]);
 
   return (
     <>

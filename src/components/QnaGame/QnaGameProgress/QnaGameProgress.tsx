@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 
@@ -12,11 +11,10 @@ import { SOCKET } from '@/constants/websocket';
 import useQnaGameStore from '@/store/useQnaGameStore';
 import useRoomStore from '@/store/useRoomStore';
 import { Player } from '@/types/api';
+import { SendMessage } from '@/types/websocket';
 
 interface QnaGameProgressProps {
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
   players: Player[];
 }
 

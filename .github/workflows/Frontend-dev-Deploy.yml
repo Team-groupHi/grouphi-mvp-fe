@@ -32,7 +32,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.DEV_ACCESS_TOKEN }}
         with:
           source-directory: 'output'
-          destination-github-username: SoJuSo
+          destination-github-username: ksjdev
           destination-repository-name: grouphi-mvp-fe
           user-email: 'asdfg7123@gmail.com'
           commit-message: ${{ github.event.commits[0].message }}

@@ -57,7 +57,6 @@ const CreateUserNameModal = () => {
     } else {
       setMyName(values.username);
       setItem(STORAGE_KEY.NICKNAME, values.username);
-      closeModal();
 
       if (sendMessage) {
         sendMessage({
@@ -73,6 +72,8 @@ const CreateUserNameModal = () => {
         title: '닉네임 변경 성공',
         description: `${values.username}님, 그루파이별에 오신 것을 환영해요!`,
       });
+
+      closeModal();
     }
   };
 

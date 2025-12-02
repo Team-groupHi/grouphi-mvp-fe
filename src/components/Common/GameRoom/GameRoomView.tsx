@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
+import { ComponentType } from 'react';
 
 import {
   AdBanner,
@@ -9,12 +9,15 @@ import {
   ErrorFallback,
   ErrorHandlingWrapper,
   GameActionButtons,
-  GamePanel,
   Spinner,
   UserList,
 } from '@/components';
+import { GameControlEntry } from '@/constants/gameControlMap';
 import { ChatMessage } from '@/types';
 import { RoomResponse } from '@/types/api';
+import { GameType } from '@/types/game';
+import { GameControllerProps } from '@/types/props';
+import { SendMessage } from '@/types/websocket';
 import { isDevelopment } from '@/utils/env';
 
 interface GameRoomViewProps {
@@ -22,10 +25,11 @@ interface GameRoomViewProps {
   roomId: string;
   myName: string;
   isRoomManager: boolean;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
   chatMessages: ChatMessage[];
+  GamePanel: ComponentType<GameControllerProps>;
+  gameControl: GameControlEntry;
+  gameType: GameType;
 }
 
 const GameRoomView = ({
@@ -35,24 +39,29 @@ const GameRoomView = ({
   isRoomManager,
   sendMessage,
   chatMessages,
+  GamePanel,
+  gameControl,
+  gameType,
 }: GameRoomViewProps) => {
   return (
     <section className="w-screen min-h-screen flex items-start justify-start 2xl:justify-center gap-4 shrink-0 py-20 overflow-y-hidden">
       <UserList players={roomDetail.players} />
 
       <section className="flex flex-col gap-300 h-[calc(100vh-12rem)] min-h-[30rem] max-w-[60%] min-w-max w-full rounded-lg shrink-0">
-        <ErrorHandlingWrapper
-          fallbackComponent={ErrorFallback}
-          suspenseFallback={<Spinner />}
-        >
-          <GamePanel
-            game={roomDetail.game.nameEn}
-            roomId={roomId}
-            roomDetail={roomDetail}
-            isRoomManager={isRoomManager}
-            sendMessage={sendMessage}
-          />
-        </ErrorHandlingWrapper>
+        <section className="bg-container/60 h-full rounded-lg">
+          <ErrorHandlingWrapper
+            fallbackComponent={ErrorFallback}
+            suspenseFallback={<Spinner />}
+          >
+            <GamePanel
+              roomId={roomId}
+              roomDetail={roomDetail}
+              isRoomManager={isRoomManager}
+              sendMessage={sendMessage}
+              gameType={gameType}
+            />
+          </ErrorHandlingWrapper>
+        </section>
         {isDevelopment && (
           <AdBanner
             type="leaderboard"
@@ -69,11 +78,12 @@ const GameRoomView = ({
           chatMessages={chatMessages}
           sendMessage={sendMessage}
         />
-        <GameActionButtons
-          game={roomDetail.game.nameEn}
-          isRoomManager={isRoomManager}
-          sendMessage={sendMessage}
-        />
+        {isRoomManager && (
+          <GameActionButtons
+            gameControl={gameControl}
+            sendMessage={sendMessage}
+          />
+        )}
       </section>
     </section>
   );
