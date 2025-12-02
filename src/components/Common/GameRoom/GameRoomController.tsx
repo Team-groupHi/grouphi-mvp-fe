@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { Spinner } from '@/components';
+import { GAME_COMPONENT_MAP } from '@/constants/gameComponentMap';
+import { GAME_CONTROL_MAP } from '@/constants/gameControlMap';
 import { PATH } from '@/constants/router';
 import { useFetchRoomDetail } from '@/hooks/queries';
 import { useToast } from '@/hooks/useToast';
@@ -13,14 +14,14 @@ import { EnterRoomProps } from '@/hooks/useWebSocket';
 import useRoomStore from '@/store/useRoomStore';
 import useSocketStore from '@/store/useSocketStore';
 import { ChatMessage } from '@/types';
+import { SendMessage } from '@/types/websocket';
+import { gameToType } from '@/utils/gameToType';
 
 import GameRoomView from './GameRoomView';
 
 interface GameRoomControllerProps {
   connect: (params: EnterRoomProps) => void;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
   chatMessages: ChatMessage[];
 }
 
@@ -46,6 +47,18 @@ const GameRoomController = ({
   const isSelfInPlayers =
     roomDetail.players.findIndex((user) => user.name === myName) !== -1;
 
+  const gameType = gameToType(roomDetail.game.nameEn || '');
+
+  useEffect(() => {
+    if (!gameType) {
+      toast({
+        variant: 'destructive',
+        title: `${roomDetail.game.nameKr}은 지원하지 않는 게임 타입이에요.`,
+      });
+      router.push(PATH.HOME);
+    }
+  }, [gameType, roomDetail.game.nameKr, router, toast]);
+
   useEffect(() => {
     if (sendMessage) {
       setSendMessage(sendMessage);
@@ -62,7 +75,7 @@ const GameRoomController = ({
   }, [roomDetail.players]);
 
   useEffect(() => {
-    if (roomDetail && !isSelfInPlayers) {
+    if (!isSelfInPlayers) {
       if (roomDetail.status === 'PLAYING') {
         toast({
           title: '게임이 이미 시작되었어요! 게임이 끝나면 다시 들어와주세요.',
@@ -76,9 +89,12 @@ const GameRoomController = ({
     }
   }, [myName, roomDetail]);
 
-  if (!isSelfInPlayers) {
+  if (!isSelfInPlayers || !gameType) {
     return <Spinner />;
   }
+
+  const GamePanel = GAME_COMPONENT_MAP[gameType];
+  const gameControl = GAME_CONTROL_MAP[gameType];
 
   return (
     <GameRoomView
@@ -88,6 +104,9 @@ const GameRoomController = ({
       isRoomManager={isRoomManager}
       sendMessage={sendMessage}
       chatMessages={chatMessages}
+      GamePanel={GamePanel}
+      gameControl={gameControl}
+      gameType={gameType}
     />
   );
 };

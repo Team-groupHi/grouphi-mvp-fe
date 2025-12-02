@@ -2,16 +2,13 @@
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
+import { Spinner } from '@/components';
 import useModalStore from '@/store/useModalStore';
 
 interface ModalProps {
   closeModal: () => void;
   optionPropsNumber?: number | string;
 }
-
-const Temploading = () => (
-  <div className="absolute bottom-0 left-0">Loading...</div>
-);
 
 const ErrorModal = ({ closeModal }: ModalProps) => (
   <div className="absolute bottom-0 left-0 bg-red-500 text-white p-4">
@@ -28,7 +25,7 @@ const loadModal = (modalType: string) => {
         return () => ErrorModal;
       }),
     {
-      loading: () => <Temploading />,
+      loading: () => <Spinner />,
       ssr: false,
     }
   );
@@ -42,7 +39,7 @@ const ModalRenderer = () => {
   const DynamicModal = loadModal(activeModal);
 
   return (
-    <Suspense fallback={<Temploading />}>
+    <Suspense fallback={<Spinner />}>
       {isOpen && DynamicModal && (
         <DynamicModal
           closeModal={closeModal}

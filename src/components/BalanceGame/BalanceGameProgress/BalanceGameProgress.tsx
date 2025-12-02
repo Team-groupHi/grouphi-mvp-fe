@@ -1,19 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
 import { useState } from 'react';
 
 import { BalanceGameQuestionCard, Timer } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import useBalanceGameStore from '@/store/useBalanceGameStore';
-
-interface BalanceGameProgressProps {
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
-  setIsTimeout: (state: boolean) => void;
-}
+import { BalanceGameProgressProps } from '@/types/props';
 
 const BalanceGameProgress = ({
   sendMessage,

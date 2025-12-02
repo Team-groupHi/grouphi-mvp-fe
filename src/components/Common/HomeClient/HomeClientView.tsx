@@ -1,33 +1,14 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { AdBanner, Footer, GameListCarousel, MainHeader } from '@/components';
-import useGameStore from '@/store/useGameStore';
-import useRoomStore from '@/store/useRoomStore';
 import { GameResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
 
-interface HomeClientProps {
+interface HomeClientViewProps {
   games: GameResponse[];
 }
 
-const HomeClient = ({ games }: HomeClientProps) => {
-  const { setGames } = useGameStore();
-
-  const { reset: roomReset } = useRoomStore();
-
-  useEffect(() => {
-    roomReset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (games) {
-      setGames(games);
-    }
-  }, [setGames, games]);
-
+const HomeClientView = ({ games }: HomeClientViewProps) => {
   return (
     <div className="flex flex-col min-h-screen justify-between overflow-y-hidden">
       <MainHeader />
@@ -54,4 +35,4 @@ const HomeClient = ({ games }: HomeClientProps) => {
     </div>
   );
 };
-export default HomeClient;
+export default HomeClientView;

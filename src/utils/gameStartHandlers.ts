@@ -1,9 +1,10 @@
 import { GAME_TYPES } from '@/constants/game';
 import { SOCKET } from '@/constants/websocket';
 import { RoomResponse } from '@/types/api';
+import { SendMessage } from '@/types/websocket';
 
 export interface StartHandlerParams {
-  sendMessage: <T>(params: { destination: string; body?: T }) => void;
+  sendMessage: SendMessage;
   roomDetail: RoomResponse;
   totalRounds: number;
 }
