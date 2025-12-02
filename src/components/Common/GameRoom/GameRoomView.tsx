@@ -77,6 +77,7 @@ const GameRoomView = ({
           myName={myName}
           chatMessages={chatMessages}
           sendMessage={sendMessage}
+          players={roomDetail.players}
         />
         {isRoomManager && (
           <GameActionButtons

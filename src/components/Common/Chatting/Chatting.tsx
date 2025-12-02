@@ -1,10 +1,17 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
+import { Player } from '@/types/api';
 import { SendMessage } from '@/types/websocket';
 
 import Item from './Item';
@@ -14,15 +21,26 @@ interface ChattingProps {
   myName: string;
   chatMessages: ChatMessage[];
   sendMessage: SendMessage;
+  players: Player[];
 }
 
-const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
+const Chatting = ({
+  myName,
+  chatMessages,
+  sendMessage,
+  players,
+}: ChattingProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesContainerRef = useRef<HTMLElement>(null);
 
   const [isAtBottom, setIsAtBottom] = useState(true);
 
   const [showNewMessage, setShowNewMessage] = useState(false);
+
+  const playerAvatarMap = useMemo(
+    () => new Map(players.map((player) => [player.name, player.avatar])),
+    [players]
+  );
 
   const handleScroll = useCallback(() => {
     const container = messagesContainerRef.current;
@@ -111,6 +129,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
                     ? 'me'
                     : 'others'
               }
+              avatar={playerAvatarMap.get(item.sender)}
             />
           ))}
         </section>

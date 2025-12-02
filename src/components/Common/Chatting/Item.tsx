@@ -1,13 +1,15 @@
-import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
+import { cn } from '@/lib/utils';
 interface ItemProps {
+  avatar?: string;
   sender: string;
   content: string;
   index: number;
   type: 'system' | 'me' | 'others';
 }
 
-const Item = ({ sender, content, index, type }: ItemProps) => {
+const Item = ({ avatar, sender, content, index, type }: ItemProps) => {
   return (
     <div
       className={cn(
@@ -24,10 +26,21 @@ const Item = ({ sender, content, index, type }: ItemProps) => {
       {type == 'system' ? (
         <span className="font-semibold break-words">{content}</span>
       ) : (
-        <div>
-          <span className="font-semibold">{sender}</span>
-          {` : `}
-          <span className="break-words hyphens-auto">{content}</span>
+        <div className="flex flex-wrap items-center gap-1">
+          {avatar && (
+            <Image
+              src={`/images/characters/${avatar}.webp`}
+              alt={`${sender}의 아바타`}
+              width={20}
+              height={20}
+              className="object-contain select-none flex-shrink-0"
+              draggable={false}
+            />
+          )}
+
+          <span className="font-semibold flex-shrink-0">{sender}</span>
+          <span className="flex-shrink-0">{`:`}</span>
+          <span className="break-all hyphens-auto min-w-0">{content}</span>
         </div>
       )}
     </div>
