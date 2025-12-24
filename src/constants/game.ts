@@ -23,6 +23,6 @@ export const GAME_TYPES = {
 } as const;
 
 export const ACTIVE_GAMES_COUNT = {
-  DEFAULT: 6,
-  DEV: 5,
+  DEFAULT: 5,
+  DEV: 6,
 };
