@@ -12,7 +12,7 @@ interface HomeClientViewProps {
 const HomeClientView = ({ games }: HomeClientViewProps) => {
   const GAMELIST_ITEM_COUNT = isDevelopment
     ? ACTIVE_GAMES_COUNT.DEV
-    : ACTIVE_GAMES_COUNT.DEFAULT;
+    : ACTIVE_GAMES_COUNT.PRODUCTION;
 
   return (
     <div className="flex flex-col min-h-screen justify-between overflow-y-hidden">
