@@ -17,6 +17,7 @@ const BalanceGameController = ({
   roomDetail,
   isRoomManager,
   sendMessage,
+  gameType,
 }: GameControllerProps) => {
   const { round } = useBalanceGameStore();
   const { roomStatus, setRoomStatus } = useRoomStore();
@@ -26,6 +27,7 @@ const BalanceGameController = ({
     roomDetail,
     sendMessage,
     toast,
+    gameType,
   });
 
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
@@ -43,7 +45,7 @@ const BalanceGameController = ({
     }
   }, [isTimeout, refetch, setRoomStatus]);
 
-  const preGameProps = { roomDetail, isRoomManager, sendMessage };
+  const preGameProps = { roomDetail, isRoomManager, sendMessage, gameType };
   const progressProps = { sendMessage, setIsTimeout };
 
   return (

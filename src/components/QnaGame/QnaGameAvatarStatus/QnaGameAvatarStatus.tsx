@@ -5,19 +5,19 @@ import { cn } from '@/lib/utils';
 interface QnaGameAvatarStatusProps {
   avatar: string;
   alt?: string;
-  isSelected?: boolean;
+  isSubmitted: boolean;
 }
 
 const QnaGameAvatarStatus = ({
   avatar,
   alt = 'avatar',
-  isSelected = false,
+  isSubmitted,
 }: QnaGameAvatarStatusProps) => {
   return (
     <div
       className={cn(
         'w-20 h-20 flex items-center justify-center rounded-full bg-container-700',
-        isSelected && 'border-3 border-primary-500'
+        isSubmitted && 'border-3 border-primary-500'
       )}
     >
       <Image

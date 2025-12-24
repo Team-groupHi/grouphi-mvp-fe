@@ -1,15 +1,19 @@
-import * as StompJS from '@stomp/stompjs';
-
 import { RoomResponse } from '@/types/api';
 
-export interface GamePanelProps {
-  game: string;
+import { GameType } from './game';
+import { SendMessage } from './websocket';
+
+export interface GameControllerProps {
   roomId: string;
   roomDetail: RoomResponse;
   isRoomManager: boolean;
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
+  gameType: GameType;
 }
 
-export type GameControllerProps = Omit<GamePanelProps, 'game'>;
+export type PreGameControllerProps = Omit<GameControllerProps, 'roomId'>;
+
+export interface BalanceGameProgressProps {
+  sendMessage: SendMessage;
+  setIsTimeout: (state: boolean) => void;
+}

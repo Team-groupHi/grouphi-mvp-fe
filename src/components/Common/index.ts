@@ -10,6 +10,18 @@ export {
 } from './Carousel';
 export { Chatting } from './Chatting';
 export {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerPortal,
+  DrawerTitle,
+  DrawerTrigger,
+} from './Drawer';
+export {
   ErrorBoundary,
   ErrorFallback,
   ErrorHandlingWrapper,
@@ -28,7 +40,6 @@ export {
 export { GameActionButtons } from './GameActionButtons';
 export { GameListCard } from './GameListCard';
 export { GameListCarousel } from './GameListCarousel';
-export { GamePanel } from './GamePanel';
 export { GameRoom } from './GameRoom';
 export { HomeClient } from './HomeClient';
 export { InitialNickname } from './InitialNickname';

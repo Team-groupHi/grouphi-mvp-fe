@@ -1,11 +1,19 @@
 'use client';
 
-import * as StompJS from '@stomp/stompjs';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Send } from 'lucide-react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
-import { Input } from '@/components';
+import { Button, Input } from '@/components';
 import { SOCKET } from '@/constants/websocket';
 import { ChatMessage } from '@/types';
+import { Player } from '@/types/api';
+import { SendMessage } from '@/types/websocket';
 
 import Item from './Item';
 import NewMessage from './NewMessage';
@@ -13,18 +21,29 @@ import NewMessage from './NewMessage';
 interface ChattingProps {
   myName: string;
   chatMessages: ChatMessage[];
-  sendMessage: <T>(
-    params: Omit<StompJS.IPublishParams, 'body'> & { body?: T }
-  ) => void;
+  sendMessage: SendMessage;
+  players: Player[];
+  isMobile?: boolean;
 }
 
-const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
+const Chatting = ({
+  myName,
+  chatMessages,
+  sendMessage,
+  players,
+  isMobile = false,
+}: ChattingProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesContainerRef = useRef<HTMLElement>(null);
 
   const [isAtBottom, setIsAtBottom] = useState(true);
 
   const [showNewMessage, setShowNewMessage] = useState(false);
+
+  const playerAvatarMap = useMemo(
+    () => new Map(players.map((player) => [player.name, player.avatar])),
+    [players]
+  );
 
   const handleScroll = useCallback(() => {
     const container = messagesContainerRef.current;
@@ -42,11 +61,11 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
     }
   }, []);
 
-  const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleSubmit = (e?: React.KeyboardEvent<HTMLInputElement>) => {
+    e?.preventDefault();
     if (
       inputRef.current &&
-      !e.nativeEvent.isComposing &&
+      !e?.nativeEvent.isComposing &&
       inputRef.current.value.trim().length !== 0
     ) {
       sendMessage({
@@ -113,6 +132,7 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
                     ? 'me'
                     : 'others'
               }
+              avatar={playerAvatarMap.get(item.sender)}
             />
           ))}
         </section>
@@ -126,13 +146,21 @@ const Chatting = ({ myName, chatMessages, sendMessage }: ChattingProps) => {
           </section>
         )}
       </section>
-      <section className="h-[4rem] flex justify-center items-center bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400">
+      <section className="h-[4rem] flex justify-center items-center bg-container-600 p-3 rounded-b-lg border-solid border-t-1 border-container-400 gap-2">
         <Input
           ref={inputRef}
           className="bg-container-700 border-transparent"
           placeholder="엔터 키를 눌러 채팅 전송"
           onKeyDown={(e) => e.key === 'Enter' && handleSubmit(e)}
         />
+        {isMobile && (
+          <Button
+            shape="square"
+            onClick={() => handleSubmit()}
+          >
+            <Send />
+          </Button>
+        )}
       </section>
     </section>
   );
