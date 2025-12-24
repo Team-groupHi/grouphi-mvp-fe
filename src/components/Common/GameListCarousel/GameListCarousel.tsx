@@ -24,9 +24,10 @@ import { GameResponse } from '@/types/api';
 
 interface GameListCarouselProps {
   games: GameResponse[];
+  count?: number;
 }
 
-const GameListCarousel = ({ games }: GameListCarouselProps) => {
+const GameListCarousel = ({ games, count = 5 }: GameListCarouselProps) => {
   const path = usePathname();
   const router = useRouter();
   const { toast } = useToast();
@@ -92,7 +93,7 @@ const GameListCarousel = ({ games }: GameListCarouselProps) => {
             path !== PATH.HOME && 'grid-cols-2'
           )}
         >
-          {games.map((game) => (
+          {games.slice(0, count).map((game) => (
             <CarouselItem key={game.id}>
               <GameListCard
                 id={game.id}

@@ -21,3 +21,8 @@ export const GAME_TYPES = {
   QNA: 'QNA',
   BALANCE: 'BALANCE',
 } as const;
+
+export const ACTIVE_GAMES_COUNT = {
+  PRODUCTION: 5,
+  DEV: 6,
+};

@@ -1,6 +1,7 @@
 'use client';
 
 import { AdBanner, Footer, GameListCarousel, MainHeader } from '@/components';
+import { ACTIVE_GAMES_COUNT } from '@/constants/game';
 import { GameResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
 
@@ -9,6 +10,10 @@ interface HomeClientViewProps {
 }
 
 const HomeClientView = ({ games }: HomeClientViewProps) => {
+  const GAMELIST_ITEM_COUNT = isDevelopment
+    ? ACTIVE_GAMES_COUNT.DEV
+    : ACTIVE_GAMES_COUNT.PRODUCTION;
+
   return (
     <div className="flex flex-col min-h-screen justify-between overflow-y-hidden">
       <MainHeader />
@@ -20,7 +25,10 @@ const HomeClientView = ({ games }: HomeClientViewProps) => {
           >
             <span className="text-md 2xl:text-lg">Game List</span>
             <span className="text-md pb-300">▽</span>
-            <GameListCarousel games={games} />
+            <GameListCarousel
+              games={games}
+              count={GAMELIST_ITEM_COUNT}
+            />
           </section>
         ) : (
           <section className="flex h-full justify-center items-center">
