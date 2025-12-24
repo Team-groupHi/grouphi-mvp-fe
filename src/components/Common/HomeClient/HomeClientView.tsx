@@ -1,6 +1,7 @@
 'use client';
 
 import { AdBanner, Footer, GameListCarousel, MainHeader } from '@/components';
+import { ACTIVE_GAMES_COUNT } from '@/constants/game';
 import { GameResponse } from '@/types/api';
 import { isDevelopment } from '@/utils/env';
 
@@ -9,7 +10,9 @@ interface HomeClientViewProps {
 }
 
 const HomeClientView = ({ games }: HomeClientViewProps) => {
-  const GAMELIST_ITEM_COUNT = isDevelopment ? 6 : 5;
+  const GAMELIST_ITEM_COUNT = isDevelopment
+    ? ACTIVE_GAMES_COUNT.DEV
+    : ACTIVE_GAMES_COUNT.DEFAULT;
 
   return (
     <div className="flex flex-col min-h-screen justify-between overflow-y-hidden">
