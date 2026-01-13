@@ -1,6 +1,7 @@
 import './globals.css';
 
 import { Viewport } from 'next';
+import { headers } from 'next/headers';
 import Script from 'next/script';
 import React from 'react';
 
@@ -12,6 +13,8 @@ import {
   Toaster,
 } from '@/components';
 import { METADATA } from '@/constants/metadata';
+import { DeviceProvider } from '@/store/useDevice';
+import { isMobileDevice } from '@/utils/deviceDetector';
 import Providers from '@/utils/providers';
 
 import { notoSans, pretendard } from './fonts/fonts';
@@ -29,6 +32,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID;
+  const headersList = headers();
+  const userAgent = headersList.get('user-agent') || '';
+  const isMobile = isMobileDevice(userAgent);
+
   return (
     <html
       lang="ko"
@@ -70,15 +77,17 @@ export default function RootLayout({
             </Script>
           </>
         )}
-        <Providers>
-          <div className="absolute inset-0 w-full h-screen -z-10">
-            <StarsBackground />
-            <ShootingStars />
-          </div>
-          <InitialNickname>{children}</InitialNickname>
-          <Toaster />
-          <ModalRenderer />
-        </Providers>
+        <DeviceProvider isMobile={isMobile}>
+          <Providers>
+            <div className="absolute inset-0 w-full h-screen -z-10">
+              <StarsBackground />
+              <ShootingStars />
+            </div>
+            <InitialNickname>{children}</InitialNickname>
+            <Toaster />
+            <ModalRenderer />
+          </Providers>
+        </DeviceProvider>
       </body>
     </html>
   );

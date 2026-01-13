@@ -11,6 +11,7 @@ import { PATH } from '@/constants/router';
 import { useFetchRoomDetail } from '@/hooks/queries';
 import { useToast } from '@/hooks/useToast';
 import { EnterRoomProps } from '@/hooks/useWebSocket';
+import { useDevice } from '@/store/useDevice';
 import useRoomStore from '@/store/useRoomStore';
 import useSocketStore from '@/store/useSocketStore';
 import { ChatMessage } from '@/types';
@@ -40,6 +41,7 @@ const GameRoomController = ({
 
   const { myName, setHostName } = useRoomStore();
   const { setSendMessage } = useSocketStore();
+  const { isMobile } = useDevice();
 
   const isRoomManager = roomDetail.players.some(
     (player) => player.name === myName && player.isHost
@@ -95,6 +97,10 @@ const GameRoomController = ({
 
   const GamePanel = GAME_COMPONENT_MAP[gameType];
   const gameControl = GAME_CONTROL_MAP[gameType];
+
+  if (isMobile) {
+    return <div>MobileGameRoomView</div>;
+  }
 
   return (
     <GameRoomView
